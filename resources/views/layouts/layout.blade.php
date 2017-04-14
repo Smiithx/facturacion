@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Consultas Web</title>
-        {!! Html::style('assets/css/bootstrap.css')!!}
+        <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">       
-        {!! Html::style('assets/css/index.css')!!}
+        <link rel="stylesheet" href="{{asset('assets/css/index.css')}}">
     </head>
     <body>
         <header class="modal-header text-success text-center bg-success">   
@@ -35,7 +35,7 @@
             </div>
         </div>
         <!-- /formulario -->
-        {!!Html::script('assets/js/jquery-3.2.0.js')!!}
-        {!!Html::script('assets/js/bootstrap.js')!!}
+        <script src="asset('assets/js/jquery-3.2.0.js')"></script>
+        <script src="asset('assets/js/bootstrap.js')"></script>
     </body>
 </html>
