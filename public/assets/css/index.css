@@ -1,0 +1,56 @@
+.fondo {
+    background: linear-gradient(top, black, white);
+}
+.header1{
+    background: linear-gradient(top, black, white);
+}
+ul, ol {
+    list-style:none;
+}
+
+.nav > li {
+    float:left;
+}
+
+.nav li a {
+    text-decoration:none;
+    display:block;
+}
+
+.nav li a:hover {
+    text-decoration: none;
+    background-color: #eee;			}
+
+.nav li ul {
+    display:none;
+    position:absolute;
+    min-width:160px;
+    padding: 0px;
+}
+
+.nav li:hover > ul {
+    display:block;
+}
+
+.nav li ul li {
+    position:relative;
+}
+
+.nav li ul li { 
+    top:0px;
+    width: 100%;
+}
+
+.nav li:hover,.nav li:hover ul{
+    background: #eee;
+}
+.nav li ul li:hover, .nav li ul li a:hover{
+    background: #ccc;
+}
+.nav li ul li{
+    padding: 10px 10px;
+}
+.nav li ul hr{
+    border-color: #bbb;
+    margin: 0px;
+}
