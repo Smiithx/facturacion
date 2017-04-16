@@ -22,6 +22,7 @@ Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
+Route::resource("test","TestController");
 Route::pattern('inexistentes', '.*');
 Route::any('/{inexistentes}', function()
 {
