@@ -17,7 +17,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        //
+        return View('pacientes.index');
     }
 
     /**
@@ -27,6 +27,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
+        Paciente:all();
         return View('pacientes.create');
     }
 
