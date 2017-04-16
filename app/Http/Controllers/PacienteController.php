@@ -63,6 +63,19 @@ class PacienteController extends Controller
     {
         //
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  String  $documento
+     * @return \Illuminate\Http\Response
+     */
+    public function documento($documento)
+    {
+        $pacientes = Paciente::all();
+        dd($pacientes);
+      
+        
+    }
 
     /**
      * Show the form for editing the specified resource.

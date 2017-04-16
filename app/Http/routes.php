@@ -14,7 +14,8 @@
 Route::get('/', function () {
     return view('pacientes.create');
 });
-Route::resource('pacientes', 'PacienteController', ['only' => ['create','store','index']]);
+Route::resource('pacientes', 'PacienteController', ['only' => ['create','store','index','show']]);
+Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 Route::resource('facturas', 'FacturaController', ['only' => ['create','store']]);
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store']]);
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
