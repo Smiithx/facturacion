@@ -7,19 +7,19 @@
         <form method="POST" action="/ordenservicio">
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Documento:</label>
-                <input type="text" class="form-control" id="documento" name="documento"/>
+                <input type="text" class="form-control" id="orden-documento" name="documento"/>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Nombre:</label>  
-                <input class="form-control" id="nombre" type="text" name="nombre" value=""/>
+                <input class="form-control" id="orden-nombre" type="text" name="nombre" value=""/>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Aseguradora:</label>
-                <input class="form-control" id="aseguradora" type="text" name="aseguradora" /> 
+                <input class="form-control" id="orden-aseguradora" type="text" name="aseguradora" /> 
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Contrato:</label>
-                <input class="form-control" id="contrato" type="text" name="contrato" /> 
+                <input class="form-control" id="orden-contrato" type="text" name="contrato" /> 
             </div>
             <br>
             <br>
