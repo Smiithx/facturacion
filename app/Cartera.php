@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cartera extends Model
 {
-    //probando2
+    //probando323
 }
