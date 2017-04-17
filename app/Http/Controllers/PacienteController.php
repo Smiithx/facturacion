@@ -87,7 +87,8 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $paciente = Paciente::find($id); 
+        return view("pacientes.edit",['paciente'=>$paciente]);
     }
 
     /**

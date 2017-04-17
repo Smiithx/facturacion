@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Consultas Web</title>
         <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/jquery-ui.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">       
         <link rel="stylesheet" href="{{asset('assets/css/index.css')}}">
     </head>
@@ -34,8 +36,14 @@
                 @yield('content')
             </div>
         </div>
+        
+        <br><br>
         <!-- /formulario -->
-        <script src="asset('assets/js/jquery-3.2.0.js')"></script>
-        <script src="asset('assets/js/bootstrap.js')"></script>
+        <script src="{{asset('assets/js/jquery.js')}}"></script>
+        <script src="{{asset('assets/js/jquery-ui.js')}}"></script>
+        <script src="{{asset('assets/js/bootstrap.js')}}"></script>
+        <script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
+        <script src="{{asset('assets/js/index.js')}}"></script>
+        <script src="{{asset('assets/js/datepicker-es.js')}}"></script>
     </body>
 </html>
