@@ -75,17 +75,18 @@ class PacienteController extends Controller
      */
     public function documento($documento)
     {
+        $paciente = Paciente::where("documento","=",$documento)->get();
 
-        $pacientes = Paciente::where("documento","=",$documento)->get()->toJson();
-
-        //$pacientes = DB::table('pacientes')->where('documento', $documento)->first();
-
-        dd($pacientes);
-        
-        
-        return response()->json(['respuesta' => pacientes::all()]);
-
-
+        if($paciente != "[]"){
+            return response()->json([
+                'success' => 'true',
+                'paciente' => $paciente[0]
+            ]);
+        }else{
+            return response()->json([
+                'error' => 'No existen pasientes con ese numero de documento'
+            ]);
+        } 
     }
 
     /**
@@ -96,7 +97,8 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $paciente = Paciente::find($id); 
+        return view("pacientes.edit",['paciente'=>$paciente]);
     }
 
     /**
