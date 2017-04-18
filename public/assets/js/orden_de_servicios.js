@@ -10,18 +10,17 @@ $(function(){
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
-
-    .focusout(function(){
-        var url = "/pacientes/documento/".orden_documento.val();
+orden_documento.focusout(function(){    
+        var url = "/pacientes/documento/"+orden_documento.val();
         $.ajax({
             url: url,
-            type: "POST",
+            type: "GET",
             dataType: "json",
             success: function(respuesta){
                 if(respuesta.success){
-                    orden_nombre.val(respuesta.nombre);
-                    orden_aseguradora.val(respuesta.aseguradora);
-                    orden_contrato.val(respuesta.contrato);
+                    orden_nombre.val(respuesta.paciente.nombre);
+                    orden_aseguradora.val(respuesta.paciente.aseguradora);
+                    orden_contrato.val(respuesta.paciente.contrato);
 
                 }else{
                     orden_nombre.val("");

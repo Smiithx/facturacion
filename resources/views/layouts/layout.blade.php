@@ -9,6 +9,12 @@
         <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">       
         <link rel="stylesheet" href="{{asset('assets/css/index.css')}}">
+        <script src="{{asset('assets/js/jquery.js')}}"></script>
+        <script src="{{asset('assets/js/jquery-ui.js')}}"></script>
+        <script src="{{asset('assets/js/bootstrap.js')}}"></script>
+        <script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
+        <script src="{{asset('assets/js/index.js')}}"></script>
+        <script src="{{asset('assets/js/datepicker-es.js')}}"></script>
     </head>
     <body>
         <header class="modal-header text-success text-center bg-success">   
@@ -39,11 +45,6 @@
         
         <br><br>
         <!-- /formulario -->
-        <script src="{{asset('assets/js/jquery.js')}}"></script>
-        <script src="{{asset('assets/js/jquery-ui.js')}}"></script>
-        <script src="{{asset('assets/js/bootstrap.js')}}"></script>
-        <script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
-        <script src="{{asset('assets/js/index.js')}}"></script>
-        <script src="{{asset('assets/js/datepicker-es.js')}}"></script>
+    
     </body>
 </html>
