@@ -4,7 +4,7 @@
 <form action="{{url('pacientes')}}" method="POST" name="frm_reg_paciente" >
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Documento:</label>
-        <input type="text" class="form-control" id="documento" name="documento" required/>
+        <input type="text" class="form-control" id="documento" name="documento" required value="{{old('documento')}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Tipo:</label>   
@@ -20,15 +20,15 @@
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Nombre:</label>  
-        <input class="form-control" id="nombre" type="text" name="nombre" required/>
+        <input class="form-control" id="nombre" type="text" name="nombre" required value="{{old('nombre')}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Edad:</label>
-        <input class="form-control" id="edad" type="number" name="edad" required min="1"/>
+        <input class="form-control" id="edad" type="number" name="edad" required min="1" value="{{old('edad')}}"/>
     </div>
     <br>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
-        <label for="label">Tipo de Edad:</label>
+        <label for="label">Tipo de edad:</label>
         <select class="form-control" id="anos" name="tipo_edad">
             <option value="Años">Años</option>
             <option value="Meses">Meses</option>
@@ -36,8 +36,8 @@
         </select>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
-        <label for="label">Fecha Nacimiento:</label>
-        <input class="form-control datepicker" id="fechana" type="text" name="fecha_nacimiento" required/>
+        <label for="label">Fecha de nacimiento:</label>
+        <input class="form-control datepicker" id="fechana" type="text" name="fecha_nacimiento" required value="{{old('fecha_nacimiento')}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Sexo:</label>
@@ -48,21 +48,21 @@
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Telefono:</label>
-        <input class="form-control" id="telefono" type="text" name="telefono" required/>
+        <input class="form-control" id="telefono" type="text" name="telefono" required value="{{old('telefono')}}"/>
     </div>
     <br>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Dirección:</label>
-        <input class="form-control" id="direccion" type="text" name="direccion" required/>
+        <input class="form-control" id="direccion" type="text" name="direccion" required value="{{old('direccion')}}"/>
     </div>
     <br>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Aseguradora:</label>
-        <input class="form-control" id="aseguradora" type="text" name="aseguradora" required/> 
+        <input class="form-control" id="aseguradora" type="text" name="aseguradora" required value="{{old('aseguradora')}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-2 col-lg-3">
         <label for="label">Contrato:</label>
-        <input class="form-control" id="acontrato" type="text" name="contrato" required/> 
+        <input class="form-control" id="acontrato" type="text" name="contrato" required value="{{old('contrato')}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-2 col-lg-3">
         <label for="label">Regimen:</label>
