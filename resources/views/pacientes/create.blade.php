@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 <br>
-<form action="/pacientes"  method="POST" name="frm_reg_paciente" >
+<form action="{{url('pacientes')}}" method="POST" name="frm_reg_paciente" >
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Documento:</label>
         <input type="text" class="form-control" id="documento" name="documento" required/>
