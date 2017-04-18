@@ -85,7 +85,7 @@ class PacienteController extends Controller
             ]);
         }else{
             return response()->json([
-                'error' => 'No existen pasientes con ese numero de documento'
+                'error' => 'No existen pacientes con ese numero de documento'
             ]);
         } 
     }
