@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Paciente;
+use Illuminate\Support\Facades\Redirect;
+
 //use Illuminate\Support\Facades\DB;
 
 
@@ -30,7 +32,6 @@ class PacienteController extends Controller
      */
     public function create()
     {
-
         return View('pacientes.create');
     }
 
@@ -53,8 +54,8 @@ class PacienteController extends Controller
             'contrato' => 'required|max:255'
         ]);
         Paciente::create($request->all());
-        $pacientes = Paciente::all();
-        return View('pacientes.index',['pacientes'=>$pacientes]);
+
+        return Redirect::to('pacientes');
     }
 
     /**
@@ -97,7 +98,7 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
-        $paciente = Paciente::find($id); 
+        $paciente = Paciente::findOrFail($id); 
         return view("pacientes.edit",['paciente'=>$paciente]);
     }
 
