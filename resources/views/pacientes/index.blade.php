@@ -20,11 +20,15 @@
                 <tr>
                     <td>{{ $paciente->documento }}</td>
                     <td>{{ $paciente->nombre }}</td>
-                    <td>{{ $paciente->edad }}</td>
+                    <td>{{ $paciente->edad." ".$paciente->tipo_edad }}</td>
                     <td>{{ $paciente->sexo }}</td>
                     <td>{{ $paciente->aseguradora }}</td>
                     <td>{{ $paciente->contrato }}</td>
-                    <td></td>
+                    <td class="acciones">
+                       <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar' target="_blank">
+                           <i class='glyphicon glyphicon-edit'></i>
+                       </a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Paciente;
+//use Illuminate\Support\Facades\DB;
+
 
 class PacienteController extends Controller
 {
@@ -28,7 +30,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
-        
+
         return View('pacientes.create');
     }
 
@@ -73,10 +75,17 @@ class PacienteController extends Controller
      */
     public function documento($documento)
     {
-        $pacientes = Paciente::all();
+
+        $pacientes = Paciente::where("documento","=",$documento)->get()->toJson();
+
+        //$pacientes = DB::table('pacientes')->where('documento', $documento)->first();
+
         dd($pacientes);
-      
         
+        
+        return response()->json(['respuesta' => pacientes::all()]);
+
+
     }
 
     /**
