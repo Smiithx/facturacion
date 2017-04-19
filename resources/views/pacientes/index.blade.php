@@ -3,7 +3,9 @@
 <div class="container-fluid">
     <div class="container-fluid table-responsive" style="background-color: #f9f9f9;">
         <table class="table table-striped table-hover table-bordered">
-            <caption class="text-center"><h2>Pacientes</h2></caption>
+            <caption class="text-center">
+                <h2>Pacientes</h2>
+            </caption>
             <thead>
                 <tr>
                     <th>Documento</th>
@@ -22,7 +24,7 @@
                     <td>{{ $paciente->nombre }}</td>
                     <td>{{ $paciente->edad." ".$paciente->tipo_edad }}</td>
                     <td>{{ $paciente->sexo }}</td>
-                    <td>{{ $paciente->aseguradora }}</td>
+                    <td>{{ $paciente->aseguradora->nombre }}</td>
                     <td>{{ $paciente->contrato }}</td>
                     <td class="acciones">
                        <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar' target="_blank">
@@ -32,6 +34,11 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7" class="text-right">{!! $pacientes->render() !!}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

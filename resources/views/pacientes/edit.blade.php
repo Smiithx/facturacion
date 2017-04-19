@@ -1,13 +1,13 @@
 @extends('layouts.layout')
 @section('content')
 <br>
-<form action="{{url('pacientes')}}"  method="POST" name="frm_reg_paciente" >
+{!! Form::open(['route' => ['pacientes.update',$paciente->id], 'method' => 'put']) !!}
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Documento:</label>
         <input type="text" class="form-control" id="documento" name="documento" required value="{{$paciente->documento}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
-        <label for="label">Tipo:</label>   
+        <label for="label">Tipo:</label>
         <select class="form-control" id="tipodoc" name="tipo_documento">
             <option value="CC" @if ($paciente->tipo_documento === "CC" ) selected @endif>CC</option>
             <option value="TI" @if ($paciente->tipo_documento === "TI" ) selected @endif>TI</option>
@@ -37,7 +37,7 @@
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Fecha Nacimiento:</label>
-        <input class="form-control datepicker" id="fechana" type="text" name="fecha_nacimiento" placeholder="{{$paciente->fecha_nacimiento}}"/>
+        <input class="form-control datepicker" id="fechana" type="text" name="fecha_nacimiento" placeholder="{{$paciente->fecha_nacimiento}}" value="{{$paciente->fecha_nacimiento}}"/>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Sexo:</label>
@@ -58,7 +58,16 @@
     <br>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Aseguradora:</label>
-        <input class="form-control" id="aseguradora" type="text" name="aseguradora" required value="{{$paciente->aseguradora}}"/> 
+        <select name="aseguradora_id" id="aseguradora_id" required class="form-control">
+            <option value="">Seleccione una aseguradora</option>
+            @foreach ($aseguradoras as $aseguradora)
+                @if($aseguradora->id == $paciente->aseguradora_id)
+                    <option value="{{$aseguradora->id}}" selected>{{$aseguradora->nombre}}</option>
+                @else
+                    <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
+                @endif
+            @endforeach
+        </select>
     </div>
     <div class="form-group col-xs-12 col-md-2 col-lg-3">
         <label for="label">Contrato:</label>
@@ -84,5 +93,5 @@
     {{ csrf_field() }}
     <br>
     <br>
-</form>
+{!! Form::close() !!}
 @endsection
