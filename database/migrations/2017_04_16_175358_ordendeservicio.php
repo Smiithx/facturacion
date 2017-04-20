@@ -16,7 +16,7 @@ class Ordendeservicio extends Migration
             $table->increments('id');
             $table->string('nombre',120);            
             $table->string('documento',120);            
-            $table->integer('aseguradora');
+            $table->integer('aseguradora_id')->index();
             $table->string('contrato',50);
             $table->string('cups',50);
             $table->string('descripcion',100);

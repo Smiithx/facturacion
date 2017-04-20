@@ -15,6 +15,8 @@ class Aseguradoras extends Migration
         Schema::create('aseguradoras', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('nit');
+            $table->enum('estado', array('Activo','Inactivo'));
             $table->timestamps();
         });
     }

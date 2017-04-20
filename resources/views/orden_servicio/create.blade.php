@@ -6,6 +6,7 @@
     <div class="row"> 
 
         <form  method="POST" action="/ordenservicio" name="frm_reg_ordendeservicios" >
+         {{ csrf_field() }}
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Documento:</label>
                 <input type="text" class="form-control" id="orden-documento" name="documento"/>
@@ -63,7 +64,7 @@
             <div class="form-group col-xs-12 col-md-12 col-lg-12">
                 <input class="btn btn-primary pull-right" type="submit" id="facturar" onclick="agregafactura()" name="facturar" value="Facturar">
             </div>
-            {{ csrf_field() }}
+           
         </form>
     </div>
 </div>

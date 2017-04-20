@@ -19,7 +19,7 @@ orden_documento.focusout(function(){
             success: function(respuesta){
                 if(respuesta.success){
                     orden_nombre.val(respuesta.paciente.nombre);
-                    orden_aseguradora.val(respuesta.paciente.aseguradora);
+                    orden_aseguradora.val(respuesta.paciente.aseguradora_id);
                     orden_contrato.val(respuesta.paciente.contrato);
 
                 }else{

@@ -39,3 +39,8 @@ $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
+    return [
+        'nombre' => $faker->name        
+    ];
+});

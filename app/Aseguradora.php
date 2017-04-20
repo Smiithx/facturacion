@@ -23,4 +23,8 @@ class Aseguradora extends Model
     public function pacientes(){
         return $this->hasMany(Paciente::class);
     }
+    
+    public function ordeservicios(){
+        return $this->hasMany(ordeservicios::class);
+    }
 }

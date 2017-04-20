@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/jquery-ui.css')}}">
         <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}">
-        <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">       
+        <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('assets/css/index.css')}}">
         <script src="{{asset('assets/js/jquery.js')}}"></script>
         <script src="{{asset('assets/js/jquery-ui.js')}}"></script>

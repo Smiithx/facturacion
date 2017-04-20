@@ -60,9 +60,9 @@
         <label for="label">Aseguradora:</label>
         <select name="aseguradora_id" id="aseguradora_id" required class="form-control">
             <option value="">Seleccione una aseguradora</option>
-            @foreach ($aseguradoras as $aseguradora)
-                <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
-            @endforeach
+     
+          <option value="1">hola</option>
+
         </select>
     </div>
     <div class="form-group col-xs-12 col-md-2 col-lg-3">
