@@ -41,6 +41,9 @@ $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
     return [
-        'nombre' => $faker->name        
+        'nombre' => $faker->name,
+         'nit' => $faker->regexify('[a-z0-9A-Z]{8}'), 
+         'estado' => $faker->randomElement(array('Activo','Inactivo'))
+      
     ];
 });

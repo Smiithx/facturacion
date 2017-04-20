@@ -97,7 +97,7 @@
 		                	</table>
 		                </div>
 		                <div class="tab-pane" id="aseguradoras">
-		                	
+		            	
 		                	<h3 class="text-center">Aseguradoras</h3>
 		                	<a title="Agregar" data-toggle="modal" data-target="#modalaseguradora"  data-placement="top" class="btn btn-primary pull-right aseguradoras">Nuevo</a>
 		                	<br>

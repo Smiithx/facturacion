@@ -15,7 +15,9 @@ class AseguradoraSeeder extends Seeder
     {
         $faker = Faker::create();
         for($i = 1; $i <= 20; $i++){
-            Aseguradora::create(['nombre' => $faker->company]);
+
+        $aseguradora = factory(Aseguradora::class)->times(20)->create();
+           /* Aseguradora::create(['nombre' => $faker->company]);
 
            /* factory(Aseguradora::class)->time(20)->create();*/
         }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Aseguradora;
 
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class AdministracionController extends Controller
      */
     public function index()
     {
-        return view("administracion.index");
+        $aseguradoras = Aseguradora::all();
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.index",$datos);
     }
 
     /**
