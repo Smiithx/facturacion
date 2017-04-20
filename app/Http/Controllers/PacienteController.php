@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Aseguradora;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Paciente;
+use Illuminate\Support\Facades\Redirect;
+
 //use Illuminate\Support\Facades\DB;
 
 
@@ -19,7 +22,7 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        $pacientes = Paciente::all();
+        $pacientes = Paciente::paginate();
         return View('pacientes.index',['pacientes'=>$pacientes]);
     }
 
@@ -30,8 +33,9 @@ class PacienteController extends Controller
      */
     public function create()
     {
-
-        return View('pacientes.create');
+        $aseguradoras = Aseguradora::all();
+        $datos = ['aseguradoras' => $aseguradoras];
+        return View('pacientes.create',$datos);
     }
 
     /**
@@ -49,12 +53,14 @@ class PacienteController extends Controller
             'fecha_nacimiento' => 'required|date',
             'telefono' => 'required',
             'direccion' => 'required|max:255',
-            'aseguradora' => 'required|max:255',
+            'aseguradora_id' => 'required|integer',
             'contrato' => 'required|max:255'
         ]);
-        Paciente::create($request->all());
-        $pacientes = Paciente::all();
-        return View('pacientes.index',['pacientes'=>$pacientes]);
+        $paciente = Paciente::create($request->all());
+        $aseguradora = Aseguradora::find($request->get('aseguradora_id'));
+        $aseguradora->pacientes()->save($paciente);
+
+        return Redirect::to('pacientes');
     }
 
     /**
@@ -84,7 +90,7 @@ class PacienteController extends Controller
             ]);
         }else{
             return response()->json([
-                'error' => 'No existen pasientes con ese numero de documento'
+                'error' => 'No existen pacientes con ese numero de documento'
             ]);
         } 
     }
@@ -97,8 +103,10 @@ class PacienteController extends Controller
      */
     public function edit($id)
     {
-        $paciente = Paciente::find($id); 
-        return view("pacientes.edit",['paciente'=>$paciente]);
+        $paciente = Paciente::findOrFail($id);
+        $aseguradoras = Aseguradora::all();
+        $datos = ['paciente'=>$paciente, 'aseguradoras' => $aseguradoras];
+        return view("pacientes.edit",$datos);
     }
 
     /**
@@ -110,7 +118,10 @@ class PacienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $paciente = Paciente::findOrFail($id);
+        $paciente->fill($request->all());
+        $paciente->save();
+        return Redirect::to("pacientes/$id/edit");
     }
 
     /**

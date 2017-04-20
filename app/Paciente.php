@@ -19,5 +19,9 @@ class Paciente extends Model
      * @var array
      */
     protected $fillable = ['documento', 'tipo_documento', 'nombre','edad','tipo_edad','fecha_nacimiento','sexo','telefono','direccion','aseguradora','contrato','regimen'];
-    
+
+    public function aseguradora(){
+        return $this->belongsTo(Aseguradora::class);
+    }
+
 }

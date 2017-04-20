@@ -6,6 +6,7 @@ use App\Cie10;
 use App\Medicamentos;
 use App\Procedimientos;
 use App\Paciente;
+use App\Aseguradora;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,12 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Cie10::truncate();
+        //Model::unreguard();
+        /*Cie10::truncate();
         $this->call('Cie10Seeder');
         Medicamentos::truncate();
         $this->call('MedicamentosSeeder');
         Procedimientos::truncate();
-        $this->call('ProcedimientosSeeder');
+        $this->call('ProcedimientosSeeder');*/
+        Aseguradora::truncate();
+        $this->call('AseguradoraSeeder');
         Paciente::truncate();
         $this->call('PacientesSeeder');
         //Model::reguard();

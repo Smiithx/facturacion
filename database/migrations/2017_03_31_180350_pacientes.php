@@ -23,7 +23,7 @@ class Pacientes extends Migration
             $table->enum('sexo', array('Masculino','Femenino'));
             $table->string('telefono');
             $table->string('direccion');
-            $table->string('aseguradora');
+            $table->integer('aseguradora_id')->index();
             $table->string('contrato');
             $table->enum('regimen', array('Contributivo', 'Subsidiado','Vinculado','Particular','Otro','Desplazado Contributivo','Desplazado Subsidiado','Desplazado Vinculado'));
             $table->timestamps();
