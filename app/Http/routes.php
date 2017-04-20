@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/','PacienteController@create');
-Route::resource('pacientes', 'PacienteController', ['only' => ['create','store','index','edit','update']]);
+Route::get('/','PacienteController@index');
+Route::resource('pacientes', 'PacienteController');
 Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 Route::resource('facturas', 'FacturaController', ['only' => ['create','store']]);
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store']]);

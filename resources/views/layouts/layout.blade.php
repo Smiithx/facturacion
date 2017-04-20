@@ -9,12 +9,14 @@
         <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}">
         <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
         <link rel="stylesheet" href="{{asset('assets/css/index.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/datepicker/bootstrap-datepicker3.css')}}">
         <script src="{{asset('assets/js/jquery.js')}}"></script>
         <script src="{{asset('assets/js/jquery-ui.js')}}"></script>
         <script src="{{asset('assets/js/bootstrap.js')}}"></script>
         <script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
         <script src="{{asset('assets/js/index.js')}}"></script>
-        <script src="{{asset('assets/js/datepicker-es.js')}}"></script>
+        <script src="{{asset('assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
+        <script src="{{asset('assets/js/datepicker/bootstrap-datepicker.es.min.js')}}"></script>
     </head>
     <body>
         <header class="modal-header text-success text-center bg-success">   

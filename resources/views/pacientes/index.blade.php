@@ -5,6 +5,16 @@
         <table class="table table-striped table-hover table-bordered">
             <caption class="text-center">
                 <h2>Pacientes</h2>
+                <div class="row">
+                    {!! Form::open(['route' => 'pacientes.index', 'method' => 'GET', 'class' => 'container-fluid text-left', 'role' => 'search']) !!}
+                    <div class="input-group">
+                        {!! Form::text('name',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">Buscar</button>
+                        </span>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
             </caption>
             <thead>
                 <tr>
@@ -27,9 +37,14 @@
                     <td>{{ $paciente->aseguradora->nombre }}</td>
                     <td>{{ $paciente->contrato }}</td>
                     <td class="acciones">
-                       <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar' target="_blank">
-                           <i class='glyphicon glyphicon-edit'></i>
-                       </a>
+                        <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar' target="_blank">
+                            <i class='glyphicon glyphicon-edit'></i>
+                        </a>
+                        {!! Form::open(['route' => 'pacientes.index', 'method' => 'delete', 'role' => 'search']) !!}
+                        <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar' target="_blank">
+                            <i class='glyphicon glyphicon-remove'></i>
+                        </a>
+                        {!! Form::close() !!}
                     </td>
                 </tr>
                 @endforeach

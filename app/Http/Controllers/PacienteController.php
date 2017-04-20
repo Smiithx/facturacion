@@ -20,9 +20,10 @@ class PacienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pacientes = Paciente::paginate();
+        //dd($request);
+        $pacientes = Paciente::name($request->get('name'))->orderBy('id','DES')->paginate();
         return View('pacientes.index',['pacientes'=>$pacientes]);
     }
 

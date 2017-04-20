@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 use App\Aseguradora;
 
 class AseguradoraSeeder extends Seeder
@@ -13,13 +12,6 @@ class AseguradoraSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
-        for($i = 1; $i <= 20; $i++){
-
-        $aseguradora = factory(Aseguradora::class)->times(20)->create();
-           /* Aseguradora::create(['nombre' => $faker->company]);
-
-           /* factory(Aseguradora::class)->time(20)->create();*/
-        }
+        factory(Aseguradora::class)->times(20)->create();
     }
 }

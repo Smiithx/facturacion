@@ -16,11 +16,11 @@ $(function(){
 
     if(campos_fecha.length > 0){
         campos_fecha.datepicker({
-            changeMonth: true,
-            changeYear: true,
+            format: "yyyy/mm/dd",
+            todayBtn: "linked",
+            language: "es",
+            toggleActive: true
         });
-        campos_fecha.datepicker("option",$.datepicker.regional['es']);    
-        campos_fecha.datepicker("option", "dateFormat", "yy-mm-dd");    
     }
 
     //-- Fin de agregar eventos ========================== //
