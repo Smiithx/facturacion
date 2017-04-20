@@ -17,7 +17,7 @@ class AdministracionController extends Controller
      */
     public function index()
     {
-        $aseguradoras = Aseguradora::all();
+        $aseguradoras = Aseguradora::paginate(5);
         $datos = ['aseguradoras' => $aseguradoras];
         return view("administracion.index",$datos);
     }

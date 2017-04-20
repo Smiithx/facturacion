@@ -16,7 +16,9 @@ class AseguradoraController extends Controller
      */
     public function index()
     {
-       
+       $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.index",$datos);
     }
 
     /**
@@ -43,9 +45,9 @@ class AseguradoraController extends Controller
              'estado' => 'required'            
         ]);
     $aseguradora = Aseguradora::create($request->all());
-    $aseguradoras = Aseguradora::all();
+    $aseguradoras = Aseguradora::paginate(5);
         $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.index",$datos);
+        return view("administracion/index",$datos);
     }
 
     /**
