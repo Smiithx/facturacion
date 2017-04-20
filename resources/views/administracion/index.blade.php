@@ -109,6 +109,13 @@
 		                				<th class="text-center">NIT</th>
 		                				<th class="text-center">Acción</th>
 		                			</tr>
+		                	@foreach($aseguradoras as $aseguradora)
+		                			<tr>
+		             <td>{{ $aseguradora->nombre }}</td>
+                    <td>{{ $aseguradora->nit }}</td>
+                    <td>{{ $aseguradora->estado }}</td>
+		                			</tr>
+		                			@endforeach
 		                		</thead>
 		                		<tbody>
 		                			

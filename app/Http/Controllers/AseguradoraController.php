@@ -16,7 +16,7 @@ class AseguradoraController extends Controller
      */
     public function index()
     {
-        //
+        $aseguradoras = Aseguradora::all();
     }
 
     /**
