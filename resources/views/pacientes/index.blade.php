@@ -51,7 +51,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="7" class="text-right">{!! $pacientes->render() !!}</td>
+                    <td colspan="7" class="text-center">{!! $pacientes->render() !!}</td>
                 </tr>
             </tfoot>
         </table>
