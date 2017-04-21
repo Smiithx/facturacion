@@ -37,8 +37,8 @@
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Fecha de nacimiento:</label>
-        <div class="input-group date">
-            <input class="form-control datepicker" id="fechana" type="text" name="fecha_nacimiento" required value="{{old('fecha_nacimiento')}}"/>
+        <div class="input-group date datepicker">
+            <input class="form-control" id="fechana" type="text" name="fecha_nacimiento" required value="{{old('fecha_nacimiento')}}"/>
             <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
     </div>
