@@ -24,4 +24,10 @@ class Paciente extends Model
         return $this->belongsTo(Aseguradora::class);
     }
 
+    public function scopeName($query,$nombre){
+        if(trim($nombre) != ""){
+            $query->where('nombre',"LIKE","%$nombre%");
+        }
+    }
+
 }

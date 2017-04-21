@@ -11,8 +11,6 @@
 |
 */
 
-use App\Aseguradora;
-
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
@@ -23,7 +21,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
-    $aseguradoras = Aseguradora::all();
     return [
         'documento' => $faker->regexify('[a-z0-9]{8}'),
         'tipo_documento' => $faker->randomElement(array('CC', 'TI','RC','CE','AS','MS','PA')),
