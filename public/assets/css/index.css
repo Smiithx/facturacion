@@ -57,3 +57,6 @@ ul, ol {
 .acciones{
     text-align: center;
 }
+.acciones form{
+    display: inline-block;
+}
