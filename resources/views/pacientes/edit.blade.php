@@ -36,7 +36,7 @@
         </select>
     </div>
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
-        <label for="label">Fecha Nacimiento: {{$paciente->fecha_nacimiento}}</label>
+        <label for="label">Fecha Nacimiento: </label>
         <div class="input-group date">
             <input
                     class="form-control datepicker" id="fechana" type="text" name="fecha_nacimiento" value="{{$paciente->fecha_nacimiento}}"
