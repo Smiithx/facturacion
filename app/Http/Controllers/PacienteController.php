@@ -133,6 +133,8 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $paciente = Paciente::findOrFail($id);
+        $paciente->delete();
+        return Redirect::to('pacientes');;
     }
 }
