@@ -19,9 +19,60 @@ class AdministracionController extends Controller
     {
         $aseguradoras = Aseguradora::paginate(5);
         $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.index",$datos);
+        return view("administracion.empresa.index",$datos);
     }
 
+    public function usuarios(){
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.usuarios.index",$datos);
+    }
+    
+      public function manuales(){
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.manuales.index",$datos);
+    }
+    
+      public function aseguradoras(){
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.aseguradoras.index",$datos);
+    }
+     
+      public function procedimientos(){
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.procedimientos.index",$datos);
+    }
+    
+     
+      public function medicamentos(){
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.medicamentos.index",$datos);
+    }
+    
+      public function diagnosticos(){
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.diagnosticos.index",$datos);
+    }
+     public function servicios(){
+       
+        return view("administracion.servicios.index");
+    }
+      public function plantillas(){
+       
+        return view("administracion.plantillas.index");
+    }
+    
+     public function editaseguradora($id){
+        $aseguradora = Aseguradora::findOrFail($id);
+
+        
+       return view('administracion.aseguradora.edit',compact('aseguradora'));
+    }
     /**
      * Show the form for creating a new resource.
      *

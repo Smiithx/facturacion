@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         Medicamentos::truncate();
         $this->call('MedicamentosSeeder');
         Procedimientos::truncate();
-        $this->call('ProcedimientosSeeder');
-        Aseguradora::truncate();*/
+        $this->call('ProcedimientosSeeder');*/
+        Aseguradora::truncate();
         $this->call('AseguradoraSeeder');
         Paciente::truncate();
         $this->call('PacientesSeeder');

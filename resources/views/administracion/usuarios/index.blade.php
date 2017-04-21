@@ -1,4 +1,6 @@
-    <div class="tab-pane" id="usuarios">
+   @extends('administracion.index')
+@section('administracion')
+                         <div>
 		                	<a title="Agregar" data-toggle="modal" data-target="#modaledit" onclick="add_usuario()" data-placement="top" class="btn btn-primary pull-right aseguradoras">Nuevo</a>
 		                	<br>
 		                	<br>
@@ -16,3 +18,4 @@
 		                		</tbody>
 		                	</table>
 		                 </div>
+		                 @stop
