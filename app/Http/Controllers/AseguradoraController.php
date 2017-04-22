@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Aseguradora;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+
 
 class AseguradoraController extends Controller
 {
@@ -58,7 +61,19 @@ class AseguradoraController extends Controller
      */
     public function show($id)
     {
-        //
+        $aseguradora=Aseguradora::find($id);
+
+        if($aseguradora != null){
+            return response()->json([
+                'success' => 'true',
+                'aseguradora' => $aseguradora
+            ]);
+        }else{
+            return response()->json([
+                'error' => 'No existe una aseguradora asociada al id'
+                
+            ]);
+        } 
     }
 
     /**
@@ -68,8 +83,9 @@ class AseguradoraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+   {
+      
+              
     }
 
     /**
@@ -92,6 +108,13 @@ class AseguradoraController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $aseguradora = Aseguradora::findOrFail($id);
+        $aseguradora->delete();
+        Session::flash('message',$aseguradora->nombre.' fue eliminado con Exito');
+         return Redirect::to('administracion/aseguradoras');
+       
+        
     }
+    
+    
 }

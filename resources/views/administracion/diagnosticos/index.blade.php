@@ -1,4 +1,5 @@
-  <div class="tab-pane" id="diagnosticos">
+@extends('administracion.index')
+@section('administracion')  <div>
 		                	<a title="Agregar" data-toggle="modal" data-target="#modaledit" onclick="add_diagnostico()" data-placement="top" class="btn btn-primary pull-right">Nuevo</a>
 		                	<br>
 		                	<br>
@@ -14,4 +15,4 @@
 		                			
 		                		</tbody>
 		                	</table>
-		                </div>
+		                </div>@stop

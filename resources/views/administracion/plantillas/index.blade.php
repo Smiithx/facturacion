@@ -1,5 +1,6 @@
-
-		                <div class="tab-pane" id="plantillas">
+@extends('administracion.index')
+@section('administracion')
+		                <div>
 		                	<a title="Agregar" data-toggle="modal" data-target="#modaledit" onclick="add_plantilla()" data-placement="top" class="btn btn-primary pull-right">Nuevo</a>
 		                	<br>
 		                	<br>
@@ -16,4 +17,4 @@
 		                			
 		                		</tbody>
 		                	</table>
-		                </div>
+		                </div>@stop

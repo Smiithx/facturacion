@@ -10,11 +10,14 @@
 		            <!-- required for floating -->
 		            <!-- Nav tabs -->
 		            <ul class="nav nav-tabs tabs-left">
-		                <li class="active link"><a href="#datose" data-toggle="tab">Datos de la empresa</a></li>
-		                <li class="link"><a href="#usuarios" data-toggle="tab">Usuarios</a></li>
-		                <li class="link"><a href="#tipocita" data-toggle="tab">Tipos de Servicios</a></li>
-		                <li class="link"><a href="#aseguradoras" data-toggle="tab">Aseguradoras y contratos</a></li>
-		                <li class="link"><a href="#manuales" data-toggle="tab">Manuales</a></li>
+		                <li class="active link"><a href="/administracion">Datos de la empresa</a></li>
+		                <li class="link"><a href="/administracion/usuarios">Usuarios</a></li>
+		                <li class="link"><a href="/administracion/servicios">Tipos de Servicios</a></li>
+		                <li class="link"><a href="/administracion/aseguradoras">Aseguradoras y contratos</a></li>
+		                <li class="link"><a href="/administracion/procedimientos">Procedimientos</a></li>
+		                <li class="link"><a href="/administracion/diagnosticos">Diagnosticos</a></li>
+		                <li class="link"><a href="/administracion/medicamentos">Medicamentos</a></li>
+		                <li class="link"><a href="/administracion/plantillas">Plantillas</a></li>
 		                
 		            </ul>
 		        </div>
