@@ -1,4 +1,4 @@
-//funcioin que se ejecuta al cargar la pagina
+//función que se ejecuta al cargar la pagina
 $(function(){
     //-- Declarar variables =============================== //
     var orden_documento = $("#orden-documento");
