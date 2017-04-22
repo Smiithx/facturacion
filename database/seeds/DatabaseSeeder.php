@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //Model::unreguard();
-        Cie10::truncate();
+        /*Cie10::truncate();
         $this->call('Cie10Seeder');
         Medicamentos::truncate();
         $this->call('MedicamentosSeeder');
         Procedimientos::truncate();
-        $this->call('ProcedimientosSeeder');
+        $this->call('ProcedimientosSeeder');*/
         Aseguradora::truncate();
         $this->call('AseguradoraSeeder');
         Paciente::truncate();

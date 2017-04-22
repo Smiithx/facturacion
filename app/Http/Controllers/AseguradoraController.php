@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Aseguradora;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+
 
 class AseguradoraController extends Controller
 {
@@ -68,8 +71,9 @@ class AseguradoraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+   {
+      
+              
     }
 
     /**
@@ -92,6 +96,13 @@ class AseguradoraController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $aseguradora = Aseguradora::findOrFail($id);
+        $aseguradora->delete();
+        Session::flash('message',$aseguradora->nombre.' fue eliminado con Exito');
+         return Redirect::to('administracion/aseguradoras');
+       
+        
     }
+    
+    
 }

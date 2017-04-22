@@ -1,4 +1,4 @@
-@extends('adminitracion.index')
+@extends('administracion.index')
 @section('administracion')
    <div class="tab-pane active" id="datose">
 		                	<form method="POST" action="">
