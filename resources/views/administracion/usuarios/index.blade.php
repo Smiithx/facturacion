@@ -1,7 +1,7 @@
    @extends('administracion.index')
 @section('administracion')
                          <div>
-		                	<a title="Agregar" data-toggle="modal" data-target="#modaledit" onclick="add_usuario()" data-placement="top" class="btn btn-primary pull-right aseguradoras">Nuevo</a>
+		                	<a title="Agregar" href="/administracion/usuarios/create"  class="btn btn-primary pull-right usuarios">Nuevo</a>
 		                	<br>
 		                	<br>
 		                	<table class="table table-striped table-bordered table-hover table-responsive" id="tabla_usuarios">
@@ -18,4 +18,6 @@
 		                		</tbody>
 		                	</table>
 		                 </div>
+		                 
+		                
 		                 @stop

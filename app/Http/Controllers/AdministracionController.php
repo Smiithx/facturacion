@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Aseguradora;
+use App\Empresa;
 
 use Illuminate\Http\Request;
 
@@ -17,15 +18,16 @@ class AdministracionController extends Controller
      */
     public function index()
     {
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.empresa.index",$datos);
+        $empresa = Empresa::find(1);
+
+ return view('administracion.empresa.index',compact('empresa'));
+    
     }
 
     public function usuarios(){
         $aseguradoras = Aseguradora::paginate(5);
         $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.usuarios.index",$datos);
+         return view("administracion.usuarios.index",$datos);
     }
     
       public function manuales(){
@@ -68,10 +70,14 @@ class AdministracionController extends Controller
     }
     
      public function editaseguradora($id){
-        $aseguradora = Aseguradora::findOrFail($id);
-
+       $aseguradora = Aseguradora::findOrFail($id);
         
-       return view('administracion.aseguradora.edit',compact('aseguradora'));
+       return view('administracion.aseguradoras.edit',compact('aseguradora'));
+    }
+    
+     public function createusuario(){
+        
+       return view('administracion.usuarios.create');
     }
     /**
      * Show the form for creating a new resource.

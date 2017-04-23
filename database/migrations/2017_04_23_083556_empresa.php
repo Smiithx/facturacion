@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Aseguradoras extends Migration
+class Empresa extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,14 @@ class Aseguradoras extends Migration
      */
     public function up()
     {
-        Schema::create('aseguradoras', function (Blueprint $table) {
+        Schema::create('empresa', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
+            $table->string('rezon_social');
             $table->string('nit');
-            $table->enum('estado', array('Activo','Inactivo'));
+            $table->string('representante');
+             $table->string('direccion');
+            $table->string('telefono');
+            $table->string('logo');
             $table->timestamps();
         });
     }
@@ -28,7 +31,6 @@ class Aseguradoras extends Migration
      */
     public function down()
     {
-        Schema::drop('aseguradoras');
+        //
     }
 }
-   

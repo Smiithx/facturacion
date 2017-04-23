@@ -1,41 +1,38 @@
 @extends('administracion.index')
 @section('administracion')
-   <div class="tab-pane active" id="datose">
-		                	<form method="POST" action="">
-		                		<div class="form-group">
-		                			<label>Razón social</label>
-		                			<input type="text" name="razon" id="razon" class="form-control">
-		                		</div>
-		                		<div class="form-group">
-		                			<label>NIT</label>
-		                			<input type="text" name="nit" id="nit" class="form-control">
-		                		</div>
-		                		<div class="form-group">
-		                			<label>Representante legal</label>
-		                			<input type="text" name="representante" id="representante" class="form-control">
-		                		</div>
-		                		<div class="form-group">
-		                			<label>Dirección</label>
-		                			<input type="text" name="direccion" id="direccion" class="form-control">
-		                		</div>
-		                		<div class="form-group">
-		                			<label>Teléfono</label>
-		                			<input type="text" name="telefono" id="telefono" class="form-control">
-		                		</div>
-		                		<div class="form-group">
-		                			<label>Logo</label>
-		                			<div class="input-group">
-						                <input type="text" class="form-control" name="image" id="image" value="">
-						                    <span class="input-group-btn">
-						                      <button type="button" class="btn btn-info btn-flat" id="logo" data-toggle="modal" data-target="#modaledit"><i class="fa fa-camera"></i></button>
-						                    </span>
-						                    
-						            </div>
-		                		</div>
-		                		
-		                		<div class="form-group">
-		                			<button type="button" onclick="guarda_dg()" class="btn btn-primary pull-right">Guardar</button>
-		                		</div>
-		                	</form>
+   <div >
+                        @if (Session::has('message'))
+		                	<p class="alert alert-success">{{Session::get('message')}}</p>
+		                	@endif
+                        
+                        <h3 class="text-center">Editar Empresa</h3>
+                 
+{!! Form::model($empresa, ['route' => ['Empresa.update',$empresa->id], 'method' => 'put']) !!}	
+
+                        {!! Form::label('rezon_social','Razón social')   !!}	                          {!! Form::text('rezon_social',null,['class' => 'form-control'])   !!}  
+                            
+                         {!! Form::label('nit','NIT')   !!}	                                
+                         {!! Form::text('nit',null,['class' => 'form-control'])   !!}
+                         
+                          {!! Form::label('representante','Representante legal')   !!}	                 {!! Form::text('representante',null,['class' => 'form-control'])   !!}
+                          
+                          {!! Form::label('direccion','Dirección')   !!}	                             
+                         {!! Form::text('direccion',null,['class' => 'form-control'])   !!}
+                         
+                         
+                          {!! Form::label('telefono','Teléfono')   !!}	                                
+                         {!! Form::text('telefono',null,['class' => 'form-control'])   !!}
+                          
+                           {!! Form::label('logo','Logo')   !!}	                                
+                         {!! Form::file('logo',null,['class' => 'form-control'])   !!}
+                         
+                 
+                         <br>          				
+		                	<button type="submit" class="btn btn-primary pull-right col-xs-3">Actualizar</button>	
+                     
+                        {!! Form::close() !!}
+		                	
+		                	
+						          
 		                </div>
 		                @stop
