@@ -64,7 +64,19 @@ class AseguradoraController extends Controller
      */
     public function show($id)
     {
-        //
+        $aseguradora=Aseguradora::find($id);
+
+        if($aseguradora != null){
+            return response()->json([
+                'success' => 'true',
+                'aseguradora' => $aseguradora
+            ]);
+        }else{
+            return response()->json([
+                'error' => 'No existe una aseguradora asociada al id'
+                
+            ]);
+        } 
     }
 
     /**

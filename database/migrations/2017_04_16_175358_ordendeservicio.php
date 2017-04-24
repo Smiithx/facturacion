@@ -22,8 +22,8 @@ class Ordendeservicio extends Migration
             $table->string('descripcion',100);
             $table->decimal('cantidad', 42, 2);	
             $table->decimal('copago', 42, 2);	
-            $table->decimal('valorunitario', 42, 2);	
-            $table->decimal('valortotal', 42, 2);	
+            $table->decimal('valor_unitario', 42, 2);	
+            $table->decimal('valor_total', 42, 2);	
 
             $table->timestamps();
         });

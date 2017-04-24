@@ -42,12 +42,19 @@ Route::get('administracion/plantillas', 'AdministracionController@plantillas');
 Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
 Route::get('administracion/aseguradoras/{id}/edit', 'AdministracionController@editaseguradora');
 
-Route::resource('Aseguradora', 'AseguradoraController', ['only' => ['create','store','destroy','update']]);
-
 
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
 
+
+Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
+Route::resource('Aseguradora', 'AseguradoraController');
+Route::get('administracion/aseguradoras/edit/{id}', 'AdministracionController@editaseguradora');
+
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
+Route::resource("procedimientos","ProcedimientosController");
+
+Route::get('procedimientos/cups/{cups}', 'ProcedimientosController@cups');
+
 
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
 

@@ -20,11 +20,11 @@ class ordenserviciocontroller extends Controller
         'documento' => 'required|max:255',
         'aseguradora' => 'required|max:255',
         'contrato' => 'required|max:255',
-        'Cups' => 'required|max:255',
-        'Copago' => 'required|integer|min:1',
-        'Cantidad' => 'required|integer|min:1',
-        'Valorunitario' => 'required|integer|min:1',
-        'Valortotal' => 'required|integer|min:1'
+        'cups' => 'required|max:255',
+        'copago' => 'required|numeric|min:0.01',
+        'cantidad' => 'required|integer|min:1',
+        'valor_unitario' => 'required|numeric|min:0.01',
+        'valor_total' => 'required|numeric|min:0.01'
 
         ]);
         ordenservicios::create($request->all());
