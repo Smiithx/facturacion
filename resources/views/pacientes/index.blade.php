@@ -40,7 +40,7 @@
                         <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar' target="_blank">
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
-                        {!! Form::open(['route' => ['pacientes.destroy', $paciente->id], 'method' => 'delete',]) !!}
+                        {!! Form::open(['route' => ['pacientes.destroy', $paciente->id], 'method' => 'delete','id' => 'form-eliminar-paciente']) !!}
                         {{ csrf_field() }}
                         <button type="submit" id="btn-eliminar-paciente" data-id="{{$paciente->id}}" class="btn btn-danger" data-toggle='tooltip' title='Eliminar' target="_blank">
                             <i class='glyphicon glyphicon-remove'></i>
