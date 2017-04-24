@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
        Paciente::truncate();
        $this->call('PacientesSeeder');
          $this->call('EmpresaSeeder');
-
         //Model::reguard();
     }
 }
