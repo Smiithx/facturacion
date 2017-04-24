@@ -19,12 +19,12 @@
 
 <div class="form-group">
   <label for="contraseña">Contraseña:</label>
-  <input type="password" class="form-control" id="contraseña" name="contraseña"  value="{{old('password')}}">
+  <input type="password" class="form-control" id="contraseña" name="contraseña"  value="{{old('contraseña')}}">
 </div>
 
 <div class="form-group">
   <label for="confirm_contraseña">Confirmar Contraseña:</label>
-  <input type="password" class="form-control" id="confirm_contraseña" name="confirm_contraseña"  value="{{old('confirm_password')}}">
+  <input type="password" class="form-control" id="confirm_contraseña" name="confirm_contraseña"  value="{{old('confirm_contraseña')}}">
 </div>
 
 <div class="form-group">

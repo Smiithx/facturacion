@@ -14,8 +14,7 @@ class EmpresaSeeder extends Seeder
     {
        Empresa::create([
            'rezon_social' => 'Casolucion',
-            'nit' => 'NIT-!294324932894',
-
+           'nit' => 'NIT-!294324932894',
            'representante' => 'Carlos Alberto Leon',
            'direccion' => 'Colombia, santander',
            'telefono' => '0500 000 12345',

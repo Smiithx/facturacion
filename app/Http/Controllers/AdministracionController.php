@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Aseguradora;
 use App\Empresa;
-
+use App\Usuarios;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -25,9 +25,9 @@ class AdministracionController extends Controller
     }
 
     public function usuarios(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-         return view("administracion.usuarios.index",$datos);
+        $usuarios = Usuarios::all();
+        $datosusuarios = ['usuarios' => $usuarios];
+         return view("administracion.usuarios.index",$datosusuarios);
     }
     
       public function manuales(){
@@ -78,6 +78,11 @@ class AdministracionController extends Controller
      public function createusuario(){
         
        return view('administracion.usuarios.create');
+    }
+    public function editusuarios($id){
+       $usuarios = Usuarios::findOrFail($id);
+        
+       return view('administracion.usuarios.edit',compact('usuarios'));
     }
     /**
      * Show the form for creating a new resource.

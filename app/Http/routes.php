@@ -29,25 +29,22 @@ Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
 Route::get('administracion/usuarios', 'AdministracionController@usuarios');
+Route::get('administracion/usuarios/create', 'AdministracionController@createusuario');
+Route::get('administracion/usuarios/{id}/edit', 'AdministracionController@editusuarios');
 Route::get('administracion/manuales', 'AdministracionController@manuales');
 Route::get('administracion/procedimientos', 'AdministracionController@procedimientos');
 Route::get('administracion/servicios', 'AdministracionController@servicios');
 Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
 Route::get('administracion/medicamentos', 'AdministracionController@medicamentos');
 Route::get('administracion/plantillas', 'AdministracionController@plantillas');
-
-
-
-
-
-
 Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
-Route::resource('Aseguradora', 'AseguradoraController', ['only' => ['create','store','destroy','update']]);
 Route::get('administracion/aseguradoras/{id}/edit', 'AdministracionController@editaseguradora');
+
+Route::resource('Aseguradora', 'AseguradoraController', ['only' => ['create','store','destroy','update']]);
+
 
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
 
-Route::get('administracion/usuarios/create', 'AdministracionController@createusuario');
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
 
 Route::resource("test","TestController");
