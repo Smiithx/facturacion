@@ -46,18 +46,18 @@
                                     <tr>
 
                                         <td>
-                                            <input type="text" name="cups"></td> 
-                                        <td>
-                                            <input type="text" name="descripcion" readonly>
+                                            <input type="text" name="cups" id="orden_servicios_cups"></td> 
+                                        <td> 
+                                            <input type="text" name="descripcion" readonly id="orden_servicios_descripcion">
                                         </td>
                                         <td>
-                                            <input type="number" name="cantidad"></td> 
+                                            <input type="number" name="cantidad" id=orden_servicios_cantidad></td> 
                                         <td>
-                                            <input type="number" name="copago"></td>
+                                            <input type="number" step="0.01" name="copago" id=orden_servicios_copago></td>
                                         <td>
-                                            <input type="number" name="valorunitario"></td>
+                                            <input type="number" step="0.01" name="valor_unitario" id="orden_servicios_valor_unitario"></td>
                                         <td>
-                                            <input type="number" name="valortotal"></td>
+                                            <input type="number" step="0.01" name="valor_total" readonly id="orden_servicios_valor_total"></td>
 
                                     </tr>
                                 </tbody>
@@ -70,7 +70,7 @@
 
                 <br>
                 <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                    <input class="btn btn-primary pull-right" type="submit" id="facturar" onclick="agregafactura()" name="facturar" value="Facturar">
+                    <input class="btn btn-primary pull-right" type="submit" id="orden_servicios_crear" name="crear" value="Crear">
                 </div>
             </form>
         </div>
