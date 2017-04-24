@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Aseguradora;
 use App\Empresa;
 use App\Usuarios;
+use App\servicios;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -61,8 +62,9 @@ class AdministracionController extends Controller
         return view("administracion.diagnosticos.index",$datos);
     }
      public function servicios(){
-       
-        return view("administracion.servicios.index");
+         $servicios = Servicios::all();
+        $datos = ['servicios' => $servicios];       
+        return view("administracion.servicios.index",$datos);
     }
       public function plantillas(){
        
@@ -75,6 +77,19 @@ class AdministracionController extends Controller
        return view('administracion.aseguradoras.edit',compact('aseguradora'));
     }
     
+     public function editservicio($id){
+
+
+       $servicios = Servicios::findOrFail($id);
+        
+       return view('administracion.servicios.edit',compact('servicios'));
+    }
+
+     public function createservicio(){
+        
+       return view('administracion.servicios.create');
+    }
+
      public function createusuario(){
         
        return view('administracion.usuarios.create');

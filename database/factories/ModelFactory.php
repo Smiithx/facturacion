@@ -45,3 +45,11 @@ $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Servicios::class, function (Faker\Generator $faker) {
+    return [
+        'cups' => $faker->regexify('[a-z0-9A-Z]{8}'), 
+         'descripcion' => $faker->name,
+         'estado' => $faker->randomElement(array('Activo','Inactivo'))
+      
+    ];
+});

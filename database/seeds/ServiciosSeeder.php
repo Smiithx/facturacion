@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Servicios;
 class ServiciosSeeder extends Seeder
 {
     /**
@@ -11,6 +11,7 @@ class ServiciosSeeder extends Seeder
      */
     public function run()
     {
-        //
+              factory(Servicios::class)->times(5)->create();
+
     }
 }

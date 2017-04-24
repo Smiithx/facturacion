@@ -18,7 +18,7 @@ class EmpresaSeeder extends Seeder
            'representante' => 'Carlos Alberto Leon',
            'direccion' => 'Colombia, santander',
            'telefono' => '0500 000 12345',
-           'logo' => 'casolucion.png'
+           'file' => 'casolucion.png'
        ]);
         
         

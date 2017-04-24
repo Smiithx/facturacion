@@ -82,6 +82,17 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
+        //obtenemos el campo file definido en el formulario
+       $file = $request->file('file');
+ 
+       //obtenemos el nombre del archivo
+       $nombre = $file->getClientOriginalName();
+ 
+       //indicamos que queremos guardar un nuevo archivo en el disco local
+       \Storage::disk('local')->put($nombre,  \File::get($file));
+       
      $empresa = Empresa::findOrFail($id);
         
         $empresa->fill($request->all());

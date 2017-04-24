@@ -20,7 +20,7 @@ class Empresa extends Model
 
         'direccion', 
         'telefono',
-        'logo'
+        'file'
     
     
     ];
