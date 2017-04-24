@@ -7,6 +7,7 @@ use App\Medicamentos;
 use App\Procedimientos;
 use App\Paciente;
 use App\Aseguradora;
+use App\Empresa;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,10 +25,12 @@ class DatabaseSeeder extends Seeder
         $this->call('MedicamentosSeeder');
         Procedimientos::truncate();
         $this->call('ProcedimientosSeeder');*/
-        Aseguradora::truncate();
-        $this->call('AseguradoraSeeder');
-        Paciente::truncate();
-        $this->call('PacientesSeeder');
+       Aseguradora::truncate();
+       $this->call('AseguradoraSeeder');
+       Paciente::truncate();
+       $this->call('PacientesSeeder');
+         $this->call('EmpresaSeeder');
+
         //Model::reguard();
     }
 }

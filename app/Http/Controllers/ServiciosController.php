@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Aseguradora;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
-
-class AseguradoraController extends Controller
+class ServiciosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +16,7 @@ class AseguradoraController extends Controller
      */
     public function index()
     {
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.aseguradoras",$datos);
+        //
     }
 
     /**
@@ -42,18 +37,7 @@ class AseguradoraController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nombre' => 'required|max:255',
-            'nit' => 'required|max:255',
-            'estado' => 'required'            
-        ]);
-        $aseguradora = Aseguradora::create($request->all());
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-
-
-        Session::flash('message',$aseguradora->nombre.' Fue Creada con exito');
-        return Redirect::to('administracion/aseguradoras');
+        //
     }
 
     /**
@@ -75,8 +59,7 @@ class AseguradoraController extends Controller
      */
     public function edit($id)
     {
-
-        dd("probando ruta");
+        //
     }
 
     /**
@@ -87,21 +70,9 @@ class AseguradoraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  
-
-        $aseguradora = Aseguradora::findOrFail($id);
-
-        $aseguradora->fill($request->all());
-        $aseguradora->save();
-        Session::flash('message',$aseguradora->nombre.' Fue actualizado con exito');
-        return Redirect::to('administracion/aseguradoras');
-
+    {
+        //
     }
-
-
-
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -111,13 +82,6 @@ class AseguradoraController extends Controller
      */
     public function destroy($id)
     {
-        $aseguradora = Aseguradora::findOrFail($id);
-        $aseguradora->delete();
-        Session::flash('message',$aseguradora->nombre.' fue eliminado con Exito');
-        return Redirect::to('administracion/aseguradoras');
-
-
+        //
     }
-
-
 }

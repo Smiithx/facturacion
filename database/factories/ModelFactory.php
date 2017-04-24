@@ -44,3 +44,4 @@ $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
       
     ];
 });
+

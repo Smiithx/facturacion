@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Aseguradoras extends Migration
+class Usuarios extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,13 @@ class Aseguradoras extends Migration
      */
     public function up()
     {
-        Schema::create('aseguradoras', function (Blueprint $table) {
+        Schema::create('usuarios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
-            $table->string('nit');
-            $table->enum('estado', array('Activo','Inactivo'));
+            $table->string('nombre',50);
+            $table->string('documento',50);
+            $table->string('contraseña',100);
+            $table->string('firma',100);
+            $table->enum('cargo', array('Medicos', 'Enfermeras','Otros'));
             $table->timestamps();
         });
     }
@@ -28,7 +30,6 @@ class Aseguradoras extends Migration
      */
     public function down()
     {
-        Schema::drop('aseguradoras');
+        Schema::drop('usuarios');
     }
 }
-   
