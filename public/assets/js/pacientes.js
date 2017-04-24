@@ -23,41 +23,44 @@ $(function(){
             cancelButtonColor: '#3085d6',
             buttonsStyling: true
         }).then(function () {
-            var url = "";
+            var id = btn_eliminar_paciente.attr("data-id");
+            var url = "pacientes/"+ id;
             var datos = form_eliminar_paciente.serialize();
             $.ajax({
                 url: url,
-                type: "GET",
+                type: "delete",
                 dataType: "json",
+                data: datos,
                 success: function(respuesta){
                     if(respuesta.success){
-                        orden_nombre.val(respuesta.paciente.nombre);
-                        orden_aseguradora.val(respuesta.paciente.aseguradora_id);
-                        orden_contrato.val(respuesta.paciente.contrato);
-
+                        swal({
+                            title: 'Deleted!',
+                            text: respuesta.mensaje,
+                            type: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then(function () {
+                            location.reload();
+                        });
                     }else{
-                        orden_nombre.val("");
-                        orden_aseguradora.val("");
-                        orden_contrato.val("");
+                        swal(
+                            'Cancelled',
+                            respuesta.error,
+                            'error'
+                        );
                     }
                 },error: function(e){
                     console.log(e);
                 }
             });
-            swal(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            )
         }, function (dismiss) {
             // dismiss can be 'cancel', 'overlay',
             // 'close', and 'timer'
             if (dismiss === 'cancel') {
                 swal(
                     'Cancelled',
-                    'Your imaginary file is safe :)',
+                    '',
                     'error'
-                )
+                );
             }
         })
     });

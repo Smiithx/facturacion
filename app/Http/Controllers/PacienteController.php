@@ -134,7 +134,17 @@ class PacienteController extends Controller
     public function destroy($id)
     {
         $paciente = Paciente::findOrFail($id);
-        $paciente->delete();
-        return Redirect::to('pacientes');;
+
+        if($paciente->delete()){
+            return response()->json([
+                'success' => 'true',
+                'mensaje' => "El paciente #$id ha sido eliminado."
+            ]);
+        }else{
+            return response()->json([
+                'error' => "Error al eliminar el paciente #$id."
+            ]);
+        }
+
     }
 }
