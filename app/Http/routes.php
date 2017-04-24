@@ -34,6 +34,8 @@ Route::get('administracion/usuarios/{id}/edit', 'AdministracionController@editus
 Route::get('administracion/manuales', 'AdministracionController@manuales');
 Route::get('administracion/procedimientos', 'AdministracionController@procedimientos');
 Route::get('administracion/servicios', 'AdministracionController@servicios');
+Route::get('administracion/servicios/create', 'AdministracionController@createservicio');
+Route::get('administracion/servicios/{id}/edit', 'AdministracionController@editservicio');
 Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
 Route::get('administracion/medicamentos', 'AdministracionController@medicamentos');
 Route::get('administracion/plantillas', 'AdministracionController@plantillas');
@@ -46,6 +48,9 @@ Route::resource('Aseguradora', 'AseguradoraController', ['only' => ['create','st
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
 
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
+
+Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
+
 
 Route::resource("test","TestController");
 

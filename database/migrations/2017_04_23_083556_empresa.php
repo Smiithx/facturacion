@@ -19,7 +19,7 @@ class Empresa extends Migration
             $table->string('representante');
              $table->string('direccion');
             $table->string('telefono');
-            $table->string('logo');
+            $table->string('file');
             $table->timestamps();
         });
     }

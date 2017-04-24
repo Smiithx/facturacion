@@ -7,7 +7,7 @@
                         
                         <h3 class="text-center">Editar Empresa</h3>
                  
-{!! Form::model($empresa, ['route' => ['Empresa.update',$empresa->id], 'method' => 'put']) !!}	
+{!! Form::model($empresa, ['route' => ['Empresa.update',$empresa->id], 'method' => 'put','enctype' => 'multipart/form-data']) !!}	
 
                         {!! Form::label('rezon_social','Razón social')   !!}	                          {!! Form::text('rezon_social',null,['class' => 'form-control'])   !!}  
                             
@@ -22,11 +22,14 @@
                          
                           {!! Form::label('telefono','Teléfono')   !!}	                                
                          {!! Form::text('telefono',null,['class' => 'form-control'])   !!}
-                          
-                           {!! Form::label('logo','Logo')   !!}	                                
-                         {!! Form::file('logo',null,['class' => 'form-control'])   !!}
-                         
-                 
+                           
+                         {!! Form::label('file','Logo')   !!} 
+                         {!! Form::file('file',null,['class' => 'form-control'])   !!}
+                                                
+<br>
+                   <img width="200px" height="200px" src="imagenes/{{$empresa->file}}" alt="{{$empresa->file}}"">
+       
+                 <br>
                          <br>          				
 		                	<button type="submit" class="btn btn-primary pull-right col-xs-3">Actualizar</button>	
                      

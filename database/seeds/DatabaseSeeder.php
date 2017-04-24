@@ -28,8 +28,9 @@ class DatabaseSeeder extends Seeder
        Aseguradora::truncate();
        $this->call('AseguradoraSeeder');
        Paciente::truncate();
-       $this->call('PacientesSeeder');
-         $this->call('EmpresaSeeder');
+        $this->call('PacientesSeeder');
+        $this->call('EmpresaSeeder');
+        $this->call('ServiciosSeeder');
         //Model::reguard();
     }
 }

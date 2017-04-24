@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Servicios;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
-
-
-class ServiciosController extends Controller
+class StorageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +16,7 @@ class ServiciosController extends Controller
      */
     public function index()
     {
-           $servicios = Aseguradora::paginate(5);
-        $servicios = ['servicios' => $servicios];
-        return view("administracion.servicios",$servicios);
+        //
     }
 
     /**
@@ -43,18 +37,7 @@ class ServiciosController extends Controller
      */
     public function store(Request $request)
     {
-         $this->validate($request, [
-            'cups' => 'required|max:255',
-            'descripcion' => 'required|max:255',
-            'estado' => 'required'            
-        ]);
-        $servicio = Servicios::create($request->all());
-        $servicios = Servicios::all();
-        $datos = ['servicios' => $servicios];
-
-   
-        Session::flash('message',$servicio->descripcion.' Fue creada con exito');
-        return Redirect::to('administracion/servicios');
+        //
     }
 
     /**
@@ -88,13 +71,7 @@ class ServiciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $servicios = Servicios::findOrFail($id);
-
-        $servicios->fill($request->all());
-        $servicios->save();
-        Session::flash('message',$servicios->descripcion.' Fue actualizado con exito');
-        return Redirect::to('administracion/servicios');
-
+        //
     }
 
     /**
@@ -105,10 +82,6 @@ class ServiciosController extends Controller
      */
     public function destroy($id)
     {
-         $servicios = Servicios::findOrFail($id);
-        $servicios->delete();
-        Session::flash('message',$servicios->descripcion.' fue eliminado con Exito');
-        return Redirect::to('administracion/servicios');
-
+        //
     }
 }

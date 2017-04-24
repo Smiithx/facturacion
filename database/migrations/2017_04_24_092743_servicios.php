@@ -12,7 +12,13 @@ class Servicios extends Migration
      */
     public function up()
     {
-        //
+       Schema::create('servicios', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('cups',50);
+            $table->string('descripcion',50);
+            $table->enum('estado', array('Activo','Inactivo'));   
+            $table->timestamps();
+        });
     }
 
     /**
@@ -22,6 +28,7 @@ class Servicios extends Migration
      */
     public function down()
     {
-        //
+                Schema::drop('usuarios');
+//
     }
 }
