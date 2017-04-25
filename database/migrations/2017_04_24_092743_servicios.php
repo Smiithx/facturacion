@@ -28,7 +28,7 @@ class Servicios extends Migration
      */
     public function down()
     {
-                Schema::drop('usuarios');
+                Schema::drop('servicios');
 //
     }
 }

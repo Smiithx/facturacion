@@ -18,7 +18,7 @@ class ordenserviciocontroller extends Controller
  $this->validate($request, [
         'nombre' => 'required|max:255',
         'documento' => 'required|max:255',
-        'aseguradora' => 'required|max:255',
+        'aseguradora_id' => 'required',
         'contrato' => 'required|max:255',
         'cups' => 'required|max:255',
         'copago' => 'required|numeric|min:0.01',

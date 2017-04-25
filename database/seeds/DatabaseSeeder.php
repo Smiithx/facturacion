@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //Model::unreguard();
-        Cie10::truncate();
+        /*Cie10::truncate();
         $this->call('Cie10Seeder');
         Medicamentos::truncate();
         $this->call('MedicamentosSeeder');
@@ -32,5 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call('EmpresaSeeder');
         $this->call('ServiciosSeeder');
         //Model::reguard();
+       
+        
     }
 }

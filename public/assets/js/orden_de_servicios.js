@@ -27,6 +27,7 @@ $(function(){
                     orden_nombre.val(respuesta.paciente.nombre);
 
                     orden_contrato.val(respuesta.paciente.contrato);
+                    var aseguradora_id = respuesta.paciente.aseguradora_id;
                     var url= "/Aseguradora/"+respuesta.paciente.aseguradora_id;
                     $.ajax({
                         url: url,
@@ -34,10 +35,11 @@ $(function(){
                         dataType: "json",
                         success: function(respuesta){
                             if(respuesta.success){
-                                orden_aseguradora.val(respuesta.aseguradora.nombre); 
+                              orden_aseguradora.html("<option value='"+aseguradora_id+"'>"+respuesta.aseguradora.nombre+"</option>");
+                               // orden_aseguradora.html(respuesta.aseguradora.nombre); 
 
                             }else{
-                                orden_aseguradora.val("No se encantro la aseguradora");
+                                orden_aseguradora.html("<option value=''></option>");
                             }
                         },error: function(e){
                             console.log(e);
@@ -47,11 +49,13 @@ $(function(){
 
                 }else{
                     orden_nombre.val("");
-                    orden_aseguradora.val("");
+                    orden_aseguradora.html("<option value=''></option>");
                     orden_contrato.val("");
                 }
             },error: function(e){
-                console.log(e);
+                orden_nombre.val("");
+                orden_aseguradora.html("<option value=''></option>");
+                orden_contrato.val("");
             }
         });
     }); 
@@ -70,7 +74,7 @@ $(function(){
                     orden_servicios_descripcion.val("");
                 }
             },error: function(e){
-                console.log(e);
+                  orden_servicios_descripcion.val("");
             }
         });
     }); 
