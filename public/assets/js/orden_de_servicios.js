@@ -25,7 +25,6 @@ $(function(){
             success: function(respuesta){
                 if(respuesta.success){
                     orden_nombre.val(respuesta.paciente.nombre);
-
                     orden_contrato.val(respuesta.paciente.contrato);
                     var aseguradora_id = respuesta.paciente.aseguradora_id;
                     var url= "/Aseguradora/"+respuesta.paciente.aseguradora_id;

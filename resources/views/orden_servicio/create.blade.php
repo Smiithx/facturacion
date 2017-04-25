@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Aseguradora:</label> 
-                    <select  readonly class="form-control" name="aseguradora_id" id="orden-aseguradora"></select>
+                    <select readonly class="form-control" name="aseguradora_id" id="orden-aseguradora"></select>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Contrato:</label>
@@ -46,18 +46,18 @@
                                     <tr>
 
                                         <td>
-                                            <input type="text" name="cups" id="orden_servicios_cups"></td> 
+                                            <input type="text" name="cups" id="orden_servicios_cups" class="form-control"></td>
                                         <td> 
-                                            <input type="text" name="descripcion" readonly id="orden_servicios_descripcion">
+                                            <input type="text" name="descripcion" readonly id="orden_servicios_descripcion" class="form-control">
                                         </td>
                                         <td>
-                                            <input type="number" name="cantidad" id=orden_servicios_cantidad></td> 
+                                            <input type="number" name="cantidad" id="orden_servicios_cantidad" class="form-control" ></td>
                                         <td>
-                                            <input type="number" step="0.01" name="copago" id=orden_servicios_copago></td>
+                                            <input type="number" step="0.01" name="copago" id="orden_servicios_copago" class="form-control"></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_unitario" id="orden_servicios_valor_unitario"></td>
+                                            <input type="number" step="0.01" name="valor_unitario" id="orden_servicios_valor_unitario" class="form-control"></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_total" readonly id="orden_servicios_valor_total"></td>
+                                            <input type="number" step="0.01" name="valor_total" readonly id="orden_servicios_valor_total" class="form-control"></td>
 
                                     </tr>
                                 </tbody>
