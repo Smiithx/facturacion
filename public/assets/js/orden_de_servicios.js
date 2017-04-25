@@ -11,71 +11,21 @@ $(function(){
     var orden_servicios_copago = $("#orden_servicios_copago");
     var orden_servicios_valor_unitario = $("#orden_servicios_valor_unitario");
     var orden_servicios_valor_total = $("#orden_servicios_valor_total");
-
+    var temporizador_documento = 0;
+    var temporizador_cups = 0;
 
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
-    orden_documento.on("keyup",function(){    
-        var url = "/pacientes/documento/"+orden_documento.val();
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            success: function(respuesta){
-                if(respuesta.success){
-                    orden_nombre.val(respuesta.paciente.nombre);
-                    orden_contrato.val(respuesta.paciente.contrato);
-                    var aseguradora_id = respuesta.paciente.aseguradora_id;
-                    var url= "/Aseguradora/"+respuesta.paciente.aseguradora_id;
-                    $.ajax({
-                        url: url,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(respuesta){
-                            if(respuesta.success){
-                              orden_aseguradora.html("<option value='"+aseguradora_id+"'>"+respuesta.aseguradora.nombre+"</option>");
-                               // orden_aseguradora.html(respuesta.aseguradora.nombre); 
+    orden_documento.on("keyup",function(){
+        clearInterval(temporizador_documento)
+        temporizador_documento = setTimeout(buscarPaciente,1000);
 
-                            }else{
-                                orden_aseguradora.html("<option value=''></option>");
-                            }
-                        },error: function(e){
-                            console.log(e);
-                        }
-                    });
-
-
-                }else{
-                    orden_nombre.val("");
-                    orden_aseguradora.html("<option value=''></option>");
-                    orden_contrato.val("");
-                }
-            },error: function(e){
-                orden_nombre.val("");
-                orden_aseguradora.html("<option value=''></option>");
-                orden_contrato.val("");
-            }
-        });
     }); 
     //-- Agregar eventos cups ================================= //
-    orden_servicios_cups.on("keyup",function(){    
-        var url = "/procedimientos/cups/"+orden_servicios_cups.val();
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            success: function(respuesta){
-                if(respuesta.success){
-                    orden_servicios_descripcion.val(respuesta.procedimiento.descripcion);
-                }
-                else{
-                    orden_servicios_descripcion.val("");
-                }
-            },error: function(e){
-                  orden_servicios_descripcion.val("");
-            }
-        });
+    orden_servicios_cups.on("keyup",function(){
+        clearInterval(temporizador_cups)
+        temporizador_cups = setTimeout(buscarCups,1000);
     }); 
 
     orden_servicios_cantidad.on("keyup",function(){
@@ -111,4 +61,78 @@ $(function(){
         
         orden_servicios_valor_total.val(valor_total);
     }
+    function interval(){
+        t=1;
+        setInterval(function(){
+            document.getElementById("testdiv").innerHTML=t++;
+        },1000,"JavaScript");
+    }
+    function timeout(){
+        setTimeout(function(){
+            document.getElementById("testdiv").innerHTML="Pasaron 2 segundos antes de que pudieras ver esto.";
+        },2000,"JavaScript");
+    }
+
+    function buscarPaciente(){
+        var url = "/pacientes/documento/"+orden_documento.val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function(respuesta){
+                if(respuesta.success){
+                    orden_nombre.val(respuesta.paciente.nombre);
+                    orden_contrato.val(respuesta.paciente.contrato);
+                    var aseguradora_id = respuesta.paciente.aseguradora_id;
+                    var url= "/Aseguradora/"+respuesta.paciente.aseguradora_id;
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(respuesta){
+                            if(respuesta.success){
+                                orden_aseguradora.html("<option value='"+aseguradora_id+"'>"+respuesta.aseguradora.nombre+"</option>");
+                                // orden_aseguradora.html(respuesta.aseguradora.nombre);
+
+                            }else{
+                                orden_aseguradora.html("<option value=''></option>");
+                            }
+                        },error: function(e){
+                            console.log(e);
+                        }
+                    });
+
+
+                }else{
+                    orden_nombre.val("");
+                    orden_aseguradora.html("<option value=''></option>");
+                    orden_contrato.val("");
+                }
+            },error: function(e){
+                orden_nombre.val("");
+                orden_aseguradora.html("<option value=''></option>");
+                orden_contrato.val("");
+            }
+        });
+    }
+
+    function buscarCups(){
+        var url = "/procedimientos/cups/"+orden_servicios_cups.val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function(respuesta){
+                if(respuesta.success){
+                    orden_servicios_descripcion.val(respuesta.procedimiento.descripcion);
+                }
+                else{
+                    orden_servicios_descripcion.val("");
+                }
+            },error: function(e){
+                orden_servicios_descripcion.val("");
+            }
+        });
+    }
+
 });
