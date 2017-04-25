@@ -1,5 +1,7 @@
 @extends('administracion.index')
 @section('administracion')  <div>
+                           <h3 class="text-center">Administrar Diagnostico</h3>
+
 		                	<a title="Agregar" data-toggle="modal" data-target="#modaledit" onclick="add_diagnostico()" data-placement="top" class="btn btn-primary pull-right">Nuevo</a>
 		                	<br>
 		                	<br>

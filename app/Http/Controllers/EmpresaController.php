@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -82,7 +83,8 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+//si esta instanciado el input file 2 hace este bloque que solo actualiza el logo
+if($request->hasFile('file')){
 
         //obtenemos el campo file definido en el formulario
        $file = $request->file('file');
@@ -92,13 +94,26 @@ class EmpresaController extends Controller
  
        //indicamos que queremos guardar un nuevo archivo en el disco local
        \Storage::disk('local')->put($nombre,  \File::get($file));
-       
-     $empresa = Empresa::findOrFail($id);
+
+        DB::update("UPDATE empresa SET file = '$nombre'");
+        Session::flash('message',' Fue actualizado con exito los dos');
+        return Redirect::to('administracion');   
+
+
+}
+
+    // del resto actualiza todo
+    else{
+          $empresa = Empresa::findOrFail($id);
         
         $empresa->fill($request->all());
           $empresa->save();
-       Session::flash('message',' Fue actualizado con exito');
+       Session::flash('message',' Fue actualizado con exito else');
     return Redirect::to('administracion');   
+
+
+    }
+
     }
 
     /**

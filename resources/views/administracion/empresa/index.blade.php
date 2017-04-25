@@ -5,7 +5,7 @@
 		                	<p class="alert alert-success">{{Session::get('message')}}</p>
 		                	@endif
                         
-                        <h3 class="text-center">Editar Empresa</h3>
+                        <h3 class="text-center">Ajuste Empresa</h3>
                  
 {!! Form::model($empresa, ['route' => ['Empresa.update',$empresa->id], 'method' => 'put','enctype' => 'multipart/form-data']) !!}	
 
@@ -23,14 +23,17 @@
                           {!! Form::label('telefono','Teléfono')   !!}	                                
                          {!! Form::text('telefono',null,['class' => 'form-control'])   !!}
                            
-                         {!! Form::label('file','Logo')   !!} 
-                         {!! Form::file('file',null,['class' => 'form-control'])   !!}
-                                                
+                         {!! Form::hidden('file2',null,['class' => 'form-control', 'readonly'])   !!}
+
+                         {!! Form::label('file2','Logo')   !!} 
+
 <br>
-                   <img width="200px" height="200px" src="imagenes/{{$empresa->file}}" alt="{{$empresa->file}}"">
+                   <img width="200px" height="100px" src="imagenes/{{$empresa->file}}" alt="{{$empresa->file}}"">
        
-                 <br>
-                         <br>          				
+                 <br><br>
+                       {!! Form::file('file',null,['class' => 'form-control'])   !!}
+                                                
+         				
 		                	<button type="submit" class="btn btn-primary pull-right col-xs-3">Actualizar</button>	
                      
                         {!! Form::close() !!}
