@@ -1,6 +1,7 @@
    @extends('administracion.index')
 @section('administracion')
                          <div>
+                           <h3 class="text-center">Administrar Usuario</h3>
                          @if (Session::has('message'))
 		                	<p class="alert alert-success">{{Session::get('message')}}</p>
 		                	@endif

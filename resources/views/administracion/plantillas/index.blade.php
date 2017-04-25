@@ -1,6 +1,8 @@
 @extends('administracion.index')
 @section('administracion')
-		                <div>
+		                <div>      
+		                <h3 class="text-center">Administrar Plantillas</h3>
+
 		                	<a title="Agregar" data-toggle="modal" data-target="#modaledit" onclick="add_plantilla()" data-placement="top" class="btn btn-primary pull-right">Nuevo</a>
 		                	<br>
 		                	<br>
