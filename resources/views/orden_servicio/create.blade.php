@@ -19,8 +19,8 @@
                     <input readonly class="form-control" id="orden-nombre" type="text" name="nombre" value=""/>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                    <label for="label">Aseguradora:</label>
-                    <input  readonly class="form-control" id="orden-aseguradora" type="text" name="aseguradora" /> 
+                    <label for="label">Aseguradora:</label> 
+                    <select  readonly class="form-control" name="aseguradora_id" id="orden-aseguradora"></select>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Contrato:</label>
