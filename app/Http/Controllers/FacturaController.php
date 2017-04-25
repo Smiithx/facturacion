@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Paciente;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,9 +15,10 @@ class FacturaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $pacientes = Paciente::name($request->get('name'))->orderBy('id','DES')->paginate();
+        return View('facturas.index',['pacientes'=>$pacientes]);
     }
 
     /**

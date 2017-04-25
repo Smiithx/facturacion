@@ -7,9 +7,9 @@
                 <li><a href="/pacientes/create">Crear</a></li>
             </ul>
         </li>
-    <li><a href="#">Facturas</a>
+    <li><a href="/facturas">Facturas</a>
         <ul>
-            <li><a href="/facturas/create">Crear Facturas</a></li>
+            <li><a href="/facturas/create">Facturar</a></li>
             <li><a href="/ordenservicio/create">Orden de servicio</a></li>
         </ul></li>    
     <li><a href="/radicacion/create">Radicación</a></li>

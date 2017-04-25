@@ -22,7 +22,6 @@ class PacienteController extends Controller
      */
     public function index(Request $request)
     {
-        //dd($request);
         $pacientes = Paciente::name($request->get('name'))->orderBy('id','DES')->paginate();
         return View('pacientes.index',['pacientes'=>$pacientes]);
     }
