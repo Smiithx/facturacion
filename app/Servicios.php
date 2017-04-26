@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Manuales;
 
 class Servicios extends Model
 {
@@ -16,8 +17,12 @@ class Servicios extends Model
     protected $fillable = [
         'cups',     
         'descripcion',
-        'estado'
-    
+        'estado' 
     
     ];
+
+
+    public function manuales(){
+        return $this->hasMany(Manuales::class);
+    }
 }

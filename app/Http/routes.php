@@ -51,13 +51,15 @@ Route::get('administracion/diagnosticos/{id}/edit', 'AdministracionController@ed
 Route::get('administracion/diagnosticos/create', 'AdministracionController@creatediagnosticos');
 
 Route::get('administracion/manuales', 'AdministracionController@manuales');
+Route::get('administracion/manuales/{id}/edit', 'AdministracionController@editmanuales');
+Route::get('administracion/manuales/create', 'AdministracionController@createmanuales');
 
 
 
 
 
 
-
+Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
 Route::resource('Aseguradora', 'AseguradoraController');
 Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','store','destroy','update']]);

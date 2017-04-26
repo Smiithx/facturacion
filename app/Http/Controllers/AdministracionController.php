@@ -6,6 +6,7 @@ use App\Empresa;
 use App\Usuarios;
 use App\servicios;
 use App\Diagnosticos;
+use App\Manuales;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -94,10 +95,21 @@ class AdministracionController extends Controller
 
      
     public function manuales(){
-    $aseguradoras = Aseguradora::paginate(5);
-    $datos = ['aseguradoras' => $aseguradoras];
+    $manuales = Manuales::paginate(5);
+       
+        
+    $datos = ['manuales' => $manuales];
     return view("administracion.manuales.index",$datos);
+
     }
+            public function createmanuales(){  
+             $servicios = Servicios::where('estado', 'Activo')->orderBy('cups')->get();
+             $servicios = ['servicios' => $servicios];       
+            return view('administracion.manuales.create',$servicios);}
+
+            public function editmanuales($id){
+            $manuales = Manuales::findOrFail($id);        
+            return view('administracion.manuales.edit',compact('manuales'));}
     
     /**
     /**
