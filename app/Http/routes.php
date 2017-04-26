@@ -28,34 +28,40 @@ Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
+
 Route::get('administracion/usuarios', 'AdministracionController@usuarios');
 Route::get('administracion/usuarios/create', 'AdministracionController@createusuario');
 Route::get('administracion/usuarios/{id}/edit', 'AdministracionController@editusuarios');
-Route::get('administracion/manuales', 'AdministracionController@manuales');
-Route::get('administracion/procedimientos', 'AdministracionController@procedimientos');
+
+
 Route::get('administracion/servicios', 'AdministracionController@servicios');
 Route::get('administracion/servicios/create', 'AdministracionController@createservicio');
 Route::get('administracion/servicios/{id}/edit', 'AdministracionController@editservicio');
-Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
-Route::get('administracion/medicamentos', 'AdministracionController@medicamentos');
-Route::get('administracion/plantillas', 'AdministracionController@plantillas');
+
+
 Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
 Route::get('administracion/aseguradoras/{id}/edit', 'AdministracionController@editaseguradora');
 
+Route::get('administracion/contratos', 'AdministracionController@contratos');
+Route::get('administracion/contratos/{id}/edit', 'AdministracionController@editcontratos');
+Route::get('administracion/contratos/create', 'AdministracionController@createcontratos');
+
+Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
+Route::get('administracion/diagnosticos/{id}/edit', 'AdministracionController@editdiagnosticos');
+Route::get('administracion/diagnosticos/create', 'AdministracionController@creatediagnosticos');
+
+Route::get('administracion/manuales', 'AdministracionController@manuales');
+
+
+
+
+
+
 
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
-
-
-Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
 Route::resource('Aseguradora', 'AseguradoraController');
-Route::get('administracion/aseguradoras/edit/{id}', 'AdministracionController@editaseguradora');
-
+Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','store','destroy','update']]);
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
-Route::resource("procedimientos","ProcedimientosController");
-
-Route::get('procedimientos/cups/{cups}', 'ProcedimientosController@cups');
-
-
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
 
 

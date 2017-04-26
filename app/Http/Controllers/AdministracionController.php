@@ -5,6 +5,7 @@ use App\Aseguradora;
 use App\Empresa;
 use App\Usuarios;
 use App\servicios;
+use App\Diagnosticos;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -17,88 +18,88 @@ class AdministracionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $empresa = Empresa::find(1);
-
  return view('administracion.empresa.index',compact('empresa'));
     
     }
 
+   
+    public function aseguradoras(){
+    $aseguradoras = Aseguradora::paginate(5);
+    $datos = ['aseguradoras' => $aseguradoras];
+    return view("administracion.aseguradoras.index",$datos);
+    }
+     
+            public function editaseguradora($id){
+            $aseguradora = Aseguradora::findOrFail($id);         
+            return view('administracion.aseguradoras.edit',compact('aseguradora'));  }
+     
+     
+     
+    public function diagnosticos(){
+ $diagnosticos = Diagnosticos::paginate(5);
+    $datos = ['diagnosticos' => $diagnosticos];
+    return view("administracion.diagnosticos.index",$datos);
+    }
+
+            public function creatediagnosticos(){        
+            return view('administracion.diagnosticos.create');}
+
+            public function editdiagnosticos($id){
+            $diagnosticos = Diagnosticos::findOrFail($id);        
+            return view('administracion.diagnosticos.edit',compact('diagnosticos'));}
+     
+    
+    public function servicios(){
+    $servicios = Servicios::all();
+    $datos = ['servicios' => $servicios];       
+    return view("administracion.servicios.index",$datos);
+    }
+    
+            public function editservicio($id){
+            $servicios = Servicios::findOrFail($id);        
+            return view('administracion.servicios.edit',compact('servicios'));}
+
+            public function createservicio(){        
+            return view('administracion.servicios.create');}
+
+
     public function usuarios(){
-        $usuarios = Usuarios::all();
-        $datosusuarios = ['usuarios' => $usuarios];
-         return view("administracion.usuarios.index",$datosusuarios);
+    $usuarios = Usuarios::all();
+    $datosusuarios = ['usuarios' => $usuarios];
+    return view("administracion.usuarios.index",$datosusuarios); 
+     }
+
+            public function createusuario(){        
+            return view('administracion.usuarios.create'); }
+
+            public function editusuarios($id){
+            $usuarios = Usuarios::findOrFail($id);        
+            return view('administracion.usuarios.edit',compact('usuarios'));}
+
+    public function contratos(){
+    $aseguradoras = Aseguradora::paginate(5);
+    $datos = ['aseguradoras' => $aseguradoras];
+    return view("administracion.contratos.index",$datos);
     }
-    
-      public function manuales(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.manuales.index",$datos);
-    }
-    
-      public function aseguradoras(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.aseguradoras.index",$datos);
-    }
+
+            public function createcontratos(){        
+            return view('administracion.contratos.create');}
+
+            public function editcontratos($id){
+            $contratos = Contratos::findOrFail($id);        
+            return view('administracion.contratos.edit',compact('contratos'));}
+
+
      
-      public function procedimientos(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.procedimientos.index",$datos);
+    public function manuales(){
+    $aseguradoras = Aseguradora::paginate(5);
+    $datos = ['aseguradoras' => $aseguradoras];
+    return view("administracion.manuales.index",$datos);
     }
     
-     
-      public function medicamentos(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.medicamentos.index",$datos);
-    }
-    
-      public function diagnosticos(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.diagnosticos.index",$datos);
-    }
-     public function servicios(){
-         $servicios = Servicios::all();
-        $datos = ['servicios' => $servicios];       
-        return view("administracion.servicios.index",$datos);
-    }
-      public function plantillas(){
-       
-        return view("administracion.plantillas.index");
-    }
-    
-     public function editaseguradora($id){
-       $aseguradora = Aseguradora::findOrFail($id);
-        
-       return view('administracion.aseguradoras.edit',compact('aseguradora'));
-    }
-    
-     public function editservicio($id){
-
-
-       $servicios = Servicios::findOrFail($id);
-        
-       return view('administracion.servicios.edit',compact('servicios'));
-    }
-
-     public function createservicio(){
-        
-       return view('administracion.servicios.create');
-    }
-
-     public function createusuario(){
-        
-       return view('administracion.usuarios.create');
-    }
-    public function editusuarios($id){
-       $usuarios = Usuarios::findOrFail($id);
-        
-       return view('administracion.usuarios.edit',compact('usuarios'));
-    }
+    /**
     /**
      * Show the form for creating a new resource.
      *

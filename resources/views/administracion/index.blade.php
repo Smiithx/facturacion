@@ -10,18 +10,14 @@
 		            <!-- required for floating -->
 		            <!-- Nav tabs -->
 		            <ul class="nav nav-tabs tabs-left">
-		                <li class="link"><a href="/administracion">Datos de la empresa</a></li>
-		                <li class=" link"><a href="/administracion/usuarios">Usuarios</a></li>
-		               <li class=" link"><a href="/administracion/servicios">Tipos de Servicios</a></li>
-		                <li class=" link"><a href="/administracion/aseguradoras">Aseguradoras</a></li>
-		               <li class="link"><a href="/administracion/contratos">Contratos</a></li>
-		                <li class="link"><a href="/administracion/manuales">Manuales</a></li>
-		              
-
-		          <!--       <li class="link"><a href="/administracion/procedimientos">Procedimientos</a></li>
-		                <li class="link"><a href="/administracion/diagnosticos">Diagnosticos</a></li>
-		                <li class="link"><a href="/administracion/medicamentos">Medicamentos</a></li>
-		                <li class="link"><a href="/administracion/plantillas">Plantillas</a></li> -->
+		              <li class="link"><a href="/administracion">Datos de la empresa</a></li>
+		              <li class=" link"><a href="/administracion/usuarios">Usuarios</a></li>
+		              <li class=" link"><a href="/administracion/servicios">Tipos de Servicios</a></li>
+		              <li class=" link"><a href="/administracion/aseguradoras">Aseguradoras</a></li>
+		              <li class="link"><a href="/administracion/contratos">Contratos</a></li>
+		              <li class="link"><a href="/administracion/manuales">Manuales</a></li>	
+		              <li class="link"><a href="/administracion/diagnosticos">Diagnosticos</a></li>
+		             
 		                
 		            </ul>
 		        </div>

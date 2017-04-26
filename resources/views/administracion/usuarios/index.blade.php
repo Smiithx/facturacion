@@ -27,7 +27,7 @@
                     <td>{{ $usuario->firma }}</td>
                     <td>{{ $usuario->cargo }}</td>
 
-                    <td>    <a href="/administracion/usuarios/{{$usuario->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
+                    <td>    <a style="float: left;" href="/administracion/usuarios/{{$usuario->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
                         {!! Form::open(['route' => ['Usuarios.destroy', $usuario->id], 'method' => 'delete']) !!}

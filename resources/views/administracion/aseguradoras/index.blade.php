@@ -31,7 +31,7 @@
 		             <td>{{ $aseguradora->nombre }}</td>
                     <td>{{ $aseguradora->nit }}</td>
                     <td>{{ $aseguradora->estado }}</td>
-                    <td>    <a href="/administracion/aseguradoras/{{$aseguradora->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
+                    <td>    <a style="float: left;" href="/administracion/aseguradoras/{{$aseguradora->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
                         {!! Form::open(['route' => ['Aseguradora.destroy', $aseguradora->id], 'method' => 'delete']) !!}
@@ -41,9 +41,13 @@
                         {!! Form::close() !!}</td>
 		                			</tr>
 		                			@endforeach
-		                			<tr><td colspan="4">
-		                			{!! $aseguradoras->render()!!}</td></tr>
+		                			
 		                		</tbody>
+		                			<tfoot>
+		                		<td colspan="4" style="text-align: center;">
+		                			{!! $aseguradoras->render()!!}
+</td>
+		                		</tfoot>
 		                	</table>
 		                	<br>
 		                </div>

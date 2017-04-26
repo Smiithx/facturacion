@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call('PacientesSeeder');
         $this->call('EmpresaSeeder');
         $this->call('ServiciosSeeder');
+        $this->call('DiagnosticosSeeder');
         //Model::reguard();
        
         

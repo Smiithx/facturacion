@@ -25,7 +25,7 @@
 		             <td>{{ $servicio->cups }}</td>
                     <td>{{ $servicio->descripcion }}</td>
                     <td>{{ $servicio->estado }}</td>
-                    <td>    <a href="/administracion/servicios/{{$servicio->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
+                    <td>    <a style="float: left;" href="/administracion/servicios/{{$servicio->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
                         {!! Form::open(['route' => ['Servicios.destroy', $servicio->id], 'method' => 'delete']) !!}

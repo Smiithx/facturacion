@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Diagnosticos;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Procedimientos;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
-class ProcedimientosController extends Controller
+class DiagnosticosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,7 @@ class ProcedimientosController extends Controller
      */
     public function index()
     {
-        //
+    
     }
 
     /**
@@ -38,8 +39,24 @@ class ProcedimientosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'codigo' => 'required|max:255',
+            'descripcion' => 'required|max:255',
+            'estado' => 'required'            
+        ]);
+        $diagnostico = Diagnosticos::create($request->all());
+        $diagnosticos = Diagnosticos::paginate(10);
+        $datos = ['diagnosticos' => $diagnosticos];
+
+   
+        Session::flash('message',$diagnostico->descripcion.' Fue creada con exito');
+        return Redirect::to('administracion/diagnosticos');
     }
+  
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -72,7 +89,12 @@ class ProcedimientosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $diagnosticos = Diagnosticos::findOrFail($id);
+
+        $diagnosticos->fill($request->all());
+        $diagnosticos->save();
+        Session::flash('message',$diagnosticos->codigo.' Fue actualizado con exito');
+        return Redirect::to('administracion/diagnosticos');
     }
 
     /**
@@ -83,22 +105,9 @@ class ProcedimientosController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-    public function cups($cups)
-    {
-          $procedimiento=Procedimientos::where("cups","=",$cups)->get();
-
-        if($procedimiento != "[]"){
-            return response()->json([
-                'success' => 'true',
-                'procedimiento' => $procedimiento[0]
-            ]);
-        }else{
-            return response()->json([
-                'error' => 'No existe un pprocedimiento con ese codigo'
-                
-            ]);
-        } 
+        $diagnosticos = Diagnosticos::findOrFail($id);
+        $diagnosticos->delete();
+        Session::flash('message',$diagnosticos->codigo.' fue eliminado con Exito');
+        return Redirect::to('administracion/diagnosticos');
     }
 }
