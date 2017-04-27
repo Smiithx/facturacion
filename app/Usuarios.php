@@ -21,5 +21,6 @@ class Usuarios extends Model
         'firma',
         'cargo'
     ];
+    
 
 }

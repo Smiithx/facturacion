@@ -1,4 +1,4 @@
-
+ 
 <!-- Inicia reporte 1 -->
 <div class="col-sm-12 reporte1 hidden">
     <br>
@@ -39,21 +39,8 @@
             <button type="button" id="resulta_r1" class="btn btn-success pull-right"><i class="fa fa-search"></i> Buscar</button>
         </div>
     </form>
-    <table style="width:100%;" class="table table-striped table-bordered table-hover hidden" id="tabla_r1">
-        <thead style="color:#fff; background: #3b5998;">
-            <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Fecha expedición</th>
-                <th class="text-center">Documento</th>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Valor unitario</th>
-                <th class="text-center">Valor total</th>
-                <th class="text-center">Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
+  
 </div>
+</body>
+</html>
 <!-- Termina reporte 1 -->

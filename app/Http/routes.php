@@ -69,6 +69,12 @@ Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store'
 
 Route::resource("test","TestController");
 
+
+
+
+Route::get('Reportes/totalfacturado', 'ReportesController@reportefacturacion');
+
+
 Route::pattern('inexistentes', '.*');
 Route::any('/{inexistentes}', function()
 {
