@@ -27,7 +27,7 @@
 		                			<tr>
 		               <td>{{ $manuale->id }}</td>
 		             <td>{{ $manuale->tipomanual }}</td>
-                    <td>{{ $manuale->servicios_id}}</td>
+                    <td>{{ $manuale->cups}}</td>
                     <td>{{ $manuale->codigosoat }}</td>
                     <td>{{ $manuale->costo }}</td>
                     <td>{{ $manuale->estado }}</td>

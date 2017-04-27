@@ -94,12 +94,13 @@ class AdministracionController extends Controller
 
 
      
-    public function manuales(){
-    $manuales = Manuales::paginate(5);
-       
-        
-    $datos = ['manuales' => $manuales];
-    return view("administracion.manuales.index",$datos);
+    public function manuales(){ 
+        $manuales = Manuales::select("manuales.id","manuales.tipomanual","servicios.cups","manuales.codigosoat", "manuales.costo", "manuales.estado")
+            ->join("servicios","manuales.servicios_id","=","servicios.id")        
+            ->get();
+
+            $manuales = ['manuales' => $manuales];
+     return view("administracion.manuales.index",$manuales);
 
     }
             public function createmanuales(){  
@@ -108,8 +109,9 @@ class AdministracionController extends Controller
             return view('administracion.manuales.create',$servicios);}
 
             public function editmanuales($id){
-            $manuales = Manuales::findOrFail($id);        
-            return view('administracion.manuales.edit',compact('manuales'));}
+            $manuales = Manuales::findOrFail($id);             
+            $servicios = Servicios::lists('cups', 'id'); /* aqui le paso los datos que quiero que muestre y el que quiero que inserte*/   
+            return view('administracion.manuales.edit',compact('manuales','servicios'));}
     
     /**
     /**

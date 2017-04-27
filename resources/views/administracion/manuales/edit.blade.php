@@ -11,8 +11,11 @@
                         {!! Form::label('tipomanual','Tipo Manual')   !!}  
                         {!! Form::select('tipomanual',['ISS2001' => 'ISS2001', 'SOAT' => 'SOAT', 'PARTICULAR' => 'PARTICULAR', 'OTRO' => 'SOAT'],null,['class' => 'form-control'])   !!}              
 
-                         {!! Form::label('cups_id','Cups')   !!}
-                        {!! Form::text('cups_id',null,['class' => 'form-control'])!!} 
+                    <!--        -->
+
+
+                  {!! Form::label('servicios_id','Cups')   !!}
+                  {!! Form::select('servicios_id', $servicios, null, ['class' => 'form-control']) !!}  
 
                          {!! Form::label('codigosoat','Soat')   !!}
                          {!! Form::text('codigosoat',null,['class' => 'form-control'])!!}

@@ -15,7 +15,8 @@ class Manuales extends Model
      * @var array
      */
     protected $fillable = [
-        'tipomanual',     
+        'tipomanual', 
+        'servicios_id',    
         
         'codigosoat', 
         'costo', 

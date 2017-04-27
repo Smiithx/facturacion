@@ -95,8 +95,12 @@ if($request->hasFile('file')){
        //indicamos que queremos guardar un nuevo archivo en el disco local
        \Storage::disk('local')->put($nombre,  \File::get($file));
 
-        DB::update("UPDATE empresa SET file = '$nombre'");
-        Session::flash('message',' El logo Fue actualizado con exito');
+    
+       $empresa = Empresa::findOrFail($id);
+       $empresa->fill($request->all());
+       $empresa->file = $nombre;
+       $empresa->save();
+       Session::flash('message',' Empresa Fue actualizado con exito');
         return Redirect::to('administracion');   
 
 
