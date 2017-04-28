@@ -111,4 +111,19 @@ class ServiciosController extends Controller
         return Redirect::to('administracion/servicios');
 
     }
+
+    public function cups($cups)
+    {
+        $servicio=Servicios::where("cups","=",$cups)->get();
+        if($servicio != "[]"){
+            return response()->json([
+                'success' => 'true',
+                'servicio' => $servicio[0]
+            ]);
+        }else{
+            return response()->json([
+                'error' => "No existe el servicio con el codigo $cups"
+            ]);
+        }
+    }
 }

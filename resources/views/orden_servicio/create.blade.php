@@ -44,29 +44,28 @@
                                         <th>Valor Total</th>
                                     </tr>
                                 </thead>
-                                <tbody id="">
+                                <tbody id="orden_servicios_servicios">
                                     <tr>
-
                                         <td>
-                                            <input type="text" name="cups" id="orden_servicios_cups" class="form-control" value="{{old('cups')}}"></td>
+                                            <input type="text" name="cups" id="orden_servicios_cups" class="form-control" value=""></td>
                                         <td> 
-                                            <input type="text" name="descripcion" readonly id="orden_servicios_descripcion" class="form-control" value="{{old('descripcion')}}">
+                                            <input type="text" name="descripcion" readonly id="orden_servicios_descripcion" class="form-control" value="">
                                         </td>
                                         <td>
-                                            <input type="number" name="cantidad" id="orden_servicios_cantidad" class="form-control" value="{{old('cantidad')}}"></td>
+                                            <input type="number" name="cantidad" id="orden_servicios_cantidad" class="form-control" value=""></td>
                                         <td>
-                                            <input type="number" step="0.01" name="copago" id="orden_servicios_copago" class="form-control" value="{{old('copago')}}"></td>
+                                            <input type="number" step="0.01" name="copago" id="orden_servicios_copago" class="form-control" value=""></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_unitario" id="orden_servicios_valor_unitario" class="form-control" value="{{old('valor_unitario')}}"></td>
+                                            <input type="number" step="0.01" name="valor_unitario" id="orden_servicios_valor_unitario" class="form-control"></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_total" readonly id="orden_servicios_valor_total" class="form-control" value="{{old('valor_total')}}"></td>
+                                            <input type="number" step="0.01" name="valor_total" readonly id="orden_servicios_valor_total" class="form-control"></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="6" class="text-right">
-                                            <button class="btn btn-success glyphicon glyphicon-plus" type="button"></button>
-                                            <button class="btn btn-danger glyphicon glyphicon-minus" type="button"></button>
+                                            <button id="orden_servicios_añadir" class="btn btn-success glyphicon glyphicon-plus" type="button"></button>
+                                            <button id="orden_servicios_eliminar" class="btn btn-danger glyphicon glyphicon-minus" type="button"></button>
                                         </td>
                                     </tr>
                                 </tfoot>

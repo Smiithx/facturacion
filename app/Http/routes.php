@@ -11,64 +11,74 @@
 |
 */
 
+//----- Inicio ----- //
 Route::get('/','PacienteController@index');
+
+//----- Pacientes ----- //
 Route::resource('pacientes', 'PacienteController');
 Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 
+//----- Facturas ----- //
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store']]);
 
+//----- Orden de servicios ----- //
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store']]);
 
+//----- Radicacion ----- //
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
 
+//----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
 
+//----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
 
+//----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 
+//----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
-
 Route::get('administracion/usuarios', 'AdministracionController@usuarios');
 Route::get('administracion/usuarios/create', 'AdministracionController@createusuario');
 Route::get('administracion/usuarios/{id}/edit', 'AdministracionController@editusuarios');
-
-
 Route::get('administracion/servicios', 'AdministracionController@servicios');
 Route::get('administracion/servicios/create', 'AdministracionController@createservicio');
 Route::get('administracion/servicios/{id}/edit', 'AdministracionController@editservicio');
-
-
 Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
 Route::get('administracion/aseguradoras/{id}/edit', 'AdministracionController@editaseguradora');
-
 Route::get('administracion/contratos', 'AdministracionController@contratos');
 Route::get('administracion/contratos/{id}/edit', 'AdministracionController@editcontratos');
 Route::get('administracion/contratos/create', 'AdministracionController@createcontratos');
-
 Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
 Route::get('administracion/diagnosticos/{id}/edit', 'AdministracionController@editdiagnosticos');
 Route::get('administracion/diagnosticos/create', 'AdministracionController@creatediagnosticos');
-
 Route::get('administracion/manuales', 'AdministracionController@manuales');
 Route::get('administracion/manuales/{id}/edit', 'AdministracionController@editmanuales');
 Route::get('administracion/manuales/create', 'AdministracionController@createmanuales');
 
-
-
-
-
-
+//----- Manuales ----- //
 Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
+
+//----- Empresa ----- //
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
+
+//----- Aseguradora ----- //
 Route::resource('Aseguradora', 'AseguradoraController');
+
+//----- Diagnosticos ----- //
 Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','store','destroy','update']]);
+
+//----- Usuarios ----- //
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
+
+//----- Servicios ----- //
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
+Route::get('servicios/cups/{cups}','ServiciosController@cups');
 
-
+//----- Test ----- //
 Route::resource("test","TestController");
 
+//----- Error 404 ----- //
 Route::pattern('inexistentes', '.*');
 Route::any('/{inexistentes}', function()
 {

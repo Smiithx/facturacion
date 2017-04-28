@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Diagnosticos;
+
 class DiagnosticosSeeder extends Seeder
 {
     /**
@@ -12,6 +13,5 @@ class DiagnosticosSeeder extends Seeder
     public function run()
     {
         factory(Diagnosticos::class)->times(20)->create();
-
     }
 }
