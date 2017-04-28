@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Servicios;
-
+use App\Contratos;
 class Manuales extends Model
 {
     protected $table = 'manuales';
@@ -27,5 +27,8 @@ class Manuales extends Model
 
      public function servicios(){
         return $this->belongsTo(Servicios::class);
+    }
+    public function contratos(){
+        return $this->hasMany(Contratos::class);
     }
 }

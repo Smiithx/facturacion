@@ -7,6 +7,7 @@ use App\Usuarios;
 use App\servicios;
 use App\Diagnosticos;
 use App\Manuales;
+use App\Contratos;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -80,27 +81,31 @@ class AdministracionController extends Controller
             return view('administracion.usuarios.edit',compact('usuarios'));}
 
     public function contratos(){
-    $aseguradoras = Aseguradora::paginate(5);
-    $datos = ['aseguradoras' => $aseguradoras];
-    return view("administracion.contratos.index",$datos);
+             $contratos = Contratos::select("contratos.id","contratos.id_manual","contratos.contrato","contratos.nombre","contratos.nit","contratos.diasvencimiento","manuales.codigosoat","contratos.porcentaje","contratos.estado")
+             ->join("manuales","contratos.id_manual","=","manuales.id")        
+              ->get();
+             $datos = ['contratos' => $contratos];
+             return view("administracion.contratos.index",$datos);
     }
 
-            public function createcontratos(){        
-            return view('administracion.contratos.create');}
+            public function createcontratos(){  
+             $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get();
+             $manuales = ['manuales' => $manuales];       
+            return view('administracion.contratos.create',$manuales);}
 
             public function editcontratos($id){
+            $manuales = Manuales::lists('codigosoat', 'id'); /* aqui le paso los datos que quiero que muestre y el que quiero que inserte*/   
             $contratos = Contratos::findOrFail($id);        
-            return view('administracion.contratos.edit',compact('contratos'));}
+            return view('administracion.contratos.edit',compact('contratos','manuales'));}
 
 
      
     public function manuales(){ 
-        $manuales = Manuales::select("manuales.id","manuales.tipomanual","servicios.cups","manuales.codigosoat", "manuales.costo", "manuales.estado")
+             $manuales = Manuales::select("manuales.id","manuales.tipomanual","servicios.cups","manuales.codigosoat", "manuales.costo", "manuales.estado")
             ->join("servicios","manuales.servicios_id","=","servicios.id")        
             ->get();
-
-            $manuales = ['manuales' => $manuales];
-     return view("administracion.manuales.index",$manuales);
+             $manuales = ['manuales' => $manuales];
+             return view("administracion.manuales.index",$manuales);
 
     }
             public function createmanuales(){  

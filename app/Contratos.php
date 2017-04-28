@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Manuales;
 class Contratos extends Model
 {
     /**
@@ -23,9 +23,13 @@ class Contratos extends Model
     'nombre',
     'nit',
     'diasvencimiento',
-    'manualtarifario',
+    'id_manual',
     'porcentaje',
     'estado'
     ];
+
+    public function manuales(){
+        return $this->belongsTo(Manuales::class);
+    }
    
 }

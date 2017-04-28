@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Contratos;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 class ContratosController extends Controller
 {
     /**
@@ -37,7 +38,23 @@ class ContratosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     $this->validate($request, [
+            'contrato' => 'required|max:255',
+            'nombre' => 'required|max:255',
+            'nit' => 'required',
+            'diasvencimiento' => 'required|integer|min:1',
+            'id_manual' => 'required',
+            'porcentaje' => 'required|integer|min:1',
+            'estado' => 'required'
+              
+        ]);
+        $contrato = Contratos::create($request->all());
+        $contratos = Contratos::paginate(5);
+        $datos = ['contratos' => $contratos];
+
+
+        Session::flash('message',$contrato->contrato.' Fue Creada con exito');
+        return Redirect::to('administracion/contratos');
     }
 
     /**
@@ -71,7 +88,13 @@ class ContratosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
+         $contratos = Contratos::findOrFail($id);
+
+        $contratos->fill($request->all());
+        $contratos->save();
+        Session::flash('message',' Fue actualizado con exito');
+        return Redirect::to('administracion/contratos');
     }
 
     /**
@@ -82,6 +105,9 @@ class ContratosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contratos = Contratos::findOrFail($id);
+        $contratos->delete();
+        Session::flash('message',$contratos->id.' fue eliminado con Exito');
+        return Redirect::to('administracion/contratos');
     }
 }

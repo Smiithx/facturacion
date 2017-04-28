@@ -57,6 +57,9 @@ Route::get('administracion/manuales', 'AdministracionController@manuales');
 Route::get('administracion/manuales/{id}/edit', 'AdministracionController@editmanuales');
 Route::get('administracion/manuales/create', 'AdministracionController@createmanuales');
 
+//----- Contratos ----- //
+Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
+
 //----- Manuales ----- //
 Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
 
