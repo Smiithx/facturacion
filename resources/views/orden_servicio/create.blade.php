@@ -47,18 +47,18 @@
                                 <tbody id="orden_servicios_servicios">
                                     <tr>
                                         <td>
-                                            <input type="text" name="cups" id="orden_servicios_cups" class="form-control" value=""></td>
+                                            <input type="text" name="cups" class="form-control orden_servicios_cups" value=""></td>
                                         <td> 
-                                            <input type="text" name="descripcion" readonly id="orden_servicios_descripcion" class="form-control" value="">
+                                            <input type="text" name="descripcion" readonly class="form-control orden_servicios_descripcion" value="">
                                         </td>
                                         <td>
-                                            <input type="number" name="cantidad" id="orden_servicios_cantidad" class="form-control" value=""></td>
+                                            <input type="number" name="cantidad" class="form-control orden_servicios_cantidad" value=""></td>
                                         <td>
-                                            <input type="number" step="0.01" name="copago" id="orden_servicios_copago" class="form-control" value=""></td>
+                                            <input type="number" step="0.01" name="copago" class="form-control orden_servicios_copago" value=""></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_unitario" id="orden_servicios_valor_unitario" class="form-control"></td>
+                                            <input type="number" step="0.01" name="valor_unitario" class="form-control orden_servicios_valor_unitario"></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_total" readonly id="orden_servicios_valor_total" class="form-control"></td>
+                                            <input type="number" step="0.01" name="valor_total" readonly class="form-control orden_servicios_valor_total"></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
