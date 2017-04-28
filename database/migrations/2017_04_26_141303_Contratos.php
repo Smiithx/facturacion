@@ -11,8 +11,20 @@ class Contratos extends Migration
      * @return void
      */
     public function up()
+
     {
-        //
+       Schema::create('contratos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('contrato',50);
+            $table->string('nombre',50);
+            $table->string('nit',50);
+            $table->integer('diasvencimiento');
+            $table->integer('id_manual')->index();
+            $table->integer('porcentaje');
+            $table->enum('estado', array('Activo','Inactivo'));   
+            $table->timestamps();
+       
+        });
     }
 
     /**
@@ -22,6 +34,7 @@ class Contratos extends Migration
      */
     public function down()
     {
-        //
+              Schema::drop('contratos');
+
     }
 }

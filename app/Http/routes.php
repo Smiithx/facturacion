@@ -58,7 +58,7 @@ Route::get('administracion/manuales/create', 'AdministracionController@createman
 
 
 
-
+Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
 Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
 Route::resource('Aseguradora', 'AseguradoraController');
