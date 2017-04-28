@@ -43,6 +43,7 @@ $(function(){
     });
 
     orden_servicios_añadir.on("click",function () {
+        guardarValorAnterior();
         servicios = orden_servicios_servicios.html();
         orden_servicios_servicios.html(servicios);
         var trs=$("#orden_servicios_servicios tr").length;
