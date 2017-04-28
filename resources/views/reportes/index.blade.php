@@ -6,7 +6,8 @@
 
 <!-- opciones -->
 <div class="col-sm-12">
-    <button type="button" id="reporte1" class="btn btn-primary btn-lg"">Total facturado</button>
+  <a   lass="btn btn-primary btn-lg" href="Reportes/1">Total facturado</a></li>
+
     <button type="button" id="reporte2" class="btn btn-primary btn-lg"">Ordenes por facturar</button>
      <button type="button" id="reporte3" class="btn btn-primary btn-lg"">Atenciones realizadas</button>
      <button type="button" class="btn btn-primary btn-lg"">Imprimir factura</button>

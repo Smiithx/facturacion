@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use PDF;
 class ReportesController extends Controller
 {
+
+
+    public function reportefacturacion () {
+  $pdf = PDF::loadView('reportes.pdf.totalfacturado');
+  return $pdf->Stream('pruebapdf');
+}
     /**
      * Display a listing of the resource.
      *

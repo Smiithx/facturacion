@@ -114,6 +114,7 @@ return [
     /*
          * Laravel Framework Service Providers...
          */
+
     Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
     Illuminate\Auth\AuthServiceProvider::class,
     Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -146,7 +147,7 @@ return [
     App\Providers\EventServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
     Collective\Html\HtmlServiceProvider::class,
-
+    Barryvdh\DomPDF\ServiceProvider::class,
 ],
 
     /*
@@ -161,7 +162,6 @@ return [
     */
 
     'aliases' => [
-
     'App'       => Illuminate\Support\Facades\App::class,
     'Artisan'   => Illuminate\Support\Facades\Artisan::class,
     'Auth'      => Illuminate\Support\Facades\Auth::class,
@@ -196,6 +196,8 @@ return [
     'View'      => Illuminate\Support\Facades\View::class,
     'Form' => 'Collective\Html\FormFacade',
     'Html' => 'Collective\Html\HtmlFacade',
+    /*'PDF' => 'Barryvdh\DomPDF\Facade',*/
+    'PDF' => Barryvdh\DomPDF\Facade::class,
 
 ],
 

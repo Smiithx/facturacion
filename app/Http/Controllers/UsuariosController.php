@@ -42,6 +42,7 @@ class UsuariosController extends Controller
     /*QUEDE AQUI DOMINGO FALTA ENCRIPTAR LA CONTRASEÑA*/
     public function store(Request $request)
     {
+      
         $this->validate($request, [
             'nombre' => 'required|max:255',
             'documento' => 'required|max:255',
@@ -50,13 +51,11 @@ class UsuariosController extends Controller
             'firma' => 'required|max:255',
             'cargo' => 'required'
 
+
         ]);
-
-             $usuarios = Usuarios::create($request->all());
-
+      
+       $usuarios = Usuarios::create($request->all());
         Session::flash('message',$usuarios->nombre.' Fue Creado con exito');
-
-
         return Redirect::to('administracion/usuarios');
 
 

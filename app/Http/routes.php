@@ -35,6 +35,7 @@ Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
+Route::get('Reportes/totalfacturado', 'ReportesController@reportefacturacion');
 
 //----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
@@ -77,6 +78,7 @@ Route::get('servicios/cups/{cups}','ServiciosController@cups');
 
 //----- Test ----- //
 Route::resource("test","TestController");
+
 
 //----- Error 404 ----- //
 Route::pattern('inexistentes', '.*');
