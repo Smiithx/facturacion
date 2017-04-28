@@ -1,6 +1,7 @@
- 
+@extends('reportes.index')
+@section('reportes') 
 <!-- Inicia reporte 1 -->
-<div class="col-sm-12 reporte1 hidden">
+<div class="col-sm-12">
     <br>
     <form method="POST">
         <div class="form-group col-sm-3">
@@ -39,8 +40,23 @@
             <button type="button" id="resulta_r1" class="btn btn-success pull-right"><i class="fa fa-search"></i> Buscar</button>
         </div>
     </form>
-  
+   <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r1">
+        <thead style="color:#fff; background: #3b5998;">
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Fecha expedición</th>
+                <th class="text-center">Documento</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Valor unitario</th>
+                <th class="text-center">Valor total</th>
+             
+            </tr>
+           </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 </div>
-</body>
-</html>
+
+@stop
 <!-- Termina reporte 1 -->

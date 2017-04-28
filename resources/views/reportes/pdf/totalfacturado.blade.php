@@ -1,6 +1,6 @@
    @include('reportes.pdf.layouts.plantilla')
 
-  <table style="width:100%;" class="table table-striped table-bordered table-hover hidden" id="tabla_r1">
+  <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r1">
         <thead style="color:#fff; background: #3b5998;">
             <tr>
                 <th class="text-center">#</th>
@@ -11,7 +11,7 @@
                 <th class="text-center">Valor total</th>
              
             </tr>
-        </thead>
+           </thead>
         <tbody>
 
         </tbody>

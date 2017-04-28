@@ -35,7 +35,15 @@ Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
-Route::get('Reportes/totalfacturado', 'ReportesController@reportefacturacion');
+Route::get('Reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
+Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
+Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar');
+Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
+Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
+Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
+
+
+
 
 //----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);

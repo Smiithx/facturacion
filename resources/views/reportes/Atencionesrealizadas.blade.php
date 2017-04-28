@@ -1,6 +1,7 @@
-
+@extends('reportes.index')
+@section('reportes') 
 <!-- Inicia reporte 3 -->
-<div class="col-sm-12 reporte3 hidden">
+<div class="col-sm-12">
     <br>
     <form method="POST">
         <div class="form-group col-md-3">
@@ -25,7 +26,7 @@
             <button type="button" id="resulta_r3" class="btn btn-success pull-right"><i class="fa fa-search"></i> Buscar</button>
         </div>
     </form>
-    <table style="width:100%;" class="table table-striped table-bordered table-hover hidden" id="tabla_r3">
+    <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r3">
         <thead style="color:#fff; background: #3b5998;">
             <tr>
                 <th class="text-center">Documento</th>
@@ -44,4 +45,4 @@
         </tbody>
     </table>
 </div>
-<!-- Termina reporte 3 -->
+<!-- Termina reporte 3 -->@stop

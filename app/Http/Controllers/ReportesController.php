@@ -11,7 +11,27 @@ class ReportesController extends Controller
 {
 
 
-    public function reportefacturacion () {
+public function reportefacturacion() {
+   return view("reportes.totalfacturado");
+
+}
+public function Ordenesporfacturar() {
+   return view("reportes.Ordenesporfacturar");
+
+}
+public function Atencionesrealizadas() {
+   return view("reportes.Atencionesrealizadas");
+
+}
+public function Imprimirfactura() {
+   return view("reportes.Imprimirfactura");
+
+}
+public function Cuentadecobro() {
+   return view("reportes.Cuentadecobro");
+
+}
+    public function reportefacturacionpdf() {
   $pdf = PDF::loadView('reportes.pdf.totalfacturado');
   return $pdf->Stream('pruebapdf');
 }
