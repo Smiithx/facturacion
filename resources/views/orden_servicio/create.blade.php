@@ -12,21 +12,21 @@
                 {{ csrf_field() }}
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Documento:</label>
-                    <input type="text" class="form-control" id="orden-documento" name="documento" value="{{old('documento')}}"/>
+                    <input required type="text" class="form-control" id="orden-documento" name="documento" value="{{old('documento')}}"/>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Nombre:</label>  
-                    <input readonly class="form-control" id="orden-nombre" type="text" name="nombre" value="{{old('nombre')}}"/>
+                    <input required readonly class="form-control" id="orden-nombre" type="text" name="nombre" value="{{old('nombre')}}"/>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Aseguradora:</label> 
-                    <select readonly class="form-control" name="aseguradora_id" id="orden-aseguradora">
+                    <select required readonly class="form-control" name="aseguradora_id" id="orden-aseguradora">
                         <option value="{{old('aseguradora_id')}}">{{old('aseguradora_id')}}</option>
                     </select>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
                     <label for="label">Contrato:</label>
-                    <input readonly  class="form-control" id="orden-contrato" type="text" name="contrato" value="{{old('contrato')}}"/>
+                    <input required readonly  class="form-control" id="orden-contrato" type="text" name="contrato" value="{{old('contrato')}}"/>
                 </div>
                 <br>
                 <br>
@@ -47,18 +47,18 @@
                                 <tbody id="orden_servicios_servicios">
                                     <tr>
                                         <td>
-                                            <input type="text" name="cups" class="form-control orden_servicios_cups" value=""></td>
+                                            <input required type="text" name="cups" class="form-control orden_servicios_cups" value=""></td>
                                         <td> 
-                                            <input type="text" name="descripcion" readonly class="form-control orden_servicios_descripcion" value="">
+                                            <input required type="text" name="descripcion" readonly class="form-control orden_servicios_descripcion" value="">
                                         </td>
                                         <td>
-                                            <input type="number" name="cantidad" class="form-control orden_servicios_cantidad" value=""></td>
+                                            <input required type="number" name="cantidad" class="form-control orden_servicios_cantidad" value=""></td>
                                         <td>
-                                            <input type="number" step="0.01" name="copago" class="form-control orden_servicios_copago" value=""></td>
+                                            <input required type="number" step="0.01" name="copago" class="form-control orden_servicios_copago" value=""></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_unitario" class="form-control orden_servicios_valor_unitario"></td>
+                                            <input required type="number" step="0.01" name="valor_unitario" class="form-control orden_servicios_valor_unitario"></td>
                                         <td>
-                                            <input type="number" step="0.01" name="valor_total" readonly class="form-control orden_servicios_valor_total"></td>
+                                            <input required type="number" step="0.01" name="valor_total" readonly class="form-control orden_servicios_valor_total"></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
