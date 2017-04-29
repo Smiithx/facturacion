@@ -47,18 +47,18 @@
                                 <tbody id="orden_servicios_servicios">
                                     <tr>
                                         <td>
-                                            <input required type="text" name="cups" class="form-control orden_servicios_cups" value=""></td>
+                                            <input required type="text" name="cups[]" class="form-control orden_servicios_cups" value=""></td>
                                         <td> 
-                                            <input required type="text" name="descripcion" readonly class="form-control orden_servicios_descripcion" value="">
+                                            <input required type="text" name="descripcion[]" readonly class="form-control orden_servicios_descripcion" value="">
                                         </td>
                                         <td>
-                                            <input required type="number" name="cantidad" class="form-control orden_servicios_cantidad" value=""></td>
+                                            <input required type="number" name="cantidad[]" class="form-control orden_servicios_cantidad" value=""></td>
                                         <td>
-                                            <input required type="number" step="0.01" name="copago" class="form-control orden_servicios_copago" value=""></td>
+                                            <input required type="number" step="0.01" name="copago[]" class="form-control orden_servicios_copago" value=""></td>
                                         <td>
-                                            <input required type="number" step="0.01" name="valor_unitario" class="form-control orden_servicios_valor_unitario"></td>
+                                            <input required type="number" step="0.01" name="valor_unitario[]" class="form-control orden_servicios_valor_unitario"></td>
                                         <td>
-                                            <input required type="number" step="0.01" name="valor_total" readonly class="form-control orden_servicios_valor_total"></td>
+                                            <input required type="number" step="0.01" name="valor_total[]" readonly class="form-control orden_servicios_valor_total"></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>

@@ -18,18 +18,30 @@ class ordenserviciocontroller extends Controller
     //
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'nombre' => 'required|max:255',
             'documento' => 'required|max:255',
             'aseguradora_id' => 'required',
             'contrato' => 'required|max:255',
-            'cups' => 'required|max:255',
-            'copago' => 'required|numeric|min:0.01',
-            'cantidad' => 'required|integer|min:1',
-            'valor_unitario' => 'required|numeric|min:0.01',
-            'valor_total' => 'required|numeric|min:0.01'
-
         ]);
+        $count = count($request->cups);
+        for ($i = 0; $i < $count; $i++) {
+            $this->validate($request->cups[$i], [
+                'cups' => 'required|max:255'
+            ]);
+            $this->validate($request->copago[$i], [
+                'copago' => 'required|numeric|min:0.01'
+            ]);
+            $this->validate($request->valor_unitario[$i], [
+                'valor_unitario' => 'required|numeric|min:0.01'
+            ]);
+            $this->validate($request->valor_total[$i], [
+                'valor_total' => 'required|numeric|min:0.01'
+            ]);
+        }
+        dd($request->all(), $request->cups, $request->copago, $request->valor_unitario, $request->valor_total);
+
         ordenservicios::create($request->all());
         return View('orden_servicio.create');
     }

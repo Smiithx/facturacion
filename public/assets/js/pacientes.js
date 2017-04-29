@@ -4,7 +4,7 @@
 //función que se ejecuta al cargar la pagina
 $(function(){
     //-- Declarar variables =============================== //
-    var btn_eliminar_paciente = $("#btn-eliminar-paciente");
+    var btn_eliminar_paciente = $(".btn-eliminar-paciente");
      var form_eliminar_paciente = $("#form-eliminar-paciente");
 
     //-- Fin de declarar variables ======================= //
@@ -12,6 +12,8 @@ $(function(){
     //-- Agregar eventos ================================= //
     btn_eliminar_paciente.on("click",function(e){
         e.preventDefault();
+        var parent = $(this).parent().parent().parent();
+        var id = $(this).attr("data-id");
         swal({
             title: '¿Desea eliminar este paciente?',
             text: "¡No podrás revertir esto!",
@@ -23,7 +25,6 @@ $(function(){
             cancelButtonColor: '#3085d6',
             buttonsStyling: true
         }).then(function () {
-            var id = btn_eliminar_paciente.attr("data-id");
             var url = "pacientes/"+ id;
             var datos = form_eliminar_paciente.serialize();
             $.ajax({
@@ -39,7 +40,7 @@ $(function(){
                             type: 'success',
                             confirmButtonText: 'Ok'
                         }).then(function () {
-                            location.reload();
+                            parent.remove();
                         });
                     }else{
                         swal(
@@ -64,5 +65,6 @@ $(function(){
             }
         })
     });
+
 
 });

@@ -16,12 +16,12 @@ $(function () {
     var orden_servicios_añadir = $("#orden_servicios_añadir");
     var orden_servicios_eliminar = $("#orden_servicios_eliminar");
     var orden_servicios_servicios = $("#orden_servicios_servicios");
-    const orden_servicios_servicios_campos = '<tr><td><input required type="text" name="cups" class="form-control orden_servicios_cups"></td>' +
-        '<td><input required type="text" name="descripcion" readonly class="form-control orden_servicios_descripcion"></td>' +
-        '<td><input required type="number" name="cantidad" class="form-control orden_servicios_cantidad"></td>' +
-        '<td><input required type="number" step="0.01" name="copago" class="form-control orden_servicios_copago"></td>' +
-        '<td><input required type="number" step="0.01" name="valor_unitario" class="form-control orden_servicios_valor_unitario"></td>' +
-        '<td><input required type="number" step="0.01" name="valor_total" readonly class="form-control orden_servicios_valor_total"></td></tr>';
+    const orden_servicios_servicios_campos = '<tr><td><input required type="text" name="cups[]" class="form-control orden_servicios_cups"></td>' +
+        '<td><input required type="text" name="descripcion[]" readonly class="form-control orden_servicios_descripcion"></td>' +
+        '<td><input required type="number" name="cantidad[]" class="form-control orden_servicios_cantidad"></td>' +
+        '<td><input required type="number" step="0.01" name="copago[]" class="form-control orden_servicios_copago"></td>' +
+        '<td><input required type="number" step="0.01" name="valor_unitario[]" class="form-control orden_servicios_valor_unitario"></td>' +
+        '<td><input required type="number" step="0.01" name="valor_total[]" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
     //-- Fin de declarar variables ======================= //
 
@@ -34,7 +34,6 @@ $(function () {
     agregarEventos();
 
     orden_servicios_añadir.on("click", function () {
-        guardarValorAnterior();
         orden_servicios_servicios.append(orden_servicios_servicios_campos);
         actualizarVariables();
     });
@@ -51,34 +50,6 @@ $(function () {
     });
 
     //-- declarar funciones auxiliares------------------------------------//
-
-    function guardarValorAnterior() {
-
-        var filas = $("#orden_servicios_servicios tr").length;
-
-        var servicios = $("#orden_servicios_servicios tr");
-        var fila = filas - 1;
-        var inicio = "<tr>";
-        var cups = '<td><input required type="text" name="cups" class="form-control orden_servicios_cups" value="' + servicios[fila].children[0].children.cups.value + '"></td>';
-        var descripcion = '<td><input required type="text" name="descripcion" readonly class="form-control orden_servicios_descripcion" value="' + servicios[fila].children[1].children.descripcion.value + '"></td>';
-        var cantidad = '<td><input required type="number" name="cantidad" class="form-control orden_servicios_cantidad" value="' + servicios[fila].children[2].children.cantidad.value + '"></td>';
-        var copago = '<td><input required type="number" step="0.01" name="copago" class="form-control orden_servicios_copago" value="' + servicios[fila].children[3].children.copago.value + '"></td>';
-        var valor_unitario = '<td><input required type="number" step="0.01" name="valor_unitario" class="form-control orden_servicios_valor_unitario" value="' + servicios[fila].children[4].children.valor_unitario.value + '"></td>';
-        var valor_total = '<td><input required type="number" step="0.01" name="valor_total" readonly class="form-control orden_servicios_valor_total" value="' + servicios[fila].children[5].children.valor_total.value + '"></td>';
-        var fin = "</tr>";
-        var servicio = inicio + cups + descripcion + cantidad + copago + valor_unitario + valor_total + fin;
-
-        if(filas > 1){
-            var contenido_anterior = "";
-            for(var i = 0; i < filas -1;i++){
-                contenido_anterior = contenido_anterior + servicios[i].outerHTML;
-            }
-            contenido_anterior = contenido_anterior + servicio;
-            orden_servicios_servicios.html(contenido_anterior);
-        }else{
-            orden_servicios_servicios.html(servicio);
-        }
-    }
 
     function valorTotal(fila) {
         var cantidad = parseInt(fila[0].children[2].children[0].value);
