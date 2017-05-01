@@ -138,6 +138,8 @@ return [
     Illuminate\Translation\TranslationServiceProvider::class,
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+
 
     /*
          * Application Service Providers...
@@ -147,7 +149,6 @@ return [
     App\Providers\EventServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
     Collective\Html\HtmlServiceProvider::class,
-    Barryvdh\DomPDF\ServiceProvider::class,
 ],
 
     /*
@@ -197,7 +198,7 @@ return [
     'Form' => 'Collective\Html\FormFacade',
     'Html' => 'Collective\Html\HtmlFacade',
     /*'PDF' => 'Barryvdh\DomPDF\Facade',*/
-    'PDF' => Barryvdh\DomPDF\Facade::class,
+     'PDF' => Barryvdh\DomPDF\Facade::class,
 
 ],
 

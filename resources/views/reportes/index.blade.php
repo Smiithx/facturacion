@@ -6,12 +6,12 @@
 
 <!-- opciones -->
 <div class="col-sm-12">
-  <a   class="btn btn-primary btn-lg" href="reportes/totalfacturado">Total facturado</a>
+  <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado">Total facturado</a>
 
-   <a   class="btn btn-primary btn-lg" href="reportes/Ordenesporfacturar">Ordenes por facturar</a>
-    <a   class="btn btn-primary btn-lg" href="reportes/Atencionesrealizadas">Atenciones realizadas</a>
-     <a   class="btn btn-primary btn-lg" href="reportes/Imprimirfactura">Imprimir factura</a>
-      <a   class="btn btn-primary btn-lg" href="reportes/Cuentadecobro">Cuenta de Cobro</a>
+   <a   class="btn btn-primary btn-lg" href="/reportes/Ordenesporfacturar">Ordenes por facturar</a>
+    <a   class="btn btn-primary btn-lg" href="/reportes/Atencionesrealizadas">Atenciones realizadas</a>
+     <a   class="btn btn-primary btn-lg" href="/reportes/Imprimirfactura">Imprimir factura</a>
+      <a   class="btn btn-primary btn-lg" href="/reportes/Cuentadecobro">Cuenta de Cobro</a>
 
    </div>
 

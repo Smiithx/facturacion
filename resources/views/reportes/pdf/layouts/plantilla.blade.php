@@ -37,4 +37,7 @@
     </table>
   </footer>
   
+  @yield('plantilla')    
+
+  
 

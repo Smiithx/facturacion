@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Aseguradora;
+use App\Contratos;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -12,9 +14,20 @@ class ReportesController extends Controller
 
 
 public function reportefacturacion() {
-   return view("reportes.totalfacturado");
+    $aseguradoras = Aseguradora::where('estado', 'Activo')->get();
+     $contratos = Contratos::where('estado', 'Activo')->get();
+             $contratoss = ['contratos' => $contratos];
+            return view('reportes.totalfacturado',compact('contratos','aseguradoras'));
 
 }
+    
+     public function reportefacturacionpdf() {
+           return view("reportes.pdf.totalfacturado");
+
+//  $pdf = PDF::loadView('reportes.pdf.totalfacturado');
+//  return $pdf->Stream('pruebapdf');
+}
+    
 public function Ordenesporfacturar() {
    return view("reportes.Ordenesporfacturar");
 
@@ -31,10 +44,7 @@ public function Cuentadecobro() {
    return view("reportes.Cuentadecobro");
 
 }
-    public function reportefacturacionpdf() {
-  $pdf = PDF::loadView('reportes.pdf.totalfacturado');
-  return $pdf->Stream('pruebapdf');
-}
+   
     /**
      * Display a listing of the resource.
      *

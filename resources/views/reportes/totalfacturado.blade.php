@@ -2,19 +2,24 @@
 @section('reportes') 
 <!-- Inicia reporte 1 -->
 <div class="col-sm-12">
-    <br>
     <form method="POST">
         <div class="form-group col-sm-3">
             <label>Aseguradora</label>
             <select class="form-control aseguradora" name="aseguradora">
-                <option></option>
+                <option value="">Selecciones una Aseguradora</option>
+                @foreach ($aseguradoras as $aseguradora)
+                <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
+                @endforeach
                 <option value="">Todas</option>
             </select>
         </div>
         <div class="form-group col-sm-3">
             <label>Contrato</label>
             <select class="form-control contrato" name="contrato">
-                <option></option>
+                <option value="">Seleccione un Contrato</option>
+                @foreach ($contratos as $contrato)
+                <option value="{{$contrato->id}}">{{$contrato->nombre}}</option>
+                @endforeach
                 <option value="">Todos</option>
             </select>
         </div>
@@ -40,7 +45,7 @@
             <button type="button" id="resulta_r1" class="btn btn-success pull-right"><i class="fa fa-search"></i> Buscar</button>
         </div>
     </form>
-   <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r1">
+    <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r1">
         <thead style="color:#fff; background: #3b5998;">
             <tr>
                 <th class="text-center">#</th>
@@ -49,13 +54,15 @@
                 <th class="text-center">Nombre</th>
                 <th class="text-center">Valor unitario</th>
                 <th class="text-center">Valor total</th>
-             
+
             </tr>
-           </thead>
+        </thead>
         <tbody>
 
         </tbody>
     </table>
+    <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado/pdf">Imprimir</a>
+
 </div>
 
 @stop

@@ -1,5 +1,5 @@
-   @include('reportes.pdf.layouts.plantilla')
-
+@extends('reportes.pdf.layouts.plantilla')
+@section('plantilla') 
   <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r1">
         <thead style="color:#fff; background: #3b5998;">
             <tr>
@@ -15,4 +15,5 @@
         <tbody>
 
         </tbody>
-    </table>
+    </table> 
+@endsection
