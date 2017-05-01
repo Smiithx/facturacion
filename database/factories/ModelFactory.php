@@ -39,18 +39,26 @@ $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
 $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
     return [
         'nombre' => $faker->name,
-         'nit' => $faker->regexify('[a-z0-9A-Z]{8}'), 
-         'estado' => $faker->randomElement(array('Activo','Inactivo'))
-      
+        'nit' => $faker->regexify('[a-z0-9A-Z]{8}'), 
+        'estado' => $faker->randomElement(array('Activo','Inactivo'))
+
     ];
 });
 
 $factory->define(App\Diagnosticos::class, function (Faker\Generator $faker) {
     return [
         'codigo' => $faker->regexify('[a-z0-9A-Z]{8}'), 
-         'descripcion' => $faker->name,
-         'estado' => $faker->randomElement(array('Activo','Inactivo'))
-      
+        'descripcion' => $faker->name,
+        'estado' => $faker->randomElement(array('Activo','Inactivo'))
+
     ];
 });
 
+$factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
+    return [
+        'nombre' => $faker->name,
+        'documento' => $faker->regexify('[a-z0-9]{8}'),
+        'aseguradora_id' =>$aseguradoras->random()->id,
+        'contrato' => $faker->regexify('[a-z0-9A-Z]{8}')
+    ];
+});

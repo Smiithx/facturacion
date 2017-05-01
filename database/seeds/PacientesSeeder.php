@@ -17,7 +17,7 @@ class PacientesSeeder extends Seeder
         $aseguradoras = Aseguradora::all();
         $pacientes = factory(Paciente::class)->times(20)->create();
         foreach ($pacientes as $paciente){
-            $aseguradoras->random()->pacientes()->save($paciente);
+        $aseguradoras->random()->pacientes()->save($paciente);
         }
     }
 }

@@ -8,6 +8,8 @@ use App\Servicios;
 use App\Paciente;
 use App\Aseguradora;
 use App\Empresa;
+use App\ordenservicios;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,6 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call('PacientesSeeder');
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');
+        ordenservicios::truncate();
+        $this->call('OrdendeserviciosSeeder');
         //Model::reguard();
 
 

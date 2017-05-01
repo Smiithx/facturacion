@@ -35,7 +35,7 @@ Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
-Route::get('Reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
+Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
 Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
 Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar');
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
