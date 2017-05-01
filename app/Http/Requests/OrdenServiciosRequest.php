@@ -53,20 +53,22 @@ class OrdenServiciosRequest extends Request
             $messages['cups.' . $key . '.required'] = 'El campo "Cups" es requerido en la fila ' . $key + 1 . '.';
         }
         foreach ($this->request->get('copago') as $key => $val) {
-            $rules['copago.' . $key] = 'required|numeric|min:0';
             $messages['copago.' . $key . '.required'] = 'El campo "copago" es requerido en la fila ' . $key + 1 . '.';
-            $messages['copago.' . $key . '.numeric'] = 'El campo "copago" en la fila ' . $key + 1 . 'debe ser un número.';
-            $messages['copago.' . $key . '.min.numeric'] = 'El campo :attribute en la fila ' . $key + 1 . ' debe ser mayor o igual a :min.';
+            $messages['copago.' . $key . '.numeric'] = 'El campo "copago" debe ser un número en la fila ' . $key + 1 . '.';
+            $messages['copago.' . $key . '.min.numeric'] = 'El campo copago debe ser mayor o igual a :min  en la fila ' . $key + 1 . '.';
         }
         foreach ($this->request->get('valor_unitario') as $key => $val) {
-            $rules['valor_unitario.' . $key] = 'required|numeric|min:0';
+            $messages['valor_unitario.' . $key . '.required'] = 'El campo "valor unitario" es requerido en la fila ' . $key + 1 . '.';
+            $messages['valor_unitario.' . $key . '.numeric'] = 'El campo "valor unitario" debe ser un número en la fila ' . $key + 1 . '.';
+            $messages['valor_unitario.' . $key . '.min.numeric'] = 'El campo valor unitario debe ser mayor o igual a :min  en la fila ' . $key + 1 . '.';
         }
         foreach ($this->request->get('valor_total') as $key => $val) {
             $rules['valor_total.' . $key] = 'required|numeric|min:0';
+            $messages['valor_total.' . $key . '.required'] = 'El campo "valor total" es requerido en la fila ' . $key + 1 . '.';
+            $messages['valor_total.' . $key . '.numeric'] = 'El campo "valor total" debe ser un número en la fila ' . $key + 1 . '.';
+            $messages['valor_total.' . $key . '.min.numeric'] = 'El campo valor total debe ser mayor o igual a :min  en la fila ' . $key + 1 . '.';
         }
-        foreach ($this->request->get('items') as $key => $val) {
-            $messages['items.' . $key . '.max'] = 'The field labeled "Book Title ' . $key . '" must be less than :max characters.';
-        }
+
         return $messages;
     }
 }
