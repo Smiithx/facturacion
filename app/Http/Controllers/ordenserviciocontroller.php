@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ordenservicios;
+use App\Http\Requests\OrdenServiciosRequest;
 
 class ordenserviciocontroller extends Controller
 {
@@ -16,33 +18,27 @@ class ordenserviciocontroller extends Controller
     }
 
     //
-    public function store(Request $request)
+    public function store(OrdenServiciosRequest $request)
     {
-
-        $this->validate($request, [
-            'nombre' => 'required|max:255',
-            'documento' => 'required|max:255',
-            'aseguradora_id' => 'required',
-            'contrato' => 'required|max:255',
+        $orden_de_servicio = ordenservicios::create([
+            'nombre' => $request->nombre,
+            'documento' => $request->documento,
+            'aseguradora_id' => (double) $request->aseguradora_id,
+            'contrato' => $request->contrato
         ]);
-        $count = count($request->cups);
-        for ($i = 0; $i < $count; $i++) {
-            $this->validate($request->cups[$i], [
-                'cups' => 'required|max:255'
-            ]);
-            $this->validate($request->copago[$i], [
-                'copago' => 'required|numeric|min:0.01'
-            ]);
-            $this->validate($request->valor_unitario[$i], [
-                'valor_unitario' => 'required|numeric|min:0.01'
-            ]);
-            $this->validate($request->valor_total[$i], [
-                'valor_total' => 'required|numeric|min:0.01'
+        for ($i = 0; $i < count($request->cups); $i++){
+
+            $total = ((double) $request->cantidad[$i] * (double) $request->valor_unitario[$i]) - (double) $request->copago[$i];
+            OrdenServicio_Items::create([
+                'id_orden_servicio' => $orden_de_servicio->id,
+                'cups' => $request->cups[$i],
+                'descripcion' => $request->descripcion[$i],
+                'cantidad' => (double) $request->cantidad[$i],
+                'copago' => (double) $request->copago[$i],
+                'valor_unitario' => (double) $request->valor_unitario[$i],
+                'valor_total' => $total
             ]);
         }
-        dd($request->all(), $request->cups, $request->copago, $request->valor_unitario, $request->valor_total);
-
-        ordenservicios::create($request->all());
-        return View('orden_servicio.create');
+        return 'Orden registrada';
     }
 }

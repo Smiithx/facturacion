@@ -52,9 +52,10 @@ $(function () {
     //-- declarar funciones auxiliares------------------------------------//
 
     function valorTotal(fila) {
+        console.log();
         var cantidad = parseInt(fila[0].children[2].children[0].value);
-        var valor_unitario = parseFloat(fila[0].children[3].children[0].value);
-        var copago = parseFloat(fila[0].children[4].children[0].value);
+        var copago = parseFloat(fila[0].children[3].children[0].value);
+        var valor_unitario = parseFloat(fila[0].children[4].children[0].value);
         if (Number.isNaN(cantidad)) {
             cantidad = 0;
         }

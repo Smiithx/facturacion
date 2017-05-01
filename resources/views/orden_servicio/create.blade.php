@@ -19,7 +19,7 @@
                     <input required readonly class="form-control" id="orden-nombre" type="text" name="nombre" value="{{old('nombre')}}"/>
                 </div>
                 <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                    <label for="label">Aseguradora:</label> 
+                    <label for="label">Aseguradora: {{old('aseguradora_id')}}</label>
                     <select required readonly class="form-control" name="aseguradora_id" id="orden-aseguradora">
                         <option value="{{old('aseguradora_id')}}">{{old('aseguradora_id')}}</option>
                     </select>

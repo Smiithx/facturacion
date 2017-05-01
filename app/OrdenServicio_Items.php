@@ -18,5 +18,5 @@ class OrdenServicio_Items extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_orden_servicio', 'cups','descripcion','cantidad','copago','valorunitario','valortotal'];
+    protected $fillable = ['id_orden_servicio', 'cups','descripcion','cantidad','copago','valor_unitario','valor_total'];
 }

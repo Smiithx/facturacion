@@ -48,25 +48,24 @@ class OrdenServiciosRequest extends Request
 
     public function messages()
     {
-        $messages = [];
+        $messages = ['aseguradora_id.required' => 'El campo aseguradora es requerido.' ];
         foreach ($this->request->get('cups') as $key => $val) {
-            $messages['cups.' . $key . '.required'] = 'El campo "Cups" es requerido en la fila ' . $key + 1 . '.';
+            $messages['cups.' . $key . '.required'] = 'El campo Cups es requerido en la fila ' . ($key + 1) . '.';
         }
         foreach ($this->request->get('copago') as $key => $val) {
-            $messages['copago.' . $key . '.required'] = 'El campo "copago" es requerido en la fila ' . $key + 1 . '.';
-            $messages['copago.' . $key . '.numeric'] = 'El campo "copago" debe ser un número en la fila ' . $key + 1 . '.';
-            $messages['copago.' . $key . '.min.numeric'] = 'El campo copago debe ser mayor o igual a :min  en la fila ' . $key + 1 . '.';
+            $messages['copago.' . $key . '.required'] = 'El campo copago es requerido en la fila ' . ($key + 1) . '.';
+            $messages['copago.' . $key . '.numeric'] = 'El campo copago debe ser un número en la fila ' . ($key + 1) . '.';
+            $messages['copago.' . $key . '.min.numeric'] = 'El campo copago debe ser mayor o igual a :min  en la fila ' . ($key + 1) . '.';
         }
         foreach ($this->request->get('valor_unitario') as $key => $val) {
-            $messages['valor_unitario.' . $key . '.required'] = 'El campo "valor unitario" es requerido en la fila ' . $key + 1 . '.';
-            $messages['valor_unitario.' . $key . '.numeric'] = 'El campo "valor unitario" debe ser un número en la fila ' . $key + 1 . '.';
-            $messages['valor_unitario.' . $key . '.min.numeric'] = 'El campo valor unitario debe ser mayor o igual a :min  en la fila ' . $key + 1 . '.';
+            $messages['valor_unitario.' . $key . '.required'] = 'El campo valor unitario es requerido en la fila ' . ($key + 1) . '.';
+            $messages['valor_unitario.' . $key . '.numeric'] = 'El campo valor unitario debe ser un número en la fila ' . ($key + 1) . '.';
+            $messages['valor_unitario.' . $key . '.min.numeric'] = 'El campo valor unitario debe ser mayor o igual a :min  en la fila ' . ($key + 1) . '.';
         }
         foreach ($this->request->get('valor_total') as $key => $val) {
-            $rules['valor_total.' . $key] = 'required|numeric|min:0';
-            $messages['valor_total.' . $key . '.required'] = 'El campo "valor total" es requerido en la fila ' . $key + 1 . '.';
-            $messages['valor_total.' . $key . '.numeric'] = 'El campo "valor total" debe ser un número en la fila ' . $key + 1 . '.';
-            $messages['valor_total.' . $key . '.min.numeric'] = 'El campo valor total debe ser mayor o igual a :min  en la fila ' . $key + 1 . '.';
+            $messages['valor_total.' . $key . '.required'] = 'El campo valor total es requerido en la fila ' . ($key + 1) . '.';
+            $messages['valor_total.' . $key . '.numeric'] = 'El campo valor total debe ser un número en la fila ' . ($key + 1) . '.';
+            $messages['valor_total.' . $key . '.min.numeric'] = 'El campo valor total debe ser mayor o igual a :min  en la fila ' . ($key + 1) . '.';
         }
 
         return $messages;
