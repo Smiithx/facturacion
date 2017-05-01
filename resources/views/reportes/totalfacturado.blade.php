@@ -23,24 +23,27 @@
                 <option value="">Todos</option>
             </select>
         </div>
+        
         <div class="form-group col-md-3">
             <label>Fecha inicio:</label>
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' name="fecha_inicio" id="fecha_inicio" class="form-control date" placeholder="Fecha inicio"/>
+            <div class='input-group date datepicker' id='datetimepicker1'>
+                <input type='text' name="fecha_inicio" id="fecha_inicio" class="form-control" placeholder="Fecha inicio"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
-            </div>
+            </div>            
         </div>
+        
         <div class="form-group col-md-3">
             <label>Fecha fin:</label>
-            <div class='input-group date' id='datetimepicker2'>
-                <input type='text' name="fecha_fin" id="fecha_fin" class="form-control date" placeholder="Fecha fin"/>
+            <div class='input-group date datepicker' id='datetimepicker2'>
+                <input type='text' name="fecha_fin" id="fecha_fin" class="form-control" placeholder="Fecha fin"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
+        
         <div class="form-group col-sm-12">
             <button type="button" id="resulta_r1" class="btn btn-success pull-right"><i class="fa fa-search"></i> Buscar</button>
         </div>
