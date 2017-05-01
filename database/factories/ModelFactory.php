@@ -55,10 +55,12 @@ $factory->define(App\Diagnosticos::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
+    $pacientes = \App\Paciente::all();
+    $paciente = $pacientes->random();
     return [
-        'nombre' => $faker->name,
-        'documento' => $faker->regexify('[a-z0-9]{8}'),
-        'aseguradora_id' =>$aseguradoras->random()->id,
-        'contrato' => $faker->regexify('[a-z0-9A-Z]{8}')
+        'nombre' => $paciente->nombre,
+        'documento' => $paciente->documento,
+        'aseguradora_id' => $paciente->aseguradora_id,
+        'contrato' => $paciente->contrato
     ];
 });

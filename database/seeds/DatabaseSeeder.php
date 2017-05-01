@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');
         ordenservicios::truncate();
-        $this->call('OrdendeserviciosSeeder');
+        $this->call('OrdenServiciosSeeder');
         //Model::reguard();
 
 
