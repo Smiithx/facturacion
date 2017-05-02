@@ -2,6 +2,8 @@
 @section('reportes') 
 <!-- Inicia reporte 1 -->
 <div class="col-sm-12">
+     <h3 class="text-center">Total Facturado</h3>
+
     <form method="POST">
         <div class="form-group col-sm-3">
             <label>Aseguradora</label>
@@ -64,7 +66,7 @@
 
         </tbody>
     </table>
-    <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado/pdf">Imprimir</a>
+    <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado/pdf" target="_blak">Imprimir</a>
 
 </div>
 

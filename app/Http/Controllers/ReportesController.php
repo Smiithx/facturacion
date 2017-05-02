@@ -22,26 +22,45 @@ public function reportefacturacion() {
 }
     
      public function reportefacturacionpdf() {
-           return view("reportes.pdf.totalfacturado");
-
-//  $pdf = PDF::loadView('reportes.pdf.totalfacturado');
-//  return $pdf->Stream('pruebapdf');
-}
+        $pdf = PDF::loadView('reportes.pdf.totalfacturado');
+         return $pdf->Stream('totalfacturado');
+     }
     
 public function Ordenesporfacturar() {
    return view("reportes.Ordenesporfacturar");
+
+}
+
+public function Ordenesporfacturarpdf() {
+  $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
+         return $pdf->Stream('Ordenesporfacturar');
 
 }
 public function Atencionesrealizadas() {
    return view("reportes.Atencionesrealizadas");
 
 }
+
+public function Atencionesrealizadaspdf() {
+  $pdf = PDF::loadView('reportes.pdf.Atencionesrealizadas');
+         return $pdf->Stream('Atencionesrealizadas');
+}
 public function Imprimirfactura() {
    return view("reportes.Imprimirfactura");
 
 }
+public function Imprimirfacturapdf() {
+   $pdf = PDF::loadView('reportes.pdf.Imprimirfactura');
+         return $pdf->Stream('Imprimirfactura');
+
+}
 public function Cuentadecobro() {
    return view("reportes.Cuentadecobro");
+
+}
+public function Cuentadecobropdf() {
+     $pdf = PDF::loadView('reportes.pdf.Cuentadecobro');
+         return $pdf->Stream('Cuentadecobro');
 
 }
    
