@@ -69,3 +69,9 @@ ul, ol {
 .alert-danger ul{
     list-style: disc; 
 }
+.table thead{
+    color: #fff;
+    background: #265a88;
+    border-color: #204d74;
+    background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
+}

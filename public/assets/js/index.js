@@ -19,7 +19,8 @@ $(function(){
             format: "yyyy/mm/dd",
             todayBtn: "linked",
             language: "es",
-            toggleActive: true
+            toggleActive: true,
+            autoclose: true
         });
     }
 
