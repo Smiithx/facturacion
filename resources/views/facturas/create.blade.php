@@ -7,12 +7,12 @@
         <form method="POST" action="/facturas">
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Contrato:</label>
-                <input  type="text" class="form-control" id="fact-contrato" name="fact-documento"/>
+                <input  type="text" class="form-control" id="facturar_contrato" name="facturar_contrato"/>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Desde:</label>  
                 <div class='input-group date datepicker' id='datetimepicker1'>
-                <input  type='text' name="fact-fecha_desde" id="fact-fecha_desde" class="form-control" placeholder="Desde"/>
+                <input  type='text' name="facturar_fecha_desde" id="facturar_fecha_desde" class="form-control" placeholder="Desde"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -25,7 +25,7 @@
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Hasta:</label>
                 <div class='input-group date datepicker' id='datetimepicker1'>
-                <input  type='text' name="fact-fecha_hasta" id="fact-fecha_hasta" class="form-control" placeholder="Hasta"/>
+                <input  type='text' name="facturar_fecha_hasta" id="facturar_fecha_hasta" class="form-control" placeholder="Hasta"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -34,7 +34,10 @@
 
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
              <label for="buscar">&nbsp</label>
-            <input type="button" name="fact-buscar" value="Buscar" class="input-group btn btn-success">
+            <input type="button" name="btn_facturar_buscar" value="Buscar" class="input-group btn btn-success" id="btn_facturar_buscar">
+
+            
+
         </div>
 
           
@@ -52,7 +55,7 @@
                     </tr>
                 </thead>
                
-                <tbody>
+                <tbody id="facturar_tbody">
 
 
                 </tbody>
@@ -66,7 +69,7 @@
         </form>
     </div>
 </div>
-<!-- formulario -->
 
-<!-- /formulario -->
+ <script src="{{asset('assets/js/factura.js')}}"></script>
 @endsection
+

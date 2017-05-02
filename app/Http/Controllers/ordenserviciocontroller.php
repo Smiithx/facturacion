@@ -41,4 +41,38 @@ class ordenserviciocontroller extends Controller
         }
         return 'Orden registrada';
     }
+
+
+    public function buscar($contrato,$desde,$hasta){
+  
+        $ordenservicios = ordenservicios::where('contrato', $contrato)->whereDate('created_at', '>=' , $desde)->whereDate('created_at', '<=' , $hasta)->get();
+            $ordenservicios = ['ordenservicios' => $ordenservicios];  
+            $facturar_tbody = "";
+            foreach ($ordenservicios as $orden) {             
+            
+          $facturar_tbody .= "<tr>
+          <td>$orden->descripcion</td>
+          <td>$orden->cups</td>
+          <td>$orden->cantidad</td>
+          <td>$orden->copago</td>
+          <td>$orden->valorunitario</td>
+          <td>$orden->valortotal</td> 
+          <td><input name='facturar' type='checkbox'></td>
+                    </tr>";    }   
+
+
+        if($ordenservicios != ""){
+            return response()->json([
+                'success' => 'true',
+                'facturar_tbody' => $facturar_tbody
+            ]);
+        }else{
+            return response()->json([
+                'error' => 'No existen pacientes con ese contrato'
+            ]);
+        }
+            
+
+
+    }
 }
