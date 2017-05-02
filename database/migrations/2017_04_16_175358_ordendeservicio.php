@@ -18,6 +18,7 @@ class Ordendeservicio extends Migration
             $table->string('documento',120);            
             $table->integer('aseguradora_id')->index();
             $table->string('contrato',50);
+            $table->decimal('orden_total', 42, 2);
             $table->timestamps();
         });
     }

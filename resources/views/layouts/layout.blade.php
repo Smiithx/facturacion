@@ -20,7 +20,7 @@
     <script src="{{asset('assets/js/datepicker/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.validate.js')}}"></script>
     <script src="{{asset('assets/js/localization/messages_es.js')}}"></script>
-
+    <script src="{{asset('assets/js/jquery.number.js')}}"></script>
 </head>
 <body>
 <header class="modal-header text-success text-center bg-success">

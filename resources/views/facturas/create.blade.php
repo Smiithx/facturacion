@@ -6,13 +6,13 @@
         <div class="row form-group">
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Contrato:</label>
-                <input type="text" class="form-control" id="facturar_contrato" name="facturar_contrato"/>
+                <input type="text" class="form-control" id="facturar_contrato" name="facturar_contrato" value="JDyqe4WF"/>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Desde:</label>
                 <div class='input-group date datepicker' id='datetimepicker1'>
                     <input type='text' name="facturar_fecha_desde" id="facturar_fecha_desde" class="form-control"
-                           placeholder="Desde"/>
+                           placeholder="Desde" value="2017-05-01"/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -22,7 +22,7 @@
                 <label for="label">Hasta:</label>
                 <div class='input-group date datepicker' id='datetimepicker1'>
                     <input type='text' name="facturar_fecha_hasta" id="facturar_fecha_hasta" class="form-control"
-                           placeholder="Hasta"/>
+                           placeholder="Hasta" value="2017-05-02"/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -51,6 +51,12 @@
                         </tr>
                         </thead>
                         <tbody id="facturar_tbody"></tbody>
+                        <tfoot>
+                        <tr>
+                            <th class="text-right" colspan="5">Total</th>
+                            <th class="text-right" colspan="1" id="facturar_total"></th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

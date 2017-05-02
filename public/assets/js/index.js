@@ -16,7 +16,7 @@ $(function(){
 
     if(campos_fecha.length > 0){
         campos_fecha.datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyy-mm-dd",
             todayBtn: "linked",
             language: "es",
             toggleActive: true,

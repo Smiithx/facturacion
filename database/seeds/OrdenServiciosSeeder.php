@@ -20,12 +20,14 @@ class OrdenServiciosSeeder extends Seeder
         $servicios = Servicios::where("estado", "=", "Activo")->get();
         foreach ($ordenes_de_servicios as $orden) {
             $items = $faker->numberBetween(1, 10);
+            $orden_total = 0;
             for ($i = 1; $i <= $items; $i++) {
                 $pos = $faker->numberBetween(0, count($servicios));
                 $cantidad = $faker->numberBetween(0, 10);
-                $copago = $faker->randomFloat(2);
-                $valor_unitario = $faker->randomFloat(2);
+                $valor_unitario = $faker->randomFloat(2,0);
+                $copago = $faker->randomFloat(2,0,($valor_unitario * $cantidad));
                 $valor_total = ($valor_unitario * $cantidad) - $copago;
+                $orden_total += $valor_total;
                 OrdenServicio_Items::create([
                     'id_orden_servicio' => $orden->id,
                     'cups' => $servicios[$pos]->cups,
@@ -36,6 +38,8 @@ class OrdenServiciosSeeder extends Seeder
                     'valor_total' => $valor_total
                 ]);
             }
+            $orden->orden_total = $orden_total;
+            $orden->save();
         }
     }
 }
