@@ -93,9 +93,15 @@ class ordenserviciocontroller extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id)    
     {
-        //
+    $ordenservicios = ordenservicios::where('id', $id)->get();
+    $OrdenServicio_Items = OrdenServicio_Items::where('id_orden_servicio', $id)->get();
+    $datos = ['ordenservicios'=>$ordenservicios, 'OrdenServicio_Items' => $OrdenServicio_Items];
+    
+   return view("orden_servicio.show",$datos);
+
+
     }
 
 }
