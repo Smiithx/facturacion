@@ -24,7 +24,7 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     facturar_tbody.html(respuesta.facturar_tbody);
-                    facturar_total.html($.number(respuesta.facturar_total,2));
+                    facturar_total.html(respuesta.facturar_total);
                     actualizarVariables();
                     facturar_all.prop('checked',true);
                     checkear();
