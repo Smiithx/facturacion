@@ -18,8 +18,8 @@ class FacturaController extends Controller
      */
     public function index(Request $request)
     {
-        $pacientes = Paciente::name($request->get('name'))->orderBy('id','DES')->paginate();
-        return View('facturas.index',['pacientes'=>$pacientes]);
+        $pacientes = Paciente::name($request->get('name'))->orderBy('id', 'DES')->paginate();
+        return View('facturas.index', ['pacientes' => $pacientes]);
     }
 
     /**
@@ -29,32 +29,34 @@ class FacturaController extends Controller
      */
     public function create()
     {
-             return View('facturas.create');
-   //
+        return View('facturas.create');
+        //
     }
-     
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
 
- $this->validate($request, [
-            'facturar_contrato' => 'required'           
-        ]);
+        if(is_null($request->facturar)){
+            dd($request->facturar,true);
+        }else{
+            dd($request->facturar,false);
+        }
 
-        
-        
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -65,7 +67,7 @@ class FacturaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -76,8 +78,8 @@ class FacturaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -88,7 +90,7 @@ class FacturaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

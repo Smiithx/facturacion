@@ -22,7 +22,7 @@ Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store']]);
 
 //----- Orden de servicios ----- //
-Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store']]);
+Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show']]);
 Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocontroller@buscar');
 
 //----- Radicacion ----- // 

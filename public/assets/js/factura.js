@@ -32,7 +32,7 @@ $(function () {
                 else {
                     facturar_tbody.html("");
                     facturar_total.html("");
-                    swal('Cancelled', respuesta.error, 'errors');
+                    swal('Cancelled', respuesta.error, 'error');
                     actualizarVariables();
                     facturar_all.prop('checked',false);
                     checkear();

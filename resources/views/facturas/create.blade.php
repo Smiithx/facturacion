@@ -2,11 +2,11 @@
 @section('content')
     <h3 class="text-center">Facturar</h3>
     <hr>
-    <form method="POST" action="/facturas">
+    <form method="POST" action="/facturas" target="_blank">
         <div class="row form-group">
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Contrato:</label>
-                <input type="text" class="form-control" id="facturar_contrato" name="facturar_contrato" value="JDyqe4WF"/>
+                <input type="text" class="form-control" id="facturar_contrato" name="contrato" value="Rlcn7ZD7"/>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Desde:</label>
@@ -22,7 +22,7 @@
                 <label for="label">Hasta:</label>
                 <div class='input-group date datepicker' id='datetimepicker1'>
                     <input type='text' name="facturar_fecha_hasta" id="facturar_fecha_hasta" class="form-control"
-                           placeholder="Hasta" value="2017-05-02"/>
+                           placeholder="Hasta" value="2017-05-03"/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -62,7 +62,7 @@
             </div>
         </div>
         <div class="form-group col-xs-12 col-md-12 col-lg-12">
-            <input class="btn btn-primary pull-right" type="submit" id="facturar" name="facturar" value="Facturar">
+            <input class="btn btn-primary pull-right" type="submit" id="btn-facturar" value="Facturar">
         </div>
         {{ csrf_field()}}
     </form>
