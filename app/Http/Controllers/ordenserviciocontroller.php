@@ -62,7 +62,7 @@ class ordenserviciocontroller extends Controller
             $facturar_total += $orden->orden_total;
             $total = number_format($orden->orden_total, 2);
             $facturar_tbody .= "<tr>
-          <td>$orden->id</td>
+          <td class='text-center'><a href='/ordenservicio/$orden->id' target='_blank'>$orden->id</a></td>
           <td>$orden->nombre</td>
           <td>$orden->documento</td>
           <td>$aseguradora->nombre</td>
@@ -86,4 +86,16 @@ class ordenserviciocontroller extends Controller
 
 
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
 }

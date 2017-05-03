@@ -9,7 +9,7 @@ use App\Paciente;
 use App\Aseguradora;
 use App\Empresa;
 use App\ordenservicios;
-use App\Diagnosticos;
+//use App\Diagnosticos;
 
 
 class DatabaseSeeder extends Seeder
@@ -21,13 +21,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
        // Model::unreguard();
-       Cie10::truncate();
-        $this->call('Cie10Seeder');
-        Medicamentos::truncate();
-        $this->call('MedicamentosSeeder');
-        Servicios::truncate();
-        $this->call('ServiciosSeeder');
+      // Cie10::truncate();
+
+        //Model::unreguard();
+        //Cie10::truncate();
+
+       // $this->call('Cie10Seeder');
+       // Medicamentos::truncate();
+      //  $this->call('MedicamentosSeeder');
+      //  Servicios::truncate();
+      //  $this->call('ServiciosSeeder');
 
         Aseguradora::truncate();
         $this->call('AseguradoraSeeder');
