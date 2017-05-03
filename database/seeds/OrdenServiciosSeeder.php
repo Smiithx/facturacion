@@ -35,7 +35,8 @@ class OrdenServiciosSeeder extends Seeder
                     'cantidad' => $cantidad,
                     'copago' => $copago,
                     'valor_unitario' => $valor_unitario,
-                    'valor_total' => $valor_total
+                    'valor_total' => $valor_total,
+                    'facturado' => 0
                 ]);
             }
             $orden->orden_total = $orden_total;

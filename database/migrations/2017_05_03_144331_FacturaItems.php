@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class OrdenServicioItems extends Migration
+class FacturaItems extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,15 @@ class OrdenServicioItems extends Migration
      */
     public function up()
     {
-        Schema::create('orden_servicio_items', function (Blueprint $table) {
+        Schema::create('factura_items', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('id_factura')->unsigned();
             $table->integer('id_orden_servicio')->unsigned();
+
+            $table->foreign('id_factura')->references('id')->on('facturas');
             $table->foreign('id_orden_servicio')->references('id')->on('ordendeservicio');
-            $table->string('cups',50);
-            $table->string('descripcion',100);
-            $table->decimal('cantidad', 42, 2);
-            $table->decimal('copago', 42, 2);
-            $table->decimal('valor_unitario', 42, 2);
-            $table->decimal('valor_total', 42, 2);
+
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class OrdenServicioItems extends Migration
      */
     public function down()
     {
-        Schema::drop('orden_servicio_items');
+        Schema::drop('factura_items');
     }
 }

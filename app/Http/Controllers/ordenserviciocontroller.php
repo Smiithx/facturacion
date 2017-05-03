@@ -39,7 +39,8 @@ class ordenserviciocontroller extends Controller
                 'cantidad' => (double)$request->cantidad[$i],
                 'copago' => (double)$request->copago[$i],
                 'valor_unitario' => (double)$request->valor_unitario[$i],
-                'valor_total' => $total
+                'valor_total' => $total,
+                'facturado' => 0
             ]);
         }
         $orden_de_servicio->orden_total = $orden_total;
@@ -51,7 +52,7 @@ class ordenserviciocontroller extends Controller
     public function buscar($contrato, $desde, $hasta)
     {
         $ordenservicios = ordenservicios::where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
-            ->whereDate('created_at', '<=', $hasta)->get();
+            ->whereDate('created_at', '<=', $hasta)->where('facturado',"0")->get();
         $facturar_tbody = "";
         $facturar_total = 0;
         $count = 0;
@@ -62,13 +63,16 @@ class ordenserviciocontroller extends Controller
             $facturar_total += $orden->orden_total;
             $total = number_format($orden->orden_total, 2);
             $facturar_tbody .= "<tr>
-          <td class='text-center'><a href='/ordenservicio/$orden->id' target='_blank'>$orden->id</a></td>
+          <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
           <td>$orden->nombre</td>
           <td>$orden->documento</td>
           <td>$aseguradora->nombre</td>
           <td>$fecha</td>
           <td class='text-right'>$total</td> 
-          <td class='text-center'><input name='facturar[]' data-value='$orden->orden_total' data-id='$count' type='checkbox' class='form-control facturar'></td>
+          <td class='text-center'>
+            <input name='facturar[]' data-value='$orden->orden_total' data-id='$count' type='checkbox' class='form-control facturar'>
+            <input type='hidden' name='orden[]' class='orden_id' value='$orden->id'>
+           </td>
            </tr>";
             $count++;
         }

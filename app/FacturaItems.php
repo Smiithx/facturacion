@@ -4,12 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Factura extends Model
+class FacturaItems extends Model
 {
-
-
-
-    protected $table = 'facturas';
+    protected $table = 'factura_items';
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +15,7 @@ class Factura extends Model
      */
     protected $fillable = [
         'id',
-        'contrato',
-        'created_at',
-        'factura_total',
+        'id_factura',
+        'id_orden_servicio',
     ];
 }

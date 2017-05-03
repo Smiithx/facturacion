@@ -14,8 +14,8 @@ class Facturas extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('documento',100);
-            $table->string('contrato',100);             
+            $table->string('contrato',100);
+            $table->decimal('factura_total', 42, 2);
             $table->timestamps();
         });
     }

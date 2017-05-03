@@ -2,17 +2,17 @@
 @section('content')
     <h3 class="text-center">Facturar</h3>
     <hr>
-    <form method="POST" action="/facturas" target="_blank">
+    <form method="POST" action="/facturas">
         <div class="row form-group">
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Contrato:</label>
-                <input type="text" class="form-control" id="facturar_contrato" name="contrato" value="Rlcn7ZD7"/>
+                <input type="text" class="form-control" id="facturar_contrato" name="contrato" value=""/>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Desde:</label>
                 <div class='input-group date datepicker' id='datetimepicker1'>
                     <input type='text' name="facturar_fecha_desde" id="facturar_fecha_desde" class="form-control"
-                           placeholder="Desde" value="2017-05-01"/>
+                           placeholder="Desde" value=""/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -22,7 +22,7 @@
                 <label for="label">Hasta:</label>
                 <div class='input-group date datepicker' id='datetimepicker1'>
                     <input type='text' name="facturar_fecha_hasta" id="facturar_fecha_hasta" class="form-control"
-                           placeholder="Hasta" value="2017-05-03"/>
+                           placeholder="Hasta" value=""/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>

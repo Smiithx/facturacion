@@ -19,7 +19,8 @@ class Contratos extends Migration
             $table->string('nombre',50);
             $table->string('nit',50);
             $table->integer('diasvencimiento');
-            $table->integer('id_manual')->index();
+           $table->integer('id_manual')->unsigned();
+           $table->foreign('id_manual')->references('id')->on('manuales');
             $table->integer('porcentaje');
             $table->enum('estado', array('Activo','Inactivo'));   
             $table->timestamps();

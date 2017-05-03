@@ -9,6 +9,7 @@ $(function () {
     var facturar_total = $("#facturar_total");
     var facturar_all = $("#facturar_all");
     var facturar = $(".facturar");
+    var orden_id = $(".orden_id");
 
     //-- Fin de declarar variables ======================= //
 
@@ -51,14 +52,17 @@ $(function () {
 
     function actualizarVariables(){
         facturar = $(".facturar");
+        orden_id = $(".orden_id");
         agregarEventos();
     }
 
     function checkear(){
         if(facturar_all.prop('checked')){
             facturar.prop('checked',true);
+            orden_id.removeAttr("disabled");
         }else{
             facturar.prop('checked',false);
+            orden_id.attr("disabled",true);
         }
         calcularValorTotal();
     }
@@ -88,6 +92,14 @@ $(function () {
         //-- Agregar eventos ================================= //
         facturar.on("click",function () {
             calcularValorTotal();
+            var checkbox = $(this);
+            var hideen = checkbox.parent()[0].children[1];
+
+            if(checkbox.prop('checked')){
+                hideen.removeAttribute('disabled');
+            }else{
+                hideen.setAttribute('disabled','disabled');
+            }
         });
 
     }
