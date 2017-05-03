@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Paciente;
 use Illuminate\Http\Request;
 
+use App\Factura;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -41,7 +42,13 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        return "Factura Registrada";
+
+ $this->validate($request, [
+            'facturar_contrato' => 'required'           
+        ]);
+
+        
+        
     }
 
     /**

@@ -70,7 +70,7 @@ class ordenserviciocontroller extends Controller
           <td>$aseguradora->nombre</td>
           <td>$fecha</td>
           <td class='text-right'>$total2</td> 
-          <td class='text-center'><input name='facturar[]' data-value='$orden->orden_total' data-id='$count' type='checkbox' class='form-control facturar'></td>
+          <td class='text-center'><input type='checkbox'  name='idfacturar[]' value='$orden->id' class='form-control facturar'></td>
            </tr>";
 
             $count++;
