@@ -50,44 +50,39 @@ class ordenserviciocontroller extends Controller
 
     public function buscar($contrato, $desde, $hasta)
     {
-        $ordenservicios = ordenservicios::where('contrato', $contrato)->whereDate('created_at', '>=', $desde)->whereDate('created_at', '<=', $hasta)->get();
+        $ordenservicios = ordenservicios::where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)->get();
         $facturar_tbody = "";
         $facturar_total = 0;
         $count = 0;
         foreach ($ordenservicios as $orden) {
-            $ordenservicio_items = OrdenServicio_Items::find($orden->id);
             $aseguradora = Aseguradora::find($orden->aseguradora_id);
             $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $orden->created_at);
             $fecha = $fecha->format('Y-m-d');
-            $total = $ordenservicio_items->valor_total;
-            $facturar_total +=  $total;
-            $total2 = number_format($ordenservicio_items->valor_total,2);// porque no queria sumar
-
+            $facturar_total += $orden->orden_total;
+            $total = number_format($orden->orden_total, 2);
             $facturar_tbody .= "<tr>
           <td>$orden->id</td>
           <td>$orden->nombre</td>
           <td>$orden->documento</td>
           <td>$aseguradora->nombre</td>
           <td>$fecha</td>
-          <td class='text-right'>$total2</td> 
-          <td class='text-center'><input type='checkbox'  name='idfacturar[]' value='$orden->id' class='form-control facturar'></td>
+          <td class='text-right'>$total</td> 
+          <td class='text-center'><input name='facturar[]' data-value='$orden->orden_total' data-id='$count' type='checkbox' class='form-control facturar'></td>
            </tr>";
-
             $count++;
-
         }
-  if ($facturar_tbody != "") {
-    
-             return response()->json([
-                 'success' => 'true',
-                'facturar_total' => $facturar_total,
-                 'facturar_tbody' => $facturar_tbody
-             ]);
+        if ($facturar_tbody != "") {
+            return response()->json([
+                'success' => 'true',
+                'facturar_tbody' => $facturar_tbody,
+                'facturar_total' => $facturar_total
+            ]);
         } else {
-             return response()->json([
-                 'error' => 'No existen pacientes con ese contrato'
-             ]);
-       }
+            return response()->json([
+                'error' => 'No existen pacientes con ese contrato'
+            ]);
+        }
 
 
     }
