@@ -12,6 +12,7 @@ use App\ordenservicios;
 use App\OrdenServicio_Items;
 use App\Factura;
 use App\FacturaItems;
+use App\Diagnosticos;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,8 +23,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //Model::unreguard();
 
+       // Model::unreguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
@@ -38,6 +39,8 @@ class DatabaseSeeder extends Seeder
         ordenservicios::truncate();
         Paciente::truncate();
         Aseguradora::truncate();
+        Diagnosticos::truncate();
+        Empresa::truncate();
 
         $this->call('Cie10Seeder');
         $this->call('MedicamentosSeeder');
@@ -53,7 +56,5 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         //Model::reguard();
-
-
     }
 }

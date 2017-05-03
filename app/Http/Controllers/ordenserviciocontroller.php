@@ -52,7 +52,7 @@ class ordenserviciocontroller extends Controller
     public function buscar($contrato, $desde, $hasta)
     {
         $ordenservicios = ordenservicios::where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
-            ->whereDate('created_at', '<=', $hasta)->where('facturado',"0")->get();
+            ->whereDate('created_at', '<=', $hasta)->where('facturado', "0")->get();
         $facturar_tbody = "";
         $facturar_total = 0;
         $count = 0;
@@ -99,7 +99,11 @@ class ordenserviciocontroller extends Controller
      */
     public function show($id)
     {
-        //
+        $ordenservicios = ordenservicios::where('id', $id)->get();
+        $OrdenServicio_Items = OrdenServicio_Items::where('id_orden_servicio', $id)->get();
+        $datos = ['ordenservicios' => $ordenservicios, 'OrdenServicio_Items' => $OrdenServicio_Items];
+
+        return view("orden_servicio.show", $datos);
     }
 
 }
