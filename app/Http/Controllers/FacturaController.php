@@ -54,11 +54,11 @@ class FacturaController extends Controller
         ]);
 
         $total = 0;
-        foreach ($request->orden as $id){
+        foreach ($request->orden as $id) {
             $orden = ordenservicios::find($id);
             FacturaItems::create([
-                'id_factura' =>  $factura->id,
-                'id_orden_servicio' =>  $orden->id,
+                'id_factura' => $factura->id,
+                'id_orden_servicio' => $orden->id,
             ]);
 
             $orden->facturado = 1;
@@ -82,26 +82,17 @@ class FacturaController extends Controller
      */
     public function show($id)
     {
-        $factura = Factura::find($id);// lo trae como objeto     
-          
-       
-        
+        $factura = Factura::findOrFail($id);// lo trae como objeto
+
+
         $FacturaItems = FacturaItems::where('id_factura', $id)->get();
         $ordenes = array();
         foreach ($FacturaItems as $item) {
-        $ordenservicios = ordenservicios::find($item->id_orden_servicio); 
-    
-      $ordenes[] =  $ordenservicios;
-
-
+            $ordenservicios = ordenservicios::find($item->id_orden_servicio);
+            $ordenes[] = $ordenservicios;
         }
-
-       
-    $datos = ['factura' => $factura,'ordenes' => $ordenes];
-
-
- return View("facturas.show", $datos);
-
+        $datos = ['factura' => $factura, 'ordenes' => $ordenes];
+        return View("facturas.show", $datos);
     }
 
     /**

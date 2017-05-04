@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\FacturaItems;
+use Carbon\Carbon;
 
 class Factura extends Model
 {
-
 
 
     protected $table = 'facturas';
@@ -23,9 +23,16 @@ class Factura extends Model
         'created_at',
         'factura_total',
     ];
-      
-       public function FacturaItems(){
+
+    public function FacturaItems()
+    {
         return $this->belongsTo(FacturaItems::class);
-    
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $value);
+        $fecha = $fecha->format('Y-m-d');
+        return $fecha;
     }
 }

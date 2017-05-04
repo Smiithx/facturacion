@@ -1,6 +1,7 @@
 //función que se ejecuta al cargar la pagina
 $(function () {
     //-- Declarar variables =============================== //
+    var orden_documento_id_paciente = $("#orden-documento-id-paciente");
     var orden_documento = $("#orden-documento");
     var orden_nombre = $("#orden-nombre");
     var orden_aseguradora = $("#orden-aseguradora");
@@ -81,6 +82,7 @@ $(function () {
                 if (respuesta.success) {
                     orden_nombre.val(respuesta.paciente.nombre);
                     orden_contrato.val(respuesta.paciente.contrato);
+                    orden_documento_id_paciente.val(respuesta.paciente.id);
                     var aseguradora_id = respuesta.paciente.aseguradora_id;
                     var url = "/Aseguradora/" + respuesta.paciente.aseguradora_id;
                     $.ajax({
@@ -99,9 +101,8 @@ $(function () {
                             console.log(e);
                         }
                     });
-
-
                 } else {
+                    orden_documento_id_paciente.val("");
                     orden_nombre.val("");
                     orden_aseguradora.html("<option value=''></option>");
                     orden_contrato.val("");
@@ -110,6 +111,7 @@ $(function () {
                 orden_nombre.val("");
                 orden_aseguradora.html("<option value=''></option>");
                 orden_contrato.val("");
+                orden_documento_id_paciente.val("");
             }
         });
     }

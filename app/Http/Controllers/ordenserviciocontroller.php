@@ -25,6 +25,7 @@ class ordenserviciocontroller extends Controller
         $orden_de_servicio = ordenservicios::create([
             'nombre' => $request->nombre,
             'documento' => $request->documento,
+            'id_paciente' => $request->id_paciente,
             'aseguradora_id' => (double)$request->aseguradora_id,
             'contrato' => $request->contrato
         ]);
@@ -57,17 +58,15 @@ class ordenserviciocontroller extends Controller
         $facturar_total = 0;
         $count = 0;
         foreach ($ordenservicios as $orden) {
-            $aseguradora = Aseguradora::find($orden->aseguradora_id);
-            $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $orden->created_at);
-            $fecha = $fecha->format('Y-m-d');
             $facturar_total += $orden->orden_total;
             $total = number_format($orden->orden_total, 2);
+            $aseguradora = $orden->aseguradora_id->nombre;
             $facturar_tbody .= "<tr>
           <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
           <td>$orden->nombre</td>
           <td>$orden->documento</td>
-          <td>$aseguradora->nombre</td>
-          <td>$fecha</td>
+          <td>$aseguradora</td>
+          <td>$orden->created_at</td>
           <td class='text-right'>$total</td> 
           <td class='text-center'>
             <input name='facturar[]' data-value='$orden->orden_total' data-id='$count' type='checkbox' class='form-control facturar'>
@@ -84,7 +83,7 @@ class ordenserviciocontroller extends Controller
             ]);
         } else {
             return response()->json([
-                'error' => 'No existen pacientes con ese contrato'
+                'error' => 'No se encontraron ordenes de servicios.'
             ]);
         }
 
@@ -99,9 +98,9 @@ class ordenserviciocontroller extends Controller
      */
     public function show($id)
     {
-        $ordenservicios = ordenservicios::where('id', $id)->get();
+        $ordenservicio = ordenservicios::findOrFail($id);
         $OrdenServicio_Items = OrdenServicio_Items::where('id_orden_servicio', $id)->get();
-        $datos = ['ordenservicios' => $ordenservicios, 'OrdenServicio_Items' => $OrdenServicio_Items];
+        $datos = ['ordenservicio' => $ordenservicio, 'OrdenServicio_Items' => $OrdenServicio_Items];
 
         return view("orden_servicio.show", $datos);
     }

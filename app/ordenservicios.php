@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class ordenservicios extends Model
 {
@@ -23,6 +24,15 @@ class ordenservicios extends Model
     public function aseguradora(){
         return $this->belongsTo(Aseguradora::class);
     }
-    
 
+    public function getCreatedAtAttribute($value)
+    {
+        $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $value);
+        $fecha = $fecha->format('Y-m-d');
+        return $fecha;
+    }
+    public function getAseguradoraIdAttribute($value)
+    {
+        return \App\Aseguradora::find($value);
+    }
 }

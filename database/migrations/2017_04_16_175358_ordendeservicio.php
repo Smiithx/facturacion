@@ -15,9 +15,11 @@ class Ordendeservicio extends Migration
         Schema::create('ordendeservicio', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',120);            
-            $table->string('documento',120);            
+            $table->string('documento',120);
             $table->integer('aseguradora_id')->unsigned();
             $table->foreign('aseguradora_id')->references('id')->on('aseguradoras');
+            $table->integer('id_paciente')->unsigned();
+            $table->foreign('id_paciente')->references('id')->on('pacientes');
             $table->string('contrato',50);
             $table->decimal('orden_total', 42, 2);
             $table->boolean('facturado');
