@@ -6,7 +6,6 @@ use App\FacturaItems;
 use App\ordenservicios;
 use App\Paciente;
 use Illuminate\Http\Request;
-
 use App\Factura;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -83,7 +82,15 @@ class FacturaController extends Controller
      */
     public function show($id)
     {
-        //
+
+       
+
+       $facturas = Factura::where('id', $id)->get();
+        $FacturaItems = FacturaItems::where('id_factura', $id)->get();
+
+        $datos = ['facturas' => $facturas,'FacturaItems' => $FacturaItems];
+
+     return View("facturas.show", $datos);
     }
 
     /**

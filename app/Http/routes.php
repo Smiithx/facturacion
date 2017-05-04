@@ -19,7 +19,7 @@ Route::resource('pacientes', 'PacienteController');
 Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 
 //----- Facturas ----- //
-Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store']]);
+Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
 
 //----- Orden de servicios ----- //
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show']]);

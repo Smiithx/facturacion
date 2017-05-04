@@ -23,5 +23,6 @@ class ordenservicios extends Model
     public function aseguradora(){
         return $this->belongsTo(Aseguradora::class);
     }
+    
 
 }

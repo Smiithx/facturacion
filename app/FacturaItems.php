@@ -2,7 +2,9 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
+
 
 class FacturaItems extends Model
 {
@@ -18,4 +20,5 @@ class FacturaItems extends Model
         'id_factura',
         'id_orden_servicio',
     ];
+
 }

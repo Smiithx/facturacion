@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\FacturaItems;
 
 class Factura extends Model
 {
@@ -22,4 +23,9 @@ class Factura extends Model
         'created_at',
         'factura_total',
     ];
+      
+       public function FacturaItems(){
+        return $this->belongsTo(FacturaItems::class);
+    
+    }
 }
