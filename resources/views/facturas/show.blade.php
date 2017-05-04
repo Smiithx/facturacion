@@ -1,8 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-@foreach($facturas as $factura)   
 
-@endforeach  
     <h3 class="text-center">Factura # {{ $factura->id }}</h3>
     <hr>
 
@@ -43,14 +41,14 @@
                         </tr>
                         </thead>
                         <tbody id="facturar_tbody">
-                            @foreach($FacturaItems as $FacturaItem)    
+                            @foreach($ordenes as $orden)    
                             <tr>
-                                <td>{{ $FacturaItem->id_orden_servicio}}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $orden->id}}</td>
+                                <td>{{ $orden->nombre}}</td>
+                                <td>{{ $orden->documento}}</td>
+                                <td>{{ $orden->aseguradora_id}}</td>
+                                <td>{{ $orden->created_at}}</td>
+                                <td>{{ $orden->orden_total}}</td>
 
                             </tr>
 

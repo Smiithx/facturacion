@@ -82,15 +82,26 @@ class FacturaController extends Controller
      */
     public function show($id)
     {
+        $factura = Factura::find($id);// lo trae como objeto     
+          
+       
+        
+        $FacturaItems = FacturaItems::where('id_factura', $id)->get();
+        $ordenes = array();
+        foreach ($FacturaItems as $item) {
+        $ordenservicios = ordenservicios::find($item->id_orden_servicio); 
+    
+      $ordenes[] =  $ordenservicios;
+
+
+        }
 
        
+    $datos = ['factura' => $factura,'ordenes' => $ordenes];
 
-       $facturas = Factura::where('id', $id)->get();
-        $FacturaItems = FacturaItems::where('id_factura', $id)->get();
 
-        $datos = ['facturas' => $facturas,'FacturaItems' => $FacturaItems];
+ return View("facturas.show", $datos);
 
-     return View("facturas.show", $datos);
     }
 
     /**
