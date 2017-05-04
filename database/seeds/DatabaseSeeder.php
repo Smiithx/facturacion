@@ -33,14 +33,14 @@ class DatabaseSeeder extends Seeder
         Servicios::truncate();
         Cie10::truncate();
         Medicamentos::truncate();
-        FacturaItems::truncate();
-        Factura::truncate();
         OrdenServicio_Items::truncate();
         ordenservicios::truncate();
         Paciente::truncate();
         Aseguradora::truncate();
         Diagnosticos::truncate();
         Empresa::truncate();
+        FacturaItems::truncate();
+        Factura::truncate();
 
         $this->call('Cie10Seeder');
         $this->call('MedicamentosSeeder');
@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
+        $this->call('FacturasSeeder');
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity

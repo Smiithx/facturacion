@@ -18,25 +18,8 @@ class TestController extends Controller
      */
     public function index()
     {
-        $faker = Faker::create();
-        $array = [];
-        for($i = 1; $i <= 10; $i++){
-            $array[] =[
-                'documento' => $faker->regexify('[a-z0-9]{8}'),
-                'tipo_documento' => $faker->randomElement(array('CC', 'TI','RC','CE','AS','MS','PA')),
-                'nombre' => $faker->name,
-                'edad' => $faker->numberBetween($min = 1, $max = 90),
-                'tipo_edad' => $faker->randomElement(array('Años', 'Meses','Dias')),
-                'fecha_nacimiento' => $faker->date($format = 'Y-m-d', $max = 'now'),
-                'sexo' => $faker->randomElement(array('Masculino','Femenino')),
-                'telefono' => $faker->phoneNumber,
-                'direccion' => $faker->address,
-                'aseguradora' => $faker->company,
-                'contrato' => $faker->regexify('[a-z0-9A-Z]{8}'),
-                'regimen' => $faker->randomElement(array('Contributivo', 'Subsidiado','Vinculado','Particular','Otro','Desplazado Contributivo','Desplazado Subsidiado','Desplazado Vinculado'))
-            ];
-        }
-        dd($array);
+        $ordenes = \App\ordenservicios::select('contrato')->groupBy('contrato')->get();
+        dd($ordenes);
     }
 
     /**

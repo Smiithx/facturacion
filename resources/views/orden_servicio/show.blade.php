@@ -2,7 +2,6 @@
 @section('content')
     <h3 class="text-center">Orden de servicio</h3>
     <hr>
-    {{ csrf_field() }}
     <div class="form-group col-xs-12 col-md-3 col-lg-3">
         <label for="label">Documento:</label>
         <input readonly type="text" class="form-control" id="orden-documento" name="documento"
@@ -41,19 +40,21 @@
                 </thead>
                 <tbody id="orden_servicios_servicios">
                 @foreach($OrdenServicio_Items as $OrdenServicio_Item)
-
                     <tr>
                         <td>{{ $OrdenServicio_Item->cups }}</td>
                         <td>{{ $OrdenServicio_Item->descripcion }}</td>
-                        <td>{{ number_format($OrdenServicio_Item->cantidad,2) }}</td>
-                        <td>{{ number_format($OrdenServicio_Item->copago,2) }}</td>
-                        <td>{{ number_format($OrdenServicio_Item->valor_unitario,2) }}</td>
-                        <td>{{ number_format($OrdenServicio_Item->valor_total,2) }}</td>
+                        <td class="text-right">{{ number_format($OrdenServicio_Item->cantidad,2) }}</td>
+                        <td class="text-right">{{ number_format($OrdenServicio_Item->copago,2) }}</td>
+                        <td class="text-right">{{ number_format($OrdenServicio_Item->valor_unitario,2) }}</td>
+                        <td class="text-right">{{ number_format($OrdenServicio_Item->valor_total,2) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
                 <tfoot>
-
+                <tr>
+                    <th colspan="5" class="text-right">Total</th>
+                    <th class="text-right">{{ number_format($ordenservicio->orden_total,2) }}</th>
+                </tr>
                 </tfoot>
             </table>
         </div>

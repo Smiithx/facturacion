@@ -16,6 +16,7 @@ class Facturas extends Migration
             $table->increments('id');
             $table->string('contrato',100);
             $table->decimal('factura_total', 42, 2);
+            $table->boolean('radicada');
             $table->timestamps();
         });
     }
