@@ -104,6 +104,8 @@ class FacturaController extends Controller
 
     }
 
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -136,5 +138,26 @@ class FacturaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+        public function buscar($aseguradora,$contrato, $desde, $hasta)
+    {
+        $facturas = Factura::where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)->get();
+
+
+        foreach ($facturas as $FacturaItem) {
+        $facturasitem = FacturaItems::where('id_Factura', $FacturaItem->id); 
+
+
+        }
+         
+    
+
+
+  
+       
+
+
     }
 }
