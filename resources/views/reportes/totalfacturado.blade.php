@@ -11,7 +11,7 @@
                 @foreach ($aseguradoras as $aseguradora)
                 <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
                 @endforeach
-                <option value="12313">Todas</option>
+                <option value="all">Todas</option>
             </select>
         </div>
         <div class="form-group col-sm-3">
@@ -20,7 +20,7 @@
                 @foreach ($contratos as $contrato)
                 <option value="{{$contrato->contrato}}">{{$contrato->contrato}}</option>
                 @endforeach
-                <option value="12312">Todos</option>
+                <option value="all">Todos</option>
             </select>
         </div>
         
@@ -37,7 +37,7 @@
         <div class="form-group col-md-3">
             <label>Fecha fin:</label>
             <div class='input-group date datepicker' id='datetimepicker2'>
-                <input type='text' name="totalfacturado_fecha_fin" id="totalfacturado_fecha_fin" class="form-control" placeholder="Fecha fin"/>
+                <input  type='text' name="totalfacturado_fecha_fin" id="totalfacturado_fecha_fin" class="form-control" placeholder="Fecha fin"/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
