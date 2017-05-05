@@ -80,21 +80,49 @@ class FacturaController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $factura = Factura::findOrFail($id);// lo trae como objeto
+        if ($request->ajax()) {
+            try {
+                $factura = Factura::findOrFail($id);// lo trae como objeto
+                $radicacion_tbody = "<tr>
+                        <td class=\"text-center\">
+                            <a href=\"/facturas/$factura->id\" target='_blank'>$factura->id</a>
+                         </td>
+                        <td>$factura->contrato</td>
+                        <td>$factura->created_at</td>
+                        <td class=\"text-right\">" . number_format($factura->factura_total, 2) . "</td>
+                    </tr>";
 
+                if (is_null($factura)) {
+                    return response()->json([
+                        'error' => 'Numero de factura desconocido.'
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => 'true',
+                        'factura' => $factura,
+                        'radicacion_factura_tbody' => $radicacion_tbody
+                    ]);
+                }
+            }  catch (\Exception $e) {
+                return response()->json([
+                    'error' => 'Numero de factura desconocido.'
+                ],200);
+            }
+        } else {
+            $factura = Factura::findOrFail($id);// lo trae como objeto
+            $FacturaItems = FacturaItems::where('id_factura', $id)->get();
+            $ordenes = array();
+            foreach ($FacturaItems as $item) {
+                $ordenservicios = ordenservicios::find($item->id_orden_servicio);
+                $ordenes[] = $ordenservicios;
+            }
+            $datos = ['factura' => $factura, 'ordenes' => $ordenes];
+            return View("facturas.show", $datos);
 
-        $FacturaItems = FacturaItems::where('id_factura', $id)->get();
-        $ordenes = array();
-        foreach ($FacturaItems as $item) {
-            $ordenservicios = ordenservicios::find($item->id_orden_servicio);
-            $ordenes[] = $ordenservicios;
         }
-        $datos = ['factura' => $factura, 'ordenes' => $ordenes];
-        return View("facturas.show", $datos);
     }
-
 
 
     /**
@@ -131,24 +159,28 @@ class FacturaController extends Controller
         //
     }
 
-        public function buscar($aseguradora,$contrato, $desde, $hasta)
+    public function buscar($aseguradora, $contrato, $desde, $hasta)
     {
         $facturas = Factura::where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)->get();
-
-
         foreach ($facturas as $FacturaItem) {
-        $facturasitem = FacturaItems::where('id_Factura', $FacturaItem->id); 
-
-
+            $facturasitem = FacturaItems::where('id_Factura', $FacturaItem->id);
         }
-         
-    
+    }
+    public function radicar($contrato, $desde, $hasta)
+    {
+        $facturas = Factura::where("radicada",0)->where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)->get();
 
-
-  
-       
-
-
+        if(count($facturas) > 0){
+            return response()->json([
+                'success' => true,
+                'facturas' => $facturas
+            ]);
+        }else{
+            return response()->json([
+                'error' => "No se encontraron facturas pendientes por radicar."
+            ]);
+        }
     }
 }

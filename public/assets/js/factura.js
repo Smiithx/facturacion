@@ -67,20 +67,16 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     totalfacturado_tbody.html(respuesta.facturar_tbody);
-                  
                 }
                 else {
                     totalfacturado_tbody.html("");
                     swal('Cancelled', respuesta.error, 'error');
-                   
                 }
             }, error: function (e) {
                 console.log(e);
             }
         });
     });
-
-  
 
     //-- declarar funciones auxiliares------------------------------------//
 

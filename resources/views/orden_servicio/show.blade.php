@@ -52,7 +52,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="5" class="text-right">Total</th>
+                    <th colspan="5" class="text-right">Total: </th>
                     <th class="text-right">{{ number_format($ordenservicio->orden_total,2) }}</th>
                 </tr>
                 </tfoot>

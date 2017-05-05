@@ -75,3 +75,9 @@ ul, ol {
     border-color: #204d74;
     background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
 }
+/*.table tfoot tr th{
+    color: #fff;
+    background: #265a88;
+    border-color: #204d74;
+    background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
+}*/

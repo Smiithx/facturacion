@@ -19,7 +19,7 @@
     <div class="col-xs-12">
         <div class="row">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
+                <table class="table table-striped table-hover">
                     <thead>
 
                     <tr>
@@ -47,7 +47,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th class="text-right" colspan="5">Total facturado</th>
+                        <th colspan="5" class="text-right">Total facturado:</th>
                         <th class="text-right" colspan="1">{{number_format($factura->factura_total, 2) }}</th>
                     </tr>
                     </tfoot>
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="form-group col-xs-12 col-md-12 col-lg-12">
-        <a href="/facturas" class="btn btn-default pull-right">Regresar</a>
+        <a href="/facturas" class="btn btn-primary pull-right">Regresar</a>
     </div>
 @endsection
 

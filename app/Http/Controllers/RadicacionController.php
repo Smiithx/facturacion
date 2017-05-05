@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Factura;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class RadicacionController extends Controller
 {
@@ -26,7 +29,17 @@ class RadicacionController extends Controller
      */
     public function create()
     {
-        return View("radicacion.create");
+        return View("radicacion.create.factura");
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function radicarContrato()
+    {
+        return View("radicacion.create.contrato");
     }
 
     /**
@@ -37,7 +50,16 @@ class RadicacionController extends Controller
      */
     public function store(Request $request)
     {
-        return "Radicación registrada";
+        $this->validate($request,[
+            'id_factura' => 'required',
+            'fecha_radicacion' => 'required',
+            'factura' => 'required'
+        ]);
+        $factura = Factura::findOrFail($request->id_factura);
+        $factura->radicada = 1;
+        $factura->save();
+        flash('Factura radicada con exito!');
+        return Redirect::to("radicacion/create");
     }
 
     /**
