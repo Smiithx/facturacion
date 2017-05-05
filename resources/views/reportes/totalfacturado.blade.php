@@ -8,21 +8,19 @@
         <div class="form-group col-sm-3">
             <label>Aseguradora</label>
             <select class="form-control aseguradora" name="totalfacturado_aseguradora" id="totalfacturado_aseguradora">
-                <option value="">Selecciones una Aseguradora</option>
                 @foreach ($aseguradoras as $aseguradora)
                 <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
                 @endforeach
-                <option value="">Todas</option>
+                <option value="12313">Todas</option>
             </select>
         </div>
         <div class="form-group col-sm-3">
             <label>Contrato</label>
             <select class="form-control contrato" name="totalfacturado_contrato" id="totalfacturado_contrato">
-                <option value="">Seleccione un Contrato</option>
                 @foreach ($contratos as $contrato)
-                <option value="{{$contrato->id}}">{{$contrato->nombre}}</option>
+                <option value="{{$contrato->contrato}}">{{$contrato->contrato}}</option>
                 @endforeach
-                <option value="">Todos</option>
+                <option value="12312">Todos</option>
             </select>
         </div>
         
@@ -65,6 +63,14 @@
         <tbody id="totalfacturado_tbody">
 
         </tbody>
+     
+
+                    <tfoot>
+                        <tr>
+                            <th class="text-right" colspan="5">Total</th>
+                            <th class="text-right" colspan="1" id="total_facturado"></th>
+                        </tr>
+                        </tfoot>
     </table>
     <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado/pdf" target="_blak">Imprimir</a>
 
