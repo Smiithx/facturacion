@@ -18,6 +18,8 @@ $(function () {
     var totalfacturado_fecha_fin = $("#totalfacturado_fecha_fin");
     var btn_totalfacturado_buscar = $("#btn_totalfacturado_buscar");
     var totalfacturado_tbody = $("#totalfacturado_tbody");
+        var total_facturado = $("#total_facturado");
+
 
     //-- Fin de declarar variables ======================= //
 
@@ -66,7 +68,8 @@ $(function () {
             dataType: "json",
             success: function (respuesta) {
                 if (respuesta.success) {
-                    totalfacturado_tbody.html(respuesta.facturar_tbody);
+                    totalfacturado_tbody.html(respuesta.totalfacturado_tbody);
+                    total_facturado.html(respuesta.total_facturado);
                 }
                 else {
                     totalfacturado_tbody.html("");
@@ -123,12 +126,12 @@ $(function () {
         facturar.on("click",function () {
             calcularValorTotal();
             var checkbox = $(this);
-            var hideen = checkbox.parent()[0].children[1];
+            var hidden = checkbox.parent()[0].children[1];
 
             if(checkbox.prop('checked')){
-                hideen.removeAttribute('disabled');
+                hidden.removeAttribute('disabled');
             }else{
-                hideen.setAttribute('disabled','disabled');
+                hidden.setAttribute('disabled','disabled');
             }
         });
 

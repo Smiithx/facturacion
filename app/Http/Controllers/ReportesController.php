@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Aseguradora;
 use App\Contratos;
-
+use App\Factura;
+use App\FacturaItems;
+use App\ordenservicios;
+use App\OrdenServicio_items;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use PDF;
@@ -22,8 +25,21 @@ public function reportefacturacion() {
 }
     
      public function reportefacturacionpdf() {
-        $pdf = PDF::loadView('reportes.pdf.totalfacturado');
-         return $pdf->Stream('totalfacturado');
+     $data =  [
+            'quantity'      => '1' ,
+            'description'   => 'some ramdom text',
+            'price'   => '500',
+            'total'     => '500'
+        ];
+
+     
+$view =  \View::make('reportes.pdf.totalfacturado', compact('data'))->render();
+              $pdf = \App::make('dompdf.wrapper');
+     $pdf->loadHTML($view);
+      return $pdf->stream('totalfacturado');
+
+        //$pdf = PDF::loadView('reportes.pdf.totalfacturado');
+        //return $pdf->Stream('totalfacturado',compact('facturas'));
      }
     
 public function Ordenesporfacturar() {
@@ -32,10 +48,11 @@ public function Ordenesporfacturar() {
 }
 
 public function Ordenesporfacturarpdf() {
-  $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
-         return $pdf->Stream('Ordenesporfacturar');
+ $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
+      return $pdf->Stream('Ordenesporfacturar');
 
 }
+
 public function Atencionesrealizadas() {
    return view("reportes.Atencionesrealizadas");
 
