@@ -49,6 +49,8 @@ Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
 Route::get('reportes/Imprimirfactura/pdf', 'ReportesController@Imprimirfacturapdf');
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
 Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
+Route::get('reportes/radicacion', 'ReportesController@radicacion');
+Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
 
 
 //----- Administracion ----- //
