@@ -42,7 +42,9 @@
 
         </tbody>
     </table>
-     <a   class="btn btn-primary btn-lg" href="/reportes/Ordenesporfacturar/pdf" target="_blak">Imprimir</a>
+     <a   class="btn btn-primary btn-lg" href="/reportes/Radicacion/pdf" target="_blak">Imprimir</a>
 </div>
+    <script src="{{asset('assets/js/radicacion.js')}}"></script>
+
 @stop
 <!-- Termina reporte 2 -->
