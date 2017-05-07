@@ -18,7 +18,7 @@ $(function () {
     var totalfacturado_fecha_fin = $("#totalfacturado_fecha_fin");
     var btn_totalfacturado_buscar = $("#btn_totalfacturado_buscar");
     var totalfacturado_tbody = $("#totalfacturado_tbody");
-        var total_facturado = $("#total_facturado");
+    var total_facturado = $("#total_facturado");
 
 
     //-- Fin de declarar variables ======================= //
@@ -37,7 +37,7 @@ $(function () {
                     facturar_tbody.html(respuesta.facturar_tbody);
                     facturar_total.html(respuesta.facturar_total);
                     actualizarVariables();
-                    facturar_all.prop('checked',true);
+                    facturar_all.prop('checked', true);
                     checkear();
                 }
                 else {
@@ -45,7 +45,7 @@ $(function () {
                     facturar_total.html("");
                     swal('Cancelled', respuesta.error, 'error');
                     actualizarVariables();
-                    facturar_all.prop('checked',false);
+                    facturar_all.prop('checked', false);
                     checkear();
                 }
             }, error: function (e) {
@@ -53,7 +53,7 @@ $(function () {
             }
         });
     });
-  facturar_all.on("change",function () {
+    facturar_all.on("change", function () {
         checkear();
     });
 
@@ -83,55 +83,55 @@ $(function () {
 
     //-- declarar funciones auxiliares------------------------------------//
 
-    function actualizarVariables(){
+    function actualizarVariables() {
         facturar = $(".facturar");
         orden_id = $(".orden_id");
         agregarEventos();
     }
 
-    function checkear(){
-        if(facturar_all.prop('checked')){
-            facturar.prop('checked',true);
+    function checkear() {
+        if (facturar_all.prop('checked')) {
+            facturar.prop('checked', true);
             orden_id.removeAttr("disabled");
-        }else{
-            facturar.prop('checked',false);
-            orden_id.attr("disabled",true);
+        } else {
+            facturar.prop('checked', false);
+            orden_id.attr("disabled", true);
         }
         calcularValorTotal();
     }
-    
+
     function calcularValorTotal() {
         var count = facturar.length;
         var total = 0;
-        if (count > 0){
-            for(var i = 0; i < count; i++ ){
-                var orden = $(".facturar[data-id='"+i+"']");
-                if(orden.prop('checked')){
+        if (count > 0) {
+            for (var i = 0; i < count; i++) {
+                var orden = $(".facturar[data-id='" + i + "']");
+                if (orden.prop('checked')) {
                     total = total + parseFloat(orden.attr("data-value"));
                 }
             }
-            facturar_total.html($.number(total,2));
-        }else{
+            facturar_total.html($.number(total, 2));
+        } else {
             facturar_total.html("");
         }
     }
 
-    function eliminarEventos(){
+    function eliminarEventos() {
         facturar.unbind("change");
     }
 
     function agregarEventos() {
         eliminarEventos();
         //-- Agregar eventos ================================= //
-        facturar.on("click",function () {
+        facturar.on("click", function () {
             calcularValorTotal();
             var checkbox = $(this);
             var hidden = checkbox.parent()[0].children[1];
 
-            if(checkbox.prop('checked')){
+            if (checkbox.prop('checked')) {
                 hidden.removeAttribute('disabled');
-            }else{
-                hidden.setAttribute('disabled','disabled');
+            } else {
+                hidden.setAttribute('disabled', 'disabled');
             }
         });
 

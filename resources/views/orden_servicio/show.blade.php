@@ -2,29 +2,34 @@
 @section('content')
     <h3 class="text-center">Orden de servicio</h3>
     <hr>
-    <div class="form-group col-xs-12 col-md-3 col-lg-3">
+    <div class="col-xs-12 col-md-2">
         <label for="label">Documento:</label>
         <input readonly type="text" class="form-control" id="orden-documento" name="documento"
                value="{{ $ordenservicio->documento }}"/>
     </div>
-    <div class="form-group col-xs-12 col-md-3 col-lg-3">
+    <div class="col-xs-12 col-md-3 col-lg-3">
         <label for="label">Nombre:</label>
         <input readonly class="form-control" id="orden-nombre" type="text" name="nombre"
                value="{{ $ordenservicio->nombre }}"/>
     </div>
-    <div class="form-group col-xs-12 col-md-3 col-lg-3">
+    <div class="col-xs-12 col-md-3 col-lg-3">
         <label for="label">Aseguradora:</label>
         <input type="text" readonly class="form-control" name="aseguradora_id" id="orden-aseguradora"
                value="{{ $ordenservicio->aseguradora_id->nombre }}">
 
     </div>
-    <div class="form-group col-xs-12 col-md-3 col-lg-3">
+    <div class="col-xs-12 col-md-2">
         <label for="label">Contrato:</label>
         <input readonly class="form-control" id="orden-contrato" type="text" name="contrato"
                value="{{ $ordenservicio->contrato }}"/>
     </div>
-    <br>
-    <br>
+    <div class="col-xs-12 col-md-2">
+        <label for="label">N° de factura:</label>
+        <input readonly class="form-control text-right" type="text"
+               value="{{ $factura ? $factura : "" }}"/>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
     <div class="col-xs-12">
         <div class="table-responsive">
             <table class="table table-striped table-hover" id="tbl_factura">
