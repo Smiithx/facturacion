@@ -29,7 +29,6 @@
                 </div>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
-                <label for="buscar">&nbsp</label>
                 <input type="button" name="btn_facturar_buscar" value="Buscar" class="input-group btn btn-success"
                        id="btn_facturar_buscar">
             </div>
@@ -46,7 +45,8 @@
                             <th class="text-center">Aseguradora</th>
                             <th class="text-center">Fecha</th>
                             <th class="text-center">Total</th>
-                            <th class="text-center"><input name='all' type='checkbox' id='facturar_all'>
+                            <th class="text-center">
+                                <input name='all' type='checkbox' id='facturar_all'>
                             </th>
                         </tr>
                         </thead>

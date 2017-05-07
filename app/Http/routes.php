@@ -30,6 +30,7 @@ Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocont
 //----- Radicacion ----- // 
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
 Route::get('radicacion/contrato/create', 'RadicacionController@radicarContrato');
+Route::post('radicacion/contrato', 'RadicacionController@storeContrato');
 
 //----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);

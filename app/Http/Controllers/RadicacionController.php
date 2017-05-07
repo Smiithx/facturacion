@@ -59,7 +59,31 @@ class RadicacionController extends Controller
         $factura->radicada = 1;
         $factura->save();
         flash('Factura radicada con exito!');
-        return Redirect::to("radicacion/create");
+        return Redirect::to("/radicacion/create");
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeContrato(Request $request)
+    {
+        $this->validate($request,[
+            'contrato' => 'required',
+            'fecha_radicacion' => 'required',
+            'facturas' => 'required'
+        ]);
+        foreach ($request->facturas as $id_factura){
+            $factura = Factura::findOrFail($id_factura);
+            $factura->radicada = 1;
+            $factura->fecha_radicacion = $request->fecha_radicacion;
+            $factura->save();
+        }
+
+        flash('Las facturas han sido radicadas exitosamente!');
+        return Redirect::to("/radicacion/contrato/create");
     }
 
     /**

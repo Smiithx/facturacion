@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Aseguradora;
+use App\FacturaItems;
 use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -100,7 +101,12 @@ class ordenserviciocontroller extends Controller
     {
         $ordenservicio = ordenservicios::findOrFail($id);
         $OrdenServicio_Items = OrdenServicio_Items::where('id_orden_servicio', $id)->get();
-        $datos = ['ordenservicio' => $ordenservicio, 'OrdenServicio_Items' => $OrdenServicio_Items];
+        $factura_item = FacturaItems::select('id_factura')->where('id_orden_servicio', $id)->get();
+        $factura = 0;
+        if(count($factura_item) > 0){
+            $factura = $factura_item[0]->id_factura;
+        }
+        $datos = ['ordenservicio' => $ordenservicio, 'OrdenServicio_Items' => $OrdenServicio_Items, 'factura' => $factura];
 
         return view("orden_servicio.show", $datos);
     }
