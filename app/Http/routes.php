@@ -31,6 +31,7 @@ Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocont
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
 Route::get('radicacion/contrato/create', 'RadicacionController@radicarContrato');
 Route::post('radicacion/contrato', 'RadicacionController@storeContrato');
+Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 
 //----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
@@ -50,7 +51,8 @@ Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
 Route::get('reportes/Imprimirfactura/pdf', 'ReportesController@Imprimirfacturapdf');
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
 Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
-
+Route::get('reportes/radicacion', 'ReportesController@radicacion');
+Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
 
 //----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);

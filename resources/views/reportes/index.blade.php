@@ -12,6 +12,7 @@
     <a   class="btn btn-primary btn-lg" href="/reportes/Atencionesrealizadas">Atenciones realizadas</a>
      <a   class="btn btn-primary btn-lg" href="/reportes/Imprimirfactura">Imprimir factura</a>
       <a   class="btn btn-primary btn-lg" href="/reportes/Cuentadecobro">Cuenta de Cobro</a>
+      <a   class="btn btn-primary btn-lg" href="/reportes/radicacion">Facturas Radicadas</a>
 
    </div>
 

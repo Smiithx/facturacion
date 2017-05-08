@@ -21,6 +21,12 @@ $(function () {
     var radicacion_contrato_radicar = $(".radicacion_contrato_radicar");
     var radicacion_contrato_total = $("#radicacion_contrato_total");
 
+    //REPORTE Radicacion
+    var radicacion_fecha_inicio = $("#radicacion_fecha_inicio");
+    var radicacion_fecha_fin = $("#radicacion_fecha_fin");
+    var btn_radicacion_buscar = $("#btn_radicacion_buscar");
+    var radicacion_tbody = $("#radicacion_tbody");
+
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
@@ -35,6 +41,28 @@ $(function () {
 
     radicacion_contrato_all.on("change", function () {
         checkear();
+    });
+
+
+    btn_radicacion_buscar.on("click", function () {
+        var url = "/radicacion/buscar/" + radicacion_fecha_inicio.val() +
+            "/" + radicacion_fecha_fin.val(); //la ruta que se desea ir y pasando los parametros
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    radicacion_tbody.html(respuesta.radicacion_tbody);
+                }
+                else {
+                    radicacion_tbody.html("");
+                    swal('Cancelled', respuesta.error, 'error');
+                }
+            }, error: function (e) {
+                console.log(e);
+            }
+        });
     });
 
     //-- declarar funciones auxiliares------------------------------------//
