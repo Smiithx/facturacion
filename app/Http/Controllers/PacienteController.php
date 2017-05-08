@@ -22,8 +22,8 @@ class PacienteController extends Controller
      */
     public function index(Request $request)
     {
-        $pacientes = Paciente::name($request->get('name'))->orderBy('id','DES')->paginate();
-        return View('pacientes.index',['pacientes'=>$pacientes]);
+        $pacientes = Paciente::name($request->get('name'))->orderBy('id', 'DES')->paginate();
+        return View('pacientes.index', ['pacientes' => $pacientes]);
     }
 
     /**
@@ -35,13 +35,13 @@ class PacienteController extends Controller
     {
         $aseguradoras = Aseguradora::all();
         $datos = ['aseguradoras' => $aseguradoras];
-        return View('pacientes.create',$datos);
+        return View('pacientes.create', $datos);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -66,54 +66,55 @@ class PacienteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  String  $documento
+     * @param  String $documento
      * @return \Illuminate\Http\Response
      */
     public function documento($documento)
     {
-        $paciente = Paciente::where("documento","=",$documento)->get();
+        $paciente = Paciente::where("documento", "=", $documento)->get();
 
-        if($paciente != "[]"){
+        if ($paciente != "[]") {
             return response()->json([
                 'success' => 'true',
                 'paciente' => $paciente[0]
             ]);
-        }else{
+        } else {
             return response()->json([
                 'error' => 'No existen pacientes con ese numero de documento'
             ]);
-        } 
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $paciente = Paciente::findOrFail($id);
         $aseguradoras = Aseguradora::all();
-        $datos = ['paciente'=>$paciente, 'aseguradoras' => $aseguradoras];
-        return view("pacientes.edit",$datos);
+        $datos = ['paciente' => $paciente, 'aseguradoras' => $aseguradoras];
+        return view("pacientes.edit", $datos);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -127,19 +128,19 @@ class PacienteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $paciente = Paciente::findOrFail($id);
 
-        if($paciente->delete()){
+        if ($paciente->delete()) {
             return response()->json([
                 'success' => 'true',
                 'mensaje' => "El paciente #$id ha sido eliminado."
             ]);
-        }else{
+        } else {
             return response()->json([
                 'error' => "Error al eliminar el paciente #$id."
             ]);

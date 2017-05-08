@@ -34,7 +34,9 @@
         @include('partials.errors')
     </div>
 @endif
-
+<div class="container">
+    @include('flash::message')
+</div>
 <!-- /menu -->
 <!-- formulario -->
 <div class="container modal-header bg-info">

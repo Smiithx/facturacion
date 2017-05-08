@@ -81,21 +81,49 @@ class FacturaController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $factura = Factura::findOrFail($id);// lo trae como objeto
+        if ($request->ajax()) {
+            try {
+                $factura = Factura::findOrFail($id);// lo trae como objeto
+                $radicacion_tbody = "<tr>
+                        <td class=\"text-center\">
+                            <a href=\"/facturas/$factura->id\" target='_blank'>$factura->id</a>
+                         </td>
+                        <td>$factura->contrato</td>
+                        <td>$factura->created_at</td>
+                        <td class=\"text-right\">" . number_format($factura->factura_total, 2) . "</td>
+                    </tr>";
 
+                if (is_null($factura)) {
+                    return response()->json([
+                        'error' => 'Numero de factura desconocido.'
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => 'true',
+                        'factura' => $factura,
+                        'radicacion_factura_tbody' => $radicacion_tbody
+                    ]);
+                }
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => 'Numero de factura desconocido.'
+                ], 200);
+            }
+        } else {
+            $factura = Factura::findOrFail($id);// lo trae como objeto
+            $FacturaItems = FacturaItems::where('id_factura', $id)->get();
+            $ordenes = array();
+            foreach ($FacturaItems as $item) {
+                $ordenservicios = ordenservicios::find($item->id_orden_servicio);
+                $ordenes[] = $ordenservicios;
+            }
+            $datos = ['factura' => $factura, 'ordenes' => $ordenes];
+            return View("facturas.show", $datos);
 
-        $FacturaItems = FacturaItems::where('id_factura', $id)->get();
-        $ordenes = array();
-        foreach ($FacturaItems as $item) {
-            $ordenservicios = ordenservicios::find($item->id_orden_servicio);
-            $ordenes[] = $ordenservicios;
         }
-        $datos = ['factura' => $factura, 'ordenes' => $ordenes];
-        return View("facturas.show", $datos);
     }
-
 
 
     /**
@@ -132,183 +160,196 @@ class FacturaController extends Controller
         //
     }
 
-        
-        public function buscar($aseguradora,$contrato, $desde, $hasta)   
-         {
-            //inicio de traer todo las aseguradoras y todos los contratos
+    public function radicar($contrato, $desde, $hasta)
+    {
+        $facturas = Factura::where("radicada", 0)->where('contrato', $contrato)->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)->get();
+
+        if (count($facturas) > 0) {
+            return response()->json([
+                'success' => true,
+                'facturas' => $facturas
+            ]);
+        } else {
+            return response()->json([
+                'error' => "No se encontraron facturas pendientes por radicar."
+            ]);
+        }
+    }
+
+
+    public function buscar($aseguradora, $contrato, $desde, $hasta)
+    {
+        //inicio de traer todo las aseguradoras y todos los contratos
         if ($aseguradora == "all" and $contrato == "all") {
-               $facturas = Factura::select("facturas.created_at","factura_items.id_factura","ordendeservicio.documento","ordendeservicio.nombre","orden_servicio_items.valor_unitario","orden_servicio_items.valor_total")
-            ->join("factura_items","facturas.id","=","factura_items.id_factura")  
-            ->join("ordendeservicio","factura_items.id_orden_servicio","=","ordendeservicio.id") 
-            ->join("orden_servicio_items","ordendeservicio.id","=","orden_servicio_items.id_orden_servicio")   
-                        ->whereDate('facturas.created_at', '>=', $desde)
-            ->whereDate('facturas.created_at', '<=', $hasta)
-            ->get();
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+                ->whereDate('facturas.created_at', '>=', $desde)
+                ->whereDate('facturas.created_at', '<=', $hasta)
+                ->get();
 
-           $totalfacturado_tbody = "";  
-            $total_facturado2 = 0;     
-     
-        foreach ($facturas as $factura) { 
-        $total_facturado2 += $factura->valor_total;  
+            $totalfacturado_tbody = "";
+            $total_facturado2 = 0;
 
-         $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
+            foreach ($facturas as $factura) {
+                $total_facturado2 += $factura->valor_total;
+
+                $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>".number_format($factura->valor_unitario,2)."</td>
-          <td>".number_format($factura->valor_total,2)."</td>          
+          <td>" . number_format($factura->valor_unitario, 2) . "</td>
+          <td>" . number_format($factura->valor_total, 2) . "</td>          
            </tr>";
-          
-        }
-
-              $total_facturado = number_format($total_facturado2,2);
-                   if ($totalfacturado_tbody != "") {
-            return response()->json([
-                'success' => 'true',
-                'totalfacturado_tbody' => $totalfacturado_tbody,
-                 'total_facturado' => $total_facturado
-            ]);
-                 } else {
-                     return response()->json([
-                'error' => 'No se encontraron facturas.'
-                 ]);
-                }
             }
 
-            //inicio de traer todo las aseguradoras
-            if ($aseguradora == "all" and $contrato !==  "all") {
-                   $facturas = Factura::select("facturas.created_at","factura_items.id_factura","ordendeservicio.documento","ordendeservicio.nombre","orden_servicio_items.valor_unitario","orden_servicio_items.valor_total")
-            ->join("factura_items","facturas.id","=","factura_items.id_factura")  
-            ->join("ordendeservicio","factura_items.id_orden_servicio","=","ordendeservicio.id") 
-            ->join("orden_servicio_items","ordendeservicio.id","=","orden_servicio_items.id_orden_servicio")   
-            ->where('facturas.contrato', $contrato)
-            ->whereDate('facturas.created_at', '>=', $desde)
-            ->whereDate('facturas.created_at', '<=', $hasta)
-            ->get();
+            $total_facturado = number_format($total_facturado2, 2);
+            if ($totalfacturado_tbody != "") {
+                return response()->json([
+                    'success' => 'true',
+                    'totalfacturado_tbody' => $totalfacturado_tbody,
+                    'total_facturado' => $total_facturado
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No se encontraron facturas.'
+                ]);
+            }
+        }
 
-           $totalfacturado_tbody = "";  
-            $total_facturado2 = 0;     
-     
-        foreach ($facturas as $factura) { 
-        $total_facturado2 += $factura->valor_total;  
+        //inicio de traer todo las aseguradoras
+        if ($aseguradora == "all" and $contrato !== "all") {
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+                ->where('facturas.contrato', $contrato)
+                ->whereDate('facturas.created_at', '>=', $desde)
+                ->whereDate('facturas.created_at', '<=', $hasta)
+                ->get();
 
-         $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
+            $totalfacturado_tbody = "";
+            $total_facturado2 = 0;
+
+            foreach ($facturas as $factura) {
+                $total_facturado2 += $factura->valor_total;
+
+                $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>".number_format($factura->valor_unitario,2)."</td>
-          <td>".number_format($factura->valor_total,2)."</td>          
+          <td>" . number_format($factura->valor_unitario, 2) . "</td>
+          <td>" . number_format($factura->valor_total, 2) . "</td>          
            </tr>";
-          
-        }
 
-              $total_facturado = number_format($total_facturado2,2);
-                   if ($totalfacturado_tbody != "") {
-            return response()->json([
-                'success' => 'true',
-                'totalfacturado_tbody' => $totalfacturado_tbody,
-                 'total_facturado' => $total_facturado
-            ]);
-                 } else {
-                     return response()->json([
-                'error' => 'No se encontraron facturas.'
-                 ]);
-                }
-             
             }
 
-            //inicio de traer todo las contrato
-            elseif ($contrato == "all" and $aseguradora !==  "all") {
-                    $facturas = Factura::select("facturas.created_at","factura_items.id_factura","ordendeservicio.documento","ordendeservicio.nombre","orden_servicio_items.valor_unitario","orden_servicio_items.valor_total")
-            ->join("factura_items","facturas.id","=","factura_items.id_factura")  
-            ->join("ordendeservicio","factura_items.id_orden_servicio","=","ordendeservicio.id") 
-            ->join("orden_servicio_items","ordendeservicio.id","=","orden_servicio_items.id_orden_servicio")   
-                      ->where('ordendeservicio.aseguradora_id', $aseguradora)
+            $total_facturado = number_format($total_facturado2, 2);
+            if ($totalfacturado_tbody != "") {
+                return response()->json([
+                    'success' => 'true',
+                    'totalfacturado_tbody' => $totalfacturado_tbody,
+                    'total_facturado' => $total_facturado
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No se encontraron facturas.'
+                ]);
+            }
 
-            ->whereDate('facturas.created_at', '>=', $desde)
-            ->whereDate('facturas.created_at', '<=', $hasta)
-            ->get();
+        } //inicio de traer todo las contrato
+        elseif ($contrato == "all" and $aseguradora !== "all") {
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+                ->where('ordendeservicio.aseguradora_id', $aseguradora)
+                ->whereDate('facturas.created_at', '>=', $desde)
+                ->whereDate('facturas.created_at', '<=', $hasta)
+                ->get();
 
-           $totalfacturado_tbody = "";  
-            $total_facturado2 = 0;     
-     
-        foreach ($facturas as $factura) { 
-        $total_facturado2 += $factura->valor_total;  
+            $totalfacturado_tbody = "";
+            $total_facturado2 = 0;
 
-         $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
+            foreach ($facturas as $factura) {
+                $total_facturado2 += $factura->valor_total;
+
+                $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>".number_format($factura->valor_unitario,2)."</td>
-          <td>".number_format($factura->valor_total,2)."</td>          
+          <td>" . number_format($factura->valor_unitario, 2) . "</td>
+          <td>" . number_format($factura->valor_total, 2) . "</td>          
            </tr>";
-          
-        }
 
-              $total_facturado = number_format($total_facturado2,2);
-                   if ($totalfacturado_tbody != "") {
-            return response()->json([
-                'success' => 'true',
-                'totalfacturado_tbody' => $totalfacturado_tbody,
-                 'total_facturado' => $total_facturado
-            ]);
-                 } else {
-                     return response()->json([
-                'error' => 'No se encontraron facturas.'
-                 ]);
-                }
-                
             }
 
-            //inicio de traer todo con los parametros
+            $total_facturado = number_format($total_facturado2, 2);
+            if ($totalfacturado_tbody != "") {
+                return response()->json([
+                    'success' => 'true',
+                    'totalfacturado_tbody' => $totalfacturado_tbody,
+                    'total_facturado' => $total_facturado
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No se encontraron facturas.'
+                ]);
+            }
 
-            if ($contrato !==  "all" and $aseguradora !==  "all") {
-     $facturas = Factura::select("facturas.created_at","factura_items.id_factura","ordendeservicio.documento","ordendeservicio.nombre","orden_servicio_items.valor_unitario","orden_servicio_items.valor_total")
-            ->join("factura_items","facturas.id","=","factura_items.id_factura")  
-            ->join("ordendeservicio","factura_items.id_orden_servicio","=","ordendeservicio.id") 
-            ->join("orden_servicio_items","ordendeservicio.id","=","orden_servicio_items.id_orden_servicio")   
-            ->where('facturas.contrato', $contrato)
-            ->where('ordendeservicio.aseguradora_id', $aseguradora)
-            ->whereDate('facturas.created_at', '>=', $desde)
-            ->whereDate('facturas.created_at', '<=', $hasta)
-            ->get();
+        }
 
-           $totalfacturado_tbody = "";  
-            $total_facturado2 = 0;     
-     
-        foreach ($facturas as $factura) { 
-        $total_facturado2 += $factura->valor_total;  
+        //inicio de traer todo con los parametros
 
-         $totalfacturado_tbody .= "<tr> 
+        if ($contrato !== "all" and $aseguradora !== "all") {
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+                ->where('facturas.contrato', $contrato)
+                ->where('ordendeservicio.aseguradora_id', $aseguradora)
+                ->whereDate('facturas.created_at', '>=', $desde)
+                ->whereDate('facturas.created_at', '<=', $hasta)
+                ->get();
+
+            $totalfacturado_tbody = "";
+            $total_facturado2 = 0;
+
+            foreach ($facturas as $factura) {
+                $total_facturado2 += $factura->valor_total;
+
+                $totalfacturado_tbody .= "<tr> 
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>".number_format($factura->valor_unitario,2)."</td>
-          <td>".number_format($factura->valor_total,2)."</td>          
+          <td>" . number_format($factura->valor_unitario, 2) . "</td>
+          <td>" . number_format($factura->valor_total, 2) . "</td>          
            </tr>";
-          
+
+            }
+
+            $total_facturado = number_format($total_facturado2, 2);
+            if ($totalfacturado_tbody != "") {
+                return response()->json([
+                    'success' => 'true',
+                    'totalfacturado_tbody' => $totalfacturado_tbody,
+                    'total_facturado' => $total_facturado
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No se encontraron facturas.'
+                ]);
+            }
+
         }
 
-              $total_facturado = number_format($total_facturado2,2);
-                   if ($totalfacturado_tbody != "") {
-            return response()->json([
-                'success' => 'true',
-                'totalfacturado_tbody' => $totalfacturado_tbody,
-                 'total_facturado' => $total_facturado
-            ]);
-                 } else {
-                     return response()->json([
-                'error' => 'No se encontraron facturas.'
-                 ]);
-                }
 
-            }
+    }
 
-
-       
-            }
 }

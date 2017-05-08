@@ -80,7 +80,15 @@ public function Cuentadecobropdf() {
          return $pdf->Stream('Cuentadecobro');
 
 }
-   
+  public function radicacion() {
+   return view("reportes.Radicacion");
+
+}
+public function radicacionpdf() {
+     $pdf = PDF::loadView('reportes.pdf.Radicacion');
+         return $pdf->Stream('Radicacion');
+
+} 
     /**
      * Display a listing of the resource.
      *
