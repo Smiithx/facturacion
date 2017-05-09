@@ -196,7 +196,7 @@ class FacturaController extends Controller
             foreach ($facturas as $factura) {
                 $total_facturado2 += $factura->valor_total;
 
-                $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
+                $totalfacturado_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>

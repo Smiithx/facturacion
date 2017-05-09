@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Glosas;
+use App\Factura;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -37,7 +41,20 @@ class GlosasController extends Controller
      */
     public function store(Request $request)
     {
-        return "La glosas fue creada";
+        
+
+       $this->validate($request, [
+            'id_factura' => 'required|max:255',
+            'contrato' => 'required|max:255',
+            'valor_glosa' => 'required',
+            'valor_aceptado' => 'required'            
+        ]);
+
+        $glosas = Glosas::create($request->all());
+       /* $glosas = Glosas::all();
+        $datos = ['glosas' => $glosas];*/
+        flash('Glosas creada con exito!');
+        return Redirect::to("/glosas/create");
     }
 
     /**
@@ -84,4 +101,39 @@ class GlosasController extends Controller
     {
         //
     }
+
+
+ public function buscar($factura, $contrato, $desde, $hasta){
+   
+    $Facturas = Factura::where('id',$factura)
+            ->orWhere('contrato', $contrato)
+            ->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)->get();
+
+
+            $glosas_tbody = "";
+           
+            foreach ($Facturas as $factura) {
+$glosas_tbody .= "<tr>
+         <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+          <td>$factura->fecha_radicacion</td>
+          <td>". number_format($factura->factura_total, 2) ."</td>
+          <td><input style='width: 100%;' type='number' step='0.00' name='valor_glosa' required></td>
+          <td><input style='width: 100%;' type='number' step='0.00' name='valor_aceptado' required></td>
+           </tr>";
+            }
+
+           if ($glosas_tbody != "") {
+                return response()->json([
+                  'success' => 'true',
+                    'glosas_tbody' => $glosas_tbody
+               ]);
+            } else {
+                 return response()->json([
+                     'error' => 'No se encontraron Facturas.'
+                 ]);
+             }
+        
+      }
+
 }
