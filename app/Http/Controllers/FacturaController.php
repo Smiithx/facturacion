@@ -182,7 +182,7 @@ class FacturaController extends Controller
     {
         //inicio de traer todo las aseguradoras y todos los contratos
         if ($aseguradora == "all" and $contrato == "all") {
-            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre",  "orden_servicio_items.valor_total")
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre",  "facturas.factura_total")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
                 ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
@@ -196,14 +196,14 @@ class FacturaController extends Controller
             $total_facturado2 = 0;
 
             foreach ($facturas as $factura) {
-                $total_facturado2 += $factura->valor_total;
+                $total_facturado2 += $factura->factura_total;
 
                 $totalfacturado_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>" . number_format($factura->valor_total, 2) . "</td>          
+          <td>" . number_format($factura->factura_total, 2) . "</td>          
            </tr>";
             }
 
@@ -223,7 +223,7 @@ class FacturaController extends Controller
 
         //inicio de traer todo las aseguradoras
         if ($aseguradora == "all" and $contrato !== "all") {
-            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "facturas.factura_total")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
                 ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
@@ -238,14 +238,14 @@ class FacturaController extends Controller
             $total_facturado2 = 0;
 
             foreach ($facturas as $factura) {
-                $total_facturado2 += $factura->valor_total;
+                $total_facturado2 += $factura->factura_total;
 
                 $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>" . number_format($factura->valor_total, 2) . "</td>          
+          <td>" . number_format($factura->factura_total, 2) . "</td>          
            </tr>";
 
             }
@@ -265,7 +265,7 @@ class FacturaController extends Controller
 
         } //inicio de traer todo las contrato
         elseif ($contrato == "all" and $aseguradora !== "all") {
-            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.valor_unitario", "facturas.factura_total")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
                 ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
@@ -280,14 +280,14 @@ class FacturaController extends Controller
             $total_facturado2 = 0;
 
             foreach ($facturas as $factura) {
-                $total_facturado2 += $factura->valor_total;
+                $total_facturado2 += $factura->factura_total;
 
-                $totalfacturado_tbody .= "<tr> voy al baño ya ba jaja
+                $totalfacturado_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>" . number_format($factura->valor_total, 2) . "</td>          
+          <td>" . number_format($factura->factura_total, 2) . "</td>          
            </tr>";
 
             }
@@ -310,7 +310,7 @@ class FacturaController extends Controller
         //inicio de traer todo con los parametros
 
         if ($contrato !== "all" and $aseguradora !== "all") {
-            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre",  "orden_servicio_items.valor_total")
+            $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre",  "facturas.factura_total")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
                 ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
@@ -326,14 +326,14 @@ class FacturaController extends Controller
             $total_facturado2 = 0;
 
             foreach ($facturas as $factura) {
-                $total_facturado2 += $factura->valor_total;
+                $total_facturado2 += $factura->factura_total;
 
                 $totalfacturado_tbody .= "<tr> 
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>" . number_format($factura->valor_total, 2) . "</td>          
+          <td>" . number_format($factura->factura_total, 2) . "</td>          
            </tr>";
 
             }
