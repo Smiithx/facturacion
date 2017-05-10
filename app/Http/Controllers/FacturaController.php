@@ -32,9 +32,7 @@ class FacturaController extends Controller
     public function create()
     {
         return View('facturas.create');
-        //
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -350,6 +348,74 @@ class FacturaController extends Controller
         }
 
 
+    }
+
+    public function reporteFactura()
+    {
+        return View('facturas.reportes.factura'); 
+    }
+
+    public function reporteFacturaShow($id)
+    {
+        $factura = Factura::findOrFail($id);
+
+        $factura_items = FacturaItems::where("id_factura",$id)->get();
+        $reporte_factura_tbody = "";
+        $items = array();
+        $ordenes = array();
+        $ordenes_items = array();
+            foreach($factura_items as $item){
+                $items[]=$item;
+                $orden = ordenservicios::findOrFail($item->id_orden_servicio);
+                $ordenes[] =$orden;
+                $orden_items = OrdenServicio_Items::where("id_orden_servicio",$orden->id)->get();
+                $ordenes_items[]=$orden_items;
+                foreach($orden_items as $orden_item){
+                    $reporte_factura_tbody .= "<tr>";
+                    $reporte_factura_tbody .= "<td>$orden_item->cups</td>";
+                    $reporte_factura_tbody .= "<td>$orden_item->descripcion</td>";
+                    $reporte_factura_tbody .= "<td>$orden_item->cantidad</td>";
+                    $reporte_factura_tbody .= "<td>$orden_item->valor_unitario</td>";
+                    $reporte_factura_tbody .= "<td>$orden_item->copago</td>";
+                    $reporte_factura_tbody .= "<td>$orden_item->valor_total</td>";
+                    $reporte_factura_tbody .= "</tr>\n";
+                }
+            }
+        dd($factura_items,$items,$ordenes,$ordenes_items,$reporte_factura_tbody);
+        /*try {
+            $factura = Factura::findOrFail($id);
+
+            $factura_items = FacturaItems::where("id_factura",$id)->get();
+
+            foreach($factura_items as $item){
+                $item
+            }
+
+            $radicacion_tbody = "<tr>
+                        <td class=\"text-center\">
+                            <a href=\"/facturas/$factura->id\" target='_blank'>$factura->id</a>
+                         </td>
+                        <td>$factura->contrato</td>
+                        <td>$factura->created_at</td>
+                        <td class=\"text-right\">" . number_format($factura->factura_total, 2) . "</td>
+                    </tr>";
+
+            if (is_null($factura)) {
+                return response()->json([
+                    'error' => 'Numero de factura desconocido.'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => 'true',
+                    'factura' => $factura,
+                    'radicacion_factura_tbody' => $radicacion_tbody
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Numero de factura desconocido.'
+            ], 200);
+        }*/
     }
 
 }

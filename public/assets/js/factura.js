@@ -1,6 +1,8 @@
 $(function () {
 
     //-- Declarar variables =============================== //
+
+    // facturar
     var facturar_contrato = $("#facturar_contrato");
     var facturar_fecha_desde = $("#facturar_fecha_desde");
     var facturar_fecha_hasta = $("#facturar_fecha_hasta");
@@ -11,7 +13,7 @@ $(function () {
     var facturar = $(".facturar");
     var orden_id = $(".orden_id");
 
-//-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
+    // REPORTE TOTAL FACTURADO
     var totalfacturado_contrato = $("#totalfacturado_contrato");
     var totalfacturado_aseguradora = $("#totalfacturado_aseguradora");
     var totalfacturado_fecha_inicio = $("#totalfacturado_fecha_inicio");
@@ -20,11 +22,16 @@ $(function () {
     var totalfacturado_tbody = $("#totalfacturado_tbody");
     var total_facturado = $("#total_facturado");
 
+    // reporte factura
+    var reporte_factura_numero_factura = $("#reporte_factura_numero_factura");
+    var reporte_factura_temporizador_numero_factura = 0;
+    var reporte_factura_tbody = $("#reporte_factura_tbody");
 
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
 
+    // factjurar
     btn_facturar_buscar.on("click", function () {
         var url = "/ordenservicio/buscar/" + facturar_contrato.val() + "/" + facturar_fecha_desde.val() +
             "/" + facturar_fecha_hasta.val(); //la ruta que se desea ir y pasando los parametros
@@ -57,7 +64,7 @@ $(function () {
         checkear();
     });
 
-    //-- Agregar evento TOTAL FACTURADO ================================= //
+    // TOTAL FACTURADO
 
     btn_totalfacturado_buscar.on("click", function () {
         var url = "/facturas/buscar/" + totalfacturado_aseguradora.val() + "/" + totalfacturado_contrato.val() + "/" + totalfacturado_fecha_inicio.val() +
@@ -81,14 +88,21 @@ $(function () {
         });
     });
 
+    // reporte factura
+
+    reporte_factura_numero_factura.on("keyup"){
+        clearInterval(reporte_factura_temporizador_numero_factura)
+        reporte_factura_temporizador_numero_factura = setTimeout(buscarFactura, 800);
+    }
+
     //-- declarar funciones auxiliares------------------------------------//
 
+    // facturar
     function actualizarVariables() {
         facturar = $(".facturar");
         orden_id = $(".orden_id");
         agregarEventos();
     }
-
     function checkear() {
         if (facturar_all.prop('checked')) {
             facturar.prop('checked', true);
@@ -99,7 +113,6 @@ $(function () {
         }
         calcularValorTotal();
     }
-
     function calcularValorTotal() {
         var count = facturar.length;
         var total = 0;
@@ -115,11 +128,9 @@ $(function () {
             facturar_total.html("");
         }
     }
-
     function eliminarEventos() {
         facturar.unbind("change");
     }
-
     function agregarEventos() {
         eliminarEventos();
         //-- Agregar eventos ================================= //
@@ -134,7 +145,29 @@ $(function () {
                 hidden.setAttribute('disabled', 'disabled');
             }
         });
-
     }
 
-})
+    // reporte factura
+    function buscarFactura(){
+        var url = "/facturas/reporte/factura/"+reporte_factura_numero_factura.val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    reporte_factura_tbody.html(respuesta.reporte_factura_tbody);
+                    reporte_factura_total.html(respuesta.reporte_factura_total);
+                }
+                else {
+                    reporte_factura_tbody.html("");
+                    reporte_factura_total.html("");
+                }
+            }, error: function (e) {
+                console.log(e);
+                reporte_factura_tbody.html("");
+                reporte_factura_total.html("");
+            }
+        });
+    }
+});

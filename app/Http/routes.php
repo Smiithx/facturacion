@@ -22,6 +22,8 @@ Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
 Route::get('facturas/buscar/{aseguradora}/{contrato}/{desde}/{hasta}', 'FacturaController@buscar');
 Route::get('facturas/radicar/{contrato}/{desde}/{hasta}', 'FacturaController@radicar');
+Route::get('facturas/reporte/factura', 'FacturaController@reporteFactura');
+Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFacturaShow');
 
 //----- Orden de servicios ----- //
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show']]);

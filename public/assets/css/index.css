@@ -16,46 +16,33 @@ ul, ol {
     text-decoration:none;
     display:block;
 }
-
-.nav li a:hover {
-    text-decoration: none;
-    background-color: #eee;
-}
-
 .nav li ul {
     display:none;
     position:absolute;
-    min-width:160px;
+    min-width:200px;
     padding: 0px;
     z-index: 100;
-    box-shadow: 0px 0px 10px #ccc;
+    /*box-shadow: 0px 0px 10px #ccc;*/
 }
 
 .nav li:hover > ul, .nav li > ul:hover{
     display:block;
 }
-
-.nav li ul li {
-    position:relative;
+.nav li:hover{
+    color: #555;
+    text-decoration: none;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
-
-.nav li ul li { 
-    top:0px;
-    width: 100%;
+.submenu{
+    position: relative;
 }
-
-.nav li:hover,.nav li:hover ul{
-    background: #eee;
-}
-.nav li ul li:hover, .nav li ul li a:hover{
-    background: #ccc;
-}
-.nav li ul li{
-    padding: 10px 10px;
-}
-.nav li ul hr{
-    border-color: #bbb;
-    margin: 0px;
+.submenu-item{
+    position: absolute;
+    top: 0px;
+    right: -200px;    
 }
 .acciones{
     text-align: center;
@@ -76,8 +63,8 @@ ul, ol {
     background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
 }
 /*.table tfoot tr th{
-    color: #fff;
-    background: #265a88;
-    border-color: #204d74;
-    background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
+color: #fff;
+background: #265a88;
+border-color: #204d74;
+background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
 }*/
