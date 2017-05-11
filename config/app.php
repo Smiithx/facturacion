@@ -201,8 +201,6 @@ return [
         /*'PDF' => 'Barryvdh\DomPDF\Facade',*/
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Flash' => Laracasts\Flash\Flash::class,
-
-
     ],
 
 ];

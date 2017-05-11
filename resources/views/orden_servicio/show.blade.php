@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-    <h3 class="text-center">Orden de servicio</h3>
+    <h3 class="text-center">Orden de servicio # {{ $ordenservicio->id }} </h3>
     <hr>
     <div class="col-xs-12 col-md-2">
         <label for="label">Documento:</label>
@@ -62,6 +62,8 @@
                 </tr>
                 </tfoot>
             </table>
+
+           <a   class="btn btn-danger pull-right" href="javascript:window.close()" target="_blak">Regresar</a>
         </div>
         <hr>
     </div>

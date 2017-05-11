@@ -18,7 +18,19 @@
 		                				<th class="text-center">Acción</th>
 		                			</tr>
 		                		</thead>
+
+		                		<form action="/Usuarios/buscar" method="POST">
+		                		<div class="input-group">
+		                		<input type="text-center" placeholder="Nombre"  class="form-control" name="nombre" >
+		                		  <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">Buscar</button>
+                        </span>
+		                		{{ csrf_field() }}
+</div>
+<br>
+		                		</form>
 		                		<tbody>
+		                	
 		                			
 		                	@foreach($usuarios as $usuario)
 		                			<tr>

@@ -17,12 +17,16 @@ class AseguradoraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $aseguradoras = Aseguradora::paginate(5);
+
+ if(trim($request) != ""){    
+      $aseguradoras = Aseguradora::where('nombre',"LIKE","%$request->name%")
+       ->paginate(5);
         $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.aseguradoras",$datos);
+        return view("administracion.aseguradoras.index",$datos);
     }
+}
 
     /**
      * Show the form for creating a new resource.

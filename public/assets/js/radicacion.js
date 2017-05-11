@@ -1,7 +1,7 @@
 //función que se ejecuta al cargar la pagina
 $(function () {
     //-- Declarar variables =============================== //
-    
+
     // radicar factura
     var radicacion_factura = $("#radicacion_factura");
     var radicacion_factura_temporizador = 0;

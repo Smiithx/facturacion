@@ -81,9 +81,13 @@ Route::get('administracion/manuales/create', 'AdministracionController@createman
 
 //----- Contratos ----- //
 Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
+Route::post('Contratos/buscar','ContratosController@buscar');
+
 
 //----- Manuales ----- //
 Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
+Route::post('Manuales/buscar','ManualesController@buscar');
+
 
 //----- Empresa ----- //
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
@@ -96,14 +100,14 @@ Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','
 
 //----- Usuarios ----- //
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
+Route::post('Usuarios/buscar','UsuariosController@buscar');
 
 //----- Servicios ----- //
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
-Route::get('servicios/cups/{cups}','ServiciosController@cups');
+Route::post('Servicios/buscar','ServiciosController@buscar');
 
 //----- Test ----- //
 Route::resource("test","TestController");
-
 
 //----- Error 404 ----- //
 Route::pattern('inexistentes', '.*');

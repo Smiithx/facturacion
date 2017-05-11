@@ -63,8 +63,9 @@
             </div>
         </div>
     </div>
+    
     <div class="form-group col-xs-12 col-md-12 col-lg-12">
-        <a href="/facturas" class="btn btn-primary pull-right">Regresar</a>
+           <a   class="btn btn-danger pull-right" href="javascript:window.close()" target="_blak">Regresar</a>
     </div>
 @endsection
 
