@@ -36,7 +36,8 @@
 		                			<tr>
 		             <td>{{ $usuario->nombre }}</td>
                     <td>{{ $usuario->documento }}</td>
-                    <td>{{ $usuario->firma }}</td>
+                    <td><img width="50px" height="50px" src="/imagenes/{{ $usuario->firma }}" alt="imagenes/{{$usuario->firma}}"></td>
+
                     <td>{{ $usuario->cargo }}</td>
 
                     <td>    <a style="float: left;" href="/administracion/usuarios/{{$usuario->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>

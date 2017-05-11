@@ -6,7 +6,9 @@
 		      		                	<h3 class="text-center">Crear Usuarios</h3>
 
 		      <div class="container-fluid">
-		          <form action="/Usuarios" method="POST">
+		          <form action="/Usuarios" method="POST" enctype="multipart/form-data">
+           
+
 		          {!!csrf_field() !!}
 		       <div class="form-group">
   <label for="nombre">Nombre:</label>
@@ -30,6 +32,7 @@
 <div class="form-group">
   <label for="firma">firma:</label>
   <input type="file" class="form-control" id="firma" name="firma"  value="{{old('firma')}}">
+
 </div>
 <div class="form-group">
   <label for="cargo">Cargo:</label>
