@@ -26,6 +26,8 @@ $(function () {
     var reporte_factura_numero_factura = $("#reporte_factura_numero_factura");
     var reporte_factura_temporizador_numero_factura = 0;
     var reporte_factura_tbody = $("#reporte_factura_tbody");
+    var reporte_factura_total = $("#reporte_factura_total");
+    var reporte_factura_btn_imprimir = $("#reporte_factura_btn_imprimir");
 
     //-- Fin de declarar variables ======================= //
 
@@ -90,10 +92,10 @@ $(function () {
 
     // reporte factura
 
-    reporte_factura_numero_factura.on("keyup"){
+    reporte_factura_numero_factura.on("keyup", function () {
         clearInterval(reporte_factura_temporizador_numero_factura)
         reporte_factura_temporizador_numero_factura = setTimeout(buscarFactura, 800);
-    }
+    });
 
     //-- declarar funciones auxiliares------------------------------------//
 
@@ -103,6 +105,7 @@ $(function () {
         orden_id = $(".orden_id");
         agregarEventos();
     }
+
     function checkear() {
         if (facturar_all.prop('checked')) {
             facturar.prop('checked', true);
@@ -113,6 +116,7 @@ $(function () {
         }
         calcularValorTotal();
     }
+
     function calcularValorTotal() {
         var count = facturar.length;
         var total = 0;
@@ -128,9 +132,11 @@ $(function () {
             facturar_total.html("");
         }
     }
+
     function eliminarEventos() {
         facturar.unbind("change");
     }
+
     function agregarEventos() {
         eliminarEventos();
         //-- Agregar eventos ================================= //
@@ -148,26 +154,51 @@ $(function () {
     }
 
     // reporte factura
-    function buscarFactura(){
-        var url = "/facturas/reporte/factura/"+reporte_factura_numero_factura.val();
+    function buscarFactura() {
+        console.log("keyup");
+        var url = "/facturas/reporte/factura/" + reporte_factura_numero_factura.val();
         $.ajax({
             url: url,
             type: "GET",
             dataType: "json",
             success: function (respuesta) {
                 if (respuesta.success) {
-                    reporte_factura_tbody.html(respuesta.reporte_factura_tbody);
-                    reporte_factura_total.html(respuesta.reporte_factura_total);
+                    rellenarReporteFactura(respuesta.factura_items);
+                    reporte_factura_btn_imprimir.removeClass("hidden");
                 }
                 else {
                     reporte_factura_tbody.html("");
                     reporte_factura_total.html("");
+                    reporte_factura_btn_imprimir.addClass("hidden");
                 }
             }, error: function (e) {
                 console.log(e);
                 reporte_factura_tbody.html("");
                 reporte_factura_total.html("");
+                reporte_factura_btn_imprimir.addClass("hidden");
             }
         });
     }
+
+    function rellenarReporteFactura(facturaItems) {
+        var tbody = ""
+        var total = 0;
+
+        $.each(facturaItems, function (ind, item) {
+            tbody += "<tr>";
+            tbody += "<td>" + item.cups + "</td>";
+            tbody += "<td>" + item.descripcion + "</td>";
+            tbody += "<td class='text-right'>" + $.number(item.cantidad, 2) + "</td>";
+            tbody += "<td class='text-right'>" + $.number(item.valor_unitario, 2) + "</td>";
+            tbody += "<td class='text-right'>" + $.number(item.copago, 2) + "</td>";
+            tbody += "<td class='text-right'>" + $.number(item.valor_total, 2) + "</td>";
+            tbody += "</tr>";
+            total += parseFloat(item.valor_total);
+        });
+
+        reporte_factura_tbody.html(tbody);
+        reporte_factura_total.html($.number(total,2));
+
+    }
+
 });
