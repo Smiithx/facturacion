@@ -22,7 +22,15 @@
 		                			
 		                		</thead>
 		                		
-                     
+                      {!! Form::open(['route' => 'Aseguradora.index', 'method' => 'GET', 'class' => 'container-fluid text-left', 'role' => 'search']) !!}
+                        <div class="input-group">
+                            {!! Form::text('name',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                            <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default">Buscar</button>
+                        </span>
+                        </div>
+                        {!! Form::close() !!}
+                        <br>
 		                		
 		                		<tbody>
 		                			

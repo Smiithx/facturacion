@@ -22,6 +22,15 @@ class ManualesController extends Controller
         //
     }
 
+      public function buscar(Request $request)
+    {
+            if(trim($request) != ""){    
+              $manuales = Manuales::where('codigosoat',"LIKE","%$request->nombre%")
+                 ->get();
+                $datos = ['manuales' => $manuales];
+               return view("administracion.manuales.index",$datos);
+    }   }
+
     /**
      * Show the form for creating a new resource.
      *

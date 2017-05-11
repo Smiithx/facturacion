@@ -25,6 +25,8 @@ class ServiciosController extends Controller
         return view("administracion.servicios",$servicios);
     }
 
+      
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,6 +36,15 @@ class ServiciosController extends Controller
     {
         //
     }
+
+    public function buscar(Request $request)
+    {
+            if(trim($request) != ""){    
+              $servicios = Servicios::where('descripcion',"LIKE","%$request->nombre%")
+                 ->get();
+                $datos = ['servicios' => $servicios];
+               return view("administracion.servicios.index",$datos);
+    }   }
 
     /**
      * Store a newly created resource in storage.

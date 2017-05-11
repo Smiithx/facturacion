@@ -27,6 +27,17 @@ class UsuariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function buscar(Request $request)
+    {
+            if(trim($request) != ""){    
+              $usuarios = Usuarios::where('nombre',"LIKE","%$request->nombre%")
+                 ->get();
+                $datos = ['usuarios' => $usuarios];
+               return view("administracion.usuarios.index",$datos);
+    }   
+        
+    }
     public function create()
     {
         //
