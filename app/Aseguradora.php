@@ -20,7 +20,7 @@ class Aseguradora extends Model
      */
     protected $fillable = ['nombre','nit','estado'];
    
-
+  
     public function pacientes(){
         return $this->hasMany(Paciente::class);
     }

@@ -30,6 +30,15 @@ class ContratosController extends Controller
         //
     }
 
+     public function buscar(Request $request)
+    {
+            if(trim($request) != ""){    
+              $contratos = Contratos::where('contrato',"LIKE","%$request->nombre%")
+                 ->get();
+                $datos = ['contratos' => $contratos];
+               return view("administracion.contratos.index",$datos);
+    }   }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -26,6 +26,7 @@ Route::get('facturas/radicar/{contrato}/{desde}/{hasta}', 'FacturaController@rad
 //----- Orden de servicios ----- //
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show']]);
 Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocontroller@buscar');
+Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontroller@ordenes_facturar');
 
 //----- Radicacion ----- // 
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
@@ -33,12 +34,13 @@ Route::get('radicacion/contrato/create', 'RadicacionController@radicarContrato')
 Route::post('radicacion/contrato', 'RadicacionController@storeContrato');
 Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 
-
 //----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
+Route::get('cartera/buscar/{factura}/{contrato}/{desde}/{hasta}', 'CarteraController@buscar');
 
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
+Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
@@ -54,7 +56,6 @@ Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
 Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
 Route::get('reportes/radicacion', 'ReportesController@radicacion');
 Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
-
 
 //----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
@@ -78,9 +79,13 @@ Route::get('administracion/manuales/create', 'AdministracionController@createman
 
 //----- Contratos ----- //
 Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
+Route::post('Contratos/buscar','ContratosController@buscar');
+
 
 //----- Manuales ----- //
 Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
+Route::post('Manuales/buscar','ManualesController@buscar');
+
 
 //----- Empresa ----- //
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
@@ -93,14 +98,14 @@ Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','
 
 //----- Usuarios ----- //
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
+Route::post('Usuarios/buscar','UsuariosController@buscar');
 
 //----- Servicios ----- //
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
-Route::get('servicios/cups/{cups}','ServiciosController@cups');
+Route::post('Servicios/buscar','ServiciosController@buscar');
 
 //----- Test ----- //
 Route::resource("test","TestController");
-
 
 //----- Error 404 ----- //
 Route::pattern('inexistentes', '.*');

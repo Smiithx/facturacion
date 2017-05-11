@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Aseguradora;
 use App\Empresa;
 use App\Usuarios;
-use App\servicios;
+use App\Servicios;
 use App\Diagnosticos;
 use App\Manuales;
 use App\Contratos;
