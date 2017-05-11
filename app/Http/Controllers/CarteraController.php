@@ -34,7 +34,7 @@ class CarteraController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,7 +45,7 @@ class CarteraController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -56,7 +56,7 @@ class CarteraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -67,8 +67,8 @@ class CarteraController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -79,7 +79,7 @@ class CarteraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -87,20 +87,21 @@ class CarteraController extends Controller
         //
     }
 
-     public function buscar($factura, $contrato, $desde, $hasta){
-    
-
-    $Facturas = Factura::select("facturas.id", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
-        ->join("glosas", "facturas.id", "=", "glosas.id_factura")
-            ->where('facturas.id',$factura)
-            ->where('radicada',1)
+    public function buscar($factura, $contrato, $desde, $hasta)
+    {
+        $Facturas = Factura::select("facturas.id", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
+            ->join("glosas", "facturas.id", "=", "glosas.id_factura")
+            ->where('facturas.id', $factura)
+            ->where('radicada', 1)
             ->orWhere('facturas.contrato', $contrato)
             ->whereDate('facturas.created_at', '>=', $desde)
             ->whereDate('facturas.created_at', '<=', $hasta)
             ->get();
 
-            $cartera_tbody = "";
-            foreach ($Facturas as $factura) {
+        dd($Facturas);
+
+        $cartera_tbody = "";
+        foreach ($Facturas as $factura) {
 // $fecha  = $factura->fecha_radicacion;
 // echo $fecha." Fecha base de datos con ese formato no la suma";
 // echo "<br>";
@@ -117,28 +118,28 @@ class CarteraController extends Controller
 //     echo $sumardia2."Resultado de sumar fecha Bd";
 // }
 // }
-$cartera_tbody .= "<tr>
+            $cartera_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
           <td>$factura->fecha_radicacion</td>
-         <td>". number_format($factura->factura_total, 2) ."</td>
+         <td>" . number_format($factura->factura_total, 2) . "</td>
           <td>&nbsp</td>
           <td><input style='width: 100%;' type='number' step='0.00' name='valor_abono' required></td>
-          <td>". number_format($factura->valor_glosa, 2) ."</td>
+          <td>" . number_format($factura->valor_glosa, 2) . "</td>
           <td><input style='width: 100%;' type='number' step='0.00' name='retencion' required></td>
           <td></td>
            </tr>";
-           }
+        }
 
-           if ($cartera_tbody != "") {
-                return response()->json([
-                  'success' => 'true',
-                    'cartera_tbody' => $cartera_tbody
-               ]);
-            } else {
-                 return response()->json([
-                     'error' => 'No se encontraron Facturas.'
-                 ]);
-             }
-        
-     }
+        if ($cartera_tbody != "") {
+            return response()->json([
+                'success' => 'true',
+                'cartera_tbody' => $cartera_tbody
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'No se encontraron Facturas.'
+            ]);
+        }
+
+    }
 }
