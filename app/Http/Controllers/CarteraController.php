@@ -7,6 +7,7 @@ use App\Factura;
 use App\Glosas;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class CarteraController extends Controller
 {
@@ -99,24 +100,34 @@ class CarteraController extends Controller
             ->get();
 
             $cartera_tbody = "";
-         
-
             foreach ($Facturas as $factura) {
+// $fecha  = $factura->fecha_radicacion;
+// echo $fecha." Fecha base de datos con ese formato no la suma";
+// echo "<br>";
+//       $fecha2 = Carbon::now()->addDay();
+//       echo $fecha2." fecha carbon asi es que la suma con este formato ";
+//       echo "<br>";     
+//     $sumardia = $fecha2->addDay(10);
+//     echo $sumardia." Resultado de sumar 10 dias a la fecha carbon ";
+// $fechafinal = Carbon::createFromFormat('Y-m-d H',$fecha.'13' )->toDateTimeString(); 
+//   echo "<br>";
+// echo $fechafinal."Pasando la fecha de la BD a formato fecha carbon para suma";
+//     $sumardia2 = $fechafinal->addDay(10);
+//     echo "<br>";
+//     echo $sumardia2."Resultado de sumar fecha Bd";
+// }
+// }
 $cartera_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
           <td>$factura->fecha_radicacion</td>
          <td>". number_format($factura->factura_total, 2) ."</td>
-
           <td>&nbsp</td>
           <td><input style='width: 100%;' type='number' step='0.00' name='valor_abono' required></td>
           <td>". number_format($factura->valor_glosa, 2) ."</td>
           <td><input style='width: 100%;' type='number' step='0.00' name='retencion' required></td>
           <td></td>
-      
-       
-
            </tr>";
-            }
+           }
 
            if ($cartera_tbody != "") {
                 return response()->json([
@@ -129,5 +140,5 @@ $cartera_tbody .= "<tr>
                  ]);
              }
         
-      }
+     }
 }
