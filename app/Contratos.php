@@ -11,7 +11,7 @@ class Contratos extends Model
      *
      * @var string
      */
-    protected $table = 'Contratos';
+    protected $table = 'contratos';
 
     /**
      * The attributes that are mass assignable.

@@ -24,6 +24,12 @@ $(function () {
         '<td><input required type="number" step="0.01" name="valor_unitario[]" class="form-control orden_servicios_valor_unitario"></td>' +
         '<td><input required type="number" step="0.01" name="valor_total[]" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
+//-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
+    var fecha_inicio_ordenes_facturar = $("#fecha_inicio_ordenes_facturar");
+    var fecha_fin_ordenes_facturar = $("#fecha_fin_ordenes_facturar");
+    var tbody_ordenes_facturar = $("#tbody_ordenes_facturar");
+    var btn_ordenes_facturar_buscar = $("#btn_ordenes_facturar_buscar");
+
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
@@ -49,6 +55,30 @@ $(function () {
         }
         actualizarVariables();
     });
+
+      //-- Agregar evento ORDENES POR FACTURAr================================= //
+
+    btn_ordenes_facturar_buscar.on("click", function () {
+        var url = "/ordenservicio/ordenes_facturar/" + fecha_inicio_ordenes_facturar.val() +
+            "/" + fecha_fin_ordenes_facturar.val(); //la ruta que se desea ir y pasando los parametros
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    tbody_ordenes_facturar.html(respuesta.tbody_ordenes_facturar);
+                }
+                else {
+                    tbody_ordenes_facturar.html("");
+                    swal('Cancelled', respuesta.error, 'error');
+                }
+            }, error: function (e) {
+                console.log(e);
+            }
+        });
+    });
+
 
     //-- declarar funciones auxiliares------------------------------------//
 

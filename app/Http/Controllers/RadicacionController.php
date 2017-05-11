@@ -138,18 +138,15 @@ class RadicacionController extends Controller
             ->whereDate('fecha_radicacion', '>=', $desde)
             ->whereDate('fecha_radicacion', '<=', $hasta)->get();
 
-
         $radicacion_tbody = "";
 
         foreach ($FacturasRadicadas as $factura) {
-
             $radicacion_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
           <td>$factura->contrato</td>
           <td>$factura->fecha_radicacion</td>
            </tr>";
         }
-
         if ($radicacion_tbody != "") {
             return response()->json([
                 'success' => 'true',
@@ -160,7 +157,5 @@ class RadicacionController extends Controller
                 'error' => 'No se encontraron Facturas Radicadas.'
             ]);
         }
-
     }
-
 }

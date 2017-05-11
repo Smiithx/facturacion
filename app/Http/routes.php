@@ -28,6 +28,7 @@ Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFactu
 //----- Orden de servicios ----- //
 Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show']]);
 Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocontroller@buscar');
+Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontroller@ordenes_facturar');
 
 //----- Radicacion ----- // 
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
@@ -37,9 +38,11 @@ Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 
 //----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
+Route::get('cartera/buscar/{factura}/{contrato}/{desde}/{hasta}', 'CarteraController@buscar');
 
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
+Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);

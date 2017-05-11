@@ -111,4 +111,43 @@ class ordenserviciocontroller extends Controller
         return view("orden_servicio.show", $datos);
     }
 
+    public function ordenes_facturar( $desde, $hasta)
+     {
+       $ordenservicios = ordenservicios::where('facturado', "0")        
+       ->whereDate('created_at', '>=', $desde)
+       ->whereDate('created_at', '<=', $hasta)        
+       ->get();
+       $tbody_ordenes_facturar = "";
+    
+        foreach ($ordenservicios as $orden) {
+           $aseguradora = $orden->aseguradora_id->nombre;
+            $tbody_ordenes_facturar .= "<tr>
+          <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
+          <td>$orden->documento</td>
+          <td>$orden->nombre</td>
+          <td>$aseguradora</td>
+          <td>$orden->contrato</td>
+            <td>$orden->created_at</td>
+            <td>&anbsp</td>
+
+           
+           </tr>";
+        }
+
+
+        if ($tbody_ordenes_facturar != "") {
+            return response()->json([
+                'success' => 'true',
+                'tbody_ordenes_facturar' => $tbody_ordenes_facturar
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'No se encontraron ordenes de servicios por facturar..'
+            ]);
+        }
+
+
+    }
+
+
 }
