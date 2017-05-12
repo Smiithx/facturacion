@@ -13,6 +13,7 @@ use App\OrdenServicio_Items;
 use App\Factura;
 use App\FacturaItems;
 use App\Diagnosticos;
+use App\Usuarios;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,9 +42,9 @@ class DatabaseSeeder extends Seeder
         Empresa::truncate();
         FacturaItems::truncate();
         Factura::truncate();
-
-        $this->call('Cie10Seeder');
-        $this->call('MedicamentosSeeder');
+        Usuarios::truncate();
+        //$this->call('Cie10Seeder');
+        //$this->call('MedicamentosSeeder');
         $this->call('ServiciosSeeder');
         $this->call('AseguradoraSeeder');
         $this->call('PacientesSeeder');
@@ -51,6 +52,8 @@ class DatabaseSeeder extends Seeder
         $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
         $this->call('FacturasSeeder');
+                $this->call('UsuariosSeeder');
+
 
         // supposed to only apply to a single connection and reset it's self
         // but I like to explicitly undo what I've done for clarity

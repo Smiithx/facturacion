@@ -4,14 +4,11 @@
     <hr>
     <form method="POST" action="/cartera">
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
-            <label for="label">Factura:</label>
-            <input class="form-control" placeholder="Numero de factura" id="cartera_factura" type="text"
+            <label for="label">Factura - Contrato:</label>
+            <input class="form-control" placeholder="Escribir Factura o Contrato" id="cartera_factura" type="text"
                    name="id_factura"/>
         </div>
-        <div class="form-group col-xs-12 col-md-2">
-            <label for="label">Contrato:</label>
-            <input placeholder="contrato" type="text" class="form-control" id="cartera_contrato" name="contrato"/>
-        </div>
+     
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Fecha desde:</label>
             <div class="input-group date datepicker">

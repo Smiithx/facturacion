@@ -103,10 +103,10 @@ class GlosasController extends Controller
     }
 
 
- public function buscar($factura, $contrato, $desde, $hasta){
+ public function buscar($factura, $desde, $hasta){
    
     $Facturas = Factura::where('id',$factura)
-            ->orWhere('contrato', $contrato)
+            ->orWhere('contrato', $factura)
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)->get();
 
@@ -118,8 +118,8 @@ $glosas_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
           <td>$factura->fecha_radicacion</td>
           <td>". number_format($factura->factura_total, 2) ."</td>
-          <td><input style='width: 100%;' type='number' step='0.00' name='valor_glosa' required></td>
-          <td><input style='width: 100%;' type='number' step='0.00' name='valor_aceptado' required></td>
+          <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>
+          <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_aceptado' required></td>
            </tr>";
             }
 

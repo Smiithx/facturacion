@@ -38,11 +38,11 @@ Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 
 //----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
-Route::get('cartera/buscar/{factura}/{contrato}/{desde}/{hasta}', 'CarteraController@buscar');
+Route::get('cartera/buscar/{factura}/{desde}/{hasta}', 'CarteraController@buscar');
 
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
-Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
+Route::get('glosas/buscar/{factura}/{desde}/{hasta}', 'GlosasController@buscar');
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);

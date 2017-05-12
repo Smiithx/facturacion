@@ -3,13 +3,10 @@
 
     <form method="POST" action="/glosas">
 			<div class="form-group col-xs-12 col-md-3 col-lg-3">
-		     <label for="label">Factura:</label>  
-		     <input class="form-control" value="0" placeholder="Numero de factura" id="glosas_factura" type="text" name="id_factura"/>
+		     <label for="label">Factura - Contrato:</label>  
+		     <input class="form-control"  placeholder="Escibir Factura o Contrato" id="glosas_factura" type="text" name="id_factura"/>
 		    </div>
-		     <div class="form-group col-xs-12 col-md-2">
-            <label for="label">Contrato:</label>
-            <input placeholder="contrato" type="text" class="form-control" id="glosas_contrato" value="0" name="contrato" />
-        </div>
+		  
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Fecha desde:</label>
             <div class="input-group date datepicker">

@@ -65,3 +65,14 @@ $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
         'id_paciente' => $paciente->id
     ];
 });
+
+$factory->define(App\Usuarios::class, function (Faker\Generator $faker) {
+       return [
+        'nombre' => $faker->name,
+        'documento' => $faker->regexify('[0-9]{8}'),
+        'contraseña' => str_random(10),
+        'firma' => 'foto.jpg',
+        'cargo' => $faker->randomElement(array('Medicos','Enfermeras','Otros'))
+
+    ];
+});
