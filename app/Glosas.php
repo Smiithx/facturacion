@@ -15,7 +15,6 @@ class Glosas extends Model
      */
     protected $fillable = [
         'id_factura',     
-        'contrato',
         'valor_glosa',
         'valor_aceptado'
     

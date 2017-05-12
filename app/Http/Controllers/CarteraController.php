@@ -31,6 +31,13 @@ class CarteraController extends Controller
         return view("cartera.create");
     }
 
+
+public function createcontrato()
+    {
+
+       return view("cartera.createcontrato");
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -111,12 +118,12 @@ class CarteraController extends Controller
             $cartera_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
           <td>$factura->fecha_radicacion</td>
-         <td>" . number_format($factura->factura_total, 2) . "</td>
+         <td id='cartera_factura_total'>" . number_format($factura->factura_total, 2) . "</td>
           <td>$date</td>
-          <td><input style='width: 100%;' type='number' step='0.00' name='valor_abono' required></td>
+          <td><input id='valor_abono' style='width: 100%;' type='number' step='0.00' name='cartera_valor_abono' required></td>
           <td>" . number_format($factura->valor_glosa, 2) . "</td>
-          <td><input style='width: 100%;' type='number' step='0.00' name='retencion' required></td>
-          <td></td>
+          <td><input id='cartera_retencion' style='width: 100%;' type='number' step='0.00' name='retencion' required></td>
+          <td id='cartera_saldo'></td>
            </tr>";
         }
 

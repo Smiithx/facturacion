@@ -33,6 +33,11 @@ class GlosasController extends Controller
         return view("glosas.create");
     }
 
+  public function createcontrato()
+    {
+      return view("glosas.createcontrato");
+        
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -45,14 +50,12 @@ class GlosasController extends Controller
 
        $this->validate($request, [
             'id_factura' => 'required|max:255',
-            'contrato' => 'required|max:255',
             'valor_glosa' => 'required',
             'valor_aceptado' => 'required'            
         ]);
 
         $glosas = Glosas::create($request->all());
-       /* $glosas = Glosas::all();
-        $datos = ['glosas' => $glosas];*/
+        
         flash('Glosas creada con exito!');
         return Redirect::to("/glosas/create");
     }
@@ -116,6 +119,8 @@ class GlosasController extends Controller
             foreach ($Facturas as $factura) {
 $glosas_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+                    <input type='hidden'  name='id_factura' value='$factura->id'>
+
           <td>$factura->fecha_radicacion</td>
           <td>". number_format($factura->factura_total, 2) ."</td>
           <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>

@@ -15,7 +15,6 @@ class Glosas extends Migration
         Schema::create('glosas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_factura');
-            $table->string('contrato',50);
             $table->decimal('valor_glosa', 42, 2);
             $table->decimal('valor_aceptado', 42, 2);
             $table->timestamps();
