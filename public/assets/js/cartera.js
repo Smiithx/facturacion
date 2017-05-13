@@ -8,6 +8,10 @@ $(function () {
     var cartera_hasta = $("#cartera_hasta");
     var btn_cartera_buscar = $("#btn_cartera_buscar");
     var cartera_tbody = $("#cartera_tbody");
+   var cartera_factura_total  = $("#cartera_factura_total");
+   var cartera_valor_abono  = $("#cartera_valor_abono");
+   var cartera_retencion  = $("#cartera_retencion");
+   var cartera_saldo  = $("#cartera_saldo");
 
     //-- Fin de declarar variables ======================= //
 
@@ -35,4 +39,12 @@ $(function () {
         });
     });
 
-});
+cartera_valor_abono.change(function() {
+
+    console.log("probando");
+
+ });
+
+
+   });
+

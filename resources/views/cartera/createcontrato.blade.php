@@ -4,8 +4,8 @@
     <hr>
     <form method="POST" action="/cartera">
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
-            <label for="label">Factura:</label>
-            <input class="form-control" placeholder="Escribir Factura" id="cartera_factura" type="text"
+            <label for="label">Contrato:</label>
+            <input class="form-control" placeholder="Escribir Contrato" id="cartera_factura" type="text"
                    name="id_factura"/>
         </div>
      
@@ -56,6 +56,6 @@
         </div>
         {{csrf_field()}}
     </form>
-    <script src="{{asset('assets/js/cartera.js')}}"></script>
+   <script src="{{asset('assets/js/cartera.js')}}"></script>
 
 @endsection

@@ -4,8 +4,8 @@
     <hr>
     <form method="POST" action="/glosas">
 			<div class="form-group col-xs-12 col-md-3 col-lg-3">
-		     <label for="label">Factura:</label>  
-		     <input class="form-control"  placeholder="Escibir Factura " id="glosas_factura" type="text" name="id_factura"/>
+		     <label for="label">Contrato:</label>  
+		     <input class="form-control"  placeholder="Escibir Contrato" id="glosas_factura" type="text" name="id_contrato"/>
 		    </div>
 		  
         <div class="form-group col-xs-12 col-md-3">
