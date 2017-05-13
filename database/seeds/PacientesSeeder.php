@@ -14,10 +14,6 @@ class PacientesSeeder extends Seeder
      */
     public function run()
     {
-        $aseguradoras = Aseguradora::all();
-        $pacientes = factory(Paciente::class)->times(20)->create();
-        foreach ($pacientes as $paciente){
-        $aseguradoras->random()->pacientes()->save($paciente);
-        }
+       factory(Paciente::class)->times(100)->create();
     }
 }

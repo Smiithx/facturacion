@@ -376,7 +376,8 @@ class FacturaController extends Controller
             } else {
                 return response()->json([
                     'success' => 'true',
-                    'factura_items' => $factura_items
+                    'factura_items' => $factura_items,
+                    'factura' => $factura
                 ]);
             }
         } catch (\Exception $e) {

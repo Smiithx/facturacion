@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Contratos;
-class ContratoSeeder extends Seeder
+
+class ManualesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ContratoSeeder extends Seeder
      */
     public function run()
     {
-        factory(Contratos::class)->times(100)->create();
+        factory(\App\Manuales::class)->times(100)->create();
     }
 }

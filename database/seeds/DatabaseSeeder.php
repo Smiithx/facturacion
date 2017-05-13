@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-       // Model::unreguard();
+        // Model::unreguard();
         //disable foreign key check for this connection before running seeders
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
@@ -47,12 +47,14 @@ class DatabaseSeeder extends Seeder
         //$this->call('MedicamentosSeeder');
         $this->call('ServiciosSeeder');
         $this->call('AseguradoraSeeder');
+        $this->call('ManualesSeeder');
+        $this->call('ContratoSeeder');
         $this->call('PacientesSeeder');
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
         $this->call('FacturasSeeder');
-                $this->call('UsuariosSeeder');
+        $this->call('UsuariosSeeder');
 
 
         // supposed to only apply to a single connection and reset it's self

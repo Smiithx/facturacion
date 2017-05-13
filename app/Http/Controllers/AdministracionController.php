@@ -22,102 +22,98 @@ class AdministracionController extends Controller
      */
     public function index(){
         $empresa = Empresa::find(1);
- return view('administracion.empresa.index',compact('empresa'));
-    
+        return view('administracion.empresa.index',compact('empresa'));
     }
 
-   
     public function aseguradoras(){
-    $aseguradoras = Aseguradora::paginate(5);
-    $datos = ['aseguradoras' => $aseguradoras];
-    return view("administracion.aseguradoras.index",$datos);
+        $aseguradoras = Aseguradora::paginate(5);
+        $datos = ['aseguradoras' => $aseguradoras];
+        return view("administracion.aseguradoras.index",$datos);
     }
-     
-            public function editaseguradora($id){
-            $aseguradora = Aseguradora::findOrFail($id);         
-            return view('administracion.aseguradoras.edit',compact('aseguradora'));  }
-     
-     
-     
+
+    public function editaseguradora($id){
+        $aseguradora = Aseguradora::findOrFail($id);         
+        return view('administracion.aseguradoras.edit',compact('aseguradora'));  
+    }
+
     public function diagnosticos(){
- $diagnosticos = Diagnosticos::paginate(5);
-    $datos = ['diagnosticos' => $diagnosticos];
-    return view("administracion.diagnosticos.index",$datos);
+        $diagnosticos = Diagnosticos::paginate(5);
+        $datos = ['diagnosticos' => $diagnosticos];
+        return view("administracion.diagnosticos.index",$datos);
     }
 
-            public function creatediagnosticos(){        
-            return view('administracion.diagnosticos.create');}
+    public function creatediagnosticos(){        
+        return view('administracion.diagnosticos.create');}
 
-            public function editdiagnosticos($id){
-            $diagnosticos = Diagnosticos::findOrFail($id);        
-            return view('administracion.diagnosticos.edit',compact('diagnosticos'));}
-     
-    
+    public function editdiagnosticos($id){
+        $diagnosticos = Diagnosticos::findOrFail($id);        
+        return view('administracion.diagnosticos.edit',compact('diagnosticos'));}
+
+
     public function servicios(){
-    $servicios = Servicios::all();
-    $datos = ['servicios' => $servicios];       
-    return view("administracion.servicios.index",$datos);
+        $servicios = Servicios::all();
+        $datos = ['servicios' => $servicios];       
+        return view("administracion.servicios.index",$datos);
     }
-    
-            public function editservicio($id){
-            $servicios = Servicios::findOrFail($id);        
-            return view('administracion.servicios.edit',compact('servicios'));}
 
-            public function createservicio(){        
-            return view('administracion.servicios.create');}
+    public function editservicio($id){
+        $servicios = Servicios::findOrFail($id);        
+        return view('administracion.servicios.edit',compact('servicios'));}
+
+    public function createservicio(){        
+        return view('administracion.servicios.create');}
 
 
     public function usuarios(){
-    $usuarios = Usuarios::all();
-    $datosusuarios = ['usuarios' => $usuarios];
-    return view("administracion.usuarios.index",$datosusuarios); 
-     }
+        $usuarios = Usuarios::all();
+        $datosusuarios = ['usuarios' => $usuarios];
+        return view("administracion.usuarios.index",$datosusuarios); 
+    }
 
-            public function createusuario(){        
-            return view('administracion.usuarios.create'); }
+    public function createusuario(){        
+        return view('administracion.usuarios.create'); }
 
-            public function editusuarios($id){
-            $usuarios = Usuarios::findOrFail($id);        
-            return view('administracion.usuarios.edit',compact('usuarios'));}
+    public function editusuarios($id){
+        $usuarios = Usuarios::findOrFail($id);        
+        return view('administracion.usuarios.edit',compact('usuarios'));}
 
     public function contratos(){
-             $contratos = Contratos::select("contratos.id","contratos.id_manual","contratos.contrato","contratos.nombre","contratos.nit","contratos.diasvencimiento","manuales.codigosoat","contratos.porcentaje","contratos.estado")
-             ->join("manuales","contratos.id_manual","=","manuales.id")        
-              ->get();
-             $datos = ['contratos' => $contratos];
-             return view("administracion.contratos.index",$datos);
+        $contratos = Contratos::select("contratos.id","contratos.id_manual","contratos.contrato","contratos.nombre","contratos.nit","contratos.diasvencimiento","manuales.codigosoat","contratos.porcentaje","contratos.estado")
+            ->join("manuales","contratos.id_manual","=","manuales.id")        
+            ->paginate();
+        $datos = ['contratos' => $contratos];
+        return view("administracion.contratos.index",$datos);
     }
 
-            public function createcontratos(){  
-             $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get();
-             $manuales = ['manuales' => $manuales];       
-            return view('administracion.contratos.create',$manuales);}
+    public function createcontratos(){  
+        $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get();
+        $manuales = ['manuales' => $manuales];       
+        return view('administracion.contratos.create',$manuales);}
 
-            public function editcontratos($id){
-            $manuales = Manuales::lists('codigosoat', 'id'); /* aqui le paso los datos que quiero que muestre y el que quiero que inserte*/   
-            $contratos = Contratos::findOrFail($id);        
-            return view('administracion.contratos.edit',compact('contratos','manuales'));}
+    public function editcontratos($id){
+        $manuales = Manuales::lists('codigosoat', 'id'); /* aqui le paso los datos que quiero que muestre y el que quiero que inserte*/   
+        $contratos = Contratos::findOrFail($id);        
+        return view('administracion.contratos.edit',compact('contratos','manuales'));
+    }
 
-
-     
     public function manuales(){ 
-             $manuales = Manuales::select("manuales.id","manuales.tipomanual","servicios.cups","manuales.codigosoat", "manuales.costo", "manuales.estado")
-            ->join("servicios","manuales.servicios_id","=","servicios.id")        
-            ->get();
-             $manuales = ['manuales' => $manuales];
-             return view("administracion.manuales.index",$manuales);
+        $manuales = Manuales::select("manuales.id","manuales.tipomanual","servicios.cups","manuales.codigosoat", "manuales.costo", "manuales.estado")
+            ->join("servicios","manuales.servicios_id","=","servicios.id")
+            ->paginate();
+        $manuales = ['manuales' => $manuales];
+        return view("administracion.manuales.index",$manuales);
 
     }
-            public function createmanuales(){  
-             $servicios = Servicios::where('estado', 'Activo')->orderBy('cups')->get();
-             $servicios = ['servicios' => $servicios];       
-            return view('administracion.manuales.create',$servicios);}
+    public function createmanuales(){  
+        $servicios = Servicios::where('estado', 'Activo')->orderBy('cups')->get();
+        $servicios = ['servicios' => $servicios];       
+        return view('administracion.manuales.create',$servicios);}
 
-            public function editmanuales($id){
-            $manuales = Manuales::findOrFail($id);             
-            $servicios = Servicios::lists('cups', 'id'); /* aqui le paso los datos que quiero que muestre y el que quiero que inserte*/   
-            return view('administracion.manuales.edit',compact('manuales','servicios'));}
-    
+    public function editmanuales($id){
+        $manuales = Manuales::findOrFail($id);             
+        $servicios = Servicios::lists('cups', 'id'); /* aqui le paso los datos que quiero que muestre y el que quiero que inserte*/   
+        return view('administracion.manuales.edit',compact('manuales','servicios'));}
+
     /**
     /**
      * Show the form for creating a new resource.

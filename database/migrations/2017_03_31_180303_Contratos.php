@@ -21,7 +21,7 @@ class Contratos extends Migration
             $table->integer('diasvencimiento');
            $table->integer('id_manual')->unsigned();
            $table->foreign('id_manual')->references('id')->on('manuales');
-            $table->integer('porcentaje');
+            $table->decimal('porcentaje',42,2);
             $table->enum('estado', array('Activo','Inactivo'));   
             $table->timestamps();
        

@@ -28,6 +28,9 @@ $(function () {
     var reporte_factura_tbody = $("#reporte_factura_tbody");
     var reporte_factura_total = $("#reporte_factura_total");
     var reporte_factura_btn_imprimir = $("#reporte_factura_btn_imprimir");
+    var reporte_factura_contrato = $("#reporte_factura_contrato");
+    var reporte_factura_fecha_facturacion = $("#reporte_factura_fecha_facturacion");
+    var reporte_factura_fecha_radicacion = $("#reporte_factura_fecha_radicacion");
 
     //-- Fin de declarar variables ======================= //
 
@@ -155,7 +158,6 @@ $(function () {
 
     // reporte factura
     function buscarFactura() {
-        console.log("keyup");
         var url = "/facturas/reporte/factura/" + reporte_factura_numero_factura.val();
         $.ajax({
             url: url,
@@ -164,17 +166,30 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     rellenarReporteFactura(respuesta.factura_items);
+                    reporte_factura_contrato.val(respuesta.factura.contrato);
+                    reporte_factura_fecha_facturacion.val(respuesta.factura.created_at);
+                    if(respuesta.factura.radicada){
+                        reporte_factura_fecha_radicacion.val(respuesta.factura.fecha_radicacion);
+                    }else{
+                        reporte_factura_fecha_radicacion.val("");
+                    }
                     reporte_factura_btn_imprimir.removeClass("hidden");
                 }
                 else {
                     reporte_factura_tbody.html("");
                     reporte_factura_total.html("");
+                    reporte_factura_contrato.val("");
+                    reporte_factura_fecha_facturacion.val("");
+                    reporte_factura_fecha_radicacion.val("");
                     reporte_factura_btn_imprimir.addClass("hidden");
                 }
             }, error: function (e) {
                 console.log(e);
                 reporte_factura_tbody.html("");
                 reporte_factura_total.html("");
+                reporte_factura_contrato.val("");
+                reporte_factura_fecha_facturacion.val("");
+                reporte_factura_fecha_radicacion.val("");
                 reporte_factura_btn_imprimir.addClass("hidden");
             }
         });

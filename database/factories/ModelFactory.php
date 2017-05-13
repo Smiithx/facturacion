@@ -21,27 +21,34 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
+    $faker->addProvider(new Faker\Provider\es_VE\Person($faker));
+    $faker->addProvider(new Faker\Provider\es_VE\PhoneNumber($faker));
+    $faker->addProvider(new Faker\Provider\es_VE\Address($faker));
+    $sexo = $faker->randomElement(array('Masculino','Femenino'));
+    $aseguradora = \App\Aseguradora::all()->random()->id;
+    $contrato = \App\Contratos::all()->random()->contrato;
     return [
-        'documento' => $faker->regexify('[a-z0-9]{8}'),
+        'documento' => $faker->nationalId(),
         'tipo_documento' => $faker->randomElement(array('CC', 'TI','RC','CE','AS','MS','PA')),
-        'nombre' => $faker->name,
+        'nombre' => $faker->firstName($sexo == 'Masculino' ? 'male' : 'female')." ".$faker->lastName,
         'edad' => $faker->numberBetween($min = 1, $max = 90),
         'tipo_edad' => $faker->randomElement(array('Años', 'Meses','Dias')),
         'fecha_nacimiento' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'sexo' => $faker->randomElement(array('Masculino','Femenino')),
+        'sexo' => $sexo,
         'telefono' => $faker->phoneNumber,
         'direccion' => $faker->address,
-        'contrato' => $faker->regexify('[a-z0-9A-Z]{8}'),
-        'regimen' => $faker->randomElement(array('Contributivo', 'Subsidiado','Vinculado','Particular','Otro','Desplazado Contributivo','Desplazado Subsidiado','Desplazado Vinculado'))
+        'contrato' => $contrato,
+        'regimen' => $faker->randomElement(array('Contributivo', 'Subsidiado','Vinculado','Particular','Otro','Desplazado Contributivo','Desplazado Subsidiado','Desplazado Vinculado')),
+        'aseguradora_id' => $aseguradora
     ];
 });
 
 $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
+    $faker->addProvider(new Faker\Provider\es_VE\Company($faker));
     return [
-        'nombre' => $faker->name,
-        'nit' => $faker->regexify('[a-z0-9A-Z]{8}'), 
+        'nombre' => $faker->company,
+        'nit' => $faker->regexify('[JG][0-9]{9}'), 
         'estado' => $faker->randomElement(array('Activo','Inactivo'))
-
     ];
 });
 
@@ -67,12 +74,37 @@ $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Usuarios::class, function (Faker\Generator $faker) {
-       return [
+    return [
         'nombre' => $faker->name,
         'documento' => $faker->regexify('[0-9]{8}'),
         'contraseña' => str_random(10),
         'firma' => 'foto.jpg',
         'cargo' => $faker->randomElement(array('Medicos','Enfermeras','Otros'))
 
+    ];
+});
+
+$factory->define(App\Manuales::class, function (Faker\Generator $faker) {
+    $servicio = \App\Servicios::all()->random()->id;
+    return [
+        'tipomanual' => $faker->randomElement(array('ISS2001','SOAT','PARTICULAR','OTRO')),
+        'servicios_id' => $servicio,
+        'codigosoat' => $faker->regexify('[a-z0-9A-Z]{8}'),
+        'costo' => $faker->randomFloat(2,0.01),
+        'estado' => $faker->randomElement(array('Activo','Inactivo'))
+    ];
+});
+
+$factory->define(App\Contratos::class, function (Faker\Generator $faker) {
+    $faker->addProvider(new Faker\Provider\es_VE\Person($faker));
+    $manual = \App\Manuales::all()->random()->id;
+    return [
+        'contrato' => $faker->regexify('[a-z0-9A-Z]{8}'),
+        'nombre' => $faker->firstName()." ".$faker->lastName,
+        'nit' => $faker->nationalId(), 
+        'diasvencimiento' => $faker->numberBetween(30, 60),
+        'id_manual' => $manual,
+        'porcentaje' => $faker->randomFloat(2,0.01,200.00),
+        'estado' => $faker->randomElement(array('Activo','Inactivo'))
     ];
 });

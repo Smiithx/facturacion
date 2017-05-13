@@ -14,7 +14,7 @@ class Pacientes extends Migration
     {
         Schema::create('pacientes', function(Blueprint $table){
             $table->increments('id');
-            $table->string('documento');
+            $table->string('documento')->unique();
             $table->enum('tipo_documento', array('CC', 'TI','RC','CE','AS','MS','PA'));
             $table->string('nombre');
             $table->integer('edad');

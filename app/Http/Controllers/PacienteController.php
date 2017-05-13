@@ -47,20 +47,20 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'documento' => 'required|max:255',
+            'documento' => 'required|max:255|unique:pacientes,documento',
             'nombre' => 'required|max:255',
             'edad' => 'required|integer|min:1',
             'fecha_nacimiento' => 'required|date',
             'telefono' => 'required',
             'direccion' => 'required|max:255',
-            'aseguradora_id' => 'required|integer',
-            'contrato' => 'required|max:255'
+            'aseguradora_id' => 'required|exists:aseguradoras,id',
+            'contrato' => 'required|exists:contratos,contrato'
         ]);
         $paciente = Paciente::create($request->all());
         $aseguradora = Aseguradora::find($request->get('aseguradora_id'));
         $aseguradora->pacientes()->save($paciente);
-
-        return Redirect::to('pacientes');
+        flash('El paciente ha sido registrado con exito!');
+        return Redirect::to('pacientes.create');
     }
 
     /**

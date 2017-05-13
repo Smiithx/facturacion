@@ -11,13 +11,13 @@
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Tipo:</label>
             <select class="form-control" id="tipodoc" name="tipo_documento">
-                <option value="CC">CC</option>
-                <option value="TI">TI</option>
-                <option value="RC">RC</option>
-                <option value="CE">CE</option>
-                <option value="AS">AS</option>
-                <option value="MS">MS</option>
-                <option value="PA">PA</option>
+                <option value="CC" {{old('tipo_documento') == "CC" ? "selected":""}}>CC</option>
+                <option value="TI" {{old('tipo_documento') == "TI" ? "selected":""}}>TI</option>
+                <option value="RC" {{old('tipo_documento') == "CC" ? "selected":""}}>RC</option>
+                <option value="CE" {{old('tipo_documento') == "RC" ? "selected":""}}>CE</option>
+                <option value="AS" {{old('tipo_documento') == "AS" ? "selected":""}}>AS</option>
+                <option value="MS" {{old('tipo_documento') == "MS" ? "selected":""}}>MS</option>
+                <option value="PA" {{old('tipo_documento') == "PA" ? "selected":""}}>PA</option>
             </select>
         </div>
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
@@ -32,9 +32,9 @@
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Tipo de edad:</label>
             <select class="form-control" id="anos" name="tipo_edad">
-                <option value="Años">Años</option>
-                <option value="Meses">Meses</option>
-                <option value="Dias">Días</option>
+                <option value="Años" {{old('tipo_edad') == "Años" ? "selected":""}}>Años</option>
+                <option value="Meses" {{old('tipo_edad') == "Meses" ? "selected":""}}>Meses</option>
+                <option value="Dias" {{old('tipo_edad') == "Dias" ? "selected":""}}>Días</option>
             </select>
         </div>
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
@@ -48,8 +48,8 @@
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Sexo:</label>
             <select class="form-control" id="sexo" name="sexo">
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
+                <option value="Femenino" {{old('sexo') == "sexo" ? "selected":""}}>Femenino</option>
+                <option value="Masculino" {{old('sexo') == "Masculino" ? "selected":""}}>Masculino</option>
             </select>
         </div>
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
@@ -68,7 +68,7 @@
             <select name="aseguradora_id" id="aseguradora_id" required class="form-control">
                 <option value="">Seleccione una aseguradora</option>
                 @foreach ($aseguradoras as $aseguradora)
-                    <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
+                    <option value="{{$aseguradora->id}}" {{old('aseguradora_id') == $aseguradora->id ? "selected":""}}>{{$aseguradora->nombre}}</option>
                 @endforeach
             </select>
         </div>
@@ -80,14 +80,14 @@
         <div class="form-group col-xs-12 col-md-2 col-lg-3">
             <label for="label">Regimen:</label>
             <select class="form-control" id="regimen" name="regimen">
-                <option value="Contributivo">Contributivo</option>
-                <option value="Subsidiado">Subsidiado</option>
-                <option value="Vinculado">Vinculado</option>
-                <option value="Particular">Particular</option>
-                <option value="Otro">Otro</option>
-                <option value="Desplazado Contributivo">Desplazado Contributivo</option>
-                <option value="Desplazado Subsidiado">Desplazado Subsidiado</option>
-                <option value="Desplazado Vinculado">Desplazado Vinculado</option>
+                <option value="Contributivo" {{old('regimen') == "Contributivo" ? "selected":""}}>Contributivo</option>
+                <option value="Subsidiado" {{old('regimen') == "Subsidiado" ? "selected":""}}>Subsidiado</option>
+                <option value="Vinculado" {{old('regimen') == "Vinculado" ? "selected":""}}>Vinculado</option>
+                <option value="Particular" {{old('regimen') == "Particular" ? "selected":""}}>Particular</option>
+                <option value="Otro" {{old('regimen') == "Otro" ? "selected":""}}>Otro</option>
+                <option value="Desplazado Contributivo" {{old('regimen') == "Desplazado Contributivo" ? "selected":""}}>Desplazado Contributivo</option>
+                <option value="Desplazado Subsidiado" {{old('regimen') == "Desplazado Subsidiado" ? "selected":""}}>Desplazado Subsidiado</option>
+                <option value="Desplazado Vinculado" {{old('regimen') == "Desplazado Vinculado" ? "selected":""}}>Desplazado Vinculado</option>
             </select>
         </div>
         <br>

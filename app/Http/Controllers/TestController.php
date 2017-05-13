@@ -18,7 +18,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $ordenes = \App\ordenservicios::select('contrato')->groupBy('contrato')->get();
+        $ordenes = \App\Servicios::all()->random()->id;
         dd($ordenes);
     }
 
