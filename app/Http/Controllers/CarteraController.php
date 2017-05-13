@@ -118,10 +118,13 @@ public function createcontrato()
             $cartera_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
           <td>$factura->fecha_radicacion</td>
-         <td id='cartera_factura_total'>" . number_format($factura->factura_total, 2) . "</td>
+         <td>         
+         <input id='cartera_factura_total' data-value='$factura->factura_total' required type='text' name='factura_total' readonly
+                                   class='form-control' value=".number_format($factura->factura_total, 2).">     
+         </td>
           <td>$date</td>
-          <td><input id='valor_abono' style='width: 100%;' type='number' step='0.00' name='cartera_valor_abono' required></td>
-          <td>" . number_format($factura->valor_glosa, 2) . "</td>
+          <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='factura_total'  name='cartera_valor_abono'  class='form-control'> </td>
+          <td id='cartera_glosa' data-value='$factura->valor_glosa'>" . number_format($factura->valor_glosa, 2) . "</td>
           <td><input id='cartera_retencion' style='width: 100%;' type='number' step='0.00' name='retencion' required></td>
           <td id='cartera_saldo'></td>
            </tr>";
