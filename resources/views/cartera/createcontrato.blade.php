@@ -6,7 +6,7 @@
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Contrato:</label>
             <input class="form-control" placeholder="Escribir Contrato" id="cartera_factura" type="text"
-                   name="id_factura"/>
+                   name="cartera_factura"/>
         </div>
      
         <div class="form-group col-xs-12 col-md-3">
