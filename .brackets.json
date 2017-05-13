@@ -1,6 +1,7 @@
 {
     "jscodehints.detectedExclusions": [
         "C:/xampp/htdocs/facturacion/gulpfile.js",
-        "C:/xampp/htdocs/facturacion/vendor/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/Template/js/respond.min.js"
+        "C:/xampp/htdocs/facturacion/vendor/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/Template/js/respond.min.js",
+        "C:/xampp/htdocs/facturacion/vendor/phpunit/php-code-coverage/src/CodeCoverage/Report/HTML/Renderer/Template/js/nv.d3.min.js"
     ]
 }

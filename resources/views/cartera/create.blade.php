@@ -31,8 +31,11 @@
         </div>
         <br>
         <br>
-        <table class="table table-striped table-bordered table-hover table-responsive "
+
+        <table class="table table-striped table-hover"
                style="align: center; width: 98%; margin: 1%; background: #3DA40A;" id="tbl_cartera">
+               
+
             <thead style="color: #fff;">
             <tr>
                 <th class="text-center">Factura</th>
@@ -48,8 +51,9 @@
             <tbody id="cartera_tbody">
 
             </tbody>
+       
         </table>
-        <br>
+           <hr>
         <div class="form-group col-xs-12 col-md-12 col-lg-12">
             <input class="btn btn-primary pull-right" type="submit" id="radicar" onclick="agregafactura()"
                    name="cartera" value="Guardar">
