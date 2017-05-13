@@ -22,7 +22,7 @@ class OrdenServiciosSeeder extends Seeder
             $items = $faker->numberBetween(1, 10);
             $orden_total = 0;
             for ($i = 1; $i <= $items; $i++) {
-                $pos = $faker->numberBetween(0, count($servicios));
+                $pos = $faker->numberBetween(0, count($servicios)-1);
                 $cantidad = $faker->numberBetween(1, 10);
                 $valor_unitario = $faker->randomFloat(2,0.02);
                 $copago = $faker->randomFloat(2,0,($valor_unitario * $cantidad));

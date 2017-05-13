@@ -119,4 +119,9 @@ class ManualesController extends Controller
         Session::flash('message',$manuales->id.' fue eliminado con Exito');
         return Redirect::to('administracion/manuales');
     }
+
+    public function cups($cups,$contrato){
+
+    }
+
 }

@@ -47,14 +47,16 @@ class DatabaseSeeder extends Seeder
         //$this->call('MedicamentosSeeder');
         $this->call('ServiciosSeeder');
         $this->call('AseguradoraSeeder');
-        $this->call('ManualesSeeder');
+        // manuales
+        factory(\App\Manuales::class)->times(100)->create();
         $this->call('ContratoSeeder');
         $this->call('PacientesSeeder');
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
         $this->call('FacturasSeeder');
-        $this->call('UsuariosSeeder');
+        // usuarios
+        factory(\App\Usuarios::class)->times(20)->create();
 
 
         // supposed to only apply to a single connection and reset it's self

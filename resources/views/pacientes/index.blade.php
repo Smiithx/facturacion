@@ -34,7 +34,7 @@
                     <td>{{ $paciente->edad." ".$paciente->tipo_edad }}</td>
                     <td>{{ $paciente->sexo }}</td>
                     <td>{{ $paciente->aseguradora_id->nombre }}</td>
-                    <td>{{ $paciente->contrato }}</td>
+                    <td>{{ $paciente->id_contrato->nombre }}</td>
                     <td class="acciones">
                         <a href="/pacientes/{{$paciente->id}}/edit" class="btn btn-success" data-toggle='tooltip'
                            title='Editar' target="_blank">

@@ -86,11 +86,10 @@ Route::get('administracion/manuales/create', 'AdministracionController@createman
 Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
 Route::post('Contratos/buscar','ContratosController@buscar');
 
-
 //----- Manuales ----- //
 Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
 Route::post('Manuales/buscar','ManualesController@buscar');
-
+Route::get('manuales/{cups}/{contrato}','ManualesController@cups');
 
 //----- Empresa ----- //
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
@@ -107,6 +106,7 @@ Route::post('Usuarios/buscar','UsuariosController@buscar');
 
 //----- Servicios ----- //
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
+Route::get('servicios/cups/{cups}','ServiciosController@cups');
 Route::post('Servicios/buscar','ServiciosController@buscar');
 
 //----- Test ----- //

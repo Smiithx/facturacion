@@ -6,10 +6,6 @@
         <form action="/Contratos" method="POST">
             {!!csrf_field() !!}
             <div class="form-group">
-                <label for="contrato">Contrato:</label>
-                <input type="text" class="form-control" id="contrato" name="contrato"  value="{{old('contrato')}}">
-            </div>
-            <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input type="text" class="form-control" id="nombre" name="nombre"  value="{{old('nombre')}}">
             </div>

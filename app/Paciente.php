@@ -18,7 +18,7 @@ class Paciente extends Model
      *
      * @var array
      */
-    protected $fillable = ['documento', 'tipo_documento', 'nombre','edad','tipo_edad','fecha_nacimiento','sexo','telefono','direccion','aseguradora_id','contrato','regimen'];
+    protected $fillable = ["id",'documento', 'tipo_documento', 'nombre','edad','tipo_edad','fecha_nacimiento','sexo','telefono','direccion','aseguradora_id','id_contrato','regimen'];
 
     public function aseguradora(){
         return $this->belongsTo(Aseguradora::class);
@@ -33,6 +33,11 @@ class Paciente extends Model
     public function getAseguradoraIdAttribute($value)
     {
         return \App\Aseguradora::find($value);
+    }
+
+    public function getIdContratoAttribute($value)
+    {
+        return \App\Contratos::find($value);
     }
 
 }

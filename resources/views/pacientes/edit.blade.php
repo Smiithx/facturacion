@@ -65,7 +65,7 @@
         <select name="aseguradora_id" id="aseguradora_id" required class="form-control">
             <option value="">Seleccione una aseguradora</option>
             @foreach ($aseguradoras as $aseguradora)
-                @if($aseguradora->id == $paciente->aseguradora_id)
+                @if($aseguradora->id == $paciente->aseguradora_id->id)
                     <option value="{{$aseguradora->id}}" selected>{{$aseguradora->nombre}}</option>
                 @else
                     <option value="{{$aseguradora->id}}">{{$aseguradora->nombre}}</option>
@@ -75,7 +75,12 @@
     </div>
     <div class="form-group col-xs-12 col-md-2 col-lg-3">
         <label for="label">Contrato:</label>
-        <input class="form-control" id="acontrato" type="text" name="contrato" required value="{{$paciente->contrato}}"/> 
+        <select name="id_contrato" id="id_contrato" required class="form-control">
+            <option value="">Seleccione un contrato</option>
+            @foreach ($contratos as $contrato)
+                <option value="{{$contrato->id}}" {{ $paciente->id_contrato->id == $contrato->id ? "selected":""}}>{{$contrato->nombre}}</option>
+            @endforeach
+        </select>
     </div>
     <div class="form-group col-xs-12 col-md-2 col-lg-3">
         <label for="label">Regimen:</label>

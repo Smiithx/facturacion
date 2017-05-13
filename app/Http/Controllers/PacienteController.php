@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aseguradora;
+use App\Contratos;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -34,7 +35,8 @@ class PacienteController extends Controller
     public function create()
     {
         $aseguradoras = Aseguradora::all();
-        $datos = ['aseguradoras' => $aseguradoras];
+        $contratos = Contratos::all();
+        $datos = ['aseguradoras' => $aseguradoras, 'contratos' => $contratos];
         return View('pacientes.create', $datos);
     }
 
@@ -54,13 +56,13 @@ class PacienteController extends Controller
             'telefono' => 'required',
             'direccion' => 'required|max:255',
             'aseguradora_id' => 'required|exists:aseguradoras,id',
-            'contrato' => 'required|exists:contratos,contrato'
+            'id_contrato' => 'required|exists:contratos,id'
         ]);
         $paciente = Paciente::create($request->all());
         $aseguradora = Aseguradora::find($request->get('aseguradora_id'));
         $aseguradora->pacientes()->save($paciente);
         flash('El paciente ha sido registrado con exito!');
-        return Redirect::to('pacientes.create');
+        return Redirect::to('pacientes/create');
     }
 
     /**
@@ -106,7 +108,8 @@ class PacienteController extends Controller
     {
         $paciente = Paciente::findOrFail($id);
         $aseguradoras = Aseguradora::all();
-        $datos = ['paciente' => $paciente, 'aseguradoras' => $aseguradoras];
+        $contratos = Contratos::all();
+        $datos = ['paciente' => $paciente, 'aseguradoras' => $aseguradoras, 'contratos' => $contratos];
         return view("pacientes.edit", $datos);
     }
 

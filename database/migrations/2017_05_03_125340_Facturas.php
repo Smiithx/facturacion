@@ -14,7 +14,8 @@ class Facturas extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('contrato',100);
+            $table->integer('id_contrato')->unsigned();
+            $table->foreign('id_contrato')->references('id')->on('contratos');
             $table->decimal('factura_total', 42, 2);
             $table->boolean('radicada');
             $table->date('fecha_radicacion');

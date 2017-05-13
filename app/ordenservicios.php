@@ -19,7 +19,7 @@ class ordenservicios extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'documento', 'aseguradora_id','contrato','orden_total','created_at'];
+    protected $fillable = ['nombre', 'documento', 'aseguradora_id','id_contrato','orden_total','id_paciente','created_at'];
 
     public function aseguradora(){
         return $this->belongsTo(Aseguradora::class);
@@ -34,5 +34,9 @@ class ordenservicios extends Model
     public function getAseguradoraIdAttribute($value)
     {
         return \App\Aseguradora::find($value);
+    }
+    public function getIdContratoAttribute($value)
+    {
+        return \App\Contratos::find($value);
     }
 }

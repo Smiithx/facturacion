@@ -21,7 +21,7 @@ $(function () {
         '<td><input required type="text" name="descripcion[]" readonly class="form-control orden_servicios_descripcion"></td>' +
         '<td><input required type="number" name="cantidad[]" class="form-control orden_servicios_cantidad"></td>' +
         '<td><input required type="number" step="0.01" name="copago[]" class="form-control orden_servicios_copago"></td>' +
-        '<td><input required type="number" step="0.01" name="valor_unitario[]" class="form-control orden_servicios_valor_unitario"></td>' +
+        '<td><input required readonly name="valor_unitario[]" class="form-control orden_servicios_valor_unitario"></td>' +
         '<td><input required type="number" step="0.01" name="valor_total[]" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
 //-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
@@ -34,6 +34,10 @@ $(function () {
 
     //-- Agregar eventos ================================= //
     orden_documento.on("keyup", function () {
+        clearInterval(temporizador_documento)
+        temporizador_documento = setTimeout(buscarPaciente, 1000);
+    });
+    orden_documento.change(function () {
         clearInterval(temporizador_documento)
         temporizador_documento = setTimeout(buscarPaciente, 1000);
     });
@@ -56,7 +60,7 @@ $(function () {
         actualizarVariables();
     });
 
-      //-- Agregar evento ORDENES POR FACTURAr================================= //
+    //-- Agregar evento ORDENES POR FACTURAr================================= //
 
     btn_ordenes_facturar_buscar.on("click", function () {
         var url = "/ordenservicio/ordenes_facturar/" + fecha_inicio_ordenes_facturar.val() +
@@ -113,24 +117,8 @@ $(function () {
                     orden_nombre.val(respuesta.paciente.nombre);
                     orden_contrato.val(respuesta.paciente.contrato);
                     orden_documento_id_paciente.val(respuesta.paciente.id);
-                    var aseguradora_id = respuesta.paciente.aseguradora_id;
-                    var url = "/Aseguradora/" + respuesta.paciente.aseguradora_id;
-                    $.ajax({
-                        url: url,
-                        type: "GET",
-                        dataType: "json",
-                        success: function (respuesta) {
-                            if (respuesta.success) {
-                                orden_aseguradora.html("<option value='" + aseguradora_id + "'>" + respuesta.aseguradora.nombre + "</option>");
-                                // orden_aseguradora.html(respuesta.aseguradora.nombre);
-
-                            } else {
-                                orden_aseguradora.html("<option value=''></option>");
-                            }
-                        }, error: function (e) {
-                            console.log(e);
-                        }
-                    });
+                    var aseguradora = respuesta.paciente.aseguradora_id;
+                    orden_aseguradora.html("<option value='" + aseguradora.id + "'>" + aseguradora.nombre + "</option>");
                 } else {
                     orden_documento_id_paciente.val("");
                     orden_nombre.val("");
@@ -155,12 +143,30 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     fila.parent().parent()[0].children[1].children[0].value = respuesta.servicio.descripcion;
+                    url = "/manuales/"+ fila[0].value + "/" + orden_contrato.val();
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (respuesta) {
+                            if (respuesta.success) {
+                                fila.parent().parent()[0].children[4].children[0].value = respuesta.manual.costo;
+                            }
+                            else {
+                                fila.parent().parent()[0].children[4].children[0].value = "";
+                            }
+                        }, error: function (e) {
+                            fila.parent().parent()[0].children[4].children[0].value = "";
+                        }
+                    });
                 }
                 else {
                     fila.parent().parent()[0].children[1].children[0].value = "";
+                    fila.parent().parent()[0].children[4].children[0].value = "";
                 }
             }, error: function (e) {
                 fila.parent().parent()[0].children[1].children[0].value = "";
+                fila.parent().parent()[0].children[4].children[0].value = "";
             }
         });
     }
@@ -176,7 +182,7 @@ $(function () {
         agregarEventos();
     }
 
-    function eliminarEventos(){
+    function eliminarEventos() {
         orden_servicios_cups.unbind("keyup");
         orden_servicios_cantidad.unbind("keyup");
         orden_servicios_copago.unbind("keyup");
@@ -189,6 +195,10 @@ $(function () {
         orden_servicios_cups.on("keyup", function () {
             clearInterval(temporizador_cups)
             temporizador_cups = setTimeout(buscarCups, 1000, $(this));
+        });
+        orden_servicios_cups.on("blur", function () {
+            clearInterval(temporizador_cups)
+            temporizador_cups = setTimeout(buscarCups, 500, $(this));
         });
         orden_servicios_cantidad.on("keyup", function () {
             valorTotal($(this).parent().parent());

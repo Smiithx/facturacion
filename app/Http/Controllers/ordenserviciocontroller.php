@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ordenservicios;
 use App\Http\Requests\OrdenServiciosRequest;
+use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 
 class ordenserviciocontroller extends Controller
@@ -23,12 +24,13 @@ class ordenserviciocontroller extends Controller
     //
     public function store(OrdenServiciosRequest $request)
     {
+        $paciente = \App\Paciente::where("documento", $request->documento)->get()[0];
         $orden_de_servicio = ordenservicios::create([
-            'nombre' => $request->nombre,
-            'documento' => $request->documento,
-            'id_paciente' => $request->id_paciente,
-            'aseguradora_id' => (double)$request->aseguradora_id,
-            'contrato' => $request->contrato
+            'nombre' => $paciente->nombre,
+            'documento' => $paciente->documento,
+            'id_paciente' => $paciente->id,
+            'aseguradora_id' => $paciente->aseguradora_id->id,
+            'contrato' => $paciente->contrato
         ]);
         $orden_total = 0;
         for ($i = 0; $i < count($request->cups); $i++) {
@@ -47,7 +49,8 @@ class ordenserviciocontroller extends Controller
         }
         $orden_de_servicio->orden_total = $orden_total;
         $orden_de_servicio->save();
-        return 'Orden registrada';
+        flash('La orden ha sido registrada con exito!');
+        return Redirect::to('ordenservicio/create');
     }
 
 
@@ -103,7 +106,7 @@ class ordenserviciocontroller extends Controller
         $OrdenServicio_Items = OrdenServicio_Items::where('id_orden_servicio', $id)->get();
         $factura_item = FacturaItems::select('id_factura')->where('id_orden_servicio', $id)->get();
         $factura = 0;
-        if(count($factura_item) > 0){
+        if (count($factura_item) > 0) {
             $factura = $factura_item[0]->id_factura;
         }
         $datos = ['ordenservicio' => $ordenservicio, 'OrdenServicio_Items' => $OrdenServicio_Items, 'factura' => $factura];
@@ -111,16 +114,16 @@ class ordenserviciocontroller extends Controller
         return view("orden_servicio.show", $datos);
     }
 
-    public function ordenes_facturar( $desde, $hasta)
-     {
-       $ordenservicios = ordenservicios::where('facturado', "0")        
-       ->whereDate('created_at', '>=', $desde)
-       ->whereDate('created_at', '<=', $hasta)        
-       ->get();
-       $tbody_ordenes_facturar = "";
-    
+    public function ordenes_facturar($desde, $hasta)
+    {
+        $ordenservicios = ordenservicios::where('facturado', "0")
+            ->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)
+            ->get();
+        $tbody_ordenes_facturar = "";
+
         foreach ($ordenservicios as $orden) {
-           $aseguradora = $orden->aseguradora_id->nombre;
+            $aseguradora = $orden->aseguradora_id->nombre;
             $tbody_ordenes_facturar .= "<tr>
           <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
           <td>$orden->documento</td>

@@ -18,7 +18,7 @@
         </div>
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Aseguradora: {{old('aseguradora_id')}}</label>
-            <select required readonly class="form-control" name="aseguradora_id" id="orden-aseguradora">
+            <select required disabled class="form-control" name="aseguradora_id" id="orden-aseguradora">
                 <option value="{{old('aseguradora_id')}}">{{old('aseguradora_id')}}</option>
             </select>
         </div>
@@ -58,7 +58,7 @@
                             <input required type="number" step="0.01" name="copago[]"
                                    class="form-control orden_servicios_copago" value=""></td>
                         <td>
-                            <input required type="number" step="0.01" name="valor_unitario[]"
+                            <input required readonly name="valor_unitario[]"
                                    class="form-control orden_servicios_valor_unitario"></td>
                         <td>
                             <input required type="number" step="0.01" name="valor_total[]" readonly

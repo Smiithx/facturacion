@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+
 class ContratosController extends Controller
 {
     /**
@@ -30,46 +31,43 @@ class ContratosController extends Controller
         //
     }
 
-     public function buscar(Request $request)
+    public function buscar(Request $request)
     {
-            if(trim($request) != ""){    
-              $contratos = Contratos::where('contrato',"LIKE","%$request->nombre%")
-                 ->get();
-                $datos = ['contratos' => $contratos];
-               return view("administracion.contratos.index",$datos);
-    }   }
+        if (trim($request) != "") {
+            $contratos = Contratos::where('contrato', "LIKE", "%$request->nombre%")
+                ->get();
+            $datos = ['contratos' => $contratos];
+            return view("administracion.contratos.index", $datos);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-     $this->validate($request, [
-            'contrato' => 'required|max:255',
+        $this->validate($request, [
             'nombre' => 'required|max:255',
             'nit' => 'required',
             'diasvencimiento' => 'required|integer|min:1',
             'id_manual' => 'required',
             'porcentaje' => 'required|integer|min:1',
             'estado' => 'required'
-              
+
         ]);
         $contrato = Contratos::create($request->all());
-        $contratos = Contratos::paginate(5);
-        $datos = ['contratos' => $contratos];
 
-
-        Session::flash('message',$contrato->contrato.' Fue Creada con exito');
+        Session::flash('message', $contrato->contrato . ' Fue Creada con exito');
         return Redirect::to('administracion/contratos');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -80,7 +78,7 @@ class ContratosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -91,32 +89,31 @@ class ContratosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-       
-         $contratos = Contratos::findOrFail($id);
 
+        $contratos = Contratos::findOrFail($id);
         $contratos->fill($request->all());
         $contratos->save();
-        Session::flash('message',' Fue actualizado con exito');
+        Session::flash('message', ' Fue actualizado con exito');
         return Redirect::to('administracion/contratos');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $contratos = Contratos::findOrFail($id);
         $contratos->delete();
-        Session::flash('message',$contratos->id.' fue eliminado con Exito');
+        Session::flash('message', $contratos->id . ' fue eliminado con Exito');
         return Redirect::to('administracion/contratos');
     }
 }

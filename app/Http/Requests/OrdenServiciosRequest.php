@@ -24,10 +24,7 @@ class OrdenServiciosRequest extends Request
     public function rules()
     {
         $rules = [
-            'nombre' => 'required|max:255',
-            'documento' => 'required|max:255',
-            'aseguradora_id' => 'required',
-            'contrato' => 'required|max:255',
+            'documento' => 'required|max:255|exists:pacientes,documento',
         ];
 
         foreach ($this->request->get('cups') as $key => $val) {

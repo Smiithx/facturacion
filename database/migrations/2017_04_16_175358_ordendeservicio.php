@@ -20,7 +20,8 @@ class Ordendeservicio extends Migration
             $table->foreign('aseguradora_id')->references('id')->on('aseguradoras');
             $table->integer('id_paciente')->unsigned();
             $table->foreign('id_paciente')->references('id')->on('pacientes');
-            $table->string('contrato',50);
+            $table->integer('id_contrato')->unsigned();
+            $table->foreign('id_contrato')->references('id')->on('contratos');
             $table->decimal('orden_total', 42, 2);
             $table->boolean('facturado');
             $table->timestamps();

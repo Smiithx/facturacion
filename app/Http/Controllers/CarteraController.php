@@ -32,10 +32,10 @@ class CarteraController extends Controller
     }
 
 
-public function createcontrato()
+    public function createcontrato()
     {
 
-       return view("cartera.createcontrato");
+        return view("cartera.createcontrato");
     }
 
     /**
@@ -96,24 +96,24 @@ public function createcontrato()
 
     public function buscar($factura, $desde, $hasta)
     {
-        
-        $Facturas = Factura::select("facturas.id","contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
+
+        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
             ->join("glosas", "facturas.id", "=", "glosas.id_factura")
-            ->join("contratos", "facturas.contrato", "=", "contratos.contrato")           
-           ->where('radicada', 1)
-           ->where('facturas.id', $factura)
-           ->orWhere('facturas.contrato',"$factura")
-           ->whereDate('facturas.created_at', '>=', $desde)
-          ->whereDate('facturas.created_at', '<=', $hasta)
-        ->get();
+            ->join("contratos", "facturas.contrato", "=", "contratos.contrato")
+            ->where('radicada', 1)
+            ->where('facturas.id', $factura)
+            ->orWhere('facturas.contrato', "$factura")
+            ->whereDate('facturas.created_at', '>=', $desde)
+            ->whereDate('facturas.created_at', '<=', $hasta)
+            ->get();
 
 
         $cartera_tbody = "";
         foreach ($Facturas as $factura) {
-            $fecha = Carbon::createFromFormat('Y-m-d',  $factura->fecha_radicacion);
-          $fecha->addDay($factura->diasvencimiento);
+            $fecha = Carbon::createFromFormat('Y-m-d', $factura->fecha_radicacion);
+            $fecha->addDay($factura->diasvencimiento);
             $date = $fecha->format('d-m-Y');
-          
+
 
             $cartera_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
@@ -136,7 +136,7 @@ public function createcontrato()
             return response()->json([
                 'error' => 'No se encontraron Facturas.'
             ]);
-       }
+        }
 
-   }
+    }
 }

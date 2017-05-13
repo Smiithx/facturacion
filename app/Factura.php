@@ -19,7 +19,7 @@ class Factura extends Model
      */
     protected $fillable = [
         'id',
-        'contrato',
+        'id_contrato',
         'created_at',
         'factura_total',
     ];
@@ -34,5 +34,9 @@ class Factura extends Model
         $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $value);
         $fecha = $fecha->format('Y-m-d');
         return $fecha;
+    }
+    public function getIdContratoAttribute($value)
+    {
+        return \App\Contratos::find($value);
     }
 }
