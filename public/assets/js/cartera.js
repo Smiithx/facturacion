@@ -41,12 +41,7 @@ $(function () {
         });
     });
 
-    cartera_valor_abono.on("keyup", function () {
-
-        console.log("probando");
-
-    });
-
+ 
     function eliminarEventos() {
         cartera_valor_abono.unbind("keyup");
         cartera_retencion.unbind("keyup");

@@ -3,8 +3,7 @@ $(function () {
     //-- Declarar variables =============================== //
     
 //-- Declarar variables Glosas=============================== //
-    var glosas_factura = $("#glosas_factura");
-   	
+    var glosas_factura = $("#glosas_factura");   	
    	var glosas_desde = $("#glosas_desde");
     var glosas_hasta = $("#glosas_hasta");
     var btn_glosas_buscar = $("#btn_glosas_buscar");

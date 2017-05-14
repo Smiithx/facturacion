@@ -109,7 +109,7 @@ class GlosasController extends Controller
  public function buscar($factura, $desde, $hasta){
    
     $Facturas = Factura::where('id',$factura)
-            ->orWhere('contrato', $factura)
+            ->orWhere('id_contrato', $factura)
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)->get();
 

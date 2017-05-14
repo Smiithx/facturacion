@@ -46,7 +46,13 @@ class CarteraController extends Controller
      */
     public function store(Request $request)
     {
-        return "La cartera fue Creada";
+        $saldo = 0;
+        $subtotal = $request->cartera_valor_abono + $request->cartera_glosa + $request->retencion;
+        
+        $saldo = $request->factura_total - $subtotal;
+        echo $subtotal."<br>";
+        echo $saldo;
+        dd($request->all());
     }
 
     /**
@@ -99,10 +105,10 @@ class CarteraController extends Controller
 
         $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
             ->join("glosas", "facturas.id", "=", "glosas.id_factura")
-            ->join("contratos", "facturas.contrato", "=", "contratos.contrato")
+            ->join("contratos", "facturas.id_contrato", "=", "contratos.id")
             ->where('radicada', 1)
             ->where('facturas.id', $factura)
-            ->orWhere('facturas.contrato', "$factura")
+            ->orWhere('facturas.id_contrato', "$factura")
             ->whereDate('facturas.created_at', '>=', $desde)
             ->whereDate('facturas.created_at', '<=', $hasta)
             ->get();
@@ -112,22 +118,32 @@ class CarteraController extends Controller
         foreach ($Facturas as $factura) {
             $fecha = Carbon::createFromFormat('Y-m-d', $factura->fecha_radicacion);
             $fecha->addDay($factura->diasvencimiento);
-            $date = $fecha->format('d-m-Y');
+            $date = $fecha->format('Y-m-d');
 
 
             $cartera_tbody .= "<tr>
-         <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
-          <td>$factura->fecha_radicacion</td>
-         <td>         
-         <input id='cartera_factura_total' data-value='$factura->factura_total' required type='text' name='factura_total' readonly
-                                   class='form-control' value=".number_format($factura->factura_total, 2).">     
-         </td>
-          <td>$date</td>
-          <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='factura_total'  name='cartera_valor_abono'  class='form-control'> </td>
-          <td id='cartera_glosa' data-value='$factura->valor_glosa'>" . number_format($factura->valor_glosa, 2) . "</td>
-          <td><input id='cartera_retencion' style='width: 100%;' type='number' step='0.00' name='retencion' required></td>
-          <td id='cartera_saldo'></td>
-           </tr>";
+            <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+            <input type='hidden' name='factura_id' value='$factura->id'>
+            <td>$factura->fecha_radicacion</td>
+          
+            <td><input id='cartera_factura_total' data-value='$factura->factura_total' required type='text' name='factura_total' readonly
+                                   class='form-control' value=".number_format($factura->factura_total, 2)."></td>
+            <td>$date</td>
+            <input type='hidden' name='fecha_vencimiento' value='$date'>
+
+          
+            <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='cartera_valor_abono'  class='form-control'></td>
+          
+
+            <td><input id='cartera_glosa' data-value='$factura->valor_glosa' required type='text' name='cartera_glosa' readonly
+                                   class='form-control' value=".number_format($factura->valor_glosa, 2)."></td>
+                                   
+            <td><input id='cartera_retencion' step='0.00'  required type='number' name='retencion'    class='form-control'></td>
+                     
+
+            <td><input id='cartera_saldo' value = '' type='number'></td>
+            
+                                    </tr>";
         }
 
         if ($cartera_tbody != "") {
