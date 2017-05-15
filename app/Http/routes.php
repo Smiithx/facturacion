@@ -22,6 +22,8 @@ Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
 Route::get('facturas/buscar/{aseguradora}/{contrato}/{desde}/{hasta}', 'FacturaController@buscar');
 Route::get('facturas/radicar/{contrato}/{desde}/{hasta}', 'FacturaController@radicar');
+Route::get('facturas/cuentacobro/buscar/{factura}/{desde}/{hasta}', 'FacturaController@cxcbuscar');
+
 Route::get('facturas/reporte/factura', 'FacturaController@reporteFactura');
 Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFacturaShow');
 
@@ -55,10 +57,14 @@ Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar
 Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfacturarpdf');
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');
+
 Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
 Route::get('reportes/Imprimirfactura/pdf', 'ReportesController@Imprimirfacturapdf');
+
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
 Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
+
+
 Route::get('reportes/radicacion', 'ReportesController@radicacion');
 Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
 
