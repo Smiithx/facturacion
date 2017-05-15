@@ -15,7 +15,12 @@ class Cartera extends Model
      */
     protected $fillable = [
         'id_factura',     
-        'retencion'
+        'fecha_vencimiento',
+        'valor_abono',
+        'valor_abono',     
+        'valor_glosa',
+        'valor_retencion',     
+        'valor_saldo'
     
     
     ];

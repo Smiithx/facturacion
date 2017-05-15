@@ -84,10 +84,8 @@ $(function () {
         var saldo = parseFloat(cartera_valor_abono.val());
         var retencio = parseFloat(cartera_retencion.val());
         var total = 0;
-        total = totalfactura - (saldo + retencio + glosa);
-        
-
-        cartera_saldo.html($.number(total,2));
+        total = parseFloat(totalfactura - (saldo + retencio + glosa));
+       cartera_saldo.val($.number(total,2));
         
 
     }
