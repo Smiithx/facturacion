@@ -24,8 +24,9 @@
         </div>
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Contrato:</label>
-            <input required readonly class="form-control" id="orden-contrato" type="text" name="contrato"
-                   value="{{old('contrato')}}"/>
+            <select disabled name="id_contrato" id="orden-contrato" required class="form-control">
+                <option value="{{old('id_contrato')}}">{{old('id_contrato')}}</option>
+            </select>
         </div>
         <br>
         <br>
@@ -58,10 +59,12 @@
                             <input required type="number" step="0.01" name="copago[]"
                                    class="form-control orden_servicios_copago" value=""></td>
                         <td>
-                            <input required readonly name="valor_unitario[]"
-                                   class="form-control orden_servicios_valor_unitario"></td>
+                            <input required readonly name=""
+                                   class="form-control orden_servicios_valor_unitario_vista">
+                            <input type="hidden" name="valor_unitario[]" class="orden_servicios_valor_unitario">
+                        </td>
                         <td>
-                            <input required type="number" step="0.01" name="valor_total[]" readonly
+                            <input required type="text" readonly
                                    class="form-control orden_servicios_valor_total"></td>
                     </tr>
                     </tbody>

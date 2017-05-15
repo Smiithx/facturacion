@@ -11,18 +11,21 @@ $(function () {
     var orden_servicios_cantidad = $(".orden_servicios_cantidad");
     var orden_servicios_copago = $(".orden_servicios_copago");
     var orden_servicios_valor_unitario = $(".orden_servicios_valor_unitario");
+    var orden_servicios_valor_unitario_vista = $(".orden_servicios_valor_unitario_vista");
     var orden_servicios_valor_total = $(".orden_servicios_valor_total");
     var temporizador_documento = 0;
     var temporizador_cups = 0;
     var orden_servicios_añadir = $("#orden_servicios_añadir");
     var orden_servicios_eliminar = $("#orden_servicios_eliminar");
     var orden_servicios_servicios = $("#orden_servicios_servicios");
+
     const orden_servicios_servicios_campos = '<tr><td><input required type="text" name="cups[]" class="form-control orden_servicios_cups"></td>' +
         '<td><input required type="text" name="descripcion[]" readonly class="form-control orden_servicios_descripcion"></td>' +
         '<td><input required type="number" name="cantidad[]" class="form-control orden_servicios_cantidad"></td>' +
         '<td><input required type="number" step="0.01" name="copago[]" class="form-control orden_servicios_copago"></td>' +
-        '<td><input required readonly name="valor_unitario[]" class="form-control orden_servicios_valor_unitario"></td>' +
-        '<td><input required type="number" step="0.01" name="valor_total[]" readonly class="form-control orden_servicios_valor_total"></td></tr>';
+        '<td><input required readonly class="form-control orden_servicios_valor_unitario_vista"></td>' +
+        '<input type="hidden" name="valor_unitario[]" class="orden_servicios_valor_unitario">' +
+        '<td><input required type="text" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
 //-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
     var fecha_inicio_ordenes_facturar = $("#fecha_inicio_ordenes_facturar");
@@ -90,7 +93,7 @@ $(function () {
         console.log();
         var cantidad = parseInt(fila[0].children[2].children[0].value);
         var copago = parseFloat(fila[0].children[3].children[0].value);
-        var valor_unitario = parseFloat(fila[0].children[4].children[0].value);
+        var valor_unitario = parseFloat(fila[0].children[4].children[1].value);
         if (Number.isNaN(cantidad)) {
             cantidad = 0;
         }
@@ -103,7 +106,7 @@ $(function () {
 
         var valor_total = (valor_unitario * cantidad) - copago;
 
-        fila[0].children[5].children[0].value = valor_total.toFixed(2);
+        fila[0].children[5].children[0].value = $.number(valor_total,2);
     }
 
     function buscarPaciente() {
@@ -115,7 +118,7 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     orden_nombre.val(respuesta.paciente.nombre);
-                    orden_contrato.val(respuesta.paciente.contrato);
+                    orden_contrato.html("<option value='" + respuesta.paciente.id_contrato.id + "'>" + respuesta.paciente.id_contrato.nombre + "</option>");
                     orden_documento_id_paciente.val(respuesta.paciente.id);
                     var aseguradora = respuesta.paciente.aseguradora_id;
                     orden_aseguradora.html("<option value='" + aseguradora.id + "'>" + aseguradora.nombre + "</option>");
@@ -135,7 +138,7 @@ $(function () {
     }
 
     function buscarCups(fila) {
-        var url = "/servicios/cups/" + fila[0].value;
+        var url = "/servicios/cups/" + fila[0].value + "/" + orden_contrato.val();
         $.ajax({
             url: url,
             type: "GET",
@@ -143,30 +146,18 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     fila.parent().parent()[0].children[1].children[0].value = respuesta.servicio.descripcion;
-                    url = "/manuales/"+ fila[0].value + "/" + orden_contrato.val();
-                    $.ajax({
-                        url: url,
-                        type: "GET",
-                        dataType: "json",
-                        success: function (respuesta) {
-                            if (respuesta.success) {
-                                fila.parent().parent()[0].children[4].children[0].value = respuesta.manual.costo;
-                            }
-                            else {
-                                fila.parent().parent()[0].children[4].children[0].value = "";
-                            }
-                        }, error: function (e) {
-                            fila.parent().parent()[0].children[4].children[0].value = "";
-                        }
-                    });
+                    fila.parent().parent()[0].children[4].children[0].value = $.number(respuesta.precio,2);
+                    fila.parent().parent()[0].children[4].children[1].value = respuesta.precio
                 }
                 else {
                     fila.parent().parent()[0].children[1].children[0].value = "";
                     fila.parent().parent()[0].children[4].children[0].value = "";
+                    fila.parent().parent()[0].children[4].children[1].value = 0;
                 }
             }, error: function (e) {
                 fila.parent().parent()[0].children[1].children[0].value = "";
                 fila.parent().parent()[0].children[4].children[0].value = "";
+                fila.parent().parent()[0].children[4].children[1].value = 0;
             }
         });
     }
@@ -177,6 +168,7 @@ $(function () {
         orden_servicios_cantidad = $(".orden_servicios_cantidad");
         orden_servicios_copago = $(".orden_servicios_copago");
         orden_servicios_valor_unitario = $(".orden_servicios_valor_unitario");
+        orden_servicios_valor_unitario_vista = $(".orden_servicios_valor_unitario_vista");
         orden_servicios_valor_total = $(".orden_servicios_valor_total");
         orden_servicios_servicios = $("#orden_servicios_servicios");
         agregarEventos();
@@ -186,7 +178,7 @@ $(function () {
         orden_servicios_cups.unbind("keyup");
         orden_servicios_cantidad.unbind("keyup");
         orden_servicios_copago.unbind("keyup");
-        orden_servicios_valor_unitario.unbind("keyup");
+        orden_servicios_valor_unitario_vista.unbind("keyup");
     }
 
     function agregarEventos() {
@@ -206,7 +198,7 @@ $(function () {
         orden_servicios_copago.on("keyup", function () {
             valorTotal($(this).parent().parent());
         });
-        orden_servicios_valor_unitario.on("keyup", function () {
+        orden_servicios_valor_unitario_vista.on("keyup", function () {
             valorTotal($(this).parent().parent());
         });
 

@@ -125,6 +125,7 @@ class PacienteController extends Controller
         $paciente = Paciente::findOrFail($id);
         $paciente->fill($request->all());
         $paciente->save();
+        flash('Los datos han sido actualizados con éxito!')->success();
         return Redirect::to("pacientes/$id/edit");
     }
 

@@ -106,7 +106,7 @@ Route::post('Usuarios/buscar','UsuariosController@buscar');
 
 //----- Servicios ----- //
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
-Route::get('servicios/cups/{cups}','ServiciosController@cups');
+Route::get('servicios/cups/{cups}/{contrato}','ServiciosController@cups');
 Route::post('Servicios/buscar','ServiciosController@buscar');
 
 //----- Test ----- //

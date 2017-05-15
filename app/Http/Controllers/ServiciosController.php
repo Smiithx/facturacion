@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Contratos;
 use Illuminate\Http\Request;
 use App\Servicios;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-
 
 
 class ServiciosController extends Controller
@@ -20,12 +20,11 @@ class ServiciosController extends Controller
      */
     public function index()
     {
-           $servicios = Aseguradora::paginate(5);
+        $servicios = Aseguradora::paginate(5);
         $servicios = ['servicios' => $servicios];
-        return view("administracion.servicios",$servicios);
+        return view("administracion.servicios", $servicios);
     }
 
-      
 
     /**
      * Show the form for creating a new resource.
@@ -39,39 +38,40 @@ class ServiciosController extends Controller
 
     public function buscar(Request $request)
     {
-            if(trim($request) != ""){    
-              $servicios = Servicios::where('descripcion',"LIKE","%$request->nombre%")
-                 ->get();
-                $datos = ['servicios' => $servicios];
-               return view("administracion.servicios.index",$datos);
-    }   }
+        if (trim($request) != "") {
+            $servicios = Servicios::where('descripcion', "LIKE", "%$request->nombre%")
+                ->get();
+            $datos = ['servicios' => $servicios];
+            return view("administracion.servicios.index", $datos);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-         $this->validate($request, [
+        $this->validate($request, [
             'cups' => 'required|max:255',
             'descripcion' => 'required|max:255',
-            'estado' => 'required'            
+            'estado' => 'required'
         ]);
         $servicio = Servicios::create($request->all());
         $servicios = Servicios::all();
         $datos = ['servicios' => $servicios];
 
-   
-        Session::flash('message',$servicio->descripcion.' Fue creada con exito');
+
+        Session::flash('message', $servicio->descripcion . ' Fue creada con exito');
         return Redirect::to('administracion/servicios');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -82,7 +82,7 @@ class ServiciosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -93,8 +93,8 @@ class ServiciosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -103,7 +103,7 @@ class ServiciosController extends Controller
 
         $servicios->fill($request->all());
         $servicios->save();
-        Session::flash('message',$servicios->descripcion.' Fue actualizado con exito');
+        Session::flash('message', $servicios->descripcion . ' Fue actualizado con exito');
         return Redirect::to('administracion/servicios');
 
     }
@@ -111,27 +111,41 @@ class ServiciosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-         $servicios = Servicios::findOrFail($id);
+        $servicios = Servicios::findOrFail($id);
         $servicios->delete();
-        Session::flash('message',$servicios->descripcion.' fue eliminado con Exito');
+        Session::flash('message', $servicios->descripcion . ' fue eliminado con Exito');
         return Redirect::to('administracion/servicios');
 
     }
 
-    public function cups($cups)
+    public function cups($cups, $contrato)
     {
-        $servicio=Servicios::where("cups","=",$cups)->get();
-        if($servicio != "[]"){
-            return response()->json([
-                'success' => 'true',
-                'servicio' => $servicio[0]
-            ]);
-        }else{
+        $servicio = Servicios::where("cups", "=", $cups)->get();
+        if ($servicio != "[]") {
+            $contrato = Contratos::selectRaw("manuales.costo,contratos.porcentaje")
+                ->join("manuales", "contratos.id_manual", "=", "manuales.id")
+                ->where("contratos.id", $contrato)
+                ->where("manuales.servicios_id", $servicio[0]->id)
+                ->get();
+            if ($contrato != "[]") {
+                $precio = $contrato[0]->costo * $contrato[0]->porcentaje / 100.00;
+                return response()->json([
+                    'success' => 'true',
+                    'servicio' => $servicio[0],
+                    'contrato' => $contrato,
+                    'precio' => $precio
+                ]);
+            } else {
+                return response()->json([
+                    'error' => "Servicio no disponible para este contrato."
+                ]);
+            }
+        } else {
             return response()->json([
                 'error' => "No existe el servicio con el codigo $cups"
             ]);
