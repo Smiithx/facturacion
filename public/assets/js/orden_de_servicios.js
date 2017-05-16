@@ -20,14 +20,14 @@ $(function () {
     var orden_servicios_servicios = $("#orden_servicios_servicios");
 
     const orden_servicios_servicios_campos = '<tr><td><input required type="text" name="cups[]" class="form-control orden_servicios_cups"></td>' +
-        '<td><input required type="text" name="descripcion[]" readonly class="form-control orden_servicios_descripcion"></td>' +
-        '<td><input required type="number" name="cantidad[]" class="form-control orden_servicios_cantidad"></td>' +
-        '<td><input required type="number" step="0.01" name="copago[]" class="form-control orden_servicios_copago"></td>' +
-        '<td><input required readonly class="form-control orden_servicios_valor_unitario_vista"></td>' +
-        '<input type="hidden" name="valor_unitario[]" class="orden_servicios_valor_unitario">' +
-        '<td><input required type="text" readonly class="form-control orden_servicios_valor_total"></td></tr>';
+          '<td><input required type="text" readonly class="form-control orden_servicios_descripcion"></td>' +
+          '<td><input required type="number" name="cantidad[]" class="form-control orden_servicios_cantidad"></td>' +
+          '<td><input required type="number" step="0.01" name="copago[]" class="form-control orden_servicios_copago"></td>' +
+          '<td><input required readonly class="form-control orden_servicios_valor_unitario_vista">' +
+          '<input type="hidden" class="orden_servicios_valor_unitario"></td>' +
+          '<td><input required type="text" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
-//-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
+    //-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
     var fecha_inicio_ordenes_facturar = $("#fecha_inicio_ordenes_facturar");
     var fecha_fin_ordenes_facturar = $("#fecha_fin_ordenes_facturar");
     var tbody_ordenes_facturar = $("#tbody_ordenes_facturar");
@@ -40,7 +40,7 @@ $(function () {
         clearInterval(temporizador_documento)
         temporizador_documento = setTimeout(buscarPaciente, 1000);
     });
-    orden_documento.change(function () {
+    orden_documento.on("blur",function () {
         clearInterval(temporizador_documento)
         temporizador_documento = setTimeout(buscarPaciente, 1000);
     });
@@ -90,7 +90,6 @@ $(function () {
     //-- declarar funciones auxiliares------------------------------------//
 
     function valorTotal(fila) {
-        console.log();
         var cantidad = parseInt(fila[0].children[2].children[0].value);
         var copago = parseFloat(fila[0].children[3].children[0].value);
         var valor_unitario = parseFloat(fila[0].children[4].children[1].value);
@@ -139,6 +138,7 @@ $(function () {
 
     function buscarCups(fila) {
         var url = "/servicios/cups/" + fila[0].value + "/" + orden_contrato.val();
+        console.log(url);
         $.ajax({
             url: url,
             type: "GET",
@@ -150,7 +150,7 @@ $(function () {
                     fila.parent().parent()[0].children[4].children[1].value = respuesta.precio
                 }
                 else {
-                    fila.parent().parent()[0].children[1].children[0].value = "";
+                    fila.parent().parent()[0].children[1].children[0].value = respuesta.error;
                     fila.parent().parent()[0].children[4].children[0].value = "";
                     fila.parent().parent()[0].children[4].children[1].value = 0;
                 }

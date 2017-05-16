@@ -25,32 +25,95 @@ class ordenserviciocontroller extends Controller
     public function store(OrdenServiciosRequest $request)
     {
         $paciente = \App\Paciente::where("documento", $request->documento)->get()[0];
-        $orden_de_servicio = ordenservicios::create([
-            'nombre' => $paciente->nombre,
-            'documento' => $paciente->documento,
-            'id_paciente' => $paciente->id,
-            'aseguradora_id' => $paciente->aseguradora_id->id,
-            'contrato' => $paciente->contrato
-        ]);
-        $orden_total = 0;
+
+        // validar datos
+        $cups_error = array();
+        $servicio_error = array();
+        $anular = false;
         for ($i = 0; $i < count($request->cups); $i++) {
-            $total = ((double)$request->cantidad[$i] * (double)$request->valor_unitario[$i]) - (double)$request->copago[$i];
-            $orden_total += $total;
-            OrdenServicio_Items::create([
-                'id_orden_servicio' => $orden_de_servicio->id,
-                'cups' => $request->cups[$i],
-                'descripcion' => $request->descripcion[$i],
-                'cantidad' => (double)$request->cantidad[$i],
-                'copago' => (double)$request->copago[$i],
-                'valor_unitario' => (double)$request->valor_unitario[$i],
-                'valor_total' => $total,
-                'facturado' => 0
-            ]);
+            $cup = $request->cups[$i];
+            $servicio = \App\Servicios::where("cups",$cup)->get();
+            if($servicio == "[]"){
+                $cups_error[] = $cup;
+            }else{
+                $contrato = \App\Contratos::selectRaw("manuales.costo,contratos.porcentaje")
+                    ->join("manuales", "contratos.id_manual", "=", "manuales.id")
+                    ->where("contratos.id", $paciente->id_contrato->id)
+                    ->where("contratos.estado", "Activo")
+                    ->where("manuales.servicios_id", $servicio[0]->id)
+                    ->where("manuales.estado","Activo")
+                    ->get();
+                if ($contrato == "[]") {
+                    $servicio_error[]=$cup;
+                }
+            }
         }
-        $orden_de_servicio->orden_total = $orden_total;
-        $orden_de_servicio->save();
-        flash('La orden ha sido registrada con exito!');
-        return Redirect::to('ordenservicio/create');
+        $cups_error_message = "";
+        $servicio_error_message = "";
+        if(count($cups_error) > 0){
+            $anular=true;
+            if(count($cups_error) > 1){
+                $cups_error_message.="Los siguientes codigos cups son incorrectos: ";
+            }else{
+                $cups_error_message.="El siguiente codigo cups es incorrecto: ";
+            }
+            foreach($cups_error as $cups){
+                $cups_error_message.= "$cups, ";
+            }
+        }
+        if(count($servicio_error) > 0){
+            $anular=true;
+            if(count($servicio_error) > 1){
+                $servicio_error_message.="Los siguientes codigos cups, no se encuentran disponible para este contrato: ";
+            }else{
+                $servicio_error_message.="El siguiente codigo cups,no se encuentran disponible para este contrato: ";
+            }
+            foreach($servicio_error as $cups){
+                $servicio_error_message.= "$cups, ";
+            }
+        }
+
+        // crear orden de servicio
+        if($anular){
+            flash(($cups_error_message != '' ?"$cups_error_message<br>": '').$servicio_error_message)->error();
+        }else{
+            $orden_de_servicio = ordenservicios::create([
+                'nombre' => $paciente->nombre,
+                'documento' => $paciente->documento,
+                'id_paciente' => $paciente->id,
+                'aseguradora_id' => $paciente->aseguradora_id->id,
+                'id_contrato' => $paciente->id_contrato->id
+            ]);
+            $orden_total = 0;
+
+            for ($i = 0; $i < count($request->cups); $i++) {
+                $cup = $request->cups[$i];
+                $servicio = \App\Servicios::where("cups",$cup)->get()[0];
+                $contrato = \App\Contratos::selectRaw("manuales.costo,contratos.porcentaje")
+                    ->join("manuales", "contratos.id_manual", "=", "manuales.id")
+                    ->where("contratos.id", $paciente->id_contrato->id)
+                    ->where("manuales.servicios_id", $servicio->id)
+                    ->get();
+                $precio = $contrato[0]->costo * $contrato[0]->porcentaje / 100.00;
+                $total = ((double)$request->cantidad[$i] * $precio) - (double)$request->copago[$i];
+                $orden_total += $total;
+                OrdenServicio_Items::create([
+                    'id_orden_servicio' => $orden_de_servicio->id,
+                    'cups' => $cup,
+                    'descripcion' => $servicio->descripcion,
+                    'cantidad' => (double)$request->cantidad[$i],
+                    'copago' => (double)$request->copago[$i], 
+                    'valor_unitario' => $precio,
+                    'valor_total' => $total,
+                    'facturado' => 0
+                ]); 
+            }
+            $orden_de_servicio->orden_total = $orden_total;
+            $orden_de_servicio->save();
+
+            flash("La orden #$orden_de_servicio->id ha sido registrada con exito!");
+        }
+        return Redirect::to('/ordenservicio/create');
     }
 
 
@@ -133,7 +196,7 @@ class ordenserviciocontroller extends Controller
             <td>$orden->created_at</td>
             <td>&anbsp</td>
 
-           
+
            </tr>";
         }
 
