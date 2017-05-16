@@ -21,7 +21,7 @@
     <div class="col-xs-12 col-md-2">
         <label for="label">Contrato:</label>
         <input readonly class="form-control" id="orden-contrato" type="text" name="contrato"
-               value="{{ $ordenservicio->contrato }}"/>
+               value="{{ $ordenservicio->id_contrato->nombre }}"/>
     </div>
     <div class="col-xs-12 col-md-2">
         <label for="label">N° de factura:</label>

@@ -38,11 +38,11 @@ $(function () {
     //-- Agregar eventos ================================= //
     orden_documento.on("keyup", function () {
         clearInterval(temporizador_documento)
-        temporizador_documento = setTimeout(buscarPaciente, 1000);
+        temporizador_documento = setTimeout(buscarPaciente, 600);
     });
     orden_documento.on("blur",function () {
         clearInterval(temporizador_documento)
-        temporizador_documento = setTimeout(buscarPaciente, 1000);
+        temporizador_documento = setTimeout(buscarPaciente, 600);
     });
 
     agregarEventos();
@@ -186,11 +186,11 @@ $(function () {
         //-- Agregar eventos cups ================================= //
         orden_servicios_cups.on("keyup", function () {
             clearInterval(temporizador_cups)
-            temporizador_cups = setTimeout(buscarCups, 1000, $(this));
+            temporizador_cups = setTimeout(buscarCups, 600, $(this));
         });
         orden_servicios_cups.on("blur", function () {
             clearInterval(temporizador_cups)
-            temporizador_cups = setTimeout(buscarCups, 500, $(this));
+            temporizador_cups = setTimeout(buscarCups, 600, $(this));
         });
         orden_servicios_cantidad.on("keyup", function () {
             valorTotal($(this).parent().parent());

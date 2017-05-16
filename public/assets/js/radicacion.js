@@ -39,7 +39,7 @@ $(function () {
     //-- Agregar eventos ================================= //
     radicacion_factura.on("keyup", function () {
         clearInterval(radicacion_factura_temporizador)
-        radicacion_factura_temporizador = setTimeout(buscarFactura, 800);
+        radicacion_factura_temporizador = setTimeout(buscarFactura, 600);
     });
 
     radicacion_contrato_buscar.on("click", function () {
@@ -165,7 +165,7 @@ $(function () {
         $.each(facturas, function (ind, factura) {
             tbody += "<tr>";
             tbody += "<td class='text-center'><a  target='_blank' href='/facturas/" + factura.id + "'>" + factura.id + "</a></td>";
-            tbody += "<td>" + factura.contrato + "</td>";
+            tbody += "<td>" + factura.id_contrato.nombre + "</td>";
             tbody += "<td class='text-center'>" + factura.created_at + "</td>";
             tbody += "<td class='text-right'>" + $.number(factura.factura_total, 2) + "</td>";
             tbody += "<td class='text-center'>";

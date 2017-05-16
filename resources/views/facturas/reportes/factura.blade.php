@@ -11,14 +11,16 @@
         </div>
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Contrato:</label>
-            <input readonly type="text" class="form-control" id="reporte_factura_contrato"/>
+            <select readonly id="reporte_factura_contrato" class="form-control">
+                <option value=""></option>
+            </select>
         </div>
         <div class="form-group col-xs-12 col-md-3">
-            <label for="label">Fecha de facturacion:</label>
+            <label for="label">Fecha de facturación:</label>
             <input readonly type="text" class="form-control" id="reporte_factura_fecha_facturacion"/>
         </div>
         <div class="form-group col-xs-12 col-md-3">
-            <label for="label">Fecha de radicacion:</label>
+            <label for="label">Fecha de radicación:</label>
             <input readonly type="text" class="form-control" id="reporte_factura_fecha_radicacion"/>
         </div>
     </div>

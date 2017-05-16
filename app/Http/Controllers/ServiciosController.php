@@ -118,7 +118,7 @@ class ServiciosController extends Controller
     {
         $servicios = Servicios::findOrFail($id);
         $servicios->delete();
-        Session::flash('message', $servicios->descripcion . ' fue eliminado con Exito');
+        Session::flash('message', $servicios->descripcion . ' fue eliminado con éxito');
         return Redirect::to('administracion/servicios');
 
     }
@@ -129,8 +129,12 @@ class ServiciosController extends Controller
         if ($servicio != "[]") {
             $contrato = Contratos::selectRaw("manuales.costo,contratos.porcentaje")
                 ->join("manuales", "contratos.id_manual", "=", "manuales.id")
+                ->join("servicios", "manuales.servicios_id", "=", "servicios.id")
                 ->where("contratos.id", $contrato)
+                ->where("contratos.estado", "Activo")
                 ->where("manuales.servicios_id", $servicio[0]->id)
+                ->where("manuales.estado","Activo")
+                ->where("servicios.estado","Activo")
                 ->get();
             if ($contrato != "[]") {
                 $precio = $contrato[0]->costo * $contrato[0]->porcentaje / 100.00;
@@ -147,7 +151,7 @@ class ServiciosController extends Controller
             }
         } else {
             return response()->json([
-                'error' => "No existe el servicio con el codigo $cups"
+                'error' => "No existe el servicio con el código $cups"
             ]);
         }
     }

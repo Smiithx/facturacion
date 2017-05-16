@@ -38,11 +38,14 @@ class ordenserviciocontroller extends Controller
             }else{
                 $contrato = \App\Contratos::selectRaw("manuales.costo,contratos.porcentaje")
                     ->join("manuales", "contratos.id_manual", "=", "manuales.id")
+                    ->join("servicios", "servicios.id", "=", "manuales.servicios_id")
                     ->where("contratos.id", $paciente->id_contrato->id)
                     ->where("contratos.estado", "Activo")
                     ->where("manuales.servicios_id", $servicio[0]->id)
                     ->where("manuales.estado","Activo")
+                    ->where("servicios.estado","Activo")
                     ->get();
+
                 if ($contrato == "[]") {
                     $servicio_error[]=$cup;
                 }
@@ -53,9 +56,9 @@ class ordenserviciocontroller extends Controller
         if(count($cups_error) > 0){
             $anular=true;
             if(count($cups_error) > 1){
-                $cups_error_message.="Los siguientes codigos cups son incorrectos: ";
+                $cups_error_message.="Los siguientes códigos cups son incorrectos: ";
             }else{
-                $cups_error_message.="El siguiente codigo cups es incorrecto: ";
+                $cups_error_message.="El siguiente código cups es incorrecto: ";
             }
             foreach($cups_error as $cups){
                 $cups_error_message.= "$cups, ";
@@ -64,9 +67,9 @@ class ordenserviciocontroller extends Controller
         if(count($servicio_error) > 0){
             $anular=true;
             if(count($servicio_error) > 1){
-                $servicio_error_message.="Los siguientes codigos cups, no se encuentran disponible para este contrato: ";
+                $servicio_error_message.="Los siguientes códigos cups, no se encuentran disponible para este contrato: ";
             }else{
-                $servicio_error_message.="El siguiente codigo cups,no se encuentran disponible para este contrato: ";
+                $servicio_error_message.="El siguiente código cups,no se encuentran disponible para este contrato: ";
             }
             foreach($servicio_error as $cups){
                 $servicio_error_message.= "$cups, ";
@@ -111,7 +114,7 @@ class ordenserviciocontroller extends Controller
             $orden_de_servicio->orden_total = $orden_total;
             $orden_de_servicio->save();
 
-            flash("La orden #$orden_de_servicio->id ha sido registrada con exito!");
+            flash("La orden <a href='/ordenservicio/$orden_de_servicio->id'>#$orden_de_servicio->id</a> ha sido registrada con éxito!")->success();
         }
         return Redirect::to('/ordenservicio/create');
     }
@@ -119,7 +122,7 @@ class ordenserviciocontroller extends Controller
 
     public function buscar($contrato, $desde, $hasta)
     {
-        $ordenservicios = ordenservicios::where('id', $contrato)->whereDate('created_at', '>=', $desde)
+        $ordenservicios = ordenservicios::where('id_contrato', $contrato)->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)->where('facturado', "0")->get();
         $facturar_tbody = "";
         $facturar_total = 0;

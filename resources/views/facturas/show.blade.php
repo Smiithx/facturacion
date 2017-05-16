@@ -8,7 +8,7 @@
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Contrato:</label>
             <input readonly type="text" class="form-control"
-                   value="{{ $factura->contrato }}"/>
+                   value="{{ $factura->id_contrato->nombre }}"/>
         </div>
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Fecha:</label>

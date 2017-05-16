@@ -7,18 +7,19 @@
                 <li><a href="/pacientes/create" class="list-group-item">Crear</a></li>
             </ul>
         </li>
-        <li><a href="/facturas">Facturas</a>
+        <li><a href="">Facturas</a>
             <ul>
                 <li><a class="list-group-item" href="/facturas/create">Facturar</a></li>
                 <li><a class="list-group-item" href="/ordenservicio/create">Orden de servicio</a></li>
-                <li class="submenu"><a class="list-group-item" href="">Reportes</a>
+                <li class="submenu">
+                    <a class="list-group-item" href="">Reportes</a>
                     <ul class="submenu-item">
                         <li><a class="list-group-item" href="/facturas/reporte/factura">Factura</a></li>
                         <li><a class="list-group-item" href="">Contrato</a></li>
                     </ul>
                 </li>
             </ul>
-        </li>    
+        </li>
         <li>
             <a href="">Radicación</a>
             <ul>
@@ -27,19 +28,21 @@
             </ul>
         </li>
         <li>
-        <a>Cartera</a>
-         <ul>
+            <a>Cartera</a>
+            <ul>
                 <li><a class="list-group-item" href="/cartera/create">Factura</a></li>
                 <li><a class="list-group-item" href="/cartera/create/contrato">Contrato</a></li>
-            </ul></li>
+            </ul>
+        </li>
 
-        <li><a>Glosas<ul>
-                <li><a class="list-group-item" href="/glosas/create">Factura</a></li>
-                <li><a class="list-group-item" href="/glosas/create/contrato">Contrato</a></li>
-            </ul></li>
+        <li><a>Glosas
+                <ul>
+                    <li><a class="list-group-item" href="/glosas/create">Factura</a></li>
+                    <li><a class="list-group-item" href="/glosas/create/contrato">Contrato</a></li>
+                </ul></li>
 
         </li>
         <li><a href="/reportes">Reportes</a></li>
         <li><a href="/administracion">Administración</a></li>
-    </ul>    
+    </ul>
 </section>

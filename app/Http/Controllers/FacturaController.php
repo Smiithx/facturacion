@@ -73,7 +73,7 @@ class FacturaController extends Controller
         $factura->factura_total = $total;
         $factura->save();
 
-        flash("La factura #$factura->id ha sido registrada exitosamente!")->success();
+        flash("La factura <a href='/facturas/$factura->id'>#$factura->id</a> ha sido registrada exitosamente!")->success();
         return Redirect::to('facturas/create');
 
     }
@@ -93,7 +93,7 @@ class FacturaController extends Controller
                         <td class=\"text-center\">
                             <a href=\"/facturas/$factura->id\" target='_blank'>$factura->id</a>
                          </td>
-                        <td>$factura->contrato</td>
+                        <td>".$factura->id_contrato->nombre."</td>
                         <td>$factura->created_at</td>
                         <td class=\"text-right\">" . number_format($factura->factura_total, 2) . "</td>
                     </tr>";

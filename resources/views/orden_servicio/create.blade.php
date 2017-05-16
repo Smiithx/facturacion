@@ -49,7 +49,7 @@
                             <input required type="text" name="cups[]" class="form-control orden_servicios_cups danger"
                                    value=""></td>
                         <td>
-                            <input required type="text" name="descripcion[]" readonly
+                            <input required type="text" readonly
                                    class="form-control orden_servicios_descripcion" value="">
                         </td>
                         <td>
@@ -59,9 +59,9 @@
                             <input required type="number" step="0.01" name="copago[]"
                                    class="form-control orden_servicios_copago" value=""></td>
                         <td>
-                            <input required readonly name=""
+                            <input required readonly
                                    class="form-control orden_servicios_valor_unitario_vista">
-                            <input type="hidden" name="valor_unitario[]" class="orden_servicios_valor_unitario">
+                            <input type="hidden" class="orden_servicios_valor_unitario">
                         </td>
                         <td>
                             <input required type="text" readonly

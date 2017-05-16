@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contratos;
 use App\Factura;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,9 @@ class RadicacionController extends Controller
      */
     public function radicarContrato()
     {
-        return View("radicacion.create.contrato");
+        $contratos = Contratos::all();
+        $datos = ['contratos' => $contratos];
+        return View("radicacion.create.contrato",$datos);
     }
 
     /**
@@ -59,7 +62,7 @@ class RadicacionController extends Controller
         $factura->radicada = 1;
         $factura->fecha_radicacion = $request->fecha_radicacion;
         $factura->save();
-        flash('Factura radicada con exito!');
+        flash("Factura <a href='/facturas/$factura->id'>#$factura->id</a> ha sido radicada con éxito!")->success();
         return Redirect::to("/radicacion/create");
     }
 

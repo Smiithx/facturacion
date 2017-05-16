@@ -3,11 +3,16 @@
     <h3 class="text-center">Radicar contrato</h3>
     <hr>
     <form method="POST" action="/radicacion/contrato">
-        <div class="form-group col-xs-12 col-md-2">
-            <label for="label">Contrato:</label>
-            <input type="text" class="form-control" id="radicacion_contrato" name="contrato" value="{{old('contrato')}}"/>
-        </div>
         <div class="form-group col-xs-12 col-md-3">
+            <label for="label">Contrato:</label>
+            <select name="id_contrato" id="radicacion_contrato" required class="form-control">
+                <option value="">Seleccione un contrato</option>
+                @foreach ($contratos as $contrato)
+                    <option value="{{$contrato->id}}" {{old('id_contrato') == $contrato->id ? "selected":""}}>{{$contrato->nombre}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-xs-12 col-md-2">
             <label for="label">Fecha desde:</label>
             <div class="input-group date datepicker">
                 <input class="form-control" id="radicaciopn_contrato_desde" type="text" name="desde"
@@ -15,7 +20,7 @@
                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
         </div>
-        <div class="form-group col-xs-12 col-md-3">
+        <div class="form-group col-xs-12 col-md-2">
             <label for="label">Fecha hasta:</label>
             <div class="input-group date datepicker">
                 <input class="form-control" id="radicaciopn_contrato_hasta" type="text" name="hasta"

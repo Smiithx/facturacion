@@ -97,7 +97,7 @@ $(function () {
 
     reporte_factura_numero_factura.on("keyup", function () {
         clearInterval(reporte_factura_temporizador_numero_factura)
-        reporte_factura_temporizador_numero_factura = setTimeout(buscarFactura, 800);
+        reporte_factura_temporizador_numero_factura = setTimeout(buscarFactura, 600);
     });
 
     //-- declarar funciones auxiliares------------------------------------//
@@ -166,7 +166,7 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     rellenarReporteFactura(respuesta.factura_items);
-                    reporte_factura_contrato.val(respuesta.factura.contrato);
+                    reporte_factura_contrato.html("<option value='" + respuesta.factura.id_contrato.id + "'>" + respuesta.factura.id_contrato.nombre + "</option>");
                     reporte_factura_fecha_facturacion.val(respuesta.factura.created_at);
                     if(respuesta.factura.radicada){
                         reporte_factura_fecha_radicacion.val(respuesta.factura.fecha_radicacion);
@@ -178,7 +178,7 @@ $(function () {
                 else {
                     reporte_factura_tbody.html("");
                     reporte_factura_total.html("");
-                    reporte_factura_contrato.val("");
+                    reporte_factura_contrato.html("");
                     reporte_factura_fecha_facturacion.val("");
                     reporte_factura_fecha_radicacion.val("");
                     reporte_factura_btn_imprimir.addClass("hidden");
@@ -187,7 +187,7 @@ $(function () {
                 console.log(e);
                 reporte_factura_tbody.html("");
                 reporte_factura_total.html("");
-                reporte_factura_contrato.val("");
+                reporte_factura_contrato.html("");
                 reporte_factura_fecha_facturacion.val("");
                 reporte_factura_fecha_radicacion.val("");
                 reporte_factura_btn_imprimir.addClass("hidden");
