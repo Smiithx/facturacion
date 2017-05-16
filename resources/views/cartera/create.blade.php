@@ -7,6 +7,8 @@
             <label for="label">Factura:</label>
             <input class="form-control" placeholder="Escribir Factura" id="cartera_factura" type="text"
                    name="cartera_factura"/>
+                               
+          <input class="form-control" id="cartera_contrato" type="hidden" value="0" name="id_contrato"/>
         </div>
      
         <div class="form-group col-xs-12 col-md-3">

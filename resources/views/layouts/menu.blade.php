@@ -26,17 +26,27 @@
                 <li><a class="list-group-item" href="/radicacion/contrato/create">Contrato</a></li>
             </ul>
         </li>
-        <li>
+        
+        <li><a>Glosas<ul>
+                <li><a class="list-group-item" href="/glosas/create">Factura</a></li>
+                <li><a class="list-group-item" href="/glosas/create/contrato">Contrato</a></li>
+        
+            <li class="submenu"><a class="list-group-item" href="">Reportes</a>
+                    <ul class="submenu-item">
+                        <li><a class="list-group-item" href="/glosas/reporte/factura">Factura</a></li>
+                        <li><a class="list-group-item" href="/glosas/reporte/Contrato">Contrato</a></li>
+                    </ul>
+                </li>
+    </ul>
+            </li>
+
+            <li>
         <a>Cartera</a>
          <ul>
                 <li><a class="list-group-item" href="/cartera/create">Factura</a></li>
                 <li><a class="list-group-item" href="/cartera/create/contrato">Contrato</a></li>
             </ul></li>
 
-        <li><a>Glosas<ul>
-                <li><a class="list-group-item" href="/glosas/create">Factura</a></li>
-                <li><a class="list-group-item" href="/glosas/create/contrato">Contrato</a></li>
-            </ul></li>
 
         </li>
         <li><a href="/reportes">Reportes</a></li>

@@ -114,63 +114,171 @@ class CarteraController extends Controller
     {
         //
     }
+//=================Funcion para Buscar factura para crear cartera===================//
 
-    public function buscar($factura, $desde, $hasta)
+    public function buscar($factura, $contrato, $desde, $hasta)
     {
+    //=================crear cartera por Numeroo Factura =======================//
 
-        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
-            ->join("glosas", "facturas.id", "=", "glosas.id_factura")
-            ->join("contratos", "facturas.id_contrato", "=", "contratos.id")
-            ->where('radicada', 1)
-            ->where('facturas.id', $factura)
-            ->orWhere('facturas.id_contrato', "$factura")
-            ->whereDate('facturas.created_at', '>=', $desde)
-            ->whereDate('facturas.created_at', '<=', $hasta)
-            ->get();
+       if ($factura >= 1) { //si es por factura, verifico que halla factura
+                    $facturas = Factura::where('id',$factura)
+                    ->whereDate('created_at', '>=', $desde)
+                    ->whereDate('created_at', '<=', $hasta)->get();
+
+            if (count($facturas) >= 1) { // si existe factura, verifico que tenga glosa
+                $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
+
+                if (count($glosas) >= 1) { //si hay glosa, verifico que tenga cartera
+                         $carteras = Cartera::where('id_factura',$glosas[0]->id_factura)->get();
 
 
-        $cartera_tbody = "";
-        foreach ($Facturas as $factura) {
-            $fecha = Carbon::createFromFormat('Y-m-d', $factura->fecha_radicacion);
-            $fecha->addDay($factura->diasvencimiento);
-            $date = $fecha->format('Y-m-d');
-
-            
-            $cartera_tbody .= "<tr>
-            <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
-            <input type='hidden' name='id_factura' value='$factura->id'>
-            <td>$factura->fecha_radicacion</td>
+                    if (count($carteras) <= 0) { //si no hay cartera creo la cartera
+                        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
+                        ->join("glosas", "facturas.id", "=", "glosas.id_factura")
+                        ->join("contratos", "facturas.id_contrato", "=", "contratos.id")
+                        ->where('radicada', 1)
+                        ->where('facturas.id', $facturas[0]->id)
+                        ->whereDate('facturas.created_at', '>=', $desde)
+                        ->whereDate('facturas.created_at', '<=', $hasta)
+                        ->get();
+                    $cartera_tbody = "";
+                    foreach ($Facturas as $factura) {
+                    $fecha = Carbon::createFromFormat('Y-m-d', $factura->fecha_radicacion);
+                    $fecha->addDay($factura->diasvencimiento);
+                    $date = $fecha->format('Y-m-d');            
+                    $cartera_tbody .= "<tr>
+                    <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+                    <input type='hidden' name='id_factura' value='$factura->id'>
+                    <td>$factura->fecha_radicacion</td>
           
-            <td><input id='cartera_factura_total' data-value='$factura->factura_total' required type='text' name='factura_total' readonly
-                                   class='form-control' value=".number_format($factura->factura_total, 2)."></td>
-            <td>$date</td>
-            <input type='hidden' name='fecha_vencimiento' value='$date'>
+                    <td><input id='cartera_factura_total' data-value='$factura->factura_total' required type='text' name='factura_total' readonly
+                                    class='form-control' value=".number_format($factura->factura_total, 2)."></td>
+                    <td>$date</td>
+                    <input type='hidden' name='fecha_vencimiento' value='$date'>
 
           
-            <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
+                    <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
           
 
-            <td><input id='cartera_glosa' data-value='$factura->valor_glosa' required type='text' name='valor_glosa' readonly
-                                   class='form-control' value=".number_format($factura->valor_glosa, 2)."></td>
+                    <td><input id='cartera_glosa' data-value='$factura->valor_glosa' required type='text' name='valor_glosa' readonly
+                                        class='form-control' value=".number_format($factura->valor_glosa, 2)."></td>
                                    
-            <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
+                    <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
                      
 
-            <td class='text-right'><input id='cartera_saldo'step='0.00'  required type='text' name='valor_saldo'    class='form-control'></td>
+                    <td class='text-right'><input id='cartera_saldo'step='0.00'  required type='text' name='valor_saldo'    class='form-control'></td>
             
-                                    </tr>";
+                                     </tr>";
+                    }//termina el foreach
+
+                        if ($cartera_tbody != "") {
+                             return response()->json([
+                            'success' => 'true',
+                            'cartera_tbody' => $cartera_tbody
+                            ]);
+                        }
+                      }// terminar  si la facturano tiene cartera
+                        else {
+                    return response()->json([
+                    'error' => 'Verificar #Factura , La Factura ya tiene cartera.'
+                    ]);
+                    }
+        
+                 }// terminar  si la factura tiene glosa
+                else {
+                    return response()->json([
+                    'error' => 'Verificar #Factura , La Factura No tiene glosa.'
+                    ]);
+                    }
+        }// terminar  si existe factura
+        else {
+            return response()->json([
+                'error' => 'Verificar #Factura o fechas, La Factura No Existe.'
+                ]);
+                }
         }
 
-        if ($cartera_tbody != "") {
-            return response()->json([
-                'success' => 'true',
-                'cartera_tbody' => $cartera_tbody
-            ]);
-        } else {
-            return response()->json([
-                'error' => 'No se encontraron Facturas.'
-            ]);
-        }
+       //======crear cartera por Numeroo contrato ============//
 
-    }
+        elseif ($contrato >=1) { 
+                 $facturas = Factura::where('id_contrato',$contrato)
+                    ->whereDate('created_at', '>=', $desde)
+                    ->whereDate('created_at', '<=', $hasta)->get();
+
+            if (count($facturas) >= 1) { // si existe factura, verifico que tenga glosa
+                $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
+
+                if (count($glosas) >= 1) { //si hay glosa, verifico que tenga cartera
+                         $carteras = Cartera::where('id_factura',$glosas[0]->id_factura)->get();
+
+
+                    if (count($carteras) <= 0) { //si no hay cartera creo la cartera
+                        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
+                        ->join("glosas", "facturas.id", "=", "glosas.id_factura")
+                        ->join("contratos", "facturas.id_contrato", "=", "contratos.id")
+                        ->where('radicada', 1)
+                        ->where('facturas.id',$facturas[0]->id)
+                        ->whereDate('facturas.created_at', '>=', $desde)
+                        ->whereDate('facturas.created_at', '<=', $hasta)
+                        ->get();
+                    $cartera_tbody = "";
+                    foreach ($Facturas as $factura) {
+                    $fecha = Carbon::createFromFormat('Y-m-d', $factura->fecha_radicacion);
+                    $fecha->addDay($factura->diasvencimiento);
+                    $date = $fecha->format('Y-m-d');            
+                    $cartera_tbody .= "<tr>
+                    <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+                    <input type='hidden' name='id_factura' value='$factura->id'>
+                    <td>$factura->fecha_radicacion</td>
+          
+                    <td><input id='cartera_factura_total' data-value='$factura->factura_total' required type='text' name='factura_total' readonly
+                                    class='form-control' value=".number_format($factura->factura_total, 2)."></td>
+                    <td>$date</td>
+                    <input type='hidden' name='fecha_vencimiento' value='$date'>
+
+          
+                    <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
+          
+
+                    <td><input id='cartera_glosa' data-value='$factura->valor_glosa' required type='text' name='valor_glosa' readonly
+                                        class='form-control' value=".number_format($factura->valor_glosa, 2)."></td>
+                                   
+                    <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
+                     
+
+                    <td class='text-right'><input id='cartera_saldo'step='0.00'  required type='text' name='valor_saldo'    class='form-control'></td>
+            
+                                     </tr>";
+                    }//termina el foreach
+
+                        if ($cartera_tbody != "") {
+                             return response()->json([
+                            'success' => 'true',
+                            'cartera_tbody' => $cartera_tbody
+                            ]);
+                        }
+                      }// terminar  si la facturano tiene cartera
+                        else {
+                    return response()->json([
+                    'error' => 'Verificar Contrato , La Factura ya tiene cartera.'
+                    ]);
+                    }
+        
+                 }// terminar  si la factura tiene glosa
+                else {
+                    return response()->json([
+                    'error' => 'Verificar #Contrato , La Factura No tiene glosa.'
+                    ]);
+                    }
+        }// terminar  si existe factura
+        else {
+            return response()->json([
+                'error' => 'Verificar #Contrato o fechas, La Factura No Existe.'
+                ]);
+                }
+
+                    
+          }//==terminar  cartera por contrato==/
+
+    }//========termina la funcion buscar para cartera====//
 }

@@ -4,6 +4,8 @@ $(function () {
 
     //-- Declarar variables cartera=============================== //
     var cartera_factura = $("#cartera_factura");
+    var cartera_contrato = $("#cartera_contrato");
+
     var cartera_desde = $("#cartera_desde");
     var cartera_hasta = $("#cartera_hasta");
     var btn_cartera_buscar = $("#btn_cartera_buscar");
@@ -12,7 +14,7 @@ $(function () {
     var cartera_glosa  = $("#cartera_glosa");
     var cartera_valor_abono  = $("#cartera_valor_abono"); // este es input de abono
     var cartera_retencion  = $("#cartera_retencion"); // este es el de retencion
-    var cartera_saldo  = $("#cartera_ declara si asaldo"); // y este es donde lo tienq q mostrar
+    var cartera_saldo  = $("#cartera_saldo"); // y este es donde lo tienq q mostrar
 
     //-- Fin de declarar variables ======================= //
 
@@ -20,7 +22,7 @@ $(function () {
     //-- Agregar evento Buscar Factura en la Vista glosa ================================= //
 
     btn_cartera_buscar.on("click", function () {
-        var url = "/cartera/buscar/" + cartera_factura.val() + "/" + cartera_desde.val() +
+        var url = "/cartera/buscar/" + cartera_factura.val() + "/"+ cartera_contrato.val() + "/" + cartera_desde.val() +
             "/" + cartera_hasta.val(); //la ruta que se desea ir y pasando los parametros
         $.ajax({
             url: url,
