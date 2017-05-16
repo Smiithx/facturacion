@@ -8,11 +8,13 @@ $(function () {
     var cxc_hasta = $("#cxc_hasta");
     var btn_cxc_buscar = $("#btn_cxc_buscar");
     var cxc_tbody = $("#cxc_tbody");
+    var total_facturado_cxc = $("#total_facturado_cxc");
 
     //-- Fin de declarar variables ======================= //
-
-
-     //-- Agregar evento Buscar Factura en la Vista glosa ================================= //
+         
+       
+  
+     //-- Agregar evento Buscar Factura  ================================= //
 
     btn_cxc_buscar.on("click", function () {
         var url = "factura/cuentacobro/buscar/" + cxc_factura.val() + "/" + cxc_desde.val() +
@@ -23,10 +25,14 @@ $(function () {
             dataType: "json",
             success: function (respuesta) {
                 if (respuesta.success) {
-                    cxc_tbody.html(respuesta.cxc_tbody);
+                  cxc_tbody.html(respuesta.cxc_tbody);
+                  total_facturado_cxc.html(respuesta.total_facturado_cxc);
+
                 }
                 else {
                     cxc_tbody.html("");
+                    total_facturado_cxc.html("");
+
                     swal('Cancelled', respuesta.error, 'error');
                 }
             }, error: function (e) {

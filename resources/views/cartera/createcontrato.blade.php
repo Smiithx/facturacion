@@ -5,8 +5,11 @@
     <form method="POST" action="/cartera">
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Contrato:</label>
-            <input class="form-control" placeholder="Escribir Contrato" id="cartera_factura" type="text"
+            <input class="form-control" placeholder="Escribir Contrato" id="cartera_contrato" type="text"
                    name="cartera_factura"/>
+
+                   
+          <input class="form-control" id="cartera_factura" type="hidden" value="0" name="id_contrato"/>
         </div>
      
         <div class="form-group col-xs-12 col-md-3">

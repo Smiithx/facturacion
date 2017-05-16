@@ -44,18 +44,15 @@ class GlosasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+//=================================Funcion de crear la glosa=================================// 
     public function store(Request $request)
-    {
-        
-
+    {        
        $this->validate($request, [
             'id_factura' => 'required|max:255',
             'valor_glosa' => 'required',
             'valor_aceptado' => 'required'            
-        ]);
-
-        $glosas = Glosas::create($request->all());
-        
+        ]);       
+        $glosas = Glosas::create($request->all());        
         flash('Glosas creada con exito!');
         return Redirect::to("/glosas/create");
     }
@@ -105,40 +102,111 @@ class GlosasController extends Controller
         //
     }
 
+//=======================Funcion para Buscar factura para crear glosa===================//
+ public function buscar($factura, $contrato, $desde, $hasta){  
 
- public function buscar($factura, $desde, $hasta){
-   
-    $Facturas = Factura::where('id',$factura)
-            ->orWhere('id_contrato', $factura)
+        //=================crear glosa por Numeroo Factura =======================//
+
+        if ($factura >= 1) { //si esta instanciado el input id_factura
+                    $facturas = Factura::where('id',$factura)
+                     ->whereDate('created_at', '>=', $desde)
+                    ->whereDate('created_at', '<=', $hasta)->get();
+            if (count($facturas) >= 1) { // verificar si existe factura
+                 $facturas = Factura::where('id',$factura)
+                 ->where('radicada',1)
+                 ->whereDate('created_at', '>=', $desde)
+                 ->whereDate('created_at', '<=', $hasta)->get();
+                if (count($facturas) >= 1) { // verificar si la factura esta radicada 
+                            $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
+                    if (count($glosas) <= 0) { // si la factura radicada ya tiene glosa        
+                        $glosas_tbody = "";           
+                        foreach ($facturas as $factura) {
+                             $glosas_tbody .= "<tr>
+                            <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+                            <input type='hidden'  name='id_factura' value='$factura->id'>
+                            <td>$factura->fecha_radicacion</td>
+                            <td>". number_format($factura->factura_total, 2) ."</td>
+                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>
+                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_aceptado' required></td>
+                            </tr>";
+                        }
+
+                        if ($facturas != "") {
+                            return response()->json([
+                             'success' => 'true',
+                                'glosas_tbody' => $glosas_tbody
+                            ]);
+                        }       
+                    } // cierra el if si la factura radicada tiene glosa
+                    else {
+                        return response()->json([
+                      'error' => 'Ya esta factura se le creo la glosa.'
+                        ]);
+                        }
+                } // cierra el if de verificar si esta radicada la factura
+                else {
+                    return response()->json([
+                        'error' => 'Verificar Factura, No Esta Radicada.'
+                    ]);
+                    }
+            } // cierra el if de verificar si existe la factura
+            else {
+                 return response()->json([
+                    'error' => 'Verificar #Factura o fechas, La Factura No Existe.'
+                ]);
+                }
+
+        }
+    //======================crear glosa por contrato================================//
+    elseif ($contrato >=1) {                     
+            $facturas = Factura::where('id_contrato',$contrato)
+            ->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)->get();
+        if (count($facturas) >= 1) { // verificar si existe factura
+            $facturas = Factura::where('id_contrato',$contrato)
+            ->where('radicada',1)
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)->get();
 
-
-            $glosas_tbody = "";
-           
-            foreach ($Facturas as $factura) {
-$glosas_tbody .= "<tr>
-         <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
-                    <input type='hidden'  name='id_factura' value='$factura->id'>
-
-          <td>$factura->fecha_radicacion</td>
-          <td>". number_format($factura->factura_total, 2) ."</td>
-          <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>
-          <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_aceptado' required></td>
-           </tr>";
-            }
-
-           if ($glosas_tbody != "") {
+            if (count($facturas) >= 1) { // verificar si la factura esta radicada 
+                $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
+                if (count($glosas) <= 0) { // si la factura radicada ya tiene glosa
+                     $glosas_tbody = "";           
+                    foreach ($facturas as $factura) {
+                        $glosas_tbody .= "<tr>
+                       <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
+                       <input type='hidden'  name='id_factura' value='$factura->id'>
+                        <td>$factura->fecha_radicacion</td>
+                        <td>". number_format($factura->factura_total, 2) ."</td>
+                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>
+                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_aceptado' required></td>
+                        </tr>";
+                    }
+                    if ($facturas != "") {
+                        return response()->json([
+                        'success' => 'true',
+                         'glosas_tbody' => $glosas_tbody
+                        ]);
+                    }
+                } // cierra el if si la factura radicada tiene glosa
+                else {
+                    return response()->json([
+                    'error' => 'Ya esta factura se le creo la glosa.'
+                    ]);
+                    }  
+            } // cierra el if de verificar si esta radicada la factura
+            else {
                 return response()->json([
-                  'success' => 'true',
-                    'glosas_tbody' => $glosas_tbody
-               ]);
-            } else {
-                 return response()->json([
-                     'error' => 'No se encontraron Facturas.'
-                 ]);
-             }
-        
-      }
+                    'error' => 'Verificar Contrato, Factura No Esta Radicada.'
+                ]);
+                }
+        } // cierra el if de verificar si existe la factura
+        else {
+            return response()->json([
+                    'error' => 'Verificar Contrato o fechas, Factura No Existe.'
+              ]);
+                }
+    }// fin de crear glosa por contrato
+}//=======Fin de Funcion para Buscar factura para crear glosa==//
 
 }

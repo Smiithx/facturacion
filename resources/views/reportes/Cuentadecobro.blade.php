@@ -40,18 +40,28 @@
                 <th class="text-center">Descripción</th>
                 <th class="text-center">Copago</th>
                 <th class="text-center">Valor unitario</th>
+                <th class="text-center">Valor Total</th>
+
             </tr>
         </thead>
                         <tbody id="cxc_tbody">
 
         </tbody>
+        <tfoot>
+              <tr>
+                        <th colspan="8" class="text-right">Total</th>
+                        <th class="text-right" colspan="1" id="total_facturado_cxc"></th>
+                    </tr>
+
+        </tfoot>
     </table>    <br>
-      <div class="form-group col-xs-12 col-md-12 col-lg-12">
-                        <input class="btn btn-primary pull-right" type="submit" id="cxc"  name="cxc" value="Guardar">
-                    </div>
+<div class="form-group col-xs-12 text-right">
+        <a href="/reportes" class="btn btn-success">Regresar</a>
+        <button class="btn btn-primary hidden" id="reporte_factura_btn_imprimir">Imprimir</button>
+    </div>
 </div>
+            <script src="{{asset('assets/js/cxc.js')}}"></script>
 
 @stop
-            <script src="{{asset('assets/js/cxc.js')}}"></script>
 
 <!-- Termina reporte 5 -->
