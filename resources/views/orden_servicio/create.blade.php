@@ -24,7 +24,7 @@
         </div>
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Contrato:</label>
-            <select disabled name="id_contrato" id="orden-contrato" required class="form-control">
+            <select readonly name="id_contrato" id="orden-contrato" required class="form-control">
                 <option value="{{old('id_contrato')}}">{{old('id_contrato')}}</option>
             </select>
         </div>
@@ -46,7 +46,7 @@
                     <tbody id="orden_servicios_servicios">
                     <tr>
                         <td>
-                            <input required type="text" name="cups[]" class="form-control orden_servicios_cups"
+                            <input required type="text" name="cups[]" class="form-control orden_servicios_cups danger"
                                    value=""></td>
                         <td>
                             <input required type="text" name="descripcion[]" readonly

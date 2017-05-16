@@ -17,8 +17,8 @@ class Servicios extends Model
     protected $fillable = [
         'cups',     
         'descripcion',
-        'estado' 
-    
+        'estado' ,
+        'id'
     ];
 
 
