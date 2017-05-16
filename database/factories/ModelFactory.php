@@ -67,7 +67,7 @@ $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
     return [
         'nombre' => $paciente->nombre,
         'documento' => $paciente->documento,
-        'aseguradora_id' => $paciente->aseguradora_id,
+        'aseguradora_id' => $paciente->aseguradora_id->id,
         'id_contrato' => $paciente->id_contrato->id,
         'id_paciente' => $paciente->id
     ];

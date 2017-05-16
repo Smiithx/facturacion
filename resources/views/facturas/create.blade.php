@@ -6,7 +6,12 @@
         <div class="row form-group">
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Contrato:</label>
-                <input type="text" class="form-control" id="facturar_contrato" name="contrato" value=""/>
+                <select name="id_contrato" id="facturar_contrato" required class="form-control">
+                    <option value="">Seleccione un contrato</option>
+                    @foreach ($contratos as $contrato)
+                        <option value="{{$contrato->id}}" {{old('id_contrato') == $contrato->id ? "selected":""}}>{{$contrato->nombre}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
                 <label for="label">Desde:</label>
@@ -29,6 +34,7 @@
                 </div>
             </div>
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
+                <label for=""></label>
                 <input type="button" name="btn_facturar_buscar" value="Buscar" class="input-group btn btn-success"
                        id="btn_facturar_buscar">
             </div>

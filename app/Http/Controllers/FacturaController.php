@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Contratos;
 use App\FacturaItems;
 use App\ordenservicios;
 use App\OrdenServicio_items;
 use App\Paciente;
 use Illuminate\Http\Request;
 use App\Factura;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -31,7 +33,9 @@ class FacturaController extends Controller
      */
     public function create()
     {
-        return View('facturas.create');
+        $contratos = Contratos::all();
+        $datos = ['contratos' => $contratos];
+        return View('facturas.create', $datos);
     }
 
     /**
@@ -44,12 +48,12 @@ class FacturaController extends Controller
     {
 
         $this->validate($request, [
-            'contrato' => 'required',
+            'id_contrato' => 'required',
             'orden' => 'required'
         ]);
 
         $factura = Factura::create([
-            'contrato' => $request->contrato
+            'id_contrato' => $request->id_contrato
         ]);
 
         $total = 0;
@@ -69,7 +73,8 @@ class FacturaController extends Controller
         $factura->factura_total = $total;
         $factura->save();
 
-        return View('facturas.create');
+        flash("La factura #$factura->id ha sido registrada exitosamente!")->success();
+        return Redirect::to('facturas/create');
 
     }
 
@@ -387,27 +392,27 @@ class FacturaController extends Controller
         }
     }
 
-    public function cxcbuscar($factura, $desde, $hasta){
+    public function cxcbuscar($factura, $desde, $hasta)
+    {
 
 
-
-     $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
-                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
-                ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
-               ->where('factura_items.id_factura', $factura)
-                ->whereDate('factura_items.created_at', '>=', $desde)
-              ->whereDate('factura_items.created_at', '<=', $hasta)
-             ->groupBy('factura_items.id')
-             ->get();
+        $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+            ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+            ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+            ->where('factura_items.id_factura', $factura)
+            ->whereDate('factura_items.created_at', '>=', $desde)
+            ->whereDate('factura_items.created_at', '<=', $hasta)
+            ->groupBy('factura_items.id')
+            ->get();
 
         $cxc_tbody = "";
-                $total_facturado = 0;
+        $total_facturado = 0;
 
 
-           foreach ($facturas as $factura) {
-                $total_facturado += $factura->valor_total;
+        foreach ($facturas as $factura) {
+            $total_facturado += $factura->valor_total;
 
-                $cxc_tbody .= "<tr> 
+            $cxc_tbody .= "<tr> 
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
           <td>$factura->created_at</td>
           <td>$factura->documento</td>
@@ -415,20 +420,20 @@ class FacturaController extends Controller
           <td>" . number_format($factura->factura_total, 2) . "</td>
            </tr>";
 
-            }
-            if ($cxc_tbody != "") {
-                return response()->json([
-                    'success' => 'true',
-                    'cxc_tbody' => $cxc_tbody,
-                    'total_facturado' => $total_facturado
-                ]);
-            } else {
-                return response()->json([
-                    'error' => 'No se encontraron facturas.'
-               
-    ]);
-            }
+        }
+        if ($cxc_tbody != "") {
+            return response()->json([
+                'success' => 'true',
+                'cxc_tbody' => $cxc_tbody,
+                'total_facturado' => $total_facturado
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'No se encontraron facturas.'
 
-}
+            ]);
+        }
+
+    }
 
 }
