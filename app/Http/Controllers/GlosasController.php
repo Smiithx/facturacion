@@ -122,11 +122,9 @@ class GlosasController extends Controller
     }
 //===============Funcion para Buscar factura para Reporte glosa==============//
 
-    public function reportebuscar($factura, $desde, $hasta){
+    public function reportebuscar($factura){
                 $glosas = Glosas::where('id_factura',$factura)
-                    ->whereDate('created_at', '>=', $desde)
-                    ->whereDate('created_at', '<=', $hasta)
-                    ->get();
+                                       ->get();
                      $glosas_tbody = "";
                     foreach ($glosas as $glosa) {
                              $glosas_tbody .= "<tr>
@@ -153,19 +151,16 @@ class GlosasController extends Controller
     }
 
 //=======================Funcion para Buscar factura para crear glosa===================//
- public function buscar($factura, $contrato, $desde, $hasta){  
+ public function buscar($factura, $contrato){  
 
         //=================crear glosa por Numeroo Factura =======================//
 
         if ($factura >= 1) { //si esta instanciado el input id_factura
                     $facturas = Factura::where('id',$factura)
-                     ->whereDate('created_at', '>=', $desde)
-                    ->whereDate('created_at', '<=', $hasta)->get();
+                     ->get();
             if (count($facturas) >= 1) { // verificar si existe factura
                  $facturas = Factura::where('id',$factura)
-                 ->where('radicada',1)
-                 ->whereDate('created_at', '>=', $desde)
-                 ->whereDate('created_at', '<=', $hasta)->get();
+                 ->where('radicada',1)->get();
                 if (count($facturas) >= 1) { // verificar si la factura esta radicada 
                             $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
                     if (count($glosas) <= 0) { // si la factura radicada ya tiene glosa        
@@ -176,8 +171,8 @@ class GlosasController extends Controller
                             <input type='hidden'  name='id_factura' value='$factura->id'>
                             <td>$factura->fecha_radicacion</td>
                             <td>". number_format($factura->factura_total, 2) ."</td>
-                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>
-                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_aceptado' required></td>
+                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor'  class='form-control'     name='valor_glosa' required></td>
+                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
                             </tr>";
                         }
 
@@ -210,13 +205,11 @@ class GlosasController extends Controller
     //======================crear glosa por contrato================================//
     elseif ($contrato >=1) {                     
             $facturas = Factura::where('id_contrato',$contrato)
-            ->whereDate('created_at', '>=', $desde)
-            ->whereDate('created_at', '<=', $hasta)->get();
+          ->get();
         if (count($facturas) >= 1) { // verificar si existe factura
             $facturas = Factura::where('id_contrato',$contrato)
             ->where('radicada',1)
-            ->whereDate('created_at', '>=', $desde)
-            ->whereDate('created_at', '<=', $hasta)->get();
+           ->get();
 
             if (count($facturas) >= 1) { // verificar si la factura esta radicada 
                 $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
@@ -228,8 +221,8 @@ class GlosasController extends Controller
                        <input type='hidden'  name='id_factura' value='$factura->id'>
                         <td>$factura->fecha_radicacion</td>
                         <td>". number_format($factura->factura_total, 2) ."</td>
-                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' required></td>
-                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_aceptado' required></td>
+                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' class='form-control' required></td>
+                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
                         </tr>";
                     }
                     if ($facturas != "") {

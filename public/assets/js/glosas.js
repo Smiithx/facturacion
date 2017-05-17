@@ -5,8 +5,8 @@ $(function () {
 //-- Declarar variables Glosas=============================== //
     var glosas_factura = $("#glosas_factura");
     var glosas_contrato = $("#glosas_contrato");  
-   	var glosas_desde = $("#glosas_desde");
-    var glosas_hasta = $("#glosas_hasta");
+   	//var glosas_desde = $("#glosas_desde");
+    //var glosas_hasta = $("#glosas_hasta");
     var btn_glosas_buscar = $("#btn_glosas_buscar");
     var glosas_tbody = $("#glosas_tbody");
     var btn_glosa_reporte_buscar = $("#btn_glosa_reporte_buscar");
@@ -17,8 +17,7 @@ $(function () {
      //-- Agregar evento Buscar Factura en la Vista glosa ================================= //
 
     btn_glosas_buscar.on("click", function () {
-        var url = "/glosas/buscar/" + glosas_factura.val() + "/"+ glosas_contrato.val() + "/" + glosas_desde.val() +
-            "/" + glosas_hasta.val(); //la ruta que se desea ir y pasando los parametros
+        var url = "/glosas/buscar/" + glosas_factura.val() + "/"+ glosas_contrato.val(); //la ruta que se desea ir y pasando los parametros
             $.ajax({
                 url: url,
                 type: "GET",
@@ -41,8 +40,7 @@ $(function () {
 
     btn_glosa_reporte_buscar.on("click", function () {
 
-        var url = "/glosas/buscar/" + glosas_factura.val() +  "/" + glosas_desde.val() +
-            "/" + glosas_hasta.val(); //la ruta que se desea ir y pasando los parametros
+        var url = "/glosas/buscar/" + glosas_factura.val(); //la ruta que se desea ir y pasando los parametros
 
         $.ajax({
             url: url,

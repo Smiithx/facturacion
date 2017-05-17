@@ -23,8 +23,8 @@
                             <a href='/facturas/{{ $glosa->id_factura }} ' target='_blank'>{{ $glosa->id_factura }} </a>
                             </td> <input type="hidden" name="id"  value="{{ $glosa->id }}">
                             <td>{{ number_format($glosa->factura_total,2) }}</td>
-                            <td><input style='width: 100%;' type='number' step="0.00" name='valor_glosa' value="{{ $glosa->valor_glosa }}" required></td>
-                            <td><input style='width: 100%;' type='text'  value="{{ $glosa->valor_aceptado }}" name='valor_aceptado' required></td>
+                            <td><input class='form-control' style='width: 100%;' type='number' step="0.00" name='valor_glosa' value="{{ $glosa->valor_glosa }}" required></td>
+                            <td><input class='form-control' style='width: 100%;' type='text'  value="{{ $glosa->valor_aceptado }}" name='valor_aceptado' required></td>
                             </tr>
                             @endforeach
                       	</tbody>
