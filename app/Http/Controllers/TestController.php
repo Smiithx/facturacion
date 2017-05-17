@@ -18,8 +18,9 @@ class TestController extends Controller
      */
     public function index()
     {
-        $ordenes = \App\Servicios::all()->random()->id;
-        dd($ordenes);
+        $test = "hola como estas tu?";
+        $test = substr($test, 0, -2);
+        dd($test);
     }
 
     /**

@@ -10,9 +10,9 @@ $(function () {
     var radicacion_fecha_radicacion = $("#radicacion_fecha_radicacion");
 
     // radicar contrato
-    var radicacion_contrato = $("#radicacion_contrato");
-    var radicaciopn_contrato_desde = $("#radicaciopn_contrato_desde");
-    var radicaciopn_contrato_hasta = $("#radicaciopn_contrato_hasta");
+    var radicacion_contrato = $("#radicacion_contrato_id_contrato");
+    var radicacion_contrato_desde = $("#radicacion_contrato_desde");
+    var radicacion_contrato_hasta = $("#radicacion_contrato_hasta");
     var radicacion_contrato_fecha = $("#radicacion_contrato_fecha");
     var radicacion_contrato_buscar = $("#radicacion_contrato_buscar");
     var radicacion_contrato_tbody = $("#radicacion_contrato_tbody");
@@ -21,20 +21,14 @@ $(function () {
     var radicacion_contrato_radicar = $(".radicacion_contrato_radicar");
     var radicacion_contrato_total = $("#radicacion_contrato_total");
 
-    //REPORTE Radicacion
+    // REPORTE Radicacion
     var radicacion_fecha_inicio = $("#radicacion_fecha_inicio");
     var radicacion_fecha_fin = $("#radicacion_fecha_fin");
     var btn_radicacion_buscar = $("#btn_radicacion_buscar");
     var radicacion_tbody = $("#radicacion_tbody");
 
     //-- Fin de declarar variables ======================= //
-    
-    //-- Declarar variables REPORTE Radicacion=============================== //
-    var radicacion_fecha_inicio = $("#radicacion_fecha_inicio");
-    var radicacion_fecha_fin = $("#radicacion_fecha_fin");
-    var btn_radicacion_buscar = $("#btn_radicacion_buscar");
-    var radicacion_tbody = $("#radicacion_tbody");
-  
+
 
     //-- Agregar eventos ================================= //
     radicacion_factura.on("keyup", function () {
@@ -49,29 +43,7 @@ $(function () {
     radicacion_contrato_all.on("change", function () {
         checkear();
     });
-        //-- Agregar evento Reporte Radicacion ================================= //
-
-    btn_radicacion_buscar.on("click", function () {
-        var url = "/radicacion/buscar/" + radicacion_fecha_inicio.val() +
-            "/" + radicacion_fecha_fin.val(); //la ruta que se desea ir y pasando los parametros
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            success: function (respuesta) {
-                if (respuesta.success) {
-                    radicacion_tbody.html(respuesta.radicacion_tbody);
-                }
-                else {
-                    radicacion_tbody.html("");
-                    swal('Cancelled', respuesta.error, 'error');
-                }
-            }, error: function (e) {
-                console.log(e);
-            }
-        });
-    });
-
+        //--  Reporte Radicacion ================================= //
 
     btn_radicacion_buscar.on("click", function () {
         var url = "/radicacion/buscar/" + radicacion_fecha_inicio.val() +
@@ -127,7 +99,7 @@ $(function () {
     }
 
     function buscarFacturas() {
-        var url = "/facturas/radicar/" + radicacion_contrato.val() + "/" + radicaciopn_contrato_desde.val() + "/" + radicaciopn_contrato_hasta.val();
+        var url = "/facturas/radicar/" + radicacion_contrato.val() + "/" + radicacion_contrato_desde.val() + "/" + radicacion_contrato_hasta.val();
         $.ajax({
             url: url,
             type: "GET",
@@ -141,7 +113,7 @@ $(function () {
                     radicacion_contrato_fecha.removeAttr('disabled');
                     radicacion_contrato_fecha.focus();
                 } else {
-                    radicacion_contrato_tbody.html("");
+                    radicacion_contrato_tbody.html("<tr><td colspan='5'><p class='text-info'>" + respuesta.error + "</p></td></tr>");
                     actualizarVariables();
                     radicacion_contrato_all.prop('checked', false);
                     checkear();

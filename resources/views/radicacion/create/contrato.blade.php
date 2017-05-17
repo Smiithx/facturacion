@@ -15,7 +15,7 @@
         <div class="form-group col-xs-12 col-md-2">
             <label for="label">Fecha desde:</label>
             <div class="input-group date datepicker">
-                <input class="form-control" id="radicaciopn_contrato_desde" type="text" name="desde"
+                <input class="form-control" id="radicacion_contrato_desde" type="text" name="desde"
                        required value="{{old('desde')}}" placeholder="yyyy-mm-dd"/>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
@@ -23,7 +23,7 @@
         <div class="form-group col-xs-12 col-md-2">
             <label for="label">Fecha hasta:</label>
             <div class="input-group date datepicker">
-                <input class="form-control" id="radicaciopn_contrato_hasta" type="text" name="hasta"
+                <input class="form-control" id="radicacion_contrato_hasta" type="text" name="hasta"
                        required value="{{old('hasta')}}" placeholder="yyyy-mm-dd"/>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>

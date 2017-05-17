@@ -74,10 +74,6 @@ Route::post('glosas/update', 'GlosasController@update');
 Route::get('glosas/buscar/{factura}/{desde}/{hasta}', 'GlosasController@reportebuscar');
 Route::get('glosas/create/contrato', 'GlosasController@createcontrato');
 
-
-
-
-
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 Route::get('reportes/glosas','ReportesController@reporteglosas');

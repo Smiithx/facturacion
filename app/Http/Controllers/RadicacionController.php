@@ -42,18 +42,18 @@ class RadicacionController extends Controller
     {
         $contratos = Contratos::all();
         $datos = ['contratos' => $contratos];
-        return View("radicacion.create.contrato",$datos);
+        return View("radicacion.create.contrato", $datos);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'id_factura' => 'required',
             'fecha_radicacion' => 'required',
             'factura' => 'required'
@@ -69,31 +69,33 @@ class RadicacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function storeContrato(Request $request)
     {
-        $this->validate($request,[
-            'contrato' => 'required',
+        $this->validate($request, [
+            'id_contrato' => 'required',
             'fecha_radicacion' => 'required',
             'facturas' => 'required'
         ]);
-        foreach ($request->facturas as $id_factura){
+        $facturas_messages = "";
+        foreach ($request->facturas as $id_factura) {
             $factura = Factura::findOrFail($id_factura);
             $factura->radicada = 1;
             $factura->fecha_radicacion = $request->fecha_radicacion;
             $factura->save();
+            $facturas_messages .= "<a href='/facturas/$id_factura' target='_blank'>#$id_factura</a>, ";
         }
-
-        flash('Las facturas han sido radicadas exitosamente!');
+        $facturas_messages = substr($facturas_messages, 0, -2);
+        flash("Las facturas: $facturas_messages. Han sido radicadas exitosamente!")->success();
         return Redirect::to("/radicacion/contrato/create");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -104,7 +106,7 @@ class RadicacionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -115,8 +117,8 @@ class RadicacionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -127,7 +129,7 @@ class RadicacionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

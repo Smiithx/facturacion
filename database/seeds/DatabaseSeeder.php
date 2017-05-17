@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
         $this->call('FacturasSeeder');
-        $this->call('GlosasSeeder');
+        //$this->call('GlosasSeeder');
         // usuarios
         factory(\App\Usuarios::class)->times(20)->create();
 

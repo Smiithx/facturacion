@@ -166,7 +166,7 @@ class FacturaController extends Controller
     public function radicar($contrato, $desde, $hasta)
     {
         $facturas = Factura::where("radicada", 0)
-            ->where('contrato', $contrato)
+            ->where('id_contrato', $contrato)
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)
             ->get();
