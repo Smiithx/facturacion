@@ -101,6 +101,36 @@ class GlosasController extends Controller
     {
         //
     }
+    
+    public function reportebuscar($factura, $desde, $hasta){
+                $glosas = Glosas::where('id_factura',$factura)
+                    ->whereDate('created_at', '>=', $desde)
+                    ->whereDate('created_at', '<=', $hasta)
+                    ->get();
+             $glosas_tbody = "";
+            foreach ($glosas as $glosa) {
+                             $glosas_tbody .= "<tr>
+                            <td class='text-center'><a href='/facturas/$glosa->id_factura' target='_blank'>$glosa->id_factura</a></td> 
+                            <td>". number_format($glosa->valor_glosa, 2) ."</td>
+                             <td>". number_format($glosa->valor_aceptado, 2) ."</td>
+                           <td>$glosa->created_at</td>
+                           </tr>";
+            }
+        
+          if ($glosas_tbody != "") {
+                        return response()->json([
+                        'success' => 'true',
+                        'glosas_tbody' => $glosas_tbody
+                                            ]);
+          }       
+          else {
+                return response()->json([
+                'error' => 'No hay glosa con esa factura']);
+                }
+        
+        
+
+    }
 
 //=======================Funcion para Buscar factura para crear glosa===================//
  public function buscar($factura, $contrato, $desde, $hasta){  
