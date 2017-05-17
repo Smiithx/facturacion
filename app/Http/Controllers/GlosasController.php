@@ -76,7 +76,16 @@ class GlosasController extends Controller
      */
     public function edit($id)
     {
-        //
+
+    $glosas = Glosas::select("facturas.factura_total","glosas.id","glosas.id_factura","glosas.valor_glosa","glosas.valor_aceptado","glosas.created_at")
+        ->join("facturas", "glosas.id_factura", "=", "facturas.id")
+        ->where('glosas.id',$id)
+        ->get(); 
+
+                $datos = ['glosas' => $glosas];
+               return view("glosas.edit",$datos);
+
+
     }
 
     /**
@@ -86,9 +95,19 @@ class GlosasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+       $this->validate($request,[
+             'valor_glosa' => 'required',
+            'valor_aceptado' => 'required'
+        ]);
+          $glosas = Glosas::findOrFail($request->id);
+          $glosas->valor_glosa = $request->valor_glosa;
+          $glosas->valor_aceptado = $request->valor_aceptado;
+            $glosas->save();
+            flash('La Glosa ha sido actualizada Correctamente!');
+        return Redirect::to("/reportes/glosas");
     }
 
     /**
@@ -101,34 +120,35 @@ class GlosasController extends Controller
     {
         //
     }
-    
+//===============Funcion para Buscar factura para Reporte glosa==============//
+
     public function reportebuscar($factura, $desde, $hasta){
                 $glosas = Glosas::where('id_factura',$factura)
                     ->whereDate('created_at', '>=', $desde)
                     ->whereDate('created_at', '<=', $hasta)
                     ->get();
-             $glosas_tbody = "";
-            foreach ($glosas as $glosa) {
+                     $glosas_tbody = "";
+                    foreach ($glosas as $glosa) {
                              $glosas_tbody .= "<tr>
                             <td class='text-center'><a href='/facturas/$glosa->id_factura' target='_blank'>$glosa->id_factura</a></td> 
                             <td>". number_format($glosa->valor_glosa, 2) ."</td>
-                             <td>". number_format($glosa->valor_aceptado, 2) ."</td>
-                           <td>$glosa->created_at</td>
-                           </tr>";
-            }
+                            <td>". number_format($glosa->valor_aceptado, 2) ."</td>
+                            <td>$glosa->created_at</td>
+                            <td><a style='float: left;' href='/glosas/$glosa->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
+                            </td>
+                            </tr>";
+                        }
         
-          if ($glosas_tbody != "") {
+                    if ($glosas_tbody != "") {
                         return response()->json([
                         'success' => 'true',
                         'glosas_tbody' => $glosas_tbody
                                             ]);
-          }       
-          else {
-                return response()->json([
-                'error' => 'No hay glosa con esa factura']);
-                }
-        
-        
+                    }       
+                    else {
+                            return response()->json([
+                             'error' => 'No hay glosa con esa factura']);
+                    }              
 
     }
 

@@ -45,8 +45,10 @@ Route::get('cartera/create/contrato', 'CarteraController@createcontrato');
 Route::get('cartera/reporte/{factura}', 'CarteraController@reportefactura');
 
 //----- Glosas ----- //
-Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
+Route::resource('glosas', 'GlosasController', ['only' => ['create','store','edit','destroy','update']]);
 Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
+Route::post('glosas/update', 'GlosasController@update');
+
 Route::get('glosas/buscar/{factura}/{desde}/{hasta}', 'GlosasController@reportebuscar');
 Route::get('glosas/create/contrato', 'GlosasController@createcontrato');
 

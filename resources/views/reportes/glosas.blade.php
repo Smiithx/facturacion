@@ -11,7 +11,7 @@
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Fecha desde:</label>
             <div class="input-group date datepicker">
-                <input class="form-control" id="glosa_desde" type="text" name="glosas_desde"
+                <input class="form-control" id="glosas_desde" type="text" name="glosas_desde"
                        required  placeholder="yyyy-mm-dd"/>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
@@ -19,7 +19,7 @@
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Fecha hasta:</label>
             <div class="input-group date datepicker">
-                <input class="form-control" id="glosa_hasta" type="text" name="glosas_hasta"
+                <input class="form-control" id="glosas_hasta" type="text" name="glosas_hasta"
                        required placeholder="yyyy-mm-dd"/>
                 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>

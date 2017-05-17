@@ -40,8 +40,10 @@ $(function () {
          //-- Agregar evento Reporte Glosas ================================= //
 
     btn_glosa_reporte_buscar.on("click", function () {
+
         var url = "/glosas/buscar/" + glosas_factura.val() +  "/" + glosas_desde.val() +
             "/" + glosas_hasta.val(); //la ruta que se desea ir y pasando los parametros
+
         $.ajax({
             url: url,
             type: "GET",
@@ -49,6 +51,7 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     glosas_tbody.html(respuesta.glosas_tbody);
+
                 }
                 else {
                     glosas_tbody.html("");

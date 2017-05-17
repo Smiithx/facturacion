@@ -16,6 +16,7 @@ class ReportesController extends Controller
 {
 
 public function reporteglosas(){
+
        return view("reportes.glosas");
 
 

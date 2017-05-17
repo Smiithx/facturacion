@@ -108,3 +108,4 @@ $factory->define(App\Contratos::class, function (Faker\Generator $faker) {
         'estado' => $faker->randomElement(array('Activo', 'Inactivo'))
     ];
 });
+

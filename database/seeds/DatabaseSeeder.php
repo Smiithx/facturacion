@@ -14,6 +14,7 @@ use App\Factura;
 use App\FacturaItems;
 use App\Diagnosticos;
 use App\Usuarios;
+use App\Glosas;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,6 +44,8 @@ class DatabaseSeeder extends Seeder
         FacturaItems::truncate();
         Factura::truncate();
         Usuarios::truncate();
+         \App\Glosas::truncate();
+
         //$this->call('Cie10Seeder');
         //$this->call('MedicamentosSeeder');
         $this->call('ServiciosSeeder');
@@ -55,6 +58,7 @@ class DatabaseSeeder extends Seeder
         $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
         $this->call('FacturasSeeder');
+        $this->call('GlosasSeeder');
         // usuarios
         factory(\App\Usuarios::class)->times(20)->create();
 
