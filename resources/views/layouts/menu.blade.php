@@ -34,12 +34,7 @@
                 <li><a class="list-group-item" href="/glosas/create">Factura</a></li>
                 <li><a class="list-group-item" href="/glosas/create/contrato">Contrato</a></li>
 
-                <li class="submenu"><a class="list-group-item" href="">Reportes</a>
-                    <ul class="submenu-item">
-                        <li><a class="list-group-item" href="/glosas/reporte/factura">Factura</a></li>
-                        <li><a class="list-group-item" href="/glosas/reporte/Contrato">Contrato</a></li>
-                    </ul>
-                </li>
+              
             </ul>
         </li>
         <li>

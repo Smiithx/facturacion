@@ -62,19 +62,30 @@ Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
 Route::get('cartera/buscar/{factura}/{contrato}/{desde}/{hasta}', 'CarteraController@buscar');
 Route::get('cartera/create/contrato', 'CarteraController@createcontrato');
+Route::get('cartera/reporte/{factura}', 'CarteraController@reportefactura');
 
 //----- Glosas ----- //
-Route::resource('glosas', 'GlosasController', ['only' => ['create','store']]);
+Route::resource('glosas', 'GlosasController', ['only' => ['create','store','edit','destroy','update']]);
 Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
+Route::post('glosas/update', 'GlosasController@update');
+
+Route::get('glosas/buscar/{factura}/{desde}/{hasta}', 'GlosasController@reportebuscar');
 Route::get('glosas/create/contrato', 'GlosasController@createcontrato');
+
+
+
 
 
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
+Route::get('reportes/glosas','ReportesController@reporteglosas');
+    
 Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
 Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
+
 Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar');
 Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfacturarpdf');
+
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');
 Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');

@@ -202,7 +202,7 @@ class CarteraController extends Controller
 
         elseif ($contrato >=1) { 
                  $facturas = Factura::where('id_contrato',$contrato)
-                    ->whereDate('created_at', '>=', $desde)
+                    ->whereDate('DATE_FORMAT(created_at', '>=', $desde)
                     ->whereDate('created_at', '<=', $hasta)->get();
 
             if (count($facturas) >= 1) { // si existe factura, verifico que tenga glosa

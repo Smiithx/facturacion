@@ -15,7 +15,12 @@ use PDF;
 class ReportesController extends Controller
 {
 
+public function reporteglosas(){
 
+       return view("reportes.glosas");
+
+
+}
 public function reportefacturacion() {
     $aseguradoras = Aseguradora::where('estado', 'Activo')->get();
      $contratos = Contratos::where('estado', 'Activo')->get();
