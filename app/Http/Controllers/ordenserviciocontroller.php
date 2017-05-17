@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Aseguradora;
 use App\FacturaItems;
+use App\Factura;
 use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -14,6 +15,10 @@ use Carbon\Carbon;
 
 class ordenserviciocontroller extends Controller
 {
+    public function index(){
+        return view("orden_servicio.index");
+    }
+
     public function create()
     {
 
@@ -198,11 +203,8 @@ class ordenserviciocontroller extends Controller
           <td>$orden->contrato</td>
             <td>$orden->created_at</td>
             <td>&anbsp</td>
-
-
            </tr>";
         }
-
 
         if ($tbody_ordenes_facturar != "") {
             return response()->json([
@@ -211,12 +213,53 @@ class ordenserviciocontroller extends Controller
             ]);
         } else {
             return response()->json([
-                'error' => 'No se encontraron ordenes de servicios por facturar..'
+                'error' => 'No se encontraron ordenes de servicios por facturar.'
             ]);
         }
-
-
     }
 
+    public function factura($id_factura){
+        try {
+            $ordenes = ordenservicios::selectRaw("ordendeservicio.*")
+                ->join("factura_items", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->where("factura_items.id_factura",$id_factura)
+                ->get();
+            if ($ordenes != "[]") {
+                return response()->json([
+                    'success' => 'true',
+                    'ordenes' => $ordenes,
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'Numero de factura desconocido.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Numero de factura desconocido.'
+            ], 200);
+        }
+    }
+    
+    public function documento($documento){
+        try {
+            $ordenes = ordenservicios::where("documento",$documento)
+                ->get();
+            if ($ordenes != "[]") {
+                return response()->json([
+                    'success' => 'true',
+                    'ordenes' => $ordenes,
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No se encontraron ordenes de servicio asociadas a este documento.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'No se encontraron ordenes de servicio asociadas a este documento.'
+            ], 200);
+        }
+    }
 
 }

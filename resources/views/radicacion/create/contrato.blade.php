@@ -5,7 +5,7 @@
     <form method="POST" action="/radicacion/contrato">
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Contrato:</label>
-            <select name="id_contrato" id="radicacion_contrato" required class="form-control">
+            <select name="id_contrato" id="radicacion_contrato_id_contrato" required class="form-control">
                 <option value="">Seleccione un contrato</option>
                 @foreach ($contratos as $contrato)
                     <option value="{{$contrato->id}}" {{old('id_contrato') == $contrato->id ? "selected":""}}>{{$contrato->nombre}}</option>

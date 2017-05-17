@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
-    <h3 class="text-center">Factura</h3>
+    <h3 class="text-center">Reporte de factura</h3>
     <hr>
 
     <div class="row form-group">
@@ -11,9 +11,7 @@
         </div>
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Contrato:</label>
-            <select readonly id="reporte_factura_contrato" class="form-control">
-                <option value=""></option>
-            </select>
+            <input readonly type="text" class="form-control" id="reporte_factura_contrato"/>
         </div>
         <div class="form-group col-xs-12 col-md-3">
             <label for="label">Fecha de facturación:</label>

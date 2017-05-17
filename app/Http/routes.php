@@ -14,23 +14,43 @@
 //----- Inicio ----- //
 Route::get('/','PacienteController@index');
 
+//----- Aseguradora ----- //
+Route::resource('Aseguradora', 'AseguradoraController');
+
+//----- Servicios ----- //
+Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
+Route::get('servicios/cups/{cups}/{contrato}','ServiciosController@cups');
+Route::post('Servicios/buscar','ServiciosController@buscar');
+
+//----- Contratos ----- //
+Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
+Route::post('Contratos/buscar','ContratosController@buscar');
+
+//----- Manuales ----- //
+Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
+Route::post('Manuales/buscar','ManualesController@buscar');
+Route::get('manuales/{cups}/{contrato}','ManualesController@cups');
+
 //----- Pacientes ----- //
 Route::resource('pacientes', 'PacienteController');
 Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
+
+//----- Orden de servicios ----- //
+Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show','index']]);
+Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocontroller@buscar');
+Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontroller@ordenes_facturar');
+Route::get('ordenservicio/factura/{factura}', 'ordenserviciocontroller@factura');
+Route::get('ordenservicio/documento/{documento}', 'ordenserviciocontroller@documento');
 
 //----- Facturas ----- //
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
 Route::get('facturas/buscar/{aseguradora}/{contrato}/{desde}/{hasta}', 'FacturaController@buscar');
 Route::get('facturas/radicar/{contrato}/{desde}/{hasta}', 'FacturaController@radicar');
 Route::get('facturas/cuentacobro/buscar/{factura}/{desde}/{hasta}', 'FacturaController@cxcbuscar');
-
 Route::get('facturas/reporte/factura', 'FacturaController@reporteFactura');
 Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFacturaShow');
-
-//----- Orden de servicios ----- //
-Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show']]);
-Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocontroller@buscar');
-Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontroller@ordenes_facturar');
+Route::get('facturas/reporte/contrato', 'FacturaController@reporteContrato');
+Route::get('facturas/reporte/contrato/{contrato}/{desde}/{hasta}', 'FacturaController@reporteContratoShow');
 
 //----- Radicacion ----- // 
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
@@ -57,14 +77,10 @@ Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar
 Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfacturarpdf');
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');
-
 Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
 Route::get('reportes/Imprimirfactura/pdf', 'ReportesController@Imprimirfacturapdf');
-
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
 Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
-
-
 Route::get('reportes/radicacion', 'ReportesController@radicacion');
 Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
 
@@ -88,20 +104,8 @@ Route::get('administracion/manuales', 'AdministracionController@manuales');
 Route::get('administracion/manuales/{id}/edit', 'AdministracionController@editmanuales');
 Route::get('administracion/manuales/create', 'AdministracionController@createmanuales');
 
-//----- Contratos ----- //
-Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
-Route::post('Contratos/buscar','ContratosController@buscar');
-
-//----- Manuales ----- //
-Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
-Route::post('Manuales/buscar','ManualesController@buscar');
-Route::get('manuales/{cups}/{contrato}','ManualesController@cups');
-
 //----- Empresa ----- //
 Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
-
-//----- Aseguradora ----- //
-Route::resource('Aseguradora', 'AseguradoraController');
 
 //----- Diagnosticos ----- //
 Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','store','destroy','update']]);
@@ -109,11 +113,6 @@ Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','
 //----- Usuarios ----- //
 Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
 Route::post('Usuarios/buscar','UsuariosController@buscar');
-
-//----- Servicios ----- //
-Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
-Route::get('servicios/cups/{cups}/{contrato}','ServiciosController@cups');
-Route::post('Servicios/buscar','ServiciosController@buscar');
 
 //----- Test ----- //
 Route::resource("test","TestController");

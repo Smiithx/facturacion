@@ -27,11 +27,19 @@ $(function () {
           '<input type="hidden" class="orden_servicios_valor_unitario"></td>' +
           '<td><input required type="text" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
-    //-- Declarar variables REPORTE TOTAL FACTURADO=============================== //
+    //-- REPORTE TOTAL FACTURADO ============================== //
     var fecha_inicio_ordenes_facturar = $("#fecha_inicio_ordenes_facturar");
     var fecha_fin_ordenes_facturar = $("#fecha_fin_ordenes_facturar");
     var tbody_ordenes_facturar = $("#tbody_ordenes_facturar");
     var btn_ordenes_facturar_buscar = $("#btn_ordenes_facturar_buscar");
+
+    // Index
+    var orden_servicio_factura = $("#orden_servicio_factura");
+    var orden_servicio_documento = $("#orden_servicio_documento");
+    var orden_servicio_buscar = $("#orden_servicio_buscar");
+    var orden_servicio_tbody = $("#orden_servicio_tbody");
+    var orden_servicio_total = $("#orden_servicio_total");
+    var bool_filtro_factura = true;
 
     //-- Fin de declarar variables ======================= //
 
@@ -63,7 +71,7 @@ $(function () {
         actualizarVariables();
     });
 
-    //-- Agregar evento ORDENES POR FACTURAr================================= //
+    //-- ORDENES POR FACTURAR ================================= //
 
     btn_ordenes_facturar_buscar.on("click", function () {
         var url = "/ordenservicio/ordenes_facturar/" + fecha_inicio_ordenes_facturar.val() +
@@ -86,6 +94,43 @@ $(function () {
         });
     });
 
+    // Index
+    orden_servicio_documento.on("click", function(){
+        orden_servicio_documento.removeAttr("readonly");
+        orden_servicio_factura.attr("readonly","readonly");
+        bool_filtro_factura = false;
+    });
+
+    orden_servicio_factura.on("click", function(){
+        orden_servicio_factura.removeAttr("readonly");
+        orden_servicio_documento.attr("readonly","readonly");
+        bool_filtro_factura = true;
+    });
+
+    orden_servicio_buscar.on("click",function(){
+        var url = "/ordenservicio/";
+        url += bool_filtro_factura ? "factura/" + orden_servicio_factura.val() : "documento/" + orden_servicio_documento.val();
+        console.log("facturacion.com"+url);
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    rellenarOrdenServicio(respuesta.ordenes);
+                }
+                else {
+                    orden_servicio_tbody.html("");
+                    orden_servicio_total.html("");
+                    swal('Cancelled', respuesta.error, 'error');
+                }
+            }, error: function (e) {
+                console.log(e);
+                orden_servicio_tbody.html("");
+                orden_servicio_total.html("");
+            }
+        });
+    });
 
     //-- declarar funciones auxiliares------------------------------------//
 
@@ -202,6 +247,26 @@ $(function () {
             valorTotal($(this).parent().parent());
         });
 
+    }
+    
+    function rellenarOrdenServicio(ordenes){
+        var tbody = ""
+        var total = 0;
+
+        $.each(ordenes, function (ind, orden) {
+            tbody += "<tr>";
+            tbody += "<td class='text-center'><a href='/ordenservicio/" + orden.id + "' target='_blank'>"+ orden.id+"</a></td>";
+            tbody += "<td>" + orden.nombre + "</td>";
+            tbody += "<td>" + orden.documento + "</td>";
+            tbody += "<td>" + orden.aseguradora_id.nombre + "</td>";
+            tbody += "<td class='text-center'>" + orden.created_at + "</td>";
+            tbody += "<td class='text-right'>" + $.number(orden.orden_total, 2) + "</td>";
+            tbody += "</tr>";
+            total += parseFloat(orden.orden_total);
+        });
+        console.log(tbody,total);
+        orden_servicio_tbody.html(tbody);
+        orden_servicio_total.html($.number(total,2));
     }
 
 });

@@ -15,7 +15,8 @@
                     <a class="list-group-item" href="">Reportes</a>
                     <ul class="submenu-item">
                         <li><a class="list-group-item" href="/facturas/reporte/factura">Factura</a></li>
-                        <li><a class="list-group-item" href="">Contrato</a></li>
+                        <li><a class="list-group-item" href="/facturas/reporte/contrato">Contrato</a></li>
+                        <li><a href="/ordenservicio" class="list-group-item">Ordenes de servicio</a></li>
                     </ul>
                 </li>
             </ul>

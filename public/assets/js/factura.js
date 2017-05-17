@@ -32,6 +32,14 @@ $(function () {
     var reporte_factura_fecha_facturacion = $("#reporte_factura_fecha_facturacion");
     var reporte_factura_fecha_radicacion = $("#reporte_factura_fecha_radicacion");
 
+    // reporte factura por contrato
+    var reporte_factura_contrato_id_contrato = $("#reporte_factura_contrato_id_contrato");
+    var reporte_factura_contrato_desde = $("#reporte_factura_contrato_desde");
+    var reporte_factura_contrato_hasta = $("#reporte_factura_contrato_hasta");
+    var reporte_factura_contrato_buscar = $("#reporte_factura_contrato_buscar");
+    var reporte_factura_contrato_tbody = $("#reporte_factura_contrato_tbody");
+    var reporte_factura_contrato_total = $("#reporte_factura_contrato_total");
+
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
@@ -100,6 +108,31 @@ $(function () {
         reporte_factura_temporizador_numero_factura = setTimeout(buscarFactura, 600);
     });
 
+    // reporte factura por contrato
+    reporte_factura_contrato_buscar.on("click",function(){
+        var url = "/facturas/reporte/contrato/" + reporte_factura_contrato_id_contrato.val() + "/";
+        url += reporte_factura_contrato_desde.val() +"/" +reporte_factura_contrato_hasta.val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    rellenarReporteContrato(respuesta.facturas);
+                }
+                else {
+                    swal('Error', respuesta.error, 'error');
+                    reporte_factura_contrato_tbody.html("");
+                    reporte_factura_contrato_total.html("");
+                }
+            }, error: function (e) {
+                console.log(e);
+                reporte_factura_contrato_tbody.html("");
+                reporte_factura_contrato_total.html("");
+            }
+        });
+    });
+
     //-- declarar funciones auxiliares------------------------------------//
 
     // facturar
@@ -166,7 +199,7 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     rellenarReporteFactura(respuesta.factura_items);
-                    reporte_factura_contrato.html("<option value='" + respuesta.factura.id_contrato.id + "'>" + respuesta.factura.id_contrato.nombre + "</option>");
+                    reporte_factura_contrato.val(respuesta.factura.id_contrato.nombre);
                     reporte_factura_fecha_facturacion.val(respuesta.factura.created_at);
                     if(respuesta.factura.radicada){
                         reporte_factura_fecha_radicacion.val(respuesta.factura.fecha_radicacion);
@@ -178,7 +211,7 @@ $(function () {
                 else {
                     reporte_factura_tbody.html("");
                     reporte_factura_total.html("");
-                    reporte_factura_contrato.html("");
+                    reporte_factura_contrato.val("");
                     reporte_factura_fecha_facturacion.val("");
                     reporte_factura_fecha_radicacion.val("");
                     reporte_factura_btn_imprimir.addClass("hidden");
@@ -187,7 +220,7 @@ $(function () {
                 console.log(e);
                 reporte_factura_tbody.html("");
                 reporte_factura_total.html("");
-                reporte_factura_contrato.html("");
+                reporte_factura_contrato.val("");
                 reporte_factura_fecha_facturacion.val("");
                 reporte_factura_fecha_radicacion.val("");
                 reporte_factura_btn_imprimir.addClass("hidden");
@@ -213,6 +246,24 @@ $(function () {
 
         reporte_factura_tbody.html(tbody);
         reporte_factura_total.html($.number(total,2));
+
+    }
+
+    function rellenarReporteContrato(facturas) {
+        var tbody = ""
+        var total = 0;
+
+        $.each(facturas, function (ind, factura) {
+            tbody += "<tr>";
+            tbody += "<td class='text-center'><a href='/facturas/" + factura.id + "' target='_blank'>"+ factura.id+"</a></td>";
+            tbody += "<td class='text-center'>" + factura.created_at + "</td>";
+            tbody += "<td class='text-center'>" + (factura.radicada == 1 ? factura.fecha_radicacion : "") + "</td>";
+            tbody += "<td class='text-right'>" + $.number(factura.factura_total, 2) + "</td>";
+            tbody += "</tr>";
+            total += parseFloat(factura.factura_total);
+        });
+        reporte_factura_contrato_tbody.html(tbody);
+        reporte_factura_contrato_total.html($.number(total,2));
 
     }
 

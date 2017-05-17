@@ -379,7 +379,7 @@ class FacturaController extends Controller
 
             if (is_null($factura)) {
                 return response()->json([
-                    'error' => 'Numero de factura desconocida.'
+                    'error' => 'Numero de factura desconocido.'
                 ]);
             } else {
                 return response()->json([
@@ -390,7 +390,38 @@ class FacturaController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Numero de factura desconocida.'
+                'error' => 'Numero de factura desconocido.'
+            ], 200);
+        }
+    }
+    
+    public function reporteContrato()
+    {
+        $contratos = Contratos::all();
+        $datos = ['contratos' => $contratos];
+        return View('facturas.reportes.contrato',$datos);
+    }
+
+    public function reporteContratoShow($contrato,$desde,$hasta)
+    {
+        try {
+            $facturas = Factura::where("id_contrato",$contrato)
+                ->whereDate('created_at', '>=', $desde)
+                ->whereDate('created_at', '<=', $hasta)->get();
+
+            if ($facturas != "[]") {
+                return response()->json([
+                    'success' => 'true',
+                    'facturas' => $facturas,
+                ]);
+            } else {
+                return response()->json([
+                    'error' => 'No se encontraron facturas asociadas a este contrato dentro del rango de fechas seleccionadas.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'No se encontraron facturas asociadas a este contrato dentro del rango de fechas seleccionadas.'
             ], 200);
         }
     }
