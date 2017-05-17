@@ -69,9 +69,9 @@ Route::post('cartera/update', 'CarteraController@update');
 
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store','edit','destroy','update']]);
-Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
+Route::get('glosas/buscar/{factura}/{contrato}', 'GlosasController@buscar');
 Route::post('glosas/update', 'GlosasController@update');
-Route::get('glosas/buscar/{factura}/{desde}/{hasta}', 'GlosasController@reportebuscar');
+Route::get('glosas/buscar/{factura}', 'GlosasController@reportebuscar');
 Route::get('glosas/create/contrato', 'GlosasController@createcontrato');
 
 //----- Reportes ----- //
