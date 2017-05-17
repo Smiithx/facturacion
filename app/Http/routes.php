@@ -59,16 +59,18 @@ Route::post('radicacion/contrato', 'RadicacionController@storeContrato');
 Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 
 //----- Cartera ----- //
-Route::resource('cartera', 'CarteraController', ['only' => ['create','store']]);
+Route::resource('cartera', 'CarteraController', ['only' => ['create','edit','store']]);
 Route::get('cartera/buscar/{factura}/{contrato}/{desde}/{hasta}', 'CarteraController@buscar');
 Route::get('cartera/create/contrato', 'CarteraController@createcontrato');
 Route::get('cartera/reporte/{factura}', 'CarteraController@reportefactura');
+Route::get('cartera/buscar/{factura}/{desde}/{hasta}', 'CarteraController@reportebuscar');
+Route::post('cartera/update', 'CarteraController@update');
+
 
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store','edit','destroy','update']]);
 Route::get('glosas/buscar/{factura}/{contrato}/{desde}/{hasta}', 'GlosasController@buscar');
 Route::post('glosas/update', 'GlosasController@update');
-
 Route::get('glosas/buscar/{factura}/{desde}/{hasta}', 'GlosasController@reportebuscar');
 Route::get('glosas/create/contrato', 'GlosasController@createcontrato');
 
@@ -79,6 +81,8 @@ Route::get('glosas/create/contrato', 'GlosasController@createcontrato');
 //----- Reportes ----- //
 Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 Route::get('reportes/glosas','ReportesController@reporteglosas');
+Route::get('reportes/carteras','ReportesController@reportecarteras');
+
     
 Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
 Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');

@@ -18,7 +18,7 @@
             <label>Contrato</label>
             <select class="form-control contrato" name="totalfacturado_contrato" id="totalfacturado_contrato">
                 @foreach ($contratos as $contrato)
-                <option value="{{$contrato->contrato}}">{{$contrato->contrato}}</option>
+                <option value="{{$contrato->id}}">{{$contrato->nombre}}</option>
                 @endforeach
                 <option value="all">Todos</option>
             </select>

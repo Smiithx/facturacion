@@ -12,7 +12,9 @@
     <li role="presentation"><a href="/reportes/Imprimirfactura">Imprimir factura</a></li>
     <li role="presentation"><a href="/reportes/Cuentadecobro">Cuenta de Cobro</a></li>
     <li role="presentation"><a href="/reportes/radicacion">Facturas Radicadas</a></li>
-    <li role="presentation"><a href="/reportes/glosas">Glosas</a></li>
+    <li role="presentation"><a href="/reportes/glosas">Glosas</a></li>  
+     <li role="presentation"><a href="/reportes/carteras">Cartera</a></li>
+
 
 </ul>
 <!-- fin opciones -->

@@ -81,6 +81,40 @@ class CarteraController extends Controller
         //
     }
 
+
+//===============Funcion para Buscar factura para Reporte cartera==============//
+
+    public function reportebuscar($factura, $desde, $hasta){
+                $carteras = Cartera::where('id_factura',$factura)
+                    ->whereDate('created_at', '>=', $desde)
+                    ->whereDate('created_at', '<=', $hasta)
+                    ->get();
+                     $cartera_tbody = "";
+                    foreach ($carteras as $cartera) {
+                             $cartera_tbody .= "<tr>
+                            <td class='text-center'><a href='/facturas/$cartera->id_factura' target='_blank'>$cartera->id_factura</a></td> 
+                            <td>". number_format($cartera->valor_abono, 2) ."</td>
+                            <td>". number_format($cartera->valor_retencion, 2) ."</td>
+                            <td>$cartera->created_at</td>
+                            <td><a style='float: left;' href='/cartera/$cartera->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
+                            </td>
+                            </tr>";
+                        }
+        
+                    if ($cartera_tbody != "") {
+                        return response()->json([
+                        'success' => 'true',
+                        'cartera_tbody' => $cartera_tbody
+                                            ]);
+                    }       
+                    else {
+                            return response()->json([
+                             'error' => 'No hay cartera con esa factura']);
+                    }              
+
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,7 +123,11 @@ class CarteraController extends Controller
      */
     public function edit($id)
     {
-        //
+        $carteras = Cartera::where('id',$id)
+        ->get(); 
+
+                $datos = ['carteras' => $carteras];
+               return view("cartera.edit",$datos);
     }
 
     /**
@@ -99,9 +137,19 @@ class CarteraController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      
+       $this->validate($request,[
+             'valor_abono' => 'required',
+            'valor_retencion' => 'required'
+        ]);
+          $carteras = Cartera::findOrFail($request->id);
+          $carteras->valor_abono = $request->valor_abono;
+          $carteras->valor_retencion = $request->valor_retencion;
+            $carteras->save();
+            flash('La cartera ha sido actualizada Correctamente!');
+        return Redirect::to("/reportes/carteras");
     }
 
     /**

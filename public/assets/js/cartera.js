@@ -15,7 +15,7 @@ $(function () {
     var cartera_valor_abono  = $("#cartera_valor_abono"); // este es input de abono
     var cartera_retencion  = $("#cartera_retencion"); // este es el de retencion
     var cartera_saldo  = $("#cartera_saldo"); // y este es donde lo tienq q mostrar
-
+var btn_cartera_reporte_buscar =$("#btn_cartera_reporte_buscar");
     //-- Fin de declarar variables ======================= //
 
 
@@ -91,6 +91,32 @@ $(function () {
         
 
     }
+
+            //-- Agregar evento Reporte carteras ================================= //
+
+    btn_cartera_reporte_buscar.on("click", function () {
+
+        var url = "/cartera/buscar/" + cartera_factura.val() +  "/" + cartera_desde.val() +
+            "/" + cartera_hasta.val(); //la ruta que se desea ir y pasando los parametros
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    cartera_tbody.html(respuesta.cartera_tbody);
+
+                }
+                else {
+                    cartera_tbody.html("");
+                    swal('Cancelled', respuesta.error, 'error');
+                }
+            }, error: function (e) {
+                console.log(e);
+            }
+        });
+    });
 
 
 
