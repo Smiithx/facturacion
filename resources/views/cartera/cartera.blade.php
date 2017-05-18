@@ -1,5 +1,5 @@
-@extends('reportes.index')
-@section('reportes') <!-- Inicia reporte 5 -->
+@extends('layouts.layout')
+@section('content')
 <div class="col-sm-12">
      <h3 class="text-center">cartera</h3>
 
@@ -38,7 +38,4 @@
     </div>
 </div>
             <script src="{{asset('assets/js/cartera.js')}}"></script>
-
-@stop
-
-<!-- Termina reporte 5 -->
+@endsection

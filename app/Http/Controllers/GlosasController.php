@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Glosas;
 use App\Contratos;
 use App\Factura;
+use App\Cartera;
+use App\Abonos;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -71,6 +73,12 @@ class GlosasController extends Controller
         //
     }
 
+     public function editar()
+    {
+       return view("glosas.glosas");
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -100,17 +108,46 @@ class GlosasController extends Controller
      */
     public function update(Request $request)
     {
-
-       $this->validate($request,[
+        $this->validate($request,[
              'valor_glosa' => 'required',
             'valor_aceptado' => 'required'
-        ]);
-          $glosas = Glosas::findOrFail($request->id);
+        ]);//validamos que vengan los campos
+
+          $glosas = Glosas::findOrFail($request->id);//buscamo la glosa
           $glosas->valor_glosa = $request->valor_glosa;
           $glosas->valor_aceptado = $request->valor_aceptado;
-            $glosas->save();
-            flash('La Glosa ha sido actualizada Correctamente!');
-        return Redirect::to("/reportes/glosas");
+          $glosas->save();
+
+                $carteras = Cartera::where('id_factura',$glosas->id_factura)->get();//buscamo la cartera para actualizar el valor_saldo
+                if (count($carteras) >= 1) { // verificar si existe cartera
+
+                    $carteras = Cartera::findOrFail($carteras[0]->id);//buscamos la cartera
+                    $factura = Factura::find($glosas->id_factura);//buscamos la factura
+                    $abonos = Abonos::where('id_factura',$glosas->id_factura)->get();//buscamos abonos con la factura
+                    $abonostotal = 0;
+                    if (count($abonos) > 0) { // verificar si existe abonos a la cartera
+
+                            foreach ($abonos as $abono) {//recoremos toda la tabla abonos
+                            $abonostotal = $abono->valor_abono + $abonostotal;
+                            } 
+
+                            $saldo = $factura->factura_total - ($request->valor_aceptado + $carteras->valor_retencion +  $carteras->valor_abono + $abonostotal );//calculadmos el saldo en cartera
+                    }
+                    else{
+
+                            $saldo = $factura->factura_total - ($request->valor_aceptado + $carteras->valor_retencion +  $carteras->valor_abono ); 
+                    }
+
+                    $carteras->valor_glosa = $request->valor_aceptado;//actualizamos el valor glosa en cartera
+                    $carteras->valor_saldo = $saldo;//actualizamos el saldo en cartera
+                    $carteras->save();   
+                    flash('La Glosa ha sido actualizada Correctamente!');
+                    return Redirect::to("/glosas/editar");
+                }
+                else{
+                    flash('La Glosa ha sido actualizada Correctamente!');
+                    return Redirect::to("/glosas/editar");
+                }     
     }
 
     /**

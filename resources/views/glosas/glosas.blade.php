@@ -1,5 +1,5 @@
-@extends('reportes.index')
-@section('reportes') <!-- Inicia reporte 5 -->
+@extends('layouts.layout')
+@section('content')
 <div class="col-sm-12">
      <h3 class="text-center">Glosas</h3>
 
@@ -34,11 +34,11 @@
     </table>    <br>
 <div class="form-group col-xs-12 text-right">
         <a href="/reportes" class="btn btn-success">Regresar</a>
-        <button class="btn btn-primary hidden" id="reporte_factura_btn_imprimir">Imprimir</button>
+        <button class="btn btn-primary" id="reporte_factura_btn_imprimir">Imprimir</button>
     </div>
 </div>
             <script src="{{asset('assets/js/glosas.js')}}"></script>
 
-@stop
-
-<!-- Termina reporte 5 -->
+             
+	
+@endsection

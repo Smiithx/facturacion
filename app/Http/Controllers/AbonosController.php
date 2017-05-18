@@ -38,8 +38,6 @@ class AbonosController extends Controller
                 
             return view("abonos.create",compact('facturas'));
 
-                     //  $datos = ['facturas' => $facturas];
-        //return view("abonos.create",$datos);
    
     } 
    
@@ -68,17 +66,17 @@ class AbonosController extends Controller
                      $carteras->save();                 
 
                     flash('Abono fue creado con exito!');
-                    return Redirect::to('reportes/carteras');
+                    return Redirect::to('cartera/editar');
                 }
                 else{ //El saldo es igual que 0
                 flash('la factura no tiene saldo pendiente!');
-                return Redirect::to('reportes/carteras');
+                return Redirect::to('cartera/editar');
                 }
             }
         else{ //si no encuentro cartera envio un mensaje
 
             flash('la factura no tiene cartera!');
-            return Redirect::to('reportes/carteras');
+            return Redirect::to('cartera/editar');
         }
 
 
