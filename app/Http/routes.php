@@ -17,6 +17,11 @@ Route::get('/','PacienteController@index');
 //----- Aseguradora ----- //
 Route::resource('Aseguradora', 'AseguradoraController');
 
+//---Abonos--//
+Route::resource('abonos', 'AbonosController', ['only' => ['store','destroy','update','show','index']]);
+Route::get('abonos/create/{id}','AbonosController@create');
+
+
 //----- Servicios ----- //
 Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
 Route::get('servicios/cups/{cups}/{contrato}','ServiciosController@cups');
@@ -60,10 +65,10 @@ Route::get('radicacion/buscar/{desde}/{hasta}', 'RadicacionController@buscar');
 
 //----- Cartera ----- //
 Route::resource('cartera', 'CarteraController', ['only' => ['create','edit','store']]);
-Route::get('cartera/buscar/{factura}/{contrato}/{desde}/{hasta}', 'CarteraController@buscar');
+Route::get('cartera/buscar/{factura}/{contrato}', 'CarteraController@buscar');
 Route::get('cartera/create/contrato', 'CarteraController@createcontrato');
 Route::get('cartera/reporte/{factura}', 'CarteraController@reportefactura');
-Route::get('cartera/buscar/{factura}/{desde}/{hasta}', 'CarteraController@reportebuscar');
+Route::get('cartera/buscar/{factura}', 'CarteraController@reportebuscar');
 Route::post('cartera/update', 'CarteraController@update');
 
 

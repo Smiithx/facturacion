@@ -6,8 +6,6 @@ $(function () {
     var cartera_factura = $("#cartera_factura");
     var cartera_contrato = $("#cartera_contrato");
 
-    var cartera_desde = $("#cartera_desde");
-    var cartera_hasta = $("#cartera_hasta");
     var btn_cartera_buscar = $("#btn_cartera_buscar");
     var cartera_tbody = $("#cartera_tbody");
     var cartera_factura_total  = $("#cartera_factura_total");
@@ -19,11 +17,10 @@ var btn_cartera_reporte_buscar =$("#btn_cartera_reporte_buscar");
     //-- Fin de declarar variables ======================= //
 
 
-    //-- Agregar evento Buscar Factura en la Vista glosa ================================= //
+    //-- Agregar evento Buscar Factura en la Vista cartera ================================= //
 
     btn_cartera_buscar.on("click", function () {
-        var url = "/cartera/buscar/" + cartera_factura.val() + "/"+ cartera_contrato.val() + "/" + cartera_desde.val() +
-            "/" + cartera_hasta.val(); //la ruta que se desea ir y pasando los parametros
+        var url = "/cartera/buscar/" + cartera_factura.val() + "/"+ cartera_contrato.val(); //la ruta que se desea ir y pasando los parametros
         $.ajax({
             url: url,
             type: "GET",
@@ -96,8 +93,7 @@ var btn_cartera_reporte_buscar =$("#btn_cartera_reporte_buscar");
 
     btn_cartera_reporte_buscar.on("click", function () {
 
-        var url = "/cartera/buscar/" + cartera_factura.val() +  "/" + cartera_desde.val() +
-            "/" + cartera_hasta.val(); //la ruta que se desea ir y pasando los parametros
+        var url = "/cartera/buscar/" + cartera_factura.val(); //la ruta que se desea ir y pasando los parametros
 
         $.ajax({
             url: url,

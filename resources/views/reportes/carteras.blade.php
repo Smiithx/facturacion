@@ -8,23 +8,7 @@
              <input class="form-control"  placeholder="Escibir Factura" id="cartera_factura" type="text" name="id_factura"/>
             </div>
           
-        <div class="form-group col-xs-12 col-md-3">
-            <label for="label">Fecha desde:</label>
-            <div class="input-group date datepicker">
-                <input class="form-control" id="cartera_desde" type="text" name="cartera_desde"
-                       required  placeholder="yyyy-mm-dd"/>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-            </div>
-        </div>
-        <div class="form-group col-xs-12 col-md-3">
-            <label for="label">Fecha hasta:</label>
-            <div class="input-group date datepicker">
-                <input class="form-control" id="cartera_hasta" type="text" name="cartera_hasta"
-                       required placeholder="yyyy-mm-dd"/>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-            </div>
-        </div>
-        <div class="form-group col-xs-12 col-md-1">
+         <div class="form-group col-xs-12 col-md-1">
             <label for="">&nbsp</label>
             <button class="btn btn-success" id="btn_cartera_reporte_buscar" type="button">Buscar</button>
         </div>
@@ -33,12 +17,13 @@
             <tr>
 
                 <th class="text-center">Nº Factura</th>
-                <th class="text-center">Valor cartera</th>
-                <th class="text-center">Valor Aceptado</th> 
-                                         <th class="text-center">Fecha</th> 
+                <th class="text-center">Total Factura</th>
+                <th class="text-center">Valor Glosas</th>
 
-                          
-                <th class="text-center">Accion</th>
+                <th class="text-center">Valor Abonos</th>
+                <th class="text-center">Valor Retencion</th>
+                <th class="text-center">Saldo</th>                          
+                <th class="text-center">Acciones</th>
 
             </tr>
         </thead>

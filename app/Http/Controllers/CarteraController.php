@@ -9,6 +9,7 @@ use App\Glosas;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use App\Abonos;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -84,19 +85,31 @@ class CarteraController extends Controller
 
 //===============Funcion para Buscar factura para Reporte cartera==============//
 
-    public function reportebuscar($factura, $desde, $hasta){
-                $carteras = Cartera::where('id_factura',$factura)
-                    ->whereDate('created_at', '>=', $desde)
-                    ->whereDate('created_at', '<=', $hasta)
-                    ->get();
+    public function reportebuscar($factura){
+                $carteras = Cartera::where('id_factura',$factura)->get();
+                $abonos = Abonos::where('id_factura',$factura)->get();
+                $facturas = Factura::where('id',$factura)->get();
+
+                $abonostotal = 0;
+                 foreach ($abonos as $abono) {
+                     $abonostotal = $abono->valor_abono + $abonostotal;
+                  } 
+
+                  $abonostotal = $abonostotal + $carteras[0]->valor_abono;
+              
                      $cartera_tbody = "";
                     foreach ($carteras as $cartera) {
                              $cartera_tbody .= "<tr>
                             <td class='text-center'><a href='/facturas/$cartera->id_factura' target='_blank'>$cartera->id_factura</a></td> 
-                            <td>". number_format($cartera->valor_abono, 2) ."</td>
+                            <td>". number_format($facturas[0]->factura_total, 2) ."</td>
+                            <td>". number_format($cartera->valor_glosa, 2) ."</td>
+                            <td>". number_format($abonostotal, 2) ."</td>
                             <td>". number_format($cartera->valor_retencion, 2) ."</td>
-                            <td>$cartera->created_at</td>
+                            <td>". number_format($cartera->valor_saldo, 2) ."</td>
+
                             <td><a style='float: left;' href='/cartera/$cartera->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
+                            <a style='right: right;' href='/abonos/create/$cartera->id_factura' class='btn btn-primary' data-toggle='tooltip' title='Abonar'><i class='glyphicon glyphicon-usd'></i></a>
+
                             </td>
                             </tr>";
                         }
@@ -164,14 +177,12 @@ class CarteraController extends Controller
     }
 //=================Funcion para Buscar factura para crear cartera===================//
 
-    public function buscar($factura, $contrato, $desde, $hasta)
+    public function buscar($factura, $contrato)
     {
     //=================crear cartera por Numeroo Factura =======================//
 
        if ($factura >= 1) { //si es por factura, verifico que halla factura
-                    $facturas = Factura::where('id',$factura)
-                    ->whereDate('created_at', '>=', $desde)
-                    ->whereDate('created_at', '<=', $hasta)->get();
+                    $facturas = Factura::where('id',$factura)->get();
 
             if (count($facturas) >= 1) { // si existe factura, verifico que tenga glosa
                 $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
@@ -181,13 +192,11 @@ class CarteraController extends Controller
 
 
                     if (count($carteras) <= 0) { //si no hay cartera creo la cartera
-                        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
+                        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_aceptado")
                         ->join("glosas", "facturas.id", "=", "glosas.id_factura")
                         ->join("contratos", "facturas.id_contrato", "=", "contratos.id")
                         ->where('radicada', 1)
                         ->where('facturas.id', $facturas[0]->id)
-                        ->whereDate('facturas.created_at', '>=', $desde)
-                        ->whereDate('facturas.created_at', '<=', $hasta)
                         ->get();
                     $cartera_tbody = "";
                     foreach ($Facturas as $factura) {
@@ -208,8 +217,8 @@ class CarteraController extends Controller
                     <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
           
 
-                    <td><input id='cartera_glosa' data-value='$factura->valor_glosa' required type='text' name='valor_glosa' readonly
-                                        class='form-control' value=".number_format($factura->valor_glosa, 2)."></td>
+                    <td><input id='cartera_glosa' data-value='$factura->valor_aceptado' required type='text' name='valor_glosa' readonly
+                                        class='form-control' value=".number_format($factura->valor_aceptado, 2)."></td>
                                    
                     <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
                      
@@ -249,9 +258,7 @@ class CarteraController extends Controller
        //======crear cartera por Numeroo contrato ============//
 
         elseif ($contrato >=1) { 
-                 $facturas = Factura::where('id_contrato',$contrato)
-                    ->whereDate('DATE_FORMAT(created_at', '>=', $desde)
-                    ->whereDate('created_at', '<=', $hasta)->get();
+                 $facturas = Factura::where('id_contrato',$contrato)->get();
 
             if (count($facturas) >= 1) { // si existe factura, verifico que tenga glosa
                 $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
@@ -261,13 +268,11 @@ class CarteraController extends Controller
 
 
                     if (count($carteras) <= 0) { //si no hay cartera creo la cartera
-                        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_glosa")
+                        $Facturas = Factura::select("facturas.id", "contratos.diasvencimiento", "facturas.fecha_radicacion", "facturas.factura_total", "glosas.valor_aceptado")
                         ->join("glosas", "facturas.id", "=", "glosas.id_factura")
                         ->join("contratos", "facturas.id_contrato", "=", "contratos.id")
                         ->where('radicada', 1)
                         ->where('facturas.id',$facturas[0]->id)
-                        ->whereDate('facturas.created_at', '>=', $desde)
-                        ->whereDate('facturas.created_at', '<=', $hasta)
                         ->get();
                     $cartera_tbody = "";
                     foreach ($Facturas as $factura) {
@@ -288,8 +293,8 @@ class CarteraController extends Controller
                     <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
           
 
-                    <td><input id='cartera_glosa' data-value='$factura->valor_glosa' required type='text' name='valor_glosa' readonly
-                                        class='form-control' value=".number_format($factura->valor_glosa, 2)."></td>
+                    <td><input id='cartera_glosa' data-value='$factura->valor_aceptado' required type='text' name='valor_glosa' readonly
+                                        class='form-control' value=".number_format($factura->valor_aceptado, 2)."></td>
                                    
                     <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
                      

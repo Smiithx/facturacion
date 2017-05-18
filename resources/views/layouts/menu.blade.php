@@ -44,6 +44,8 @@
                 <li><a class="list-group-item" href="/cartera/create/contrato">Contrato</a></li>
             </ul>
         </li>
+
+     
         </li>
         <li><a href="/reportes">Reportes</a></li>
         <li><a href="/administracion">Administración</a></li>
