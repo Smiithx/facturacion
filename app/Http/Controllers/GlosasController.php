@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Glosas;
+use App\Contratos;
 use App\Factura;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -33,9 +34,11 @@ class GlosasController extends Controller
         return view("glosas.create");
     }
 
-  public function createcontrato()
+  public function createcontrato()           
     {
-      return view("glosas.createcontrato");
+      $contratos = Contratos::where('estado', 'Activo')->get();
+             $contratoss = ['contratos' => $contratos];
+      return view("glosas.createcontrato",compact('contratos'));
         
     }
     /**
@@ -197,7 +200,7 @@ class GlosasController extends Controller
             } // cierra el if de verificar si existe la factura
             else {
                  return response()->json([
-                    'error' => 'Verificar #Factura o fechas, La Factura No Existe.'
+                    'error' => 'Verificar Numero deFactura, La Factura No Existe.'
                 ]);
                 }
 
@@ -246,7 +249,7 @@ class GlosasController extends Controller
         } // cierra el if de verificar si existe la factura
         else {
             return response()->json([
-                    'error' => 'Verificar Contrato o fechas, Factura No Existe.'
+                    'error' => 'Verificar Contrato, Factura No Existe.'
               ]);
                 }
     }// fin de crear glosa por contrato

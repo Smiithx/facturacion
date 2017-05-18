@@ -5,7 +5,14 @@
     <form method="POST" action="/glosas">
 			<div class="form-group col-xs-12 col-md-3 col-lg-3">
 		     <label for="label">Contrato:</label>  
-		     <input class="form-control"  placeholder="Escibir Contrato" id="glosas_contrato" type="text" name="id_contrato"/>
+		     
+		     <select class="form-control aseguradora" name="id_contrato" id="glosas_contrato">
+                @foreach ($contratos as $contrato)
+                <option value="{{$contrato->id}}">{{$contrato->nombre}}</option>
+                @endforeach
+            </select>
+
+		   
 
                    <input class="form-control" id="glosas_factura" type="hidden" value="0" name="id_factura"/>
 
