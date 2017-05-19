@@ -15,12 +15,12 @@
     <script src="{{asset('assets/js/jquery-ui.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.js')}}"></script>
     <script src="{{asset('assets/js/sweetalert2.js')}}"></script>
-    <script src="{{asset('assets/js/index.js')}}"></script>
     <script src="{{asset('assets/js/datepicker/bootstrap-datepicker.js')}}"></script>
     <script src="{{asset('assets/js/datepicker/bootstrap-datepicker.es.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.validate.js')}}"></script>
     <script src="{{asset('assets/js/localization/messages_es.js')}}"></script>
     <script src="{{asset('assets/js/jquery.number.js')}}"></script>
+    <script src="{{asset('assets/js/index.js')}}"></script>
 </head>
 <body>
 <header class="modal-header text-success text-center bg-success">
