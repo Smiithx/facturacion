@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Glosas;
 use App\Contratos;
 use App\Factura;
+use App\Cartera;
+use App\Abonos;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -34,12 +36,12 @@ class GlosasController extends Controller
         return view("glosas.create");
     }
 
-  public function createcontrato()           
+    public function createcontrato()           
     {
-      $contratos = Contratos::where('estado', 'Activo')->get();
-             $contratoss = ['contratos' => $contratos];
-      return view("glosas.createcontrato",compact('contratos'));
-        
+        $contratos = Contratos::where('estado', 'Activo')->get();
+        $contratoss = ['contratos' => $contratos];
+        return view("glosas.createcontrato",compact('contratos'));
+
     }
     /**
      * Store a newly created resource in storage.
@@ -47,10 +49,10 @@ class GlosasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-//=================================Funcion de crear la glosa=================================// 
+    //=================================Funcion de crear la glosa=================================// 
     public function store(Request $request)
     {        
-       $this->validate($request, [
+        $this->validate($request, [
             'id_factura' => 'required|max:255',
             'valor_glosa' => 'required',
             'valor_aceptado' => 'required'            
@@ -71,6 +73,12 @@ class GlosasController extends Controller
         //
     }
 
+    public function editar()
+    {
+        return view("glosas.glosas");
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -80,13 +88,13 @@ class GlosasController extends Controller
     public function edit($id)
     {
 
-    $glosas = Glosas::select("facturas.factura_total","glosas.id","glosas.id_factura","glosas.valor_glosa","glosas.valor_aceptado","glosas.created_at")
-        ->join("facturas", "glosas.id_factura", "=", "facturas.id")
-        ->where('glosas.id',$id)
-        ->get(); 
+        $glosas = Glosas::select("facturas.factura_total","glosas.id","glosas.id_factura","glosas.valor_glosa","glosas.valor_aceptado","glosas.created_at")
+            ->join("facturas", "glosas.id_factura", "=", "facturas.id")
+            ->where('glosas.id',$id)
+            ->get(); 
 
-                $datos = ['glosas' => $glosas];
-               return view("glosas.edit",$datos);
+        $datos = ['glosas' => $glosas];
+        return view("glosas.edit",$datos);
 
 
     }
@@ -100,17 +108,46 @@ class GlosasController extends Controller
      */
     public function update(Request $request)
     {
-
-       $this->validate($request,[
-             'valor_glosa' => 'required',
+        $this->validate($request,[
+            'valor_glosa' => 'required',
             'valor_aceptado' => 'required'
-        ]);
-          $glosas = Glosas::findOrFail($request->id);
-          $glosas->valor_glosa = $request->valor_glosa;
-          $glosas->valor_aceptado = $request->valor_aceptado;
-            $glosas->save();
+        ]);//validamos que vengan los campos
+
+        $glosas = Glosas::findOrFail($request->id);//buscamo la glosa
+        $glosas->valor_glosa = $request->valor_glosa;
+        $glosas->valor_aceptado = $request->valor_aceptado;
+        $glosas->save();
+
+        $carteras = Cartera::where('id_factura',$glosas->id_factura)->get();//buscamo la cartera para actualizar el valor_saldo
+        if (count($carteras) >= 1) { // verificar si existe cartera
+
+            $carteras = Cartera::findOrFail($carteras[0]->id);//buscamos la cartera
+            $factura = Factura::find($glosas->id_factura);//buscamos la factura
+            $abonos = Abonos::where('id_factura',$glosas->id_factura)->get();//buscamos abonos con la factura
+            $abonostotal = 0;
+            if (count($abonos) > 0) { // verificar si existe abonos a la cartera
+
+                foreach ($abonos as $abono) {//recoremos toda la tabla abonos
+                    $abonostotal = $abono->valor_abono + $abonostotal;
+                } 
+
+                $saldo = $factura->factura_total - ($request->valor_aceptado + $carteras->valor_retencion +  $carteras->valor_abono + $abonostotal );//calculadmos el saldo en cartera
+            }
+            else{
+
+                $saldo = $factura->factura_total - ($request->valor_aceptado + $carteras->valor_retencion +  $carteras->valor_abono ); 
+            }
+
+            $carteras->valor_glosa = $request->valor_aceptado;//actualizamos el valor glosa en cartera
+            $carteras->valor_saldo = $saldo;//actualizamos el saldo en cartera
+            $carteras->save();   
             flash('La Glosa ha sido actualizada Correctamente!');
-        return Redirect::to("/reportes/glosas");
+            return Redirect::to("/glosas/editar");
+        }
+        else{
+            flash('La Glosa ha sido actualizada Correctamente!');
+            return Redirect::to("/glosas/editar");
+        }     
     }
 
     /**
@@ -123,53 +160,57 @@ class GlosasController extends Controller
     {
         //
     }
-//===============Funcion para Buscar factura para Reporte glosa==============//
+    //===============Funcion para Buscar factura para Reporte glosa==============//
 
     public function reportebuscar($factura){
-                $glosas = Glosas::where('id_factura',$factura)
-                                       ->get();
-                     $glosas_tbody = "";
-                    foreach ($glosas as $glosa) {
-                             $glosas_tbody .= "<tr>
+        $glosas = Glosas::where('id_factura',$factura)
+            ->get();
+        $glosas_tbody = "";
+        foreach ($glosas as $glosa) {
+            $glosas_tbody .= "<tr>
                             <td class='text-center'><a href='/facturas/$glosa->id_factura' target='_blank'>$glosa->id_factura</a></td> 
                             <td>". number_format($glosa->valor_glosa, 2) ."</td>
                             <td>". number_format($glosa->valor_aceptado, 2) ."</td>
                             <td>$glosa->created_at</td>
                             <td><a style='float: left;' href='/glosas/$glosa->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
+
+                            <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
+                        <i class='glyphicon glyphicon-remove'></i>
+                    </button>
                             </td>
                             </tr>";
-                        }
-        
-                    if ($glosas_tbody != "") {
-                        return response()->json([
-                        'success' => 'true',
-                        'glosas_tbody' => $glosas_tbody
-                                            ]);
-                    }       
-                    else {
-                            return response()->json([
-                             'error' => 'No hay glosa con esa factura']);
-                    }              
+        }
+
+        if ($glosas_tbody != "") {
+            return response()->json([
+                'success' => 'true',
+                'glosas_tbody' => $glosas_tbody
+            ]);
+        }       
+        else {
+            return response()->json([
+                'error' => 'No hay glosa con esa factura']);
+        }              
 
     }
 
-//=======================Funcion para Buscar factura para crear glosa===================//
- public function buscar($factura, $contrato){  
+    //=======================Funcion para Buscar factura para crear glosa===================//
+    public function buscar($factura, $contrato){  
 
         //=================crear glosa por Numeroo Factura =======================//
 
         if ($factura >= 1) { //si esta instanciado el input id_factura
-                    $facturas = Factura::where('id',$factura)
-                     ->get();
+            $facturas = Factura::where('id',$factura)
+                ->get();
             if (count($facturas) >= 1) { // verificar si existe factura
-                 $facturas = Factura::where('id',$factura)
-                 ->where('radicada',1)->get();
+                $facturas = Factura::where('id',$factura)
+                    ->where('radicada',1)->get();
                 if (count($facturas) >= 1) { // verificar si la factura esta radicada 
-                            $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
+                    $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
                     if (count($glosas) <= 0) { // si la factura radicada ya tiene glosa        
                         $glosas_tbody = "";           
                         foreach ($facturas as $factura) {
-                             $glosas_tbody .= "<tr>
+                            $glosas_tbody .= "<tr>
                             <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
                             <input type='hidden'  name='id_factura' value='$factura->id'>
                             <td>$factura->fecha_radicacion</td>
@@ -181,45 +222,45 @@ class GlosasController extends Controller
 
                         if ($facturas != "") {
                             return response()->json([
-                             'success' => 'true',
+                                'success' => 'true',
                                 'glosas_tbody' => $glosas_tbody
                             ]);
                         }       
                     } // cierra el if si la factura radicada tiene glosa
                     else {
                         return response()->json([
-                      'error' => 'Ya esta factura se le creo la glosa.'
+                            'error' => 'Ya esta factura se le creo la glosa.'
                         ]);
-                        }
+                    }
                 } // cierra el if de verificar si esta radicada la factura
                 else {
                     return response()->json([
                         'error' => 'Verificar Factura, No Esta Radicada.'
                     ]);
-                    }
+                }
             } // cierra el if de verificar si existe la factura
             else {
-                 return response()->json([
+                return response()->json([
                     'error' => 'Verificar Numero deFactura, La Factura No Existe.'
                 ]);
-                }
+            }
 
         }
-    //======================crear glosa por contrato================================//
-    elseif ($contrato >=1) {                     
+        //======================crear glosa por contrato================================//
+        elseif ($contrato >=1) {                     
             $facturas = Factura::where('id_contrato',$contrato)
-          ->get();
-        if (count($facturas) >= 1) { // verificar si existe factura
-            $facturas = Factura::where('id_contrato',$contrato)
-            ->where('radicada',1)
-           ->get();
+                ->get();
+            if (count($facturas) >= 1) { // verificar si existe factura
+                $facturas = Factura::where('id_contrato',$contrato)
+                    ->where('radicada',1)
+                    ->get();
 
-            if (count($facturas) >= 1) { // verificar si la factura esta radicada 
-                $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
-                if (count($glosas) <= 0) { // si la factura radicada ya tiene glosa
-                     $glosas_tbody = "";           
-                    foreach ($facturas as $factura) {
-                        $glosas_tbody .= "<tr>
+                if (count($facturas) >= 1) { // verificar si la factura esta radicada 
+                    $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
+                    if (count($glosas) <= 0) { // si la factura radicada ya tiene glosa
+                        $glosas_tbody = "";           
+                        foreach ($facturas as $factura) {
+                            $glosas_tbody .= "<tr>
                        <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
                        <input type='hidden'  name='id_factura' value='$factura->id'>
                         <td>$factura->fecha_radicacion</td>
@@ -227,32 +268,32 @@ class GlosasController extends Controller
                         <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' class='form-control' required></td>
                         <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
                         </tr>";
-                    }
-                    if ($facturas != "") {
+                        }
+                        if ($facturas != "") {
+                            return response()->json([
+                                'success' => 'true',
+                                'glosas_tbody' => $glosas_tbody
+                            ]);
+                        }
+                    } // cierra el if si la factura radicada tiene glosa
+                    else {
                         return response()->json([
-                        'success' => 'true',
-                         'glosas_tbody' => $glosas_tbody
+                            'error' => 'Ya esta factura se le creo la glosa.'
                         ]);
-                    }
-                } // cierra el if si la factura radicada tiene glosa
+                    }  
+                } // cierra el if de verificar si esta radicada la factura
                 else {
                     return response()->json([
-                    'error' => 'Ya esta factura se le creo la glosa.'
+                        'error' => 'Verificar Contrato, Factura No Esta Radicada.'
                     ]);
-                    }  
-            } // cierra el if de verificar si esta radicada la factura
+                }
+            } // cierra el if de verificar si existe la factura
             else {
                 return response()->json([
-                    'error' => 'Verificar Contrato, Factura No Esta Radicada.'
-                ]);
-                }
-        } // cierra el if de verificar si existe la factura
-        else {
-            return response()->json([
                     'error' => 'Verificar Contrato, Factura No Existe.'
-              ]);
-                }
-    }// fin de crear glosa por contrato
-}//=======Fin de Funcion para Buscar factura para crear glosa==//
+                ]);
+            }
+        }// fin de crear glosa por contrato
+    }//=======Fin de Funcion para Buscar factura para crear glosa==//
 
 }

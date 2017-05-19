@@ -26,7 +26,12 @@ class CarteraController extends Controller
         //
     }
 
-    /**
+    
+   public function editar()
+    {
+       return view("cartera.cartera");
+
+    }    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -55,7 +60,10 @@ class CarteraController extends Controller
 
     $factura = Factura::find($request->id_factura);
     $glosa = Glosas::where('id_factura',$request->id_factura)->get();
-    $total = $factura->factura_total - ($request->valor_abono + $request->valor_retencion+$glosa[0]->valor_glosa);
+    $deduciones = $request->valor_abono + $request->valor_retencion+$glosa[0]->valor_aceptado;
+  
+     $total = $factura->factura_total - $deduciones;    
+    
       $this->validate($request, [
             'id_factura' => 'required',
             'fecha_vencimiento' => 'required',
@@ -87,17 +95,24 @@ class CarteraController extends Controller
 
     public function reportebuscar($factura){
                 $carteras = Cartera::where('id_factura',$factura)->get();
+        if (count($carteras) > 0) {// verificar si existe  la cartera
                 $abonos = Abonos::where('id_factura',$factura)->get();
                 $facturas = Factura::where('id',$factura)->get();
-
                 $abonostotal = 0;
-                 foreach ($abonos as $abono) {
-                     $abonostotal = $abono->valor_abono + $abonostotal;
-                  } 
+                if (count($abonos) > 0) { // verificar si existe abonos a la cartera
 
-                  $abonostotal = $abonostotal + $carteras[0]->valor_abono;
-              
-                     $cartera_tbody = "";
+                    foreach ($abonos as $abono) {//recoremos toda la tabla abonos
+                     $abonostotal = $abono->valor_abono + $abonostotal;
+                    } 
+
+                    $abonostotal = $abonostotal + $carteras[0]->valor_abono;
+                }
+                else{
+
+                    $abonostotal = $carteras[0]->valor_abono;  
+                }
+
+                    $cartera_tbody = "";
                     foreach ($carteras as $cartera) {
                              $cartera_tbody .= "<tr>
                             <td class='text-center'><a href='/facturas/$cartera->id_factura' target='_blank'>$cartera->id_factura</a></td> 
@@ -120,12 +135,15 @@ class CarteraController extends Controller
                         'cartera_tbody' => $cartera_tbody
                                             ]);
                     }       
-                    else {
+                    
+        }
+        else {
                             return response()->json([
                              'error' => 'No hay cartera con esa factura']);
                     }              
 
     }
+    //========Fin Reporte cartera============//
 
 
     /**
@@ -162,7 +180,7 @@ class CarteraController extends Controller
           $carteras->valor_retencion = $request->valor_retencion;
             $carteras->save();
             flash('La cartera ha sido actualizada Correctamente!');
-        return Redirect::to("/reportes/carteras");
+        return Redirect::to("/cartera/editar");
     }
 
     /**
