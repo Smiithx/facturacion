@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-    <h3 class="text-center">Cartera</h3>
+    <h3 class="text-center">Crear Cartera</h3>
     <hr>
     <form method="POST" action="/cartera">
         <div class="form-group col-xs-12 col-md-3 col-lg-3">

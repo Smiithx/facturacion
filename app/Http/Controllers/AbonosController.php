@@ -145,7 +145,26 @@ class AbonosController extends Controller
      */
     public function update(Request $request, $id)
     {
-       dd("entro a update");
+       $abonos = Abonos::findOrFail($id);      
+       $carteras = Cartera::where('id_factura',$request->id_factura)->get();
+       $saldo = $carteras[0]->valor_saldo; //saco el saldo actual
+            if($saldo >=1 ){                
+                 $saldo_sin_abono = $saldo + $abonos->valor_abono;//le sumo el valor de abono viejo
+                 $saldo_con_abono = $saldo_sin_abono - $request->valor_abono;//le resto el valor de abono nuevo                 
+
+                    $carteras = Cartera::findOrFail($carteras[0]->id);
+                    $carteras->valor_saldo = $saldo_con_abono;//actualizamos el saldo
+                    $carteras->save();
+
+                    $abonos->fill($request->all());//actualizamos el abono
+                    $abonos->save();
+                    flash('El abono ha sido actualizado con Exito');
+                    return Redirect::to("/abonos");
+            }
+            else{
+                flash('Ya esta factura fue cancelada, Verifique!');
+                return Redirect::to("/abonos");
+            }
     }
 
     /**

@@ -105,11 +105,11 @@ class CarteraController extends Controller
                      $abonostotal = $abono->valor_abono + $abonostotal;
                     } 
 
-                    $abonostotal = $abonostotal + $carteras[0]->valor_abono;
+                    
                 }
                 else{
 
-                    $abonostotal = $carteras[0]->valor_abono;  
+                    $abonostotal = 0;  
                 }
 
                     $cartera_tbody = "";
@@ -118,6 +118,7 @@ class CarteraController extends Controller
                             <td class='text-center'><a href='/facturas/$cartera->id_factura' target='_blank'>$cartera->id_factura</a></td> 
                             <td>". number_format($facturas[0]->factura_total, 2) ."</td>
                             <td>". number_format($cartera->valor_glosa, 2) ."</td>
+                            <td>".number_format($cartera->valor_abono, 2)."</td>
                             <td>". number_format($abonostotal, 2) ."</td>
                             <td>". number_format($cartera->valor_retencion, 2) ."</td>
                             <td>". number_format($cartera->valor_saldo, 2) ."</td>
@@ -172,15 +173,21 @@ class CarteraController extends Controller
     {
       
        $this->validate($request,[
-             'valor_abono' => 'required',
+            'valor_abono' => 'required',
             'valor_retencion' => 'required'
         ]);
-          $carteras = Cartera::findOrFail($request->id);
-          $carteras->valor_abono = $request->valor_abono;
-          $carteras->valor_retencion = $request->valor_retencion;
+            $carteras = Cartera::where('id',$request->id)->get();
+            $saldo = $carteras[0]->valor_saldo;//valor_saldo
+            $abono_inicial = $carteras[0]->valor_abono;//abono inicial
+            $saldo_sin_abono_inicial = $saldo + $abono_inicial;//sumar a saldo el abono_inicial
+            $saldo_con_nuevo_abono = $saldo_sin_abono_inicial - $request->valor_abono;//restamos al saldo el nuevo abono
+            $carteras = Cartera::findOrFail($request->id);//buscamos la carter a editar
+            $carteras->valor_abono = $request->valor_abono;
+            $carteras->valor_retencion = $request->valor_retencion;
+            $carteras->valor_saldo = $saldo_con_nuevo_abono; 
             $carteras->save();
             flash('La cartera ha sido actualizada Correctamente!');
-        return Redirect::to("/cartera/editar");
+            return Redirect::to("/cartera/editar");
     }
 
     /**
