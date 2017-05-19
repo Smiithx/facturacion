@@ -21,20 +21,22 @@ Route::resource('Aseguradora', 'AseguradoraController');
 Route::resource('abonos', 'AbonosController', ['only' => ['store','destroy','update','show','index']]);
 Route::get('abonos/create/{id}','AbonosController@create');
 
-
 //----- Servicios ----- //
-Route::resource('Servicios', 'ServiciosController', ['only' => ['create','store','destroy','update']]);
+Route::resource('servicios', 'ServiciosController');
 Route::get('servicios/cups/{cups}/{contrato}','ServiciosController@cups');
 Route::post('Servicios/buscar','ServiciosController@buscar');
 
 //----- Contratos ----- //
-Route::resource('Contratos', 'ContratosController', ['only' => ['create','store','destroy','update']]);
+Route::resource('contratos', 'ContratosController');
 Route::post('Contratos/buscar','ContratosController@buscar');
 
 //----- Manuales ----- //
-Route::resource('Manuales', 'ManualesController', ['only' => ['create','store','destroy','update']]);
+Route::resource('manuales', 'ManualesController');
 Route::post('Manuales/buscar','ManualesController@buscar');
 Route::get('manuales/{cups}/{contrato}','ManualesController@cups');
+
+//----- Manuales servicios ----- //
+Route::resource('manuales.servicios', 'ManualServiciosController');
 
 //----- Pacientes ----- //
 Route::resource('pacientes', 'PacienteController');
@@ -71,7 +73,6 @@ Route::get('cartera/reporte/{factura}', 'CarteraController@reportefactura');
 Route::get('cartera/buscar/{factura}', 'CarteraController@reportebuscar');
 Route::post('cartera/update', 'CarteraController@update');
 
-
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store','edit','destroy','update']]);
 Route::get('glosas/buscar/{factura}/{contrato}', 'GlosasController@buscar');
@@ -84,7 +85,6 @@ Route::resource('reportes', 'ReportesController', ['only' => ['index']]);
 Route::get('reportes/glosas','ReportesController@reporteglosas');
 Route::get('reportes/carteras','ReportesController@reportecarteras');
 
-    
 Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
 Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
 
@@ -105,23 +105,15 @@ Route::resource('administracion', 'AdministracionController', ['only' => ['index
 Route::get('administracion/usuarios', 'AdministracionController@usuarios');
 Route::get('administracion/usuarios/create', 'AdministracionController@createusuario');
 Route::get('administracion/usuarios/{id}/edit', 'AdministracionController@editusuarios');
-Route::get('administracion/servicios', 'AdministracionController@servicios');
-Route::get('administracion/servicios/create', 'AdministracionController@createservicio');
-Route::get('administracion/servicios/{id}/edit', 'AdministracionController@editservicio');
 Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
 Route::get('administracion/aseguradoras/{id}/edit', 'AdministracionController@editaseguradora');
-Route::get('administracion/contratos', 'AdministracionController@contratos');
-Route::get('administracion/contratos/{id}/edit', 'AdministracionController@editcontratos');
-Route::get('administracion/contratos/create', 'AdministracionController@createcontratos');
+
 Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
 Route::get('administracion/diagnosticos/{id}/edit', 'AdministracionController@editdiagnosticos');
 Route::get('administracion/diagnosticos/create', 'AdministracionController@creatediagnosticos');
-Route::get('administracion/manuales', 'AdministracionController@manuales');
-Route::get('administracion/manuales/{id}/edit', 'AdministracionController@editmanuales');
-Route::get('administracion/manuales/create', 'AdministracionController@createmanuales');
 
 //----- Empresa ----- //
-Route::resource('Empresa', 'EmpresaController', ['only' => ['create','store','destroy','update']]);
+Route::resource('empresa', 'EmpresaController');
 
 //----- Diagnosticos ----- //
 Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','store','destroy','update']]);

@@ -7,7 +7,7 @@ use App\Manuales;
 
 class Servicios extends Model
 {
-     protected $table = 'servicios';
+    protected $table = 'servicios';
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +21,18 @@ class Servicios extends Model
         'id'
     ];
 
-
-    public function manuales(){
-        return $this->hasMany(Manuales::class);
+    public function scopeCups($query,$cup){
+        if(trim($cup) != ""){
+            $query->where('cups',"LIKE","%$cup%");
+        }
     }
+
+    public function scopeManualCups($query,$cup, $manual){
+        $query->selectRaw('servicios.cups,servicios.descripcion,manuales_servicios.*')
+            ->join("manuales_servicios","manuales_servicios.id_servicio","=","servicios.id")
+            ->where("manuales_servicios.id_manual",$manual)
+            ->where('servicios.cups',"LIKE","%$cup%")
+            ->orderBy("servicios.cups");
+    }
+
 }

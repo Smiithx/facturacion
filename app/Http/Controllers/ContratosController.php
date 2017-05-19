@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contratos;
+use App\Manuales;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -16,9 +17,11 @@ class ContratosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $contratos = Contratos::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate();
+        $datos = ['contratos' => $contratos];
+        return view("administracion.contratos.index",$datos);
     }
 
     /**
@@ -28,7 +31,9 @@ class ContratosController extends Controller
      */
     public function create()
     {
-        //
+        $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get();
+        $manuales = ['manuales' => $manuales];       
+        return view('administracion.contratos.create',$manuales);
     }
 
     public function buscar(Request $request)
@@ -50,18 +55,17 @@ class ContratosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nombre' => 'required|max:255',
+            'nombre' => 'required|max:255|unique:contratos,nombre',
             'nit' => 'required',
-            'diasvencimiento' => 'required|integer|min:1',
-            'id_manual' => 'required',
-            'porcentaje' => 'required|integer|min:1',
+            'diasvencimiento' => 'required|integer|min:0',
+            'id_manual' => 'required|exists:manuales,id',
+            'porcentaje' => 'required|numeric|min:0',
             'estado' => 'required'
-
         ]);
         $contrato = Contratos::create($request->all());
 
-        Session::flash('message', $contrato->contrato . ' Fue Creada con exito');
-        return Redirect::to('administracion/contratos');
+        flash("EL contrato #<a href='/contratos/$contrato->id/edit' target='_blank'>$contrato->id</a> ha sido creado con éxito!")->success();
+        return Redirect::to('/contratos');
     }
 
     /**
@@ -83,7 +87,9 @@ class ContratosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get(); 
+        $contrato = Contratos::findOrFail($id);        
+        return view('administracion.contratos.edit',compact('contrato','manuales'));
     }
 
     /**
@@ -95,12 +101,37 @@ class ContratosController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $contratos = Contratos::findOrFail($id);
-        $contratos->fill($request->all());
-        $contratos->save();
-        Session::flash('message', ' Fue actualizado con exito');
-        return Redirect::to('administracion/contratos');
+        $contrato = Contratos::findOrFail($id);
+        if(isset($request->nombre)){
+            if($contrato->nombre != $request->nombre){
+                $this->validate($request, [
+                    'nombre' => 'required|max:255|unique:contratos,nombre',
+                    'nit' => 'required',
+                    'diasvencimiento' => 'required|integer|min:0',
+                    'id_manual' => 'required|exists:manuales,id',
+                    'porcentaje' => 'required|numeric|min:0',
+                    'estado' => 'required'
+                ]);
+            }else{
+                $this->validate($request, [
+                    'nit' => 'required',
+                    'diasvencimiento' => 'required|integer|min:0',
+                    'id_manual' => 'required|exists:manuales,id',
+                    'porcentaje' => 'required|numeric|min:0',
+                    'estado' => 'required'
+                ]);
+            }
+        }else{
+            $this->validate($request, [
+                'nombre' => 'required|max:255|unique:contratos,nombre'
+            ]);
+        }
+        
+        $contrato->fill($request->all());
+        $contrato->save();
+        
+        flash("EL contrato #<a href='/contratos/$contrato->id/edit' target='_blank'>$contrato->id</a> ha sido modificado con éxito!")->success();
+        return Redirect::to('/contratos');
     }
 
     /**
@@ -111,9 +142,9 @@ class ContratosController extends Controller
      */
     public function destroy($id)
     {
-        $contratos = Contratos::findOrFail($id);
-        $contratos->delete();
-        Session::flash('message', $contratos->id . ' fue eliminado con Exito');
-        return Redirect::to('administracion/contratos');
+        $contrato = Contratos::findOrFail($id);
+        $contrato->delete();
+        flash("EL contrato #$id ha sido eliminado con éxito!")->success();
+        return Redirect::to('/contratos');
     }
 }

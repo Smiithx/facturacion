@@ -19,17 +19,30 @@ class Contratos extends Model
      * @var array
      */
     protected $fillable = [
-    'contrato',
-    'nombre',
-    'nit',
-    'diasvencimiento',
-    'id_manual',
-    'porcentaje',
-    'estado'
+        'id',
+        'contrato',
+        'nombre',
+        'nit',
+        'diasvencimiento',
+        'id_manual',
+        'porcentaje',
+        'estado'
     ];
 
     public function manuales(){
         return $this->belongsTo(Manuales::class);
     }
-   
+
+    public function scopeNombre($query,$nombre){
+        if(trim($nombre) != ""){
+            $query->where('nombre',"LIKE","%$nombre%");
+        }
+    }
+    
+    public function getIdManualAttribute($value)
+    {
+        return Manuales::find($value);
+    }
+
+
 }

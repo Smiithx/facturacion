@@ -15,20 +15,18 @@ class Manuales extends Model
      * @var array
      */
     protected $fillable = [
-        'tipomanual', 
-        'servicios_id',    
-        
-        'codigosoat', 
-        'costo', 
-        'estado'
-    
-    
+        'id', 
+        'tipo',    
+        'codigosoat',
+        'estado',
+        'created_at',
+        'updated_at'
     ];
 
-     public function servicios(){
-        return $this->belongsTo(Servicios::class);
+    public function scopeSoat($query,$soat){
+        if(trim($soat) != ""){
+            $query->where('codigosoat',"LIKE","%$soat%");
+        }
     }
-    public function contratos(){
-        return $this->hasMany(Contratos::class);
-    }
+
 }

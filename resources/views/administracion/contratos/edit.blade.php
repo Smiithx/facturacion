@@ -1,37 +1,53 @@
 @extends('administracion.index')
+
+@section('menu')
+
+@include('administracion.partials.menu',["pagina" => "Editar contrato #$contrato->id", "seccion" => "contrato"])
+
+@endsection
+
 @section('administracion')
-    <div>
-        <h3 class="text-center">Editar Contrato: {{ $contratos->id }}</h3>
-        <hr>
-        {!! Form::model($contratos, ['route' => ['Contratos.update',$contratos->id], 'method' => 'put']) !!}
 
-        {!! Form::label('nombre','Nombre')   !!}
-        {!! Form::text('nombre',null,['class' => 'form-control'])!!}
+{!! Form::model($contrato, ['route' => ['contratos.update',$contrato->id], 'method' => 'put']) !!}
 
-        {!! Form::label('nit','Nit')   !!}
-        {!! Form::text('nit',null,['class' => 'form-control', 'step' =>'0.01'])!!}
+<div class="form-group">
+    {!! Form::label('nombre','Nombre')   !!}
+    {!! Form::text('nombre',null,['class' => 'form-control'])!!}
+</div>
 
+<div class="form-group">
+    {!! Form::label('nit','NIT')   !!}
+    {!! Form::text('nit',null,['class' => 'form-control'])!!}
+</div>
 
-        {!! Form::label('diasvencimiento',' Dia de Vencimiento')   !!}
-        {!! Form::text('diasvencimiento',null,['class' => 'form-control', 'step' =>'0.01'])!!}
+<div class="form-group">
+    {!! Form::label('diasvencimiento','Dias de vencimiento')   !!}
+    {!! Form::text('diasvencimiento',null,['class' => 'form-control', 'step' =>'1', 'type' => 'number', 'min' => '0'])!!}
+</div>
 
+<div class="form-group">
+    <label for="id_manual">Manual</label>
+    <select class="form-control" id="id_manual" required name="id_manual" >
+        @foreach ($manuales as $manual)
+        <option value="{{$manual->id}}" {{old('id_manual')  == $manual->id ?"selected":""}}>{{$manual->codigosoat}}</option>
+        @endforeach
+    </select>
+</div>
 
+<div class="form-group">
+    {!! Form::label('porcentaje','Porcentaje')   !!}
+    {!! Form::text('porcentaje',null,['class' => 'form-control', 'step' =>'0.01', 'type' => 'number', 'min' => '0'])!!}
+</div>
 
-        {!! Form::label('id_manual','Manual Tarif')   !!}
-        {!! Form::select('servicios_id', $manuales, null, ['class' => 'form-control']) !!}
+<div class="form-group">
+    {!! Form::label('estado','Estado')   !!}
+    {!! Form::select('estado',['Activo' => 'Activo', 'Inactivo' => 'Inactivo'],null,['class' => 'form-control'])   !!}
+</div>
 
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+</div>
 
+{!! Form::close() !!}
 
-        {!! Form::label('porcentaje','Porcentaje')   !!}
-        {!! Form::text('porcentaje',null,['class' => 'form-control', 'step' =>'0.01'])!!}
-
-
-        {!! Form::label('estado','Estado')   !!}
-        {!! Form::select('estado',['Activo' => 'Activo', 'Inactivo' => 'Inactivo'],null,['class' => 'form-control'])   !!}
-
-        <br>
-        <button type="submit" class="btn btn-primary pull-right col-xs-3">Actualizar</button>
-
-        {!! Form::close() !!}
-    </div>
 @stop

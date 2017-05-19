@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contratos;
+use App\Aseguradora;
 use Illuminate\Http\Request;
 use App\Servicios;
 use App\Http\Requests;
@@ -18,11 +19,11 @@ class ServiciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $servicios = Aseguradora::paginate(5);
-        $servicios = ['servicios' => $servicios];
-        return view("administracion.servicios", $servicios);
+        $servicios = Servicios::cups($request->get('cup'))->orderBy('id', 'DES')->paginate();
+        $datos = ['servicios' => $servicios];       
+        return view("administracion.servicios.index",$datos);
     }
 
 
@@ -33,7 +34,7 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        //
+        return view('administracion.servicios.create');
     }
 
     public function buscar(Request $request)
@@ -55,17 +56,14 @@ class ServiciosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'cups' => 'required|max:255',
+            'cups' => 'required|max:255|unique:servicios,cups',
             'descripcion' => 'required|max:255',
             'estado' => 'required'
         ]);
         $servicio = Servicios::create($request->all());
-        $servicios = Servicios::all();
-        $datos = ['servicios' => $servicios];
 
-
-        Session::flash('message', $servicio->descripcion . ' Fue creada con exito');
-        return Redirect::to('administracion/servicios');
+        flash("EL servicio #<a href='/servicios/$servicio->id/edit' target='_blank'>$servicio->id</a> ha sido creado con éxito!")->success();
+        return Redirect::to('/servicios');
     }
 
     /**
@@ -87,7 +85,8 @@ class ServiciosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $servicio = Servicios::findOrFail($id);        
+        return view('administracion.servicios.edit',compact('servicio'));
     }
 
     /**
@@ -99,13 +98,31 @@ class ServiciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $servicios = Servicios::findOrFail($id);
+        $servicio = Servicios::findOrFail($id);
 
-        $servicios->fill($request->all());
-        $servicios->save();
-        Session::flash('message', $servicios->descripcion . ' Fue actualizado con exito');
-        return Redirect::to('administracion/servicios');
+        if(isset($request->cups)){
+            if($servicio->cups != $request->cups){
+                $this->validate($request, [
+                    'cups' => 'required|max:255|unique:servicios,cups',
+                    'descripcion' => 'required|max:255',
+                    'estado' => 'required'
+                ]);
+            }else{
+                $this->validate($request, [
+                    'descripcion' => 'required|max:255',
+                    'estado' => 'required'
+                ]);
+            }
+        }else{
+            $this->validate($request, [
+                'cups' => 'required|max:255'
+            ]);
+        }
 
+        $servicio->fill($request->all());
+        $servicio->save();
+        flash("EL servicio #<a href='/servicios/$servicio->id/edit' target='_blank'>$servicio->id</a> ha sido modificado con éxito!")->success();
+        return Redirect::to('/servicios');
     }
 
     /**
@@ -118,8 +135,8 @@ class ServiciosController extends Controller
     {
         $servicios = Servicios::findOrFail($id);
         $servicios->delete();
-        Session::flash('message', $servicios->descripcion . ' fue eliminado con éxito');
-        return Redirect::to('administracion/servicios');
+        flash("EL servicio #$id ha sido eliminado con éxito!")->success();
+        return Redirect::to('/servicios');
 
     }
 

@@ -12,10 +12,11 @@ class Cartera extends Migration
      */
     public function up()
     {
-  
-    Schema::create('cartera', function (Blueprint $table) {
+
+        Schema::create('cartera', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_factura');
+            $table->integer('id_factura')->unsigned();
+            $table->foreign('id_factura')->references('id')->on('facturas');
             $table->date('fecha_vencimiento');
             $table->decimal('valor_abono', 42, 2);
             $table->decimal('valor_glosa', 42, 2);

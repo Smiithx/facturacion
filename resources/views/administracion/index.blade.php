@@ -1,38 +1,12 @@
 @extends('layouts.layout')
 @section('content')
 
-<div class="" >
-		    <div class="container-fluid">
-		    <div  class="col-sm-12">
-		        <h3 class="text-center">&nbsp</h3>
-		        
-		        <div class="col-xs-3">
-		            <!-- required for floating -->
-		            <!-- Nav tabs -->
-		            <ul class="nav nav-tabs tabs-left">
-		              <li class="link"><a href="/administracion">Datos de la empresa</a></li>
-		              <li class=" link"><a href="/administracion/usuarios">Usuarios</a></li>
-		              <li class=" link"><a href="/administracion/servicios">Tipos de Servicios</a></li>
-		              <li class=" link"><a href="/administracion/aseguradoras">Aseguradoras</a></li>
-		              <li class="link"><a href="/administracion/contratos">Contratos</a></li>
-		              <li class="link"><a href="/administracion/manuales">Manuales</a></li>	
-		              <li class="link"><a href="/administracion/diagnosticos">Diagnosticos</a></li>
-		             
-		                
-		            </ul>
-		        </div>
-		        <div class="col-xs-9">
-		            <!-- Tab panes -->
-		            <div class="tab-content">
-		                
- @yield('administracion')		               
-  </div>
-		            </div>
-		        </div>
-		        <div class="clearfix"></div>
-		    </div>
-    		</div>
-		
+@section('menu')
 
-
+@show
+<div class="col-xs-9">
+    <!-- Tab panes -->
+    @yield('administracion')
+</div>
+<hr class="clear">
 @endsection

@@ -1,51 +1,50 @@
 @extends('administracion.index')
-@section('administracion')
-<div>
-    <h3 class="text-center">Manuales</h3>
 
-    @if (Session::has('message'))
-    <p class="alert alert-success">{{Session::get('message')}}</p>
-    @endif
-    <a title="Agregar" href="/administracion/manuales/create"  class="btn btn-primary pull-right servicios">Nuevo</a>
-    <br>
-    <br>
-    <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_manuales">
-        <thead style="color:#fff; background: #3b5998;">
-            <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Tipo de manual</th>
-                <th class="text-center">Cups</th>
-                <th class="text-center">Código soat</th>
-                <th class="text-center">Costo</th>
-                <th class="text-center">Estado</th>
-                <th class="text-center">Acción</th>
-            </tr>
-        </thead>
-        <form action="/Manuales/buscar" method="POST">
+@section('menu')
+
+@include('administracion.partials.menu',["pagina" => "Manuales", "seccion" => "manual"])
+
+@endsection
+
+@section('administracion')
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover" id="tabla_manuales">
+        <caption class="text-center">
+            {!! Form::open(['route' => 'manuales.index', 'method' => 'GET', 'class' => 'container-fluid text-left', 'role' => 'search']) !!}
             <div class="input-group">
-                <input type="text-center" placeholder="Codigo Soat"  class="form-control" name="nombre" >
+                {!! Form::text('soat',null, ['class' => 'form-control', 'placeholder' => 'Codigo soat']) !!}
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
-                {{ csrf_field() }}
+                <span class="input-group-btn">
+                    <a title="Agregar" href="/manuales/create"  class="btn btn-primary servicios">Nuevo</a>
+                </span>
             </div>
+            {!! Form::close() !!}
             <br>
-        </form>
-        <tbody>
-
-            @foreach($manuales as $manuale)
+        </caption>
+        <thead>
             <tr>
-                <td class="text-center">{{ $manuale->id }}</td>
-                <td>{{ $manuale->tipomanual }}</td>
-                <td class="text-center">{{ $manuale->cups}}</td>
-                <td>{{ $manuale->codigosoat }}</td>
-                <td class="text-right">{{ $manuale->costo }}</td>
-                <td class="text-center">{{ $manuale->estado }}</td>
+                <th class="text-center">#</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">SOAT</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($manuales as $manual)
+            <tr>
+                <td class="text-center"><a href="/manuales/{{ $manual->id }}">{{ $manual->id }}</a></td>
+                <td>{{ $manual->tipo }}</td>
+                <td>{{ $manual->codigosoat }}</td>
+                <td class="text-center">{{ $manual->estado }}</td>
                 <td class="acciones"> 
-                    <a href="/administracion/manuales/{{$manuale->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
-                        <i class='glyphicon glyphicon-edit'></i></a>
-
-                    {!! Form::open(['route' => ['Manuales.destroy', $manuale->id], 'method' => 'delete']) !!}
+                    <a href="/manuales/{{$manual->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
+                        <i class='glyphicon glyphicon-edit'></i>
+                    </a>
+                    {!! Form::open(['route' => ['manuales.destroy', $manual->id], 'method' => 'delete']) !!}
                     <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar' target="_blank">
                         <i class='glyphicon glyphicon-remove'></i>
                     </button>
@@ -53,11 +52,9 @@
             </tr>
             @endforeach
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="7" class="text-center">{!! $manuales->render() !!}</td>
-            </tr>
-        </tfoot>
     </table>
+    <div class="container-fluid text-center">
+        {!! $manuales->render() !!}
+    </div>
 </div>
 @stop

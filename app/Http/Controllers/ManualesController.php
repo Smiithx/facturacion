@@ -17,19 +17,22 @@ class ManualesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $manuales = Manuales::soat($request->get('soat'))->orderBy('id', 'DES')->paginate();
+        $manuales = ['manuales' => $manuales];
+        return view("administracion.manuales.index",$manuales);
     }
 
-      public function buscar(Request $request)
+    public function buscar(Request $request)
     {
-            if(trim($request) != ""){    
-              $manuales = Manuales::where('codigosoat',"LIKE","%$request->nombre%")
-                 ->get();
-                $datos = ['manuales' => $manuales];
-               return view("administracion.manuales.index",$datos);
-    }   }
+        if(trim($request) != ""){    
+            $manuales = Manuales::where('codigosoat',"LIKE","%$request->nombre%")
+                ->get();
+            $datos = ['manuales' => $manuales];
+            return view("administracion.manuales.index",$datos);
+        }
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -37,8 +40,8 @@ class ManualesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    { 
+        return view('administracion.manuales.create');
     }
 
     /**
@@ -49,21 +52,15 @@ class ManualesController extends Controller
      */
     public function store(Request $request)
     {
-
-
-         $this->validate($request, [
-            'tipomanual' => 'required',
-            'servicios_id' => 'required',
-            'tipomanual' => 'required',
+        $this->validate($request, [
+            'tipo' => 'required',
             'codigosoat' => 'required',
-            'costo' => 'required|numeric|min:0.01',
             'estado' => 'required'            
         ]);
         $manual = Manuales::create($request->all());
-         
-   
-        Session::flash('message',' Fue creada con exito');
-        return Redirect::to('administracion/manuales');
+
+        flash("EL manual #<a href='/manuales/$manual->id/edit' target='_blank'>$manual->id</a> ha sido creado con éxito!")->success();
+        return Redirect::to('/manuales');
     }
 
     /**
@@ -72,9 +69,12 @@ class ManualesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        //
+        $manual = Manuales::findOrFail($id);
+        $servicios = Servicios::manualCups($request->get('cup'),$id)
+            ->paginate();
+        return view('administracion.manuales.show',compact('manual','servicios'));
     }
 
     /**
@@ -85,7 +85,8 @@ class ManualesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $manual = Manuales::findOrFail($id);
+        return view('administracion.manuales.edit',["manual" => $manual]);
     }
 
     /**
@@ -97,13 +98,13 @@ class ManualesController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $manuales = Manuales::findOrFail($id);
+        $manual = Manuales::findOrFail($id);
 
-        $manuales->fill($request->all());
-        $manuales->save();
-        Session::flash('message',' Fue actualizado con exito');
-        return Redirect::to('administracion/manuales');
+        $manual->fill($request->all());
+        $manual->save();
 
+        flash("EL manual #<a href='/manuales/$manual->id/edit' target='_blank'>$manual->id</a> ha sido modificado con éxito!")->success();
+        return Redirect::to('/manuales');
     }
 
     /**
@@ -114,10 +115,11 @@ class ManualesController extends Controller
      */
     public function destroy($id)
     {
-         $manuales = Manuales::findOrFail($id);
+        $manuales = Manuales::findOrFail($id);
         $manuales->delete();
-        Session::flash('message',$manuales->id.' fue eliminado con Exito');
-        return Redirect::to('administracion/manuales');
+
+        flash("EL manual #$id ha sido eliminado con éxito!")->success();
+        return Redirect::to('/manuales');
     }
 
     public function cups($cups,$contrato){

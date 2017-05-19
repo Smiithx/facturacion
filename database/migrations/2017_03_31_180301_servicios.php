@@ -12,9 +12,9 @@ class Servicios extends Migration
      */
     public function up()
     {
-       Schema::create('servicios', function (Blueprint $table) {
+        Schema::create('servicios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cups',50);
+            $table->string('cups',50)->unique();
             $table->string('descripcion',50);
             $table->enum('estado', array('Activo','Inactivo'));   
             $table->timestamps();
@@ -28,7 +28,6 @@ class Servicios extends Migration
      */
     public function down()
     {
-                Schema::drop('servicios');
-//
+        Schema::drop('servicios');
     }
 }

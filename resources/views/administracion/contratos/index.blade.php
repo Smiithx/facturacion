@@ -1,67 +1,68 @@
 @extends('administracion.index')
-@section('administracion')
-    <div>
-        <h3 class="text-center">Contratos</h3>
 
-        @if (Session::has('message'))
-            <p class="alert alert-success">{{Session::get('message')}}</p>
-        @endif
-        <a title="Agregar" href="/administracion/contratos/create"
-           class="btn btn-primary pull-right servicios">Nuevo</a>
-        <br>
-        <br>
-        <table class="table table-striped table-bordered table-hover table-responsive">
-            <thead style="color:#fff; background: #3b5998;">
+@section('menu')
+
+@include('administracion.partials.menu',["pagina" => "Contratos", "seccion" => "contrato"])
+
+@endsection
+
+@section('administracion')
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <caption class="text-center">
+            {!! Form::open(['route' => 'contratos.index', 'method' => 'GET', 'class' => 'container-fluid text-left', 'role' => 'search']) !!}
+            <div class="input-group">
+                {!! Form::text('nombre',null, ['class' => 'form-control', 'placeholder' => 'Nombre del contrato']) !!}
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">Buscar</button>
+                </span>
+                <span class="input-group-btn">
+                    <a title="Agregar" href="/contratos/create"  class="btn btn-primary servicios">Nuevo</a>
+                </span>
+            </div>
+            {!! Form::close() !!}
+            <br>
+        </caption>
+        <thead>
             <tr>
+                <th class="text-center">#</th>
                 <th class="text-center">Nombre</th>
-                <th class="text-center">Nit</th>
-                <th class="text-center">Dias Venci.</th>
-                <th class="text-center">Manual Tarif.</th>
+                <th class="text-center">NIT</th>
+                <th class="text-center">Días V.</th>
+                <th class="text-center">Manual.</th>
                 <th class="text-center">Porcentaje</th>
                 <th class="text-center">Estado</th>
                 <th class="text-center">Acciones</th>
             </tr>
-            </thead>
-            <form action="/Contratos/buscar" method="POST">
-                <div class="input-group">
-                    <input type="text-center" placeholder="Contrato" class="form-control" name="nombre">
-                    <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default">Buscar</button>
-                </span>
-                    {{ csrf_field() }}
-                </div>
-                <br>
-            </form>
-            <tbody>
+        </thead>
+        <tbody>
             @foreach($contratos as $contrato)
-                <tr>
-                    <td>{{ $contrato->nombre }}</td>
-                    <td>{{ $contrato->nit}}</td>
-                    <td class="text-center">{{ $contrato->diasvencimiento }}</td>
-                    <td>{{ $contrato->codigosoat }}</td>
-                    <td class="text-center">{{ $contrato->porcentaje }}%</td>
-                    <td class="text-center">{{ $contrato->estado }}</td>
-                    <td class="acciones">
-                        <a href="/administracion/contratos/{{$contrato->id}}/edit" class="btn btn-success"
-                           data-toggle='tooltip' title='Editar'>
-                            <i class='glyphicon glyphicon-edit'></i>
-                        </a>
-
-                        {!! Form::open(['route' => ['Contratos.destroy', $contrato->id], 'method' => 'delete']) !!}
-                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'
-                                target="_blank">
-                            <i class='glyphicon glyphicon-remove'></i>
-                        </button>
-                        {!! Form::close() !!}
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-            <tfoot>
             <tr>
-                <td colspan="8" class="text-center">{!! $contratos->render() !!}</td>
+                <td class="text-center">{{ $contrato->id }}</td>
+                <td>{{ $contrato->nombre }}</td>
+                <td>{{ $contrato->nit}}</td>
+                <td class="text-center">{{ $contrato->diasvencimiento }}</td>
+                <td>{{ $contrato->id_manual->codigosoat }}</td>
+                <td class="text-center">{{ $contrato->porcentaje }}%</td>
+                <td class="text-center">{{ $contrato->estado }}</td>
+                <td class="acciones">
+                    <a href="/contratos/{{$contrato->id}}/edit" class="btn btn-success"
+                       data-toggle='tooltip' title='Editar'>
+                        <i class='glyphicon glyphicon-edit'></i>
+                    </a>
+                    {!! Form::open(['route' => ['contratos.destroy', $contrato->id], 'method' => 'delete']) !!}
+                    <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'
+                            target="_blank">
+                        <i class='glyphicon glyphicon-remove'></i>
+                    </button>
+                    {!! Form::close() !!}
+                </td>
             </tr>
-            </tfoot>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="container-fluid text-center">
+        {!! $contratos->render() !!}
     </div>
+</div>
 @stop

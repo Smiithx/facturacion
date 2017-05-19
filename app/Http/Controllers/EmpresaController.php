@@ -23,12 +23,8 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-              $empresa = Empresa::find(1);
-
- return view('administracion.empresa.index',compact('empresa'));
-        
-        
-       
+        $empresa = Empresa::find(1);
+        return view('administracion.empresa.index',compact('empresa'));
     }
 
     /**
@@ -83,41 +79,35 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-//si esta instanciado el input file 2 hace este bloque que solo actualiza el logo
-if($request->hasFile('file')){
+        //si esta instanciado el input file 2 hace este bloque que solo actualiza el logo
+        if($request->hasFile('file')){
 
-        //obtenemos el campo file definido en el formulario
-       $file = $request->file('file');
- 
-       //obtenemos el nombre del archivo
-       $nombre = $file->getClientOriginalName();
- 
-       //indicamos que queremos guardar un nuevo archivo en el disco local
-       \Storage::disk('local')->put($nombre,  \File::get($file));
+            //obtenemos el campo file definido en el formulario
+            $file = $request->file('file');
 
-    
-       $empresa = Empresa::findOrFail($id);
-       $empresa->fill($request->all());
-       $empresa->file = $nombre;
-       $empresa->save();
-       Session::flash('message',' Empresa Fue actualizado con exito');
-        return Redirect::to('administracion');   
+            //obtenemos el nombre del archivo
+            $nombre = $file->getClientOriginalName();
 
+            //indicamos que queremos guardar un nuevo archivo en el disco local
+            \Storage::disk('local')->put($nombre,  \File::get($file));
 
-}
+            $empresa = Empresa::findOrFail($id);
+            $empresa->fill($request->all());
+            $empresa->file = $nombre;
+            $empresa->save();
+            flash("Los datos han sido actualizados con éxito!")->success();
+            return Redirect::to('/administracion');   
 
-    // del resto actualiza todo
-    else{
-          $empresa = Empresa::findOrFail($id);
-        
-        $empresa->fill($request->all());
-          $empresa->save();
-       Session::flash('message',' Empresa fue  actualizado con exito');
-    return Redirect::to('administracion');   
+        }
+        // del resto actualiza todo
+        else{
+            $empresa = Empresa::findOrFail($id);
 
-
-    }
-
+            $empresa->fill($request->all());
+            $empresa->save();
+            flash("Los datos han sido actualizados con éxito!")->success();
+            return Redirect::to('administracion');   
+        }
     }
 
     /**

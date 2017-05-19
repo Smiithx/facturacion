@@ -1,24 +1,34 @@
 @extends('administracion.index')
+
+@section('menu')
+
+@include('administracion.partials.menu',["pagina" => "Editar servicio #$servicio->id", "seccion" => "servicio"])
+
+@endsection
+
 @section('administracion')
-  <div>
-		            	
-		       <h3 class="text-center">Editar Servicio: {{ $servicios->nombre }}</h3>
-                 
-{!! Form::model($servicios, ['route' => ['Servicios.update',$servicios->id], 'method' => 'put']) !!}	
 
-                        {!! Form::label('cups','cups')   !!}
-                        {!! Form::text('cups',null,['class' => 'form-control'])!!} 
+{!! Form::model($servicio, ['route' => ['servicios.update',$servicio->id], 'method' => 'put']) !!}	
 
-                         {!! Form::label('descripcion','Descripcion')   !!}
-                         {!! Form::text('descripcion',null,['class' => 'form-control'])!!}
+<div class="form-group">
+    {!! Form::label('cups','cups')   !!}
+    {!! Form::text('cups',null,['class' => 'form-control',"required" => "required"])!!} 
+</div>
 
-                         
+<div class="form-group">
+    {!! Form::label('descripcion','Descripcion')   !!}
+    {!! Form::text('descripcion',null,['class' => 'form-control',"required" => "required"])!!}
+</div>
 
-                        {!! Form::label('estado','Estado')   !!}  
-                        {!! Form::select('estado',['Activo' => 'Activo', 'Inactivo' => 'Inactivo'],null,['class' => 'form-control'])   !!}   
-                         <br>          				
-		                	<button type="submit" class="btn btn-primary pull-right col-xs-3">Actualizar</button>	
-                     
-                        {!! Form::close() !!}
-                        
-		                </div> @stop
+<div class="form-group">
+    {!! Form::label('estado','Estado')   !!}  
+    {!! Form::select('estado',['Activo' => 'Activo', 'Inactivo' => 'Inactivo'],null,['class' => 'form-control',"required" => "required"])   !!}   
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Actualizar</button>	
+</div>        				
+
+{!! Form::close() !!}
+
+@stop

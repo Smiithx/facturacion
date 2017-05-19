@@ -18,8 +18,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $test = "hola como estas tu?";
-        $test = substr($test, 0, -2);
+        $test = csrf_token();
         dd($test);
     }
 
