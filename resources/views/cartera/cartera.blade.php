@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 <div class="col-sm-12">
-     <h3 class="text-center">cartera</h3>
+     <h3 class="text-center">Cartera</h3>
 
             <div class="form-group col-xs-12 col-md-3 col-lg-3">
              <label for="label">Factura</label>  
@@ -12,14 +12,14 @@
             <label for="">&nbsp</label>
             <button class="btn btn-success" id="btn_cartera_reporte_buscar" type="button">Buscar</button>
         </div>
-    <table style="width:100%;" class="table table-striped table-bordered table-hover" id="tabla_r4">
+    <table style="width:100%;font-size: 15px;" class="table tables-responsive table-striped table-bordered table-hover" id="tabla_r4">
         <thead style="color:#fff; background: #3b5998;">
             <tr>
 
                 <th class="text-center">Nº Factura</th>
                 <th class="text-center">Total Factura</th>
                 <th class="text-center">Valor Glosas</th>
-
+                <th class="text-center">Abono inicial</th>
                 <th class="text-center">Valor Abonos</th>
                 <th class="text-center">Valor Retencion</th>
                 <th class="text-center">Saldo</th>                          
@@ -33,8 +33,8 @@
     
     </table>    <br>
 <div class="form-group col-xs-12 text-right">
-        <a href="/reportes" class="btn btn-success">Regresar</a>
-        <button class="btn btn-primary hidden" id="reporte_factura_btn_imprimir">Imprimir</button>
+        <a href="/reportes" class="btn btn-danger">Regresar</a>
+        <button class="btn btn-primary " id="reporte_factura_btn_imprimir">Imprimir</button>
     </div>
 </div>
             <script src="{{asset('assets/js/cartera.js')}}"></script>

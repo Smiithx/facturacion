@@ -10,7 +10,7 @@
                  <thead style="color: #fff;">
 	                        <tr> 
 	                        <th class="text-center">Factura</th>
-                           <th class="text-center">Valor Abono</th>
+                           <th class="text-center">Abono Inicial</th>
 	                          <th class="text-center">Valor Retencion</th>
                             </tr>
                   </thead>
@@ -21,8 +21,8 @@
                             <td class='text-center'>
                             <a href='/facturas/{{ $cartera->id_factura }} ' target='_blank'>{{ $cartera->id_factura }} </a>
                             </td> <input type="hidden" name="id"  value="{{ $cartera->id }}">
-                            <td><input style='width: 100%;' type='number' step="0.00" name='valor_abono' value="{{ $cartera->valor_abono }}" required></td>
-                            <td><input style='width: 100%;' type='text'  value="{{ $cartera->valor_retencion }}" name='valor_retencion' required></td>
+                            <td><input class="form-control" style='width: 100%;' type='number' step="0.00" name='valor_abono' value="{{ $cartera->valor_abono }}" required></td>
+                            <td><input class="form-control" style='width: 100%;' type='text'  value="{{ $cartera->valor_retencion }}" name='valor_retencion' required></td>
                             </tr>
                             @endforeach
                       	</tbody>
