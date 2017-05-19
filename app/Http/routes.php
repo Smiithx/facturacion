@@ -18,8 +18,9 @@ Route::get('/','PacienteController@index');
 Route::resource('Aseguradora', 'AseguradoraController');
 
 //---Abonos--//
-Route::resource('abonos', 'AbonosController', ['only' => ['store','destroy','update','show','index']]);
+Route::resource('abonos', 'AbonosController', ['only' => ['store','destroy','update','show','index','edit']]);
 Route::get('abonos/create/{id}','AbonosController@create');
+
 
 
 //----- Servicios ----- //

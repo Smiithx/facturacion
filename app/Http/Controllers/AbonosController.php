@@ -21,26 +21,23 @@ class AbonosController extends Controller
      */
     public function index()
     {
-        //
+        return view("abonos.index");
     }
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-   
-     public function create($id)
+
+    public function create($id)
     {
+        $facturas = Factura::findOrFail($id); 
+        return view("abonos.create",compact('facturas'));
 
-
-   $facturas = Factura::findOrFail($id);         
-                
-            return view("abonos.create",compact('facturas'));
-
-   
     } 
-   
+
 
     /**
      * Store a newly created resource in storage.
@@ -50,29 +47,29 @@ class AbonosController extends Controller
      */
     public function store(Request $request){
 
-            $this->validate($request,['id_factura'=>'required','descripcion'=>'required','valor_abono'=>'required|numeric|min:0.01' ]);
-            $carteras = Cartera::where('id_factura',$request->id_factura)
-                ->get();//verifico que si ya la factura tiene cartera.
-         
+        $this->validate($request,['id_factura'=>'required','descripcion'=>'required','valor_abono'=>'required|numeric|min:0.01' ]);
+        $carteras = Cartera::where('id_factura',$request->id_factura)
+            ->get();//verifico que si ya la factura tiene cartera.
+
         if (count($carteras) >= 1) {          // si encuentra cartera
 
-                if($carteras[0]->valor_saldo >= 1){ //si el saldo es mayor que 0
+            if($carteras[0]->valor_saldo >= 1){ //si el saldo es mayor que 0
 
-                     $abonos = Abonos::create($request->all());// creo el abono
-                     $carteras = Cartera::where('id_factura',$request->id_factura)->get();//busco la cartera para actualizar el monto
-                     $saldo = $carteras[0]->valor_saldo - $request->valor_abono;//le resto al saldo de factura el valor del abono
-                     $carteras = Cartera::findOrFail($carteras[0]->id);//buscamo la cartera para actualizar
-                     $carteras->valor_saldo = $saldo;
-                     $carteras->save();                 
+                $abonos = Abonos::create($request->all());// creo el abono
+                $carteras = Cartera::where('id_factura',$request->id_factura)->get();//busco la cartera para actualizar el monto
+                $saldo = $carteras[0]->valor_saldo - $request->valor_abono;//le resto al saldo de factura el valor del abono
+                $carteras = Cartera::findOrFail($carteras[0]->id);//buscamo la cartera para actualizar
+                $carteras->valor_saldo = $saldo;
+                $carteras->save();                 
 
-                    flash('Abono fue creado con exito!');
-                    return Redirect::to('cartera/editar');
-                }
-                else{ //El saldo es igual que 0
+                flash('Abono fue creado con exito!');
+                return Redirect::to('cartera/editar');
+            }
+            else{ //El saldo es igual que 0
                 flash('la factura no tiene saldo pendiente!');
                 return Redirect::to('cartera/editar');
-                }
             }
+        }
         else{ //si no encuentro cartera envio un mensaje
 
             flash('la factura no tiene cartera!');
@@ -83,7 +80,7 @@ class AbonosController extends Controller
 
 
 
-   }
+    }
 
     /**
      * Display the specified resource.
@@ -93,7 +90,38 @@ class AbonosController extends Controller
      */
     public function show($id)
     {
-        //
+        // $abonos = Abonos::findOrFail($id);  
+        $abonos = Abonos::where('id_factura',$id)->get();
+        $abonos_tbody = "";
+
+            foreach ($abonos as $abono) {
+                $abonos_tbody .= "<tr>
+                            <td class='text-center'><a href='/facturas/$abono->id_factura' target='_blank'>$abono->id_factura</a></td> 
+                            <td>$abono->descripcion</td>
+                            <td>". number_format($abono->valor_abono, 2) ."</td>
+                            <td>$abono->created_at</td>
+                            <td><a style='float: left;' href='/abonos/$abono->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
+
+                            <form action='abonos/$abono->id' method='POST'>
+                                <input type='hidden' name='_method' value='DELETE'>
+                                <input type='hidden' name='_token' value='csrf_token()'>
+                                <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
+                                <i class='glyphicon glyphicon-remove'></i>
+                             </form>
+                            </td>
+                            </tr>";                            
+            }
+
+            if ($abonos_tbody != "") {
+                     return response()->json([
+                     'success' => 'true',
+                     'abonos_tbody' => $abonos_tbody
+                     ]);
+            }       
+            else {
+                return response()->json([
+                'error' => 'No hay abonos a esa factura']);
+             }           
     }
 
     /**
@@ -103,8 +131,9 @@ class AbonosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $abonos = Abonos::findOrFail($id); 
+        return view("abonos.edit",compact('abonos'));
     }
 
     /**
@@ -116,7 +145,7 @@ class AbonosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       dd("entro a update");
     }
 
     /**
@@ -125,8 +154,9 @@ class AbonosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy($id)
     {
-        //
     }
 }

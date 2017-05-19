@@ -57,9 +57,17 @@
 
             </ul>
         </li>
+        
+          <li>
+            <a>Abonos</a>
+            <ul>
+                <li><a class="list-group-item" href="/abonos">Ver Abonos</a></li>
+             
+            </ul>
+        </li>
+
 
      
-        </li>
         <li><a href="/reportes">Reportes</a></li>
         <li><a href="/administracion">Administración</a></li>
     </ul>
