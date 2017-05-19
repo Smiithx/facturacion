@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Aseguradora;
 use App\FacturaItems;
 use App\Factura;
+use App\Contratos;
 use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -195,12 +196,13 @@ class ordenserviciocontroller extends Controller
 
         foreach ($ordenservicios as $orden) {
             $aseguradora = $orden->aseguradora_id->nombre;
+            $contratos = $orden->id_contrato->nombre;
             $tbody_ordenes_facturar .= "<tr>
           <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
           <td>$orden->documento</td>
           <td>$orden->nombre</td>
           <td>$aseguradora</td>
-          <td>$orden->contrato</td>
+          <td>$contratos</td>
             <td>$orden->created_at</td>
             <td>&anbsp</td>
            </tr>";

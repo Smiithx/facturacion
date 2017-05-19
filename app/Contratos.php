@@ -31,5 +31,8 @@ class Contratos extends Model
     public function manuales(){
         return $this->belongsTo(Manuales::class);
     }
+     public function ordeservicios(){
+        return $this->hasMany(ordeservicios::class);
+    }
    
 }

@@ -24,6 +24,9 @@ class ordenservicios extends Model
     public function aseguradora(){
         return $this->belongsTo(Aseguradora::class);
     }
+     public function contratos(){
+        return $this->belongsTo(Contratos::class);
+    }
 
     public function getCreatedAtAttribute($value)
     {
