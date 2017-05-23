@@ -23,14 +23,6 @@ class Empresa extends Migration
             $table->string('file');
             $table->timestamps();
         });
-        App_empresa::create([
-           'rezon_social' => 'Casolucion',
-           'nit' => 'NIT-!294324932894',
-           'representante' => 'Carlos Alberto Leon',
-           'direccion' => 'Colombia, santander',
-           'telefono' => '0500 000 12345',
-           'file' => 'casolucion.png'
-       ]);
     }
 
     /**

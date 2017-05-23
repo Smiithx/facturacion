@@ -2,8 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Aseguradora;
+use App\Contratos;
 use App\FacturaItems;
 use App\Factura;
+use App\Manuales;
 use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -15,7 +17,8 @@ use Carbon\Carbon;
 
 class ordenserviciocontroller extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view("orden_servicio.index");
     }
 
@@ -31,31 +34,55 @@ class ordenserviciocontroller extends Controller
     {
         $paciente = \App\Paciente::where("documento", $request->documento)->get()[0];
 
+        /**
+         * // ---- Validar estado del servicio ----- //
+         * if ($servicio[0]->estado == "Activo") {
+         * $manual_servicios = Manuales_servicios::where("id_manual", $contrato->id_manual->id)->where("id_servicio", $servicio[0]->id)->get();
+         * // ---- Validar existencia del servicio en el contrato ----- //
+         * if ($manual_servicios != "[]") {
+         */
+
+        if ($paciente->id_contrato->estado == "Inactivo") {
+            flash("El contrato se encuentra desactivado.")->error();
+            return Redirect::to('/ordenservicio/create');
+        }
+
+        if ($paciente->id_contrato->id_manual->estado == "Inactivo") {
+            flash("El manual se encuentra desactivado.")->error();
+            return Redirect::to('/ordenservicio/create');
+        }
+
         // validar datos
         $cups_error = array();
         $servicio_error = array();
         $anular = false;
         for ($i = 0; $i < count($request->cups); $i++) {
             $cup = $request->cups[$i];
-            $servicio = \App\Servicios::where("cups",$cup)->get();
-            if($servicio == "[]"){
+            $servicio = \App\Servicios::where("cups", $cup)->get();
+            if ($servicio == "[]") {
                 $cups_error[] = $cup;
-            }else{
+            } else {
+                $servicio = $servicio[0];
+                if($servicio->estado == "Inactivo"){
+                    flash("El servicio $servicio->cups se encuentra desactivado.")->error();
+                    return Redirect::to('/ordenservicio/create');
+                }
                 $contrato = \App\Contratos::selectRaw("manuales.costo,contratos.porcentaje")
                     ->join("manuales", "contratos.id_manual", "=", "manuales.id")
                     ->join("servicios", "servicios.id", "=", "manuales.servicios_id")
                     ->where("contratos.id", $paciente->id_contrato->id)
                     ->where("contratos.estado", "Activo")
                     ->where("manuales.servicios_id", $servicio[0]->id)
-                    ->where("manuales.estado","Activo")
-                    ->where("servicios.estado","Activo")
+                    ->where("manuales.estado", "Activo")
+                    ->where("servicios.estado", "Activo")
                     ->get();
 
                 if ($contrato == "[]") {
-                    $servicio_error[]=$cup;
+                    $servicio_error[] = $cup;
                 }
             }
         }
+        /*
         $cups_error_message = "";
         $servicio_error_message = "";
         if(count($cups_error) > 0){
@@ -110,18 +137,18 @@ class ordenserviciocontroller extends Controller
                     'cups' => $cup,
                     'descripcion' => $servicio->descripcion,
                     'cantidad' => (double)$request->cantidad[$i],
-                    'copago' => (double)$request->copago[$i], 
+                    'copago' => (double)$request->copago[$i],
                     'valor_unitario' => $precio,
                     'valor_total' => $total,
                     'facturado' => 0
-                ]); 
+                ]);
             }
             $orden_de_servicio->orden_total = $orden_total;
             $orden_de_servicio->save();
 
             flash("La orden <a href='/ordenservicio/$orden_de_servicio->id'>#$orden_de_servicio->id</a> ha sido registrada con éxito!")->success();
         }
-        return Redirect::to('/ordenservicio/create');
+        return Redirect::to('/ordenservicio/create');*/
     }
 
 
@@ -218,11 +245,12 @@ class ordenserviciocontroller extends Controller
         }
     }
 
-    public function factura($id_factura){
+    public function factura($id_factura)
+    {
         try {
             $ordenes = ordenservicios::selectRaw("ordendeservicio.*")
                 ->join("factura_items", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
-                ->where("factura_items.id_factura",$id_factura)
+                ->where("factura_items.id_factura", $id_factura)
                 ->get();
             if ($ordenes != "[]") {
                 return response()->json([
@@ -240,10 +268,11 @@ class ordenserviciocontroller extends Controller
             ], 200);
         }
     }
-    
-    public function documento($documento){
+
+    public function documento($documento)
+    {
         try {
-            $ordenes = ordenservicios::where("documento",$documento)
+            $ordenes = ordenservicios::where("documento", $documento)
                 ->get();
             if ($ordenes != "[]") {
                 return response()->json([

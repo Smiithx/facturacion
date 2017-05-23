@@ -851,8 +851,6 @@ class ServiciosSeeder extends Seeder
             [837, '218402', 'REVISION DE RINOPLAS',  'Activo'],
             [838, '218501', 'RINOPLASTIA DE AUMEN',  'Activo'],
             [839, '218502', 'RINOPLASTIA DE AUMEN',  'Activo'],
-            [840, '218501', 'RINOPLASTIA DE AUMEN',  'Activo'],
-            [841, '218502', 'RINOPLASTIA DE AUMEN',  'Activo'],
             [842, '218601', 'RINOPLASTIA LIMITADA',  'Activo'],
             [843, '218602', 'RINOPLASTIA LIMITADA',  'Activo'],
             [844, '218701', 'TURBINOPLASTIA VIA T',  'Activo'],

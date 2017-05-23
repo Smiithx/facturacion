@@ -190,7 +190,7 @@ $(function () {
             dataType: "json",
             success: function (respuesta) {
                 if (respuesta.success) {
-                    fila.parent().parent()[0].children[1].children[0].value = respuesta.servicio.descripcion;
+                    fila.parent().parent()[0].children[1].children[0].value = respuesta.manual_servicios.id_servicio.descripcion;
                     fila.parent().parent()[0].children[4].children[0].value = $.number(respuesta.precio,2);
                     fila.parent().parent()[0].children[4].children[1].value = respuesta.precio
                 }

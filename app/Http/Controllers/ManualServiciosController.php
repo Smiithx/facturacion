@@ -54,7 +54,7 @@ class ManualServiciosController extends Controller
 
         if($manual_servicio !=  "[]"){
             $manual_servicio = $manual_servicio[0];
-            flash("EL servicio <a href='/servicios/$request->id_servicio/edit' target='_blank'>".$manual_servicio->id_servicio->cups."</a> ya se encuentra registrado en el manual <a href='/manuales/$id_manual/edit' target='_blank'>".$manual_servicio->id_manual->codigosoat."</a>.")->error();
+            flash("EL servicio <a href='/manuales/$id_manual/servicios/$request->id_servicio/edit' target='_blank'>".$manual_servicio->id_servicio->cups."</a> ya se encuentra registrado en el manual <a href='/manuales/$id_manual' target='_blank'>".$manual_servicio->id_manual->codigosoat."</a>.")->error();
             return Redirect::to("/manuales/$id_manual/servicios/create");
         }else{
             $manual_servicio = Manuales_servicios::create([
@@ -65,7 +65,7 @@ class ManualServiciosController extends Controller
 
             ]);
             
-            flash("EL servicio <a href='/servicios/$request->id_servicio/edit' target='_blank'>".$manual_servicio->id_servicio->cups."</a> ha sido añadido al manual <a href='/manuales/$id_manual/edit' target='_blank'>".$manual_servicio->id_manual->codigosoat."</a> con éxito!. <a href='/manuales/$id_manual/servicios/$manual_servicio->id/edit' target='_blank'>Editar</a>")->success();
+            flash("El servicio <a href='/manuales/$id_manual/servicios/$request->id_servicio/edit' target='_blank'>".$manual_servicio->id_servicio->cups."</a> ha sido añadido al manual <a href='/manuales/$id_manual' target='_blank'>".$manual_servicio->id_manual->codigosoat."</a> con éxito!.")->success();
             return Redirect::to("/manuales/$id_manual");
         }
         
@@ -92,6 +92,7 @@ class ManualServiciosController extends Controller
     {
         $manual_servicio = Manuales_servicios::findOrFail($id_manual_servicio);
         $servicios = Servicios::where("estado","Activo")->orderBy("cups")->get();
+
         return view('administracion.manuales.servicios.edit',compact('manual_servicio','servicios'));
     }
 
@@ -102,9 +103,38 @@ class ManualServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_manual,$id_manual_servicio)
     {
-        //
+        $this->validate($request, [
+            'id_servicio' => 'required|exists:servicios,id',
+            'costo' => 'required|numeric|min:0',
+            'estado' => 'required'
+        ]);
+        $servicio = Servicios::findOrfail($request->id_servicio);
+        $manual = Manuales::findOrfail($id_manual);
+        $manual_servicio = Manuales_servicios::findOrFail($id_manual_servicio);
+        if($request->id_servicio != $manual_servicio->id_servicio->id){
+
+            $servicios = Manuales_servicios::where("id_manual",$id_manual)->where("id_servicio",$request->id_servicio)->get();
+
+            if($servicios != "[]"){
+
+                $servicios = $servicios[0];
+                flash("El servicio <a href='/manuales/$id_manual/servicios/$servicios->id/edit' target='_blank'>".$servicio->cups."</a> ya se encuentra registrado en el manual <a href='/manuales/$id_manual' target='_blank'>".$manual->codigosoat."</a>")->error();
+                return Redirect::to("/manuales/$id_manual/servicios/$id_manual_servicio/edit");
+            }else{
+                $manual_servicio->id_servicio = $request->id_servicio;
+                $manual_servicio->costo = $request->costo;
+                $manual_servicio->estado = $request->estado;
+                $manual_servicio->save();
+            }
+        }else{
+            $manual_servicio->costo = $request->costo;
+            $manual_servicio->estado = $request->estado;
+            $manual_servicio->save();
+        }
+        flash("El servicio <a href='/manuales/$id_manual/servicios/$id_manual_servicio/edit' target='_blank'>".$servicio->cups."</a> fue actualizado con éxito!.")->success();
+        return Redirect::to("/manuales/$id_manual");
     }
 
     /**
@@ -113,8 +143,13 @@ class ManualServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_manual,$id_manual_servicio)
     {
-        //
+        $manual_servicio = Manuales_servicios::findOrFail($id_manual_servicio);
+        $cups = $manual_servicio->id_servicio->cups;
+        $manual_servicio->delete();
+
+        flash("EL servicio $cups ha sido eliminado con éxito!")->success();
+        return Redirect::to("/manuales/$id_manual");
     }
 }

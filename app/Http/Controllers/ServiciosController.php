@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contratos;
 use App\Aseguradora;
+use App\Manuales_servicios;
 use Illuminate\Http\Request;
 use App\Servicios;
 use App\Http\Requests;
@@ -22,8 +23,8 @@ class ServiciosController extends Controller
     public function index(Request $request)
     {
         $servicios = Servicios::cups($request->get('cup'))->orderBy('id', 'DES')->paginate();
-        $datos = ['servicios' => $servicios];       
-        return view("administracion.servicios.index",$datos);
+        $datos = ['servicios' => $servicios];
+        return view("administracion.servicios.index", $datos);
     }
 
 
@@ -85,8 +86,8 @@ class ServiciosController extends Controller
      */
     public function edit($id)
     {
-        $servicio = Servicios::findOrFail($id);        
-        return view('administracion.servicios.edit',compact('servicio'));
+        $servicio = Servicios::findOrFail($id);
+        return view('administracion.servicios.edit', compact('servicio'));
     }
 
     /**
@@ -100,20 +101,20 @@ class ServiciosController extends Controller
     {
         $servicio = Servicios::findOrFail($id);
 
-        if(isset($request->cups)){
-            if($servicio->cups != $request->cups){
+        if (isset($request->cups)) {
+            if ($servicio->cups != $request->cups) {
                 $this->validate($request, [
                     'cups' => 'required|max:255|unique:servicios,cups',
                     'descripcion' => 'required|max:255',
                     'estado' => 'required'
                 ]);
-            }else{
+            } else {
                 $this->validate($request, [
                     'descripcion' => 'required|max:255',
                     'estado' => 'required'
                 ]);
             }
-        }else{
+        } else {
             $this->validate($request, [
                 'cups' => 'required|max:255'
             ]);
@@ -142,34 +143,62 @@ class ServiciosController extends Controller
 
     public function cups($cups, $contrato)
     {
-        $servicio = Servicios::where("cups", "=", $cups)->get();
-        if ($servicio != "[]") {
-            $contrato = Contratos::selectRaw("manuales.costo,contratos.porcentaje")
-                ->join("manuales", "contratos.id_manual", "=", "manuales.id")
-                ->join("servicios", "manuales.servicios_id", "=", "servicios.id")
-                ->where("contratos.id", $contrato)
-                ->where("contratos.estado", "Activo")
-                ->where("manuales.servicios_id", $servicio[0]->id)
-                ->where("manuales.estado","Activo")
-                ->where("servicios.estado","Activo")
-                ->get();
-            if ($contrato != "[]") {
-                $precio = $contrato[0]->costo * $contrato[0]->porcentaje / 100.00;
+        //try {
+            $contrato = Contratos::findOrFail($contrato);
+
+            // ---- Validar estado del contrato ----- //
+            if ($contrato->estado == "Activo") {
+                // ---- Validar estado del manual ----- //
+                if ($contrato->id_manual->estado == "Activo") {
+                    // ---- Validar existencia del servicio ----- //
+                    $servicio = Servicios::where("cups", "=", $cups)->get();
+                    if ($servicio != "[]") {
+                        // ---- Validar estado del servicio ----- //
+                        if ($servicio[0]->estado == "Activo") {
+                            $manual_servicios = Manuales_servicios::where("id_manual", $contrato->id_manual->id)->where("id_servicio", $servicio[0]->id)->get();
+                            // ---- Validar existencia del servicio en el contrato ----- //
+                            if ($manual_servicios != "[]") {
+                                $manual_servicios = $manual_servicios[0];
+                                $precio = $manual_servicios->costo * $contrato->porcentaje / 100.00;
+                                return response()->json([
+                                    'success' => 'true',
+                                    'manual_servicios' => $manual_servicios,
+                                    'precio' => $precio
+                                ]);
+                            } //---- Fin de validar la existencia del servicio en el manual----- //
+                            else{
+                                return response()->json([
+                                    'error' => "El servicio no se encuentra disponible para este contrato."
+                                ]);
+                            }
+                        }  //---- Fin de validar estado del servicio ----- //
+                        else {
+                            return response()->json([
+                                'error' => "El servicio se encuentra desactivado"
+                            ]);
+                        }
+                    } //---- Fin de validar la existencia del servicio ----- //
+                    else {
+                        return response()->json([
+                            'error' => "No existe el servicio con el código $cups"
+                        ]);
+                    }
+                } //---- Fin de validar estado del manual ----- //
+                else {
+                    return response()->json([
+                        'error' => "El manual se encuentra desactivado"
+                    ]);
+                }
+            } //---- Fin de validar estado del contrato ----- //
+            else {
                 return response()->json([
-                    'success' => 'true',
-                    'servicio' => $servicio[0],
-                    'contrato' => $contrato,
-                    'precio' => $precio
-                ]);
-            } else {
-                return response()->json([
-                    'error' => "Servicio no disponible para este contrato."
-                ]);
+                    'error' => 'El contrato se encuentra desactivado.'
+                ], 200);
             }
-        } else {
-            return response()->json([
-                'error' => "No existe el servicio con el código $cups"
-            ]);
-        }
+        /*} catch (\Exception $e) {
+            return response()->json(['error' => 'Contrato desconocido.'], 200);
+        }*/
     }
+
 }
+

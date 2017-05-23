@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Servicios;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,7 +19,7 @@ class TestController extends Controller
      */
     public function index()
     {
-        $test = csrf_token();
+        $test = Servicios::all()->random(2);
         dd($test);
     }
 

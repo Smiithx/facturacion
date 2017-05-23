@@ -11,7 +11,7 @@
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover" id="tablacitas">
         <caption class="text-center">
-            {!! Form::open(['route' => 'servicios.index', 'method' => 'GET', 'class' => 'container-fluid text-left', 'role' => 'search']) !!}
+            {!! Form::open(['route' => 'servicios.index', 'method' => 'GET', 'class' => 'text-left', 'role' => 'search']) !!}
             <div class="input-group">
                 {!! Form::text('cup',null, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
                 <span class="input-group-btn">

@@ -48,7 +48,7 @@ $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
     return [
         'nombre' => $faker->company,
         'nit' => $faker->regexify('[JG][0-9]{9}'),
-        'estado' => $faker->randomElement(array('Activo', 'Inactivo'))
+        'estado' => 'Activo'
     ];
 });
 
@@ -85,13 +85,10 @@ $factory->define(App\Usuarios::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Manuales::class, function (Faker\Generator $faker) {
-    $servicio = \App\Servicios::all()->random()->id;
     return [
-        'tipomanual' => $faker->randomElement(array('ISS2001', 'SOAT', 'PARTICULAR', 'OTRO')),
-        'servicios_id' => $servicio,
+        'tipo' => $faker->randomElement(array('ISS2001', 'SOAT', 'PARTICULAR', 'OTRO')),
         'codigosoat' => $faker->regexify('[a-z0-9A-Z]{8}'),
-        'costo' => $faker->randomFloat(2, 0.01),
-        'estado' => $faker->randomElement(array('Activo', 'Inactivo'))
+        'estado' => 'Activo'
     ];
 });
 
@@ -105,7 +102,7 @@ $factory->define(App\Contratos::class, function (Faker\Generator $faker) {
         'diasvencimiento' => $faker->numberBetween(30, 60),
         'id_manual' => $manual,
         'porcentaje' => $faker->randomFloat(2, 0.01, 200.00),
-        'estado' => $faker->randomElement(array('Activo', 'Inactivo'))
+        'estado' => 'Activo'
     ];
 });
 

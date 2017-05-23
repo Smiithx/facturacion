@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         \App\Contratos::truncate();
         \App\Manuales::truncate();
         Servicios::truncate();
+        \App\Manuales_servicios::truncate();
         Cie10::truncate();
         Medicamentos::truncate();
         OrdenServicio_Items::truncate();
@@ -48,19 +49,19 @@ class DatabaseSeeder extends Seeder
 
         //$this->call('Cie10Seeder');
         //$this->call('MedicamentosSeeder');
+        $this->call('EmpresaSeeder');
+        $this->call('DiagnosticosSeeder');
         $this->call('ServiciosSeeder');
         $this->call('AseguradoraSeeder');
         // manuales
-        factory(\App\Manuales::class)->times(100)->create();
+        $this->call('ManualesServiciosSeeder');
         $this->call('ContratoSeeder');
         $this->call('PacientesSeeder');
-        $this->call('EmpresaSeeder');
-        $this->call('DiagnosticosSeeder');
         $this->call('OrdenServiciosSeeder');
         $this->call('FacturasSeeder');
         //$this->call('GlosasSeeder');
         // usuarios
-        factory(\App\Usuarios::class)->times(20)->create();
+        factory(\App\Usuarios::class)->times(10)->create();
 
 
         // supposed to only apply to a single connection and reset it's self
