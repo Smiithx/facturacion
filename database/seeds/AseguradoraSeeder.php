@@ -12,6 +12,6 @@ class AseguradoraSeeder extends Seeder
      */
     public function run()
     {
-        factory(Aseguradora::class)->times(20)->create();
+        factory(Aseguradora::class)->times(10)->create();
     }
 }

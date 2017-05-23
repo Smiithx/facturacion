@@ -16,7 +16,7 @@ class ManualesServiciosSeeder extends Seeder
         $manuales = \App\Manuales::all();
         $servicios = \App\Servicios::all();
         $faker = Faker::create();
-        $count_max_servicios = count($servicios) / 3;
+        $count_max_servicios = count($servicios) / 10;
         foreach ($manuales as $manual){
             $count_servicios = $faker->numberBetween(1, $count_max_servicios);
             $servicios = \App\Servicios::all()->random($count_servicios);

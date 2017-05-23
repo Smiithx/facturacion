@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\OrdenServicio_Items;
 use App\Servicios;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,32 @@ class TestController extends Controller
      */
     public function index()
     {
-        $test = Servicios::all()->random(2);
+        $faker = Faker::create();
+        $servicios = \App\Manuales_servicios::where("id_manual",1)->where("estado","Activo")->get();
+        $count_servicios = count($servicios);
+        $count_items = $faker->numberBetween(1, ($count_servicios > 10 ? 10: $count_servicios));
+        $orden_total = 0;
+        $items = $servicios->random($count_items);
+        $orden_items = [];
+        foreach ($items as $item){
+            $cantidad = $faker->numberBetween(1, 10);
+            $valor_unitario = $item->costo;
+            $copago = $faker->randomFloat(2,0,($valor_unitario * $cantidad));
+            $valor_total = ($valor_unitario * $cantidad) - $copago;
+            $orden_total += $valor_total;
+            $orden_items[] = OrdenServicio_Items::create([
+                'id_orden_servicio' => 1,
+                'cups' => $item->id_servicio->cups,
+                'descripcion' => $item->id_servicio->descripcion,
+                'cantidad' => $cantidad,
+                'copago' => $copago,
+                'valor_unitario' => $valor_unitario,
+                'valor_total' => $valor_total,
+                'facturado' => 0
+            ]);
+        }
+        dd($servicios,$count_servicios,$count_items,$items,$orden_items);
+
         dd($test);
     }
 

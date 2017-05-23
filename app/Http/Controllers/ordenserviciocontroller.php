@@ -35,8 +35,6 @@ class ordenserviciocontroller extends Controller
         $paciente = \App\Paciente::where("documento", $request->documento)->get()[0];
 
         /**
-         * // ---- Validar estado del servicio ----- //
-         * if ($servicio[0]->estado == "Activo") {
          * $manual_servicios = Manuales_servicios::where("id_manual", $contrato->id_manual->id)->where("id_servicio", $servicio[0]->id)->get();
          * // ---- Validar existencia del servicio en el contrato ----- //
          * if ($manual_servicios != "[]") {
@@ -66,23 +64,22 @@ class ordenserviciocontroller extends Controller
                 if($servicio->estado == "Inactivo"){
                     flash("El servicio $servicio->cups se encuentra desactivado.")->error();
                     return Redirect::to('/ordenservicio/create');
-                }
-                $contrato = \App\Contratos::selectRaw("manuales.costo,contratos.porcentaje")
-                    ->join("manuales", "contratos.id_manual", "=", "manuales.id")
-                    ->join("servicios", "servicios.id", "=", "manuales.servicios_id")
-                    ->where("contratos.id", $paciente->id_contrato->id)
-                    ->where("contratos.estado", "Activo")
-                    ->where("manuales.servicios_id", $servicio[0]->id)
-                    ->where("manuales.estado", "Activo")
-                    ->where("servicios.estado", "Activo")
-                    ->get();
-
-                if ($contrato == "[]") {
-                    $servicio_error[] = $cup;
+                }else{
+                    $manual_servicios = Manuales_servicios::where("id_manual", $paciente->id_contrato->id_manual->id)->where("id_servicio", $servicio->id)->get();
+                    if ($manual_servicios == "[]") {
+                        flash("El servicio $servicio->cups no se encuentra disponible para este contrato.")->error();
+                        return Redirect::to('/ordenservicio/create');
+                    }else{
+                        $manual_servicios = $manual_servicios[0];
+                        if($manual_servicios->estado == "Inactivo"){
+                            flash("El servicio $servicio->cups no se encuentra disponible para este contrato.")->error();
+                            return Redirect::to('/ordenservicio/create');
+                        }
+                    }
                 }
             }
         }
-        /*
+
         $cups_error_message = "";
         $servicio_error_message = "";
         if(count($cups_error) > 0){
@@ -124,12 +121,8 @@ class ordenserviciocontroller extends Controller
             for ($i = 0; $i < count($request->cups); $i++) {
                 $cup = $request->cups[$i];
                 $servicio = \App\Servicios::where("cups",$cup)->get()[0];
-                $contrato = \App\Contratos::selectRaw("manuales.costo,contratos.porcentaje")
-                    ->join("manuales", "contratos.id_manual", "=", "manuales.id")
-                    ->where("contratos.id", $paciente->id_contrato->id)
-                    ->where("manuales.servicios_id", $servicio->id)
-                    ->get();
-                $precio = $contrato[0]->costo * $contrato[0]->porcentaje / 100.00;
+                $manual_servicios = Manuales_servicios::where("id_manual", $paciente->id_contrato->id_manual->id)->where("id_servicio", $servicio->id)->get()[0];
+                $precio = $manual_servicios->costo * $paciente->id_contrato->porcentaje / 100.00;
                 $total = ((double)$request->cantidad[$i] * $precio) - (double)$request->copago[$i];
                 $orden_total += $total;
                 OrdenServicio_Items::create([
@@ -148,7 +141,7 @@ class ordenserviciocontroller extends Controller
 
             flash("La orden <a href='/ordenservicio/$orden_de_servicio->id'>#$orden_de_servicio->id</a> ha sido registrada con éxito!")->success();
         }
-        return Redirect::to('/ordenservicio/create');*/
+        return Redirect::to('/ordenservicio/create');
     }
 
 
