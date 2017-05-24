@@ -71,7 +71,7 @@
                         </tr>
                         </tfoot>
     </table>
-    <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado/pdf/{{$aseguradora->id}}" target="_blak">Imprimir</a>
+    <a   class="btn btn-primary btn-lg" href="/reportes/totalfacturado/pdf" target="_blak">Imprimir</a>
 
 </div>
     <script src="{{asset('assets/js/factura.js')}}"></script>

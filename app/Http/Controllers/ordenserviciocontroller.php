@@ -30,9 +30,15 @@ class ordenserviciocontroller extends Controller
         //
     }
 
-    public function edit($id)
+    public function anular($id)
     {
-        dd("entro a edit ordenes de servicios");
+        $ordenes = ordenservicios::findOrFail($id);
+        $ordenes->anulado = 1;
+        $ordenes->save();
+        flash("Orden de servicio Anulada con Exito.")->error();
+            return Redirect::to('/reportes/Ordenesporfacturar');
+
+
 
     }
 
@@ -53,7 +59,7 @@ class ordenserviciocontroller extends Controller
         }
 
         if ($paciente->id_contrato->id_manual->estado == "Inactivo") {
-            flash("El manual se encuentra desactivado.")->error();
+            flash("El manual se encuentra desactivado.");
             return Redirect::to('/ordenservicio/create');
         }
 
@@ -217,6 +223,8 @@ class ordenserviciocontroller extends Controller
         $ordenservicios = ordenservicios::where('facturado', "0")
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)
+                        ->where('anulado', "0")
+
             ->get();
         $tbody_ordenes_facturar = "";
 
@@ -232,12 +240,10 @@ class ordenserviciocontroller extends Controller
              <td>$contrato</td>
              <td>$orden->created_at</td>
              <td class='acciones'>
-                  <a href='/ordenservicio/$orden->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'>
-                    <i class='glyphicon glyphicon-edit'></i>
+                  <a href='/ordenservicio/$orden->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Anular'>
+                    <i class='glyphicon glyphicon-remove'></i>
                    </a>
-                  <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
-                      <i class='glyphicon glyphicon-remove'></i>
-                   </button>
+                 
              </td>
             </tr>";
         }

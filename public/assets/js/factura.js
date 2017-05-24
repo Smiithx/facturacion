@@ -40,6 +40,12 @@ $(function () {
     var reporte_factura_contrato_tbody = $("#reporte_factura_contrato_tbody");
     var reporte_factura_contrato_total = $("#reporte_factura_contrato_total");
 
+    // reporte imprimir factura
+    var imprimirfactura_fecha_desde = $("#imprimirfactura_fecha_desde");
+    var imprimirfactura_fecha_hasta = $("#imprimirfactura_fecha_hasta");
+    var btn_imprimirfactura_buscar = $("#btn_imprimirfactura_buscar");
+    var imprimirfactura_tbody = $("#imprimirfactura_tbody");
+
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
@@ -101,6 +107,30 @@ $(function () {
         });
     });
 
+
+
+// Imprimir Factura
+
+    btn_imprimirfactura_buscar.on("click", function () {
+        var url = "/facturas/imprimir/"  + imprimirfactura_fecha_desde.val() +
+            "/" + imprimirfactura_fecha_hasta.val(); //la ruta que se desea ir y pasando los parametros
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    imprimirfactura_tbody.html(respuesta.imprimirfactura_tbody);
+                }
+                else {
+                    imprimirfactura_tbody.html("");
+                    swal('Cancelled', respuesta.error, 'error');
+                }
+            }, error: function (e) {
+                console.log(e);
+            }
+        });
+    });
     // reporte factura
 
     reporte_factura_numero_factura.on("keyup", function () {

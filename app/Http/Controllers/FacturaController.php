@@ -7,6 +7,7 @@ use App\FacturaItems;
 use App\ordenservicios;
 use App\OrdenServicio_items;
 use App\Paciente;
+use App\Aseguradora;
 use Illuminate\Http\Request;
 use App\Factura;
 use Illuminate\Support\Facades\Redirect;
@@ -426,6 +427,57 @@ class FacturaController extends Controller
         }
     }
 
+    //---------------- reporte  Imprimir Facturas-------------------------------//
+    public function imprimir($desde, $hasta)
+    {
+               
+ 
+            $facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "aseguradoras.nombre", "contratos.nombre")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("aseguradoras", "ordendeservicio.aseguradora_id", "=", "aseguradoras.id")
+                ->join("contratos", "ordendeservicio.id_contrato", "=", "contratos.id")                
+                ->whereDate('facturas.created_at', '>=', $desde)
+                ->whereDate('facturas.created_at', '<=', $hasta)->get();      
+
+                $imprimirfactura_tbody ="";
+
+                foreach ($facturas as $factura) {
+                     $imprimirfactura_tbody .= "<tr> 
+                    <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td>
+                    <td>$factura->documento</td>
+                    <td>$factura->nombre</td>
+                    <td>$factura->aseguradora</td>
+                    <td>$factura->contratos</td>
+                    <td>$factura->created_at</td>
+                     <td class='acciones'>
+                  <a href='/facturas/$factura->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Anular'>
+                    <i class='glyphicon glyphicon-remove'></i>
+                   </a>
+                 
+             </td>
+
+                    </tr>"; 
+
+                }
+
+           
+
+                if ($imprimirfactura_tbody != "") {
+                     return response()->json([
+                    'success' => 'true',
+                    'imprimirfactura_tbody' => $imprimirfactura_tbody
+
+                    ]);
+                }
+                else {
+                    return response()->json([
+                    'error' => 'No se encontro factura.'
+                     ]);
+                }      
+    }
+
+    //----------------- reporte cuenta por cobrar---------------------------//
     public function cxcbuscar($factura)
     {
         $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total", "cartera.valor_saldo")
@@ -453,7 +505,7 @@ class FacturaController extends Controller
           <td>$factura->nombre</td>
           <td>$factura->cups</td>
           <td>$factura->descripcion</td>
-          <td>" . number_format($factura->copago, 2) . "</td>
+          <td>" . number_format($factura->copago, 3) . "</td>
           <td>" . number_format($factura->valor_unitario, 2) . "</td>
           <td>" . number_format($factura->valor_total, 2) . "</td>
           </tr>";

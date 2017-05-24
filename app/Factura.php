@@ -22,6 +22,7 @@ class Factura extends Model
         'id_contrato',
         'created_at',
         'factura_total',
+        'anulado'
     ];
 
     public function FacturaItems()
