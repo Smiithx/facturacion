@@ -6,6 +6,7 @@ use App\Contratos;
 use App\FacturaItems;
 use App\Factura;
 use App\Manuales;
+use App\Manuales_servicios;
 use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
