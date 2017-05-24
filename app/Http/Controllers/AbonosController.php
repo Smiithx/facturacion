@@ -108,6 +108,8 @@ class AbonosController extends Controller
                                 <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
                                 <i class='glyphicon glyphicon-remove'></i>
                              </form>
+
+
                             </td>
                             </tr>";                            
             }

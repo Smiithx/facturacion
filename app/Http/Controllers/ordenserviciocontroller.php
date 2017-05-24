@@ -6,6 +6,7 @@ use App\Contratos;
 use App\FacturaItems;
 use App\Factura;
 use App\Manuales;
+use App\Contratos;
 use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -220,14 +221,22 @@ class ordenserviciocontroller extends Controller
 
         foreach ($ordenservicios as $orden) {
             $aseguradora = $orden->aseguradora_id->nombre;
+<<<<<<< HEAD
             $contrato = $orden->id_contrato->nombre;
 
+=======
+            $contratos = $orden->id_contrato->nombre;
+>>>>>>> e97a804f9b52c13a42ec5bf64b97f663cc29b926
             $tbody_ordenes_facturar .= "<tr>
           <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
           <td>$orden->documento</td>
           <td>$orden->nombre</td>
           <td>$aseguradora</td>
+<<<<<<< HEAD
           <td>$contrato</td>
+=======
+          <td>$contratos</td>
+>>>>>>> e97a804f9b52c13a42ec5bf64b97f663cc29b926
             <td>$orden->created_at</td>
             <td><a style='float: left;' href='/ordenservicio/$orden->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
                 <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
