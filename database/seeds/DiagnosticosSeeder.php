@@ -12,6 +12,6 @@ class DiagnosticosSeeder extends Seeder
      */
     public function run()
     {
-        factory(Diagnosticos::class)->times(10)->create();
+        factory(Diagnosticos::class)->times(15)->create();
     }
 }

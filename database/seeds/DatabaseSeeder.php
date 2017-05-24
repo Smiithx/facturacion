@@ -47,8 +47,8 @@ class DatabaseSeeder extends Seeder
         Usuarios::truncate();
          \App\Glosas::truncate();
 
-        //$this->call('Cie10Seeder');
-        //$this->call('MedicamentosSeeder');
+        $this->call('Cie10Seeder');
+        $this->call('MedicamentosSeeder');
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');
         $this->call('ServiciosSeeder');
@@ -58,8 +58,9 @@ class DatabaseSeeder extends Seeder
         $this->call('ContratoSeeder');
         $this->call('PacientesSeeder');
         $this->call('OrdenServiciosSeeder');
+        $this->call('ItemOrdenServicioSeeder');
         $this->call('FacturasSeeder');
-        //$this->call('GlosasSeeder');
+        $this->call('GlosasSeeder');
         // usuarios
         factory(\App\Usuarios::class)->times(10)->create();
 

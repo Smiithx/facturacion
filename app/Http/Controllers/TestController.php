@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\FacturaItems;
 use App\OrdenServicio_Items;
+use App\ordenservicios;
 use App\Servicios;
 use Illuminate\Http\Request;
 
@@ -21,32 +23,38 @@ class TestController extends Controller
     public function index()
     {
         $faker = Faker::create();
-        $servicios = \App\Manuales_servicios::where("id_manual",1)->where("estado","Activo")->get();
-        $count_servicios = count($servicios);
-        $count_items = $faker->numberBetween(1, ($count_servicios > 10 ? 10: $count_servicios));
-        $orden_total = 0;
-        $items = $servicios->random($count_items);
-        $orden_items = [];
-        foreach ($items as $item){
-            $cantidad = $faker->numberBetween(1, 10);
-            $valor_unitario = $item->costo;
-            $copago = $faker->randomFloat(2,0,($valor_unitario * $cantidad));
-            $valor_total = ($valor_unitario * $cantidad) - $copago;
-            $orden_total += $valor_total;
-            $orden_items[] = OrdenServicio_Items::create([
-                'id_orden_servicio' => 1,
-                'cups' => $item->id_servicio->cups,
-                'descripcion' => $item->id_servicio->descripcion,
-                'cantidad' => $cantidad,
-                'copago' => $copago,
-                'valor_unitario' => $valor_unitario,
-                'valor_total' => $valor_total,
-                'facturado' => 0
-            ]);
-        }
-        dd($servicios,$count_servicios,$count_items,$items,$orden_items);
+        $contratos = \App\ordenservicios::select('id_contrato')->where('facturado', '0')->groupBy('id_contrato')->get();
 
-        dd($test);
+        foreach ($contratos as $contrato) {
+            $contrato = $contrato->id_contrato->id;
+
+            $factura = \App\Factura::create([
+                'id_contrato' => $contrato,
+                'radicada' => 0
+            ]);
+
+            $ordenes = ordenservicios::where('id_contrato', $contrato)->get();
+            $num_ordenes = count($ordenes);
+            $count_ordenes_facturar = $faker->numberBetween(1, $num_ordenes);
+
+            $ordenes = $count_ordenes_facturar > 1 ? $ordenes->random($count_ordenes_facturar) : $ordenes;
+
+            $factura_total = 0;
+
+            foreach ($ordenes as $orden) {
+                FacturaItems::create([
+                    'id_factura' => $factura->id,
+                    'id_orden_servicio' => $orden->id
+                ]);
+                $orden->facturado = 1;
+                $orden->save();
+                $factura_total += $orden->orden_total;
+            }
+
+            $factura->factura_total = $factura_total;
+            $factura->save();
+
+        }
     }
 
     /**
@@ -54,7 +62,8 @@ class TestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public
+    function create()
     {
         //
     }
@@ -62,10 +71,11 @@ class TestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public
+    function store(Request $request)
     {
         //
     }
@@ -73,10 +83,11 @@ class TestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         //
     }
@@ -84,10 +95,11 @@ class TestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         //
     }
@@ -95,11 +107,12 @@ class TestController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         //
     }
@@ -107,10 +120,11 @@ class TestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         //
     }

@@ -13,12 +13,10 @@ class FacturasSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        $contratos = \App\ordenservicios::select('id_contrato')->where('facturado','0')->groupBy('id_contrato')->get();;
-        $num_contratos = count($contratos);
-        $count_contratos_facturar = $faker->numberBetween(1, $num_contratos);
+        $contratos = \App\ordenservicios::select('id_contrato')->where('facturado', '0')->groupBy('id_contrato')->get();
 
-        for ($i = 0; $i < $count_contratos_facturar; $i++) {
-            $contrato = $contratos[$i]->id_contrato->id;
+        foreach ($contratos as $contrato) {
+            $contrato = $contrato->id_contrato->id;
 
             $factura = \App\Factura::create([
                 'id_contrato' => $contrato,
@@ -29,10 +27,10 @@ class FacturasSeeder extends Seeder
             $num_ordenes = count($ordenes);
             $count_ordenes_facturar = $faker->numberBetween(1, $num_ordenes);
 
-            $factura_total = 0;
+            $ordenes = $count_ordenes_facturar > 1 ? $ordenes->random($count_ordenes_facturar) : $ordenes;
 
-            for ($item = 0; $item < $count_ordenes_facturar; $item++) {
-                $orden = $ordenes[$item];
+            $factura_total = 0;
+            foreach ($ordenes as $orden) {
                 App\FacturaItems::create([
                     'id_factura' => $factura->id,
                     'id_orden_servicio' => $orden->id
