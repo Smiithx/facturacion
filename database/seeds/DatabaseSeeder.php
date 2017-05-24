@@ -15,6 +15,7 @@ use App\FacturaItems;
 use App\Diagnosticos;
 use App\Usuarios;
 use App\Glosas;
+use App\Manuales;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,7 +48,7 @@ class DatabaseSeeder extends Seeder
         Usuarios::truncate();
          \App\Glosas::truncate();
 
-        $this->call('Cie10Seeder');
+        //$this->call('Cie10Seeder');
         $this->call('MedicamentosSeeder');
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');

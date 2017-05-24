@@ -53,7 +53,7 @@ Route::get('ordenservicio/documento/{documento}', 'ordenserviciocontroller@docum
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
 Route::get('facturas/buscar/{aseguradora}/{contrato}/{desde}/{hasta}', 'FacturaController@buscar');
 Route::get('facturas/radicar/{contrato}/{desde}/{hasta}', 'FacturaController@radicar');
-Route::get('facturas/cuentacobro/buscar/{factura}/{desde}/{hasta}', 'FacturaController@cxcbuscar');
+Route::get('facturas/cuentacobro/buscar/{factura}', 'FacturaController@cxcbuscar');
 Route::get('facturas/reporte/factura', 'FacturaController@reporteFactura');
 Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFacturaShow');
 Route::get('facturas/reporte/contrato', 'FacturaController@reporteContrato');
