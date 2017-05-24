@@ -469,7 +469,7 @@ class FacturaController extends Controller
             ]);
         } else {
             return response()->json([
-                'error' => 'No se encontraron facturas. Verifique que Tenga saldo cartera'
+                'error' => 'No se encontro factura. Verifique que Tenga  Cartera '
             ]);
         }
     }

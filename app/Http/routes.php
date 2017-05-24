@@ -43,7 +43,7 @@ Route::resource('pacientes', 'PacienteController');
 Route::get('pacientes/documento/{documento}', 'PacienteController@documento');
 
 //----- Orden de servicios ----- //
-Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','show','index']]);
+Route::resource('ordenservicio', 'ordenserviciocontroller', ['only' => ['create','store','edit','show','index']]);
 Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocontroller@buscar');
 Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontroller@ordenes_facturar');
 Route::get('ordenservicio/factura/{factura}', 'ordenserviciocontroller@factura');
@@ -92,7 +92,7 @@ Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
 Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
 
 Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar');
-Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfacturarpdf');
+Route::get('reportes/Ordenesporfacturar/pdf/{id}', 'ReportesController@Ordenesporfacturarpdf');
 
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');

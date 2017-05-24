@@ -28,6 +28,11 @@ class ordenserviciocontroller extends Controller
         return View('orden_servicio.create');
         //
     }
+       public function edit($id)
+    {
+        dd("entro a edit ordenes de servicios");
+
+    }
 
     //
     public function store(OrdenServiciosRequest $request)
@@ -215,14 +220,19 @@ class ordenserviciocontroller extends Controller
 
         foreach ($ordenservicios as $orden) {
             $aseguradora = $orden->aseguradora_id->nombre;
+            $contrato = $orden->id_contrato->nombre;
+
             $tbody_ordenes_facturar .= "<tr>
           <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
           <td>$orden->documento</td>
           <td>$orden->nombre</td>
           <td>$aseguradora</td>
-          <td>$orden->contrato</td>
+          <td>$contrato</td>
             <td>$orden->created_at</td>
-            <td>&anbsp</td>
+            <td><a style='float: left;' href='/ordenservicio/$orden->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
+                <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
+                                <i class='glyphicon glyphicon-remove'></i>
+                            </td>
            </tr>";
         }
 

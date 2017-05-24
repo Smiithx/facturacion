@@ -179,8 +179,10 @@ class CarteraController extends Controller
             $carteras = Cartera::where('id',$request->id)->get();
             $saldo = $carteras[0]->valor_saldo;//valor_saldo
             $abono_inicial = $carteras[0]->valor_abono;//abono inicial
-            $saldo_sin_abono_inicial = $saldo + $abono_inicial;//sumar a saldo el abono_inicial
-            $saldo_con_nuevo_abono = $saldo_sin_abono_inicial - $request->valor_abono;//restamos al saldo el nuevo abono
+            $valor_retencion = $carteras[0]->valor_retencion;//abono inicial
+
+            $saldo_sin_abono_inicial = $saldo + $abono_inicial +  $valor_retencion;//sumar a saldo el abono_inicial
+            $saldo_con_nuevo_abono = $saldo_sin_abono_inicial - $request->valor_abono - $request->valor_retencion;//restamos al saldo el nuevo abono
             $carteras = Cartera::findOrFail($request->id);//buscamos la carter a editar
             $carteras->valor_abono = $request->valor_abono;
             $carteras->valor_retencion = $request->valor_retencion;

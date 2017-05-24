@@ -48,9 +48,10 @@ public function Ordenesporfacturar() {
 
 }
 
-public function Ordenesporfacturarpdf() {
- $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
-      return $pdf->Stream('Ordenesporfacturar');
+public function Ordenesporfacturarpdf($id) {
+dd("enntro");
+ //$pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
+   //   return $pdf->Stream('Ordenesporfacturar');
 
 }
 
