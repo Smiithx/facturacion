@@ -426,22 +426,26 @@ class FacturaController extends Controller
         }
     }
 
-    public function cxcbuscar($factura, $desde, $hasta)
+    public function cxcbuscar($factura)
     {
-        $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total")
+        $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total", "cartera.valor_saldo")
             ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
             ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+            ->join("cartera", "factura_items.id_factura", "=", "cartera.id_factura")
             ->where('factura_items.id_factura', $factura)
-            ->whereDate('factura_items.created_at', '>=', $desde)
-            ->whereDate('factura_items.created_at', '<=', $hasta)
+            ->where('cartera.valor_saldo', '>=',1)            
+            
             ->groupBy('factura_items.id')
             ->get();
 
         $cxc_tbody = "";
         $total_facturado_cxc = 0;
+        $saldo_cxc = 0;
+
 
         foreach ($facturas as $factura) {
             $total_facturado_cxc += $factura->valor_total;
+            $saldo_cxc = number_format($factura->valor_saldo,2);
             $cxc_tbody .= "<tr> 
           <td class='text-center'><a href='/ordenservicio/$factura->id' target='_blank'>$factura->id</a></td>
           <td>$factura->created_at</td>
@@ -459,11 +463,13 @@ class FacturaController extends Controller
             return response()->json([
                 'success' => 'true',
                 'cxc_tbody' => $cxc_tbody,
-                'total_facturado_cxc' => $total_facturado_cxc
+                'total_facturado_cxc' => $total_facturado_cxc,
+                'saldo_cxc' => $saldo_cxc
+
             ]);
         } else {
             return response()->json([
-                'error' => 'No se encontraron facturas.'
+                'error' => 'No se encontro factura. Verifique que Tenga  Cartera '
             ]);
         }
     }

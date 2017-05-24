@@ -33,6 +33,7 @@ class Contratos extends Model
         return $this->belongsTo(Manuales::class);
     }
 
+
     public function scopeNombre($query,$nombre){
         if(trim($nombre) != ""){
             $query->where('nombre',"LIKE","%$nombre%");
@@ -45,4 +46,8 @@ class Contratos extends Model
     }
 
 
+     public function ordeservicios(){
+        return $this->hasMany(ordeservicios::class);
+    }
+   
 }

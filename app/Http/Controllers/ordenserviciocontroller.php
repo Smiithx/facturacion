@@ -30,6 +30,12 @@ class ordenserviciocontroller extends Controller
         //
     }
 
+    public function edit($id)
+    {
+        dd("entro a edit ordenes de servicios");
+
+    }
+
     //
     public function store(OrdenServiciosRequest $request)
     {
@@ -62,17 +68,17 @@ class ordenserviciocontroller extends Controller
                 $cups_error[] = $cup;
             } else {
                 $servicio = $servicio[0];
-                if($servicio->estado == "Inactivo"){
+                if ($servicio->estado == "Inactivo") {
                     flash("El servicio $servicio->cups se encuentra desactivado.")->error();
                     return Redirect::to('/ordenservicio/create');
-                }else{
+                } else {
                     $manual_servicios = Manuales_servicios::where("id_manual", $paciente->id_contrato->id_manual->id)->where("id_servicio", $servicio->id)->get();
                     if ($manual_servicios == "[]") {
                         flash("El servicio $servicio->cups no se encuentra disponible para este contrato.")->error();
                         return Redirect::to('/ordenservicio/create');
-                    }else{
+                    } else {
                         $manual_servicios = $manual_servicios[0];
-                        if($manual_servicios->estado == "Inactivo"){
+                        if ($manual_servicios->estado == "Inactivo") {
                             flash("El servicio $servicio->cups no se encuentra disponible para este contrato.")->error();
                             return Redirect::to('/ordenservicio/create');
                         }
@@ -83,33 +89,33 @@ class ordenserviciocontroller extends Controller
 
         $cups_error_message = "";
         $servicio_error_message = "";
-        if(count($cups_error) > 0){
-            $anular=true;
-            if(count($cups_error) > 1){
-                $cups_error_message.="Los siguientes códigos cups son incorrectos: ";
-            }else{
-                $cups_error_message.="El siguiente código cups es incorrecto: ";
+        if (count($cups_error) > 0) {
+            $anular = true;
+            if (count($cups_error) > 1) {
+                $cups_error_message .= "Los siguientes códigos cups son incorrectos: ";
+            } else {
+                $cups_error_message .= "El siguiente código cups es incorrecto: ";
             }
-            foreach($cups_error as $cups){
-                $cups_error_message.= "$cups, ";
+            foreach ($cups_error as $cups) {
+                $cups_error_message .= "$cups, ";
             }
         }
-        if(count($servicio_error) > 0){
-            $anular=true;
-            if(count($servicio_error) > 1){
-                $servicio_error_message.="Los siguientes códigos cups, no se encuentran disponible para este contrato: ";
-            }else{
-                $servicio_error_message.="El siguiente código cups,no se encuentran disponible para este contrato: ";
+        if (count($servicio_error) > 0) {
+            $anular = true;
+            if (count($servicio_error) > 1) {
+                $servicio_error_message .= "Los siguientes códigos cups, no se encuentran disponible para este contrato: ";
+            } else {
+                $servicio_error_message .= "El siguiente código cups,no se encuentran disponible para este contrato: ";
             }
-            foreach($servicio_error as $cups){
-                $servicio_error_message.= "$cups, ";
+            foreach ($servicio_error as $cups) {
+                $servicio_error_message .= "$cups, ";
             }
         }
 
         // crear orden de servicio
-        if($anular){
-            flash(($cups_error_message != '' ?"$cups_error_message<br>": '').$servicio_error_message)->error();
-        }else{
+        if ($anular) {
+            flash(($cups_error_message != '' ? "$cups_error_message<br>" : '') . $servicio_error_message)->error();
+        } else {
             $orden_de_servicio = ordenservicios::create([
                 'nombre' => $paciente->nombre,
                 'documento' => $paciente->documento,
@@ -121,7 +127,7 @@ class ordenserviciocontroller extends Controller
 
             for ($i = 0; $i < count($request->cups); $i++) {
                 $cup = $request->cups[$i];
-                $servicio = \App\Servicios::where("cups",$cup)->get()[0];
+                $servicio = \App\Servicios::where("cups", $cup)->get()[0];
                 $manual_servicios = Manuales_servicios::where("id_manual", $paciente->id_contrato->id_manual->id)->where("id_servicio", $servicio->id)->get()[0];
                 $precio = $manual_servicios->costo * $paciente->id_contrato->porcentaje / 100.00;
                 $total = ((double)$request->cantidad[$i] * $precio) - (double)$request->copago[$i];
@@ -216,15 +222,24 @@ class ordenserviciocontroller extends Controller
 
         foreach ($ordenservicios as $orden) {
             $aseguradora = $orden->aseguradora_id->nombre;
-            $tbody_ordenes_facturar .= "<tr>
-          <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
-          <td>$orden->documento</td>
-          <td>$orden->nombre</td>
-          <td>$aseguradora</td>
-          <td>$orden->contrato</td>
-            <td>$orden->created_at</td>
-            <td>&anbsp</td>
-           </tr>";
+            $contrato = $orden->id_contrato->nombre;
+            $tbody_ordenes_facturar .= "
+           <tr>
+             <td class='text-center'><a href='/ordenservicio/$orden->id' name='id[]' target='_blank'>$orden->id</a></td>
+             <td>$orden->documento</td>
+             <td>$orden->nombre</td>
+             <td>$aseguradora</td>
+             <td>$contrato</td>
+             <td>$orden->created_at</td>
+             <td class='acciones'>
+                  <a href='/ordenservicio/$orden->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'>
+                    <i class='glyphicon glyphicon-edit'></i>
+                   </a>
+                  <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
+                      <i class='glyphicon glyphicon-remove'></i>
+                   </button>
+             </td>
+            </tr>";
         }
 
         if ($tbody_ordenes_facturar != "") {

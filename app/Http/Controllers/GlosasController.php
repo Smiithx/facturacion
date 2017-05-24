@@ -173,10 +173,6 @@ class GlosasController extends Controller
                             <td>". number_format($glosa->valor_aceptado, 2) ."</td>
                             <td>$glosa->created_at</td>
                             <td><a style='float: left;' href='/glosas/$glosa->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
-
-                            <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
-                        <i class='glyphicon glyphicon-remove'></i>
-                    </button>
                             </td>
                             </tr>";
         }

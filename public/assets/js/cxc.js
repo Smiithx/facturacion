@@ -4,11 +4,12 @@ $(function () {
     
 //-- Declarar variables cxc=============================== //
     var cxc_factura = $("#cxc_factura");   	
-   	var cxc_desde = $("#cxc_desde");
-    var cxc_hasta = $("#cxc_hasta");
+
     var btn_cxc_buscar = $("#btn_cxc_buscar");
     var cxc_tbody = $("#cxc_tbody");
     var total_facturado_cxc = $("#total_facturado_cxc");
+    var saldo_cxc = $("#saldo_cxc");
+
 
     //-- Fin de declarar variables ======================= //
          
@@ -17,8 +18,7 @@ $(function () {
      //-- Agregar evento Buscar Factura  ================================= //
 
     btn_cxc_buscar.on("click", function () {
-        var url = "factura/cuentacobro/buscar/" + cxc_factura.val() + "/" + cxc_desde.val() +
-            "/" + cxc_hasta.val(); //la ruta que se desea ir y pasando los parametros
+        var url = "/facturas/cuentacobro/buscar/" + cxc_factura.val(); //la ruta que se desea ir y pasando los parametros
         $.ajax({
             url: url,
             type: "GET",
@@ -27,11 +27,14 @@ $(function () {
                 if (respuesta.success) {
                   cxc_tbody.html(respuesta.cxc_tbody);
                   total_facturado_cxc.html(respuesta.total_facturado_cxc);
+                  saldo_cxc.html(respuesta.saldo_cxc);
+
 
                 }
                 else {
                     cxc_tbody.html("");
-                    total_facturado_cxc.html("");
+                   total_facturado_cxc.html("");
+                   saldo_cxc.html("");
 
                     swal('Cancelled', respuesta.error, 'error');
                 }

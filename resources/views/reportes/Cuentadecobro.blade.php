@@ -7,23 +7,7 @@
              <label for="label">Factura:</label>  
              <input class="form-control"  placeholder="Escibir Factura " id="cxc_factura" type="text" name="id_factura"/>
             </div>
-          
-        <div class="form-group col-xs-12 col-md-3">
-            <label for="label">Fecha desde:</label>
-            <div class="input-group date datepicker">
-                <input class="form-control" id="cxc_desde" type="text" name="cxc_desde"
-                       required  placeholder="yyyy-mm-dd"/>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-            </div>
-        </div>
-        <div class="form-group col-xs-12 col-md-3">
-            <label for="label">Fecha hasta:</label>
-            <div class="input-group date datepicker">
-                <input class="form-control" id="cxc_hasta" type="text" name="cxc_hasta"
-                       required placeholder="yyyy-mm-dd"/>
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-            </div>
-        </div>
+       
         <div class="form-group col-xs-12 col-md-1">
             <label for="">&nbsp</label>
             <button class="btn btn-success" id="btn_cxc_buscar" type="button">Buscar</button>
@@ -42,15 +26,21 @@
                 <th class="text-center">Valor unitario</th>
                 <th class="text-center">Valor Total</th>
 
+
             </tr>
         </thead>
                         <tbody id="cxc_tbody">
 
         </tbody>
         <tfoot>
+        
               <tr>
                         <th colspan="8" class="text-right">Total</th>
                         <th class="text-right" colspan="1" id="total_facturado_cxc"></th>
+                    </tr>
+                     <tr>
+                        <th colspan="8" class="text-right">Saldo Pendiente</th>
+                        <th class="text-right" colspan="1" id="saldo_cxc"></th>
                     </tr>
 
         </tfoot>
