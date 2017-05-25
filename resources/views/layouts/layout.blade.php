@@ -53,6 +53,6 @@
 
 <br><br>
 <!-- /formulario -->
-
+@yield('scripts')
 </body>
 </html>

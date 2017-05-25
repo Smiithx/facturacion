@@ -62,8 +62,9 @@ class DatabaseSeeder extends Seeder
         $this->call('ItemOrdenServicioSeeder');
         $this->call('FacturasSeeder');
         $this->call('GlosasSeeder');
+        $this->call('UsuariosSeeder');
         // usuarios
-        factory(\App\Usuarios::class)->times(10)->create();
+
 
 
         // supposed to only apply to a single connection and reset it's self

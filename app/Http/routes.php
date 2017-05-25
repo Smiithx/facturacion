@@ -11,8 +11,45 @@
 |
 */
 
+//----- Login ----- //
+
+// Authentication routes...
+Route::get('/login', [
+    'uses' => 'Auth\AuthController@getLogin',
+    'as' => 'login'
+]);
+Route::post('/login', [
+    'uses' => 'Auth\AuthController@postLogin',
+    "as" => "login"
+]);
+Route::get('/logout', [
+    "uses" => 'Auth\AuthController@getLogout',
+    "as" => "logout"
+]);
+
+// Registration routes...
+Route::get('/register', [
+    "uses" => 'Auth\AuthController@getRegister',
+    "as" => "register"
+]);
+Route::post('/register', [
+    "uses" => 'Auth\AuthController@postRegister',
+    "as" => "register"
+]);
+
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
 //----- Inicio ----- //
-Route::get('/','PacienteController@index');
+Route::get('/',[
+    "uses" => 'PacienteController@index',
+    "as" => "home"
+]);
 
 //----- Aseguradora ----- //
 Route::resource('aseguradoras', 'AseguradoraController');

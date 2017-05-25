@@ -12,8 +12,10 @@
 */
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
+    $faker->addProvider(new Faker\Provider\es_VE\Person($faker));
+    $faker->addProvider(new Faker\Provider\es_VE\Internet($faker));
     return [
-        'name' => $faker->name,
+        'name' =>  $faker->firstName. " " . $faker->lastName,
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),

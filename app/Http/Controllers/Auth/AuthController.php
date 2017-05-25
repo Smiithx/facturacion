@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Routing\Route;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -62,4 +63,15 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function loginPath()
+    {
+        return route("login");
+    }
+
+    public function redirectPath()
+    {
+        return route("home");
+    }
+
 }

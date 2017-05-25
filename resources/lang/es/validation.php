@@ -106,7 +106,8 @@ return [
 	|
 	*/
 	'attributes' => [
-		'username' => 'usuario',
-		'password' => 'contraseña'
+		'username' => 'Usuario',
+		'password' => 'Contraseña',
+        'email' => "E-mail",
 	],
 ];
