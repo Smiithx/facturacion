@@ -432,23 +432,24 @@ class FacturaController extends Controller
     {
                
  
-            $facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "aseguradoras.nombre", "contratos.nombre")
+            $facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "factura_items.id_orden_servicio", "ordendeservicio.aseguradora_id",  "ordendeservicio.id_contrato", "ordendeservicio.nombre")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
-                ->join("aseguradoras", "ordendeservicio.aseguradora_id", "=", "aseguradoras.id")
-                ->join("contratos", "ordendeservicio.id_contrato", "=", "contratos.id")                
                 ->whereDate('facturas.created_at', '>=', $desde)
-                ->whereDate('facturas.created_at', '<=', $hasta)->get();      
+                ->whereDate('facturas.created_at', '<=', $hasta)->get();  
 
                 $imprimirfactura_tbody ="";
 
                 foreach ($facturas as $factura) {
+                     $aseguradoras = Aseguradora::where('id',$factura->aseguradora_id)->get();
+                  
+
                      $imprimirfactura_tbody .= "<tr> 
                     <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td>
                     <td>$factura->documento</td>
                     <td>$factura->nombre</td>
-                    <td>$factura->aseguradora</td>
-                    <td>$factura->contratos</td>
+                    <td></td>
+                    <td></td>
                     <td>$factura->created_at</td>
                      <td class='acciones'>
                   <a href='/facturas/$factura->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Anular'>
@@ -476,6 +477,25 @@ class FacturaController extends Controller
                      ]);
                 }      
     }
+
+    //----------------- Anular Factura---------------------------//
+    public function anular($id)
+      {
+        $facturas = Factura::findOrFail($id);
+        $facturas->anulado = 1;
+        $facturas->save();  
+        $factura_items = FacturaItems::where('id_factura', $facturas->id)->get();
+     
+        $ordenes = ordenservicios::findOrFail($factura_items[0]->id_orden_servicio);
+        $ordenes->anulado = 1;
+        $ordenes->save();
+
+         flash("Factura  Anulada con Exito.");
+            return Redirect::to('/reportes/Imprimirfactura');
+    
+
+     }
+      
 
     //----------------- reporte cuenta por cobrar---------------------------//
     public function cxcbuscar($factura)

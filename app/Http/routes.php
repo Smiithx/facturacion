@@ -60,6 +60,8 @@ Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFactu
 Route::get('facturas/reporte/contrato', 'FacturaController@reporteContrato');
 Route::get('facturas/reporte/contrato/{contrato}/{desde}/{hasta}', 'FacturaController@reporteContratoShow');
 Route::get('facturas/imprimir/{desde}/{hasta}', 'FacturaController@imprimir');
+Route::get('facturas/{id}/anular', 'FacturaController@anular');
+
 
 //----- Radicacion ----- // 
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);

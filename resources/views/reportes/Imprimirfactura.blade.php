@@ -34,7 +34,7 @@
     <table class="table table-striped table-bordered table-hover" id="tabla_r4">
         <thead>
         <tr>
-            <th class="text-center">N° de Orden</th>
+            <th class="text-center">N° de factura</th>
             <th class="text-center">Documento</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Aseguradora</th>

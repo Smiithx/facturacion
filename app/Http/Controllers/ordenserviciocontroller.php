@@ -35,7 +35,7 @@ class ordenserviciocontroller extends Controller
         $ordenes = ordenservicios::findOrFail($id);
         $ordenes->anulado = 1;
         $ordenes->save();
-        flash("Orden de servicio Anulada con Exito.")->error();
+        flash("Orden de servicio Anulada con Exito.");
             return Redirect::to('/reportes/Ordenesporfacturar');
 
 
