@@ -19,14 +19,10 @@ class AseguradoraController extends Controller
      */
     public function index(Request $request)
     {
-
- if(trim($request) != ""){    
-      $aseguradoras = Aseguradora::where('nombre',"LIKE","%$request->name%")
-       ->paginate(5);
+        $aseguradoras = Aseguradora::nombre($request->get('nombre'))->paginate(10);
         $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.aseguradoras.index",$datos);
+        return view("administracion.aseguradoras.index", $datos);
     }
-}
 
     /**
      * Show the form for creating a new resource.
@@ -41,7 +37,7 @@ class AseguradoraController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,90 +45,80 @@ class AseguradoraController extends Controller
         $this->validate($request, [
             'nombre' => 'required|max:255',
             'nit' => 'required|max:255',
-            'estado' => 'required'            
+            'estado' => 'required'
         ]);
         $aseguradora = Aseguradora::create($request->all());
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
 
-
-        Session::flash('message',$aseguradora->nombre.' Fue Creada con exito');
-        return Redirect::to('administracion/aseguradoras');
+        flash("La aseguradora <a href='/aseguradoras/$aseguradora->id/edit'>$aseguradora->nombre</a> ha sido creada con éxito")->success();
+        return Redirect::to('/aseguradoras');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $aseguradora=Aseguradora::find($id);
+        $aseguradora = Aseguradora::find($id);
 
-        if($aseguradora != null){
+        if ($aseguradora != null) {
             return response()->json([
                 'success' => 'true',
                 'aseguradora' => $aseguradora
             ]);
-        }else{
+        } else {
             return response()->json([
                 'error' => 'No existe una aseguradora asociada al id'
-                
+
             ]);
-        } 
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-
-        dd("probando ruta");
+        $aseguradora = Aseguradora::findOrFail($id);
+        return view('administracion.aseguradoras.edit', compact('aseguradora'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  
-
+    {
         $aseguradora = Aseguradora::findOrFail($id);
-
         $aseguradora->fill($request->all());
         $aseguradora->save();
-        Session::flash('message',$aseguradora->nombre.' Fue actualizado con exito');
-        return Redirect::to('administracion/aseguradoras');
+        flash("La aseguradora '<a href='/aseguradoras/$aseguradora->id/edit'><b>$aseguradora->nombre</b></a>' ha sido actualizada con éxito")->success();
+        return Redirect::to('/aseguradoras');
 
     }
-
-
-
-
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $aseguradora = Aseguradora::findOrFail($id);
+        $nombre = $aseguradora->nombre;
         $aseguradora->delete();
-        Session::flash('message',$aseguradora->nombre.' fue eliminado con Exito');
-        return Redirect::to('administracion/aseguradoras');
-
-
+        flash("La aseguradora '<b>$nombre</b>' ha sido eliminada con éxito")->success();
+        return Redirect::to('/aseguradoras');
     }
 
 

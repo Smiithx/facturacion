@@ -18,7 +18,7 @@ class Aseguradora extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre','nit','estado'];
+    protected $fillable = ['id','nombre','nit','estado'];
    
   
     public function pacientes(){
@@ -28,4 +28,11 @@ class Aseguradora extends Model
     public function ordeservicios(){
         return $this->hasMany(ordeservicios::class);
     }
+
+    public function scopeNombre($query,$nombre){
+        if(trim($nombre) != ""){
+            $query->where('nombre',"LIKE","%$nombre%");
+        }
+    }
+
 }

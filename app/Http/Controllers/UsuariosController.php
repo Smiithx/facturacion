@@ -16,11 +16,12 @@ class UsuariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-         $usuarios = Usuarios::paginate(5);
+        $usuarios = Usuarios::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate();
         $datosusuarios = ['usuarios' => $usuarios];
-         return view("administracion.usuarios.index",$datosusuarios);    }
+        return view("administracion.usuarios.index", $datosusuarios);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -28,64 +29,61 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function buscar(Request $request)
+    public function buscar(Request $request)
     {
-            if(trim($request) != ""){    
-              $usuarios = Usuarios::where('nombre',"LIKE","%$request->nombre%")
-                 ->get();
-                $datos = ['usuarios' => $usuarios];
-               return view("administracion.usuarios.index",$datos);
-    }   
-        
+        if (trim($request) != "") {
+            $usuarios = Usuarios::where('nombre', "LIKE", "%$request->nombre%")
+                ->get();
+            $datos = ['usuarios' => $usuarios];
+            return view("administracion.usuarios.index", $datos);
+        }
+
     }
+
     public function create()
     {
-        //
+        return view('administracion.usuarios.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
-
      */
     /*QUEDE AQUI DOMINGO FALTA ENCRIPTAR LA CONTRASEÑA*/
     public function store(Request $request)
     {
-      
         $this->validate($request, [
             'nombre' => 'required|max:255',
             'documento' => 'required|max:255',
             'contraseña' => 'required',
             'confirm_contraseña' => 'required|same:contraseña',
             'cargo' => 'required'
-
-
         ]);
 
-       $firma = $request->file('firma');
- 
-       //obtenemos el nombre del archivo
-       $nombre = $firma->getClientOriginalName();
- 
-       //indicamos que queremos guardar un nuevo archivo en el disco local
-       \Storage::disk('local')->put($nombre,  \File::get($firma));
-      
-       $usuarios = Usuarios::create($request->all());
-        $usuarios->firma = $nombre;
-       $usuarios->save();
-        Session::flash('message',$usuarios->nombre.' Fue Creado con exito');
-        return Redirect::to('administracion/usuarios');
+        $firma = $request->file('firma');
 
+        //obtenemos el nombre del archivo
+        $nombre = $firma->getClientOriginalName();
 
-        /**
+        //indicamos que queremos guardar un nuevo archivo en el disco local
+        \Storage::disk('local')->put($nombre, \File::get($firma));
+
+        $usuario = Usuarios::create($request->all());
+        $usuario->firma = $nombre;
+        $usuario->save();
+        flash("El usuario <a href='/usuarios/$usuario->id/edit' target='_blank'>#$usuario->id</a> ha sido creado con éxito!")->success();
+        return Redirect::to('usuarios');
+    }
+
+    /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    }
+
     public function show($id)
     {
         //
@@ -94,59 +92,56 @@ class UsuariosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $usuarios = Usuarios::findOrFail($id);
+        return view('administracion.usuarios.edit', compact('usuarios'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-       if($request->hasFile('firma')){
-        $firma = $request->file('firma'); 
-       //obtenemos el nombre del archivo
-       $nombre = $firma->getClientOriginalName(); 
-       //indicamos que queremos guardar un nuevo archivo en el disco local
-       \Storage::disk('local')->put($nombre,  \File::get($firma));
-        $usuarios = Usuarios::findOrFail($id);
-        $usuarios->fill($request->all());
-        $usuarios->firma = $nombre;
-        $usuarios->save();
-        Session::flash('message',$usuarios->nombre.' Fue actualizado con exito dentro del has file');
-        return Redirect::to('administracion/usuarios');
+        $usuario = Usuarios::findOrFail($id);
+        if ($request->hasFile('firma')) {
+            $firma = $request->file('firma');
+            //obtenemos el nombre del archivo
+            $nombre = $firma->getClientOriginalName();
+            //indicamos que queremos guardar un nuevo archivo en el disco local
+            \Storage::disk('local')->put($nombre, \File::get($firma));
+
+            $usuario->fill($request->all());
+            $usuario->firma = $nombre;
+            $usuario->save();
+            flash("El usuario <a href='/usuarios/$usuario->id/edit'>#$usuario->id</a> ha sido actualizado con éxito!")->success();
+            return Redirect::to('/usuarios');
+        } else {
+            $usuario->fill($request->all());
+            $usuario->save();
+            flash("El usuario <a href='/usuarios/$usuario->id/edit'>#$usuario->id</a> ha sido actualizado con éxito!")->success();
+            return Redirect::to('/usuarios');
+        }
     }
-
-     else{
-         $usuarios = Usuarios::findOrFail($id);
-        $usuarios->fill($request->all());
-        $usuarios->save();
-        Session::flash('message',$usuarios->nombre.' Fue actualizado con exito en el else');
-        return Redirect::to('administracion/usuarios');
-
-
-    }
-}
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-       $usuarios = Usuarios::findOrFail($id);
+        $usuarios = Usuarios::findOrFail($id);
         $usuarios->delete();
-        Session::flash('message',$usuarios->nombre.' fue eliminado con Exito');
-        return Redirect::to('administracion/usuarios');
+        flash("El usuario #$id ha sido eliminado con éxito!")->success();
+        return Redirect::to('/usuarios');
     }
 }

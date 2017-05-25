@@ -18,7 +18,7 @@
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
                 <span class="input-group-btn">
-                    <a title="Agregar" href="/servicios/create"  class="btn btn-primary servicios">Nuevo</a>
+                    <a title="Agregar" href="/servicios/create"  class="btn btn-primary">Nuevo</a>
                 </span>
             </div>
             {!! Form::close() !!}

@@ -15,7 +15,7 @@
 Route::get('/','PacienteController@index');
 
 //----- Aseguradora ----- //
-Route::resource('Aseguradora', 'AseguradoraController');
+Route::resource('aseguradoras', 'AseguradoraController');
 
 //---Abonos--//
 Route::resource('abonos', 'AbonosController');
@@ -105,25 +105,15 @@ Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
 
 //----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);
-Route::get('administracion/usuarios', 'AdministracionController@usuarios');
-Route::get('administracion/usuarios/create', 'AdministracionController@createusuario');
-Route::get('administracion/usuarios/{id}/edit', 'AdministracionController@editusuarios');
-Route::get('administracion/aseguradoras', 'AdministracionController@aseguradoras');
-Route::get('administracion/aseguradoras/{id}/edit', 'AdministracionController@editaseguradora');
-
-Route::get('administracion/diagnosticos', 'AdministracionController@diagnosticos');
-Route::get('administracion/diagnosticos/{id}/edit', 'AdministracionController@editdiagnosticos');
-Route::get('administracion/diagnosticos/create', 'AdministracionController@creatediagnosticos');
 
 //----- Empresa ----- //
 Route::resource('empresa', 'EmpresaController');
 
 //----- Diagnosticos ----- //
-Route::resource('Diagnosticos', 'DiagnosticosController', ['only' => ['create','store','destroy','update']]);
+Route::resource('diagnosticos', 'DiagnosticosController');
 
 //----- Usuarios ----- //
-Route::resource('Usuarios', 'UsuariosController', ['only' => ['create','store','destroy','update']]);
-Route::post('Usuarios/buscar','UsuariosController@buscar');
+Route::resource('usuarios', 'UsuariosController');
 
 //----- Test ----- //
 Route::resource("test","TestController");

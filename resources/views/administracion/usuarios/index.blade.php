@@ -2,66 +2,68 @@
 
 @section('menu')
 
-@include('administracion.partials.menu',["pagina" => "Usuarios", "seccion" => "usuario"])
+    @include('administracion.partials.menu',["pagina" => "Usuarios", "seccion" => "usuario"])
 
 @endsection
 
 @section('administracion')
-<div>
-    <h3 class="text-center">Administrar Usuario</h3>
-    @if (Session::has('message'))
-    <p class="alert alert-success">{{Session::get('message')}}</p>
-    @endif
-    <a title="Agregar" href="/administracion/usuarios/create"  class="btn btn-primary pull-right usuarios">Nuevo</a>
-    <br>
-    <br>
-    <table class="table table-striped table-bordered table-hover table-responsive" id="tabla_usuarios">
-        <thead style="color:#fff; background: #3b5998;">
-            <tr>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Documento</th>
-                <th class="text-center">Firma</th>
-                <th class="text-center">Cargo</th>
-                <th class="text-center">Acción</th>
-            </tr>
-        </thead>
-
-        <form action="/Usuarios/buscar" method="POST">
-            <div class="input-group">
-                <input type="text-center" placeholder="Nombre"  class="form-control" name="nombre" >
-                <span class="input-group-btn">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover" id="tabla_usuarios">
+            <caption class="text-center">
+                {!! Form::open(['route' => 'usuarios.index', 'method' => 'GET', 'role' => 'search']) !!}
+                <div class="input-group">
+                    {!! Form::text('nombre',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                    <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
-                {{ csrf_field() }}
-            </div>
-            <br>
-        </form>
-        <tbody>
-
-
-            @foreach($usuarios as $usuario)
+                    <span class="input-group-btn">
+                    <a title="Agregar" href="/usuarios/create" class="btn btn-primary">Nuevo</a>
+                </span>
+                </div>
+                {!! Form::close() !!}
+                <br>
+            </caption>
+            <thead>
             <tr>
-                <td>{{ $usuario->nombre }}</td>
-                <td>{{ $usuario->documento }}</td>
-                <td><img width="50px" height="50px" src="/imagenes/{{ $usuario->firma }}" alt="imagenes/{{$usuario->firma}}"></td>
-
-                <td>{{ $usuario->cargo }}</td>
-
-                <td>    <a style="float: left;" href="/administracion/usuarios/{{$usuario->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
-                    <i class='glyphicon glyphicon-edit'></i>
-                    </a>
-                    {!! Form::open(['route' => ['Usuarios.destroy', $usuario->id], 'method' => 'delete']) !!}
-                    <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar' target="_blank">
-                        <i class='glyphicon glyphicon-remove'></i>
-                    </button>
-                    {!! Form::close() !!}</td>
+                <th class="text-center">#</th>
+                <th>Nombre</th>
+                <th >Documento</th>
+                <th class="text-center">Firma</th>
+                <th>Cargo</th>
+                <th class="text-center">Acción</th>
             </tr>
+            </thead>
+            <tbody>
+            @foreach($usuarios as $usuario)
+                <tr>
+                    <td class="text-center">{{ $usuario->id }}
+                    <td>{{ $usuario->nombre }}</td>
+                    <td>{{ $usuario->documento }}</td>
+                    <td class="text-center">
+                        <img class="img-responsive firma" src="/imagenes/{{ $usuario->firma }}"
+                             alt="imagenes/{{$usuario->firma}}">
+                    </td>
+                    <td>{{ $usuario->cargo }}</td>
+
+                    <td class="acciones">
+                        <a href="/usuarios/{{$usuario->id}}/edit" class="btn btn-success"
+                           data-toggle='tooltip' title='Editar'>
+                            <i class='glyphicon glyphicon-edit'></i>
+                        </a>
+                        {!! Form::open(['route' => ['usuarios.destroy', $usuario->id], 'method' => 'delete']) !!}
+                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'
+                                target="_blank">
+                            <i class='glyphicon glyphicon-remove'></i>
+                        </button>
+                        {!! Form::close() !!}</td>
+                </tr>
             @endforeach
-
-
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+        <div class="container-fluid text-center">
+            {!! $usuarios->render() !!}
+        </div>
+    </div>
 
 
 @stop

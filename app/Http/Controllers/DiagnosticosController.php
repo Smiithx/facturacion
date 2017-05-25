@@ -16,9 +16,11 @@ class DiagnosticosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    
+        $diagnosticos = Diagnosticos::codigo($request->get('codigo'))->paginate(10);
+        $datos = ['diagnosticos' => $diagnosticos];
+        return view("administracion.diagnosticos.index", $datos);
     }
 
     /**
@@ -28,7 +30,7 @@ class DiagnosticosController extends Controller
      */
     public function create()
     {
-        //
+        return view('administracion.diagnosticos.create');
     }
 
     /**
@@ -40,22 +42,15 @@ class DiagnosticosController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'codigo' => 'required|max:255',
+            'codigo' => 'required|max:255|unique:diagnosticos,codigo',
             'descripcion' => 'required|max:255',
             'estado' => 'required'            
         ]);
         $diagnostico = Diagnosticos::create($request->all());
-        $diagnosticos = Diagnosticos::paginate(10);
-        $datos = ['diagnosticos' => $diagnosticos];
-
    
-        Session::flash('message',$diagnostico->descripcion.' Fue creada con exito');
-        return Redirect::to('administracion/diagnosticos');
+        flash("El diagnostico '<a href='/diagnosticos/$diagnostico->id/edit'><b>$diagnostico->codigo</b></a>' ha sido creado con éxito")->success();
+        return Redirect::to('/diagnosticos');
     }
-  
-
-
-
 
 
     /**
@@ -77,7 +72,8 @@ class DiagnosticosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $diagnosticos = Diagnosticos::findOrFail($id);
+        return view('administracion.diagnosticos.edit', compact('diagnosticos'));
     }
 
     /**
@@ -89,12 +85,33 @@ class DiagnosticosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $diagnosticos = Diagnosticos::findOrFail($id);
 
-        $diagnosticos->fill($request->all());
-        $diagnosticos->save();
-        Session::flash('message',$diagnosticos->codigo.' Fue actualizado con exito');
-        return Redirect::to('administracion/diagnosticos');
+        $diagnostico = Diagnosticos::findOrFail($id);
+
+        if(isset($request->codigo)){
+            if($diagnostico->codigo != $request->codigo){
+                $this->validate($request, [
+                    'codigo' => 'required|max:255|unique:diagnosticos,codigo',
+                    'descripcion' => 'required|max:255',
+                    'estado' => 'required'
+                ]);
+            }else{
+                $this->validate($request, [
+                    'codigo' => 'required|max:255',
+                    'descripcion' => 'required|max:255',
+                    'estado' => 'required'
+                ]);
+            }
+        }else{
+            $this->validate($request, [
+                'codigo' => 'required|max:255|unique:diagnosticos,codigo'
+            ]);
+        }
+
+        $diagnostico->fill($request->all());
+        $diagnostico->save();
+        flash("El diagnostico '<a href='/diagnosticos/$diagnostico->id/edit'><b>$diagnostico->codigo</b></a>' ha sido actualizado con éxito")->success();
+       return Redirect::to('/diagnosticos');
     }
 
     /**
@@ -105,9 +122,10 @@ class DiagnosticosController extends Controller
      */
     public function destroy($id)
     {
-        $diagnosticos = Diagnosticos::findOrFail($id);
-        $diagnosticos->delete();
-        Session::flash('message',$diagnosticos->codigo.' fue eliminado con Exito');
-        return Redirect::to('administracion/diagnosticos');
+        $diagnostico = Diagnosticos::findOrFail($id);
+        $codigo=$diagnostico->codigo;
+        $diagnostico->delete();
+        flash("El diagnostico '<b>$diagnostico->codigo</b>' ha sido eliminado con éxito")->success();
+        return Redirect::to('/diagnosticos');
     }
 }

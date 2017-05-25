@@ -16,8 +16,14 @@ class Diagnosticos extends Model
     protected $fillable = [
         'codigo',     
         'descripcion',
-        'estado'
-    
-    
+        'estado',
+        'id'
     ];
+
+    public function scopeCodigo($query,$codigo){
+        if(trim($codigo) != ""){
+            $query->where('codigo',"LIKE","%$codigo%");
+        }
+    }
+
 }

@@ -11,86 +11,13 @@ use App\ordenservicios;
 use App\OrdenServicio_items;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
+
 class ReportesController extends Controller
 {
 
 
-
-public function reportefacturacion() {
-    $aseguradoras = Aseguradora::where('estado', 'Activo')->get();
-     $contratos = Contratos::where('estado', 'Activo')->get();
-             $contratoss = ['contratos' => $contratos];
-            return view('reportes.totalfacturado',compact('contratos','aseguradoras'));
-
-}
-    
-     public function reportefacturacionpdf() {
-     $data =  [
-            'quantity'      => '1' ,
-            'description'   => 'some ramdom text',
-            'price'   => '500',
-            'total'     => '500'
-        ];
-
-     
-$view =  \View::make('reportes.pdf.totalfacturado', compact('data'))->render();
-              $pdf = \App::make('dompdf.wrapper');
-     $pdf->loadHTML($view);
-      return $pdf->stream('totalfacturado');
-
-        //$pdf = PDF::loadView('reportes.pdf.totalfacturado');
-        //return $pdf->Stream('totalfacturado',compact('facturas'));
-     }
-    
-public function Ordenesporfacturar() {
-   return view("reportes.Ordenesporfacturar");
-
-}
-
-public function Ordenesporfacturarpdf($id) {
-dd("enntro");
- //$pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
-   //   return $pdf->Stream('Ordenesporfacturar');
-
-}
-
-public function Atencionesrealizadas() {
-   return view("reportes.Atencionesrealizadas");
-
-}
-
-public function Atencionesrealizadaspdf() {
-  $pdf = PDF::loadView('reportes.pdf.Atencionesrealizadas');
-         return $pdf->Stream('Atencionesrealizadas');
-}
-public function Imprimirfactura() {
-   return view("reportes.Imprimirfactura");
-
-}
-public function Imprimirfacturapdf() {
-   $pdf = PDF::loadView('reportes.pdf.Imprimirfactura');
-         return $pdf->Stream('Imprimirfactura');
-
-}
-public function Cuentadecobro() {
-   return view("reportes.Cuentadecobro");
-
-}
-public function Cuentadecobropdf() {
-     $pdf = PDF::loadView('reportes.pdf.Cuentadecobro');
-         return $pdf->Stream('Cuentadecobro');
-
-}
-  public function radicacion() {
-   return view("reportes.Radicacion");
-
-}
-public function radicacionpdf() {
-     $pdf = PDF::loadView('reportes.pdf.Radicacion');
-         return $pdf->Stream('Radicacion');
-
-} 
     /**
      * Display a listing of the resource.
      *
@@ -98,7 +25,7 @@ public function radicacionpdf() {
      */
     public function index()
     {
-       return view("reportes.index");
+        return Redirect::to('/reportes/totalfacturado');
     }
 
     /**
@@ -108,24 +35,24 @@ public function radicacionpdf() {
      */
     public function create()
     {
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-    
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -136,7 +63,7 @@ public function radicacionpdf() {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -147,8 +74,8 @@ public function radicacionpdf() {
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -159,11 +86,104 @@ public function radicacionpdf() {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+
+    public function reportefacturacion()
+    {
+        $aseguradoras = Aseguradora::where('estado', 'Activo')->get();
+        $contratos = Contratos::where('estado', 'Activo')->get();
+        $contratoss = ['contratos' => $contratos];
+        return view('reportes.totalfacturado', compact('contratos', 'aseguradoras'));
+    }
+
+    public function reportefacturacionpdf()
+    {
+        $data = [
+            'quantity' => '1',
+            'description' => 'some ramdom text',
+            'price' => '500',
+            'total' => '500'
+        ];
+
+
+        $view = \View::make('reportes.pdf.totalfacturado', compact('data'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('totalfacturado');
+
+        //$pdf = PDF::loadView('reportes.pdf.totalfacturado');
+        //return $pdf->Stream('totalfacturado',compact('facturas'));
+    }
+
+    public function Ordenesporfacturar()
+    {
+        return view("reportes.Ordenesporfacturar");
+
+    }
+
+    public function Ordenesporfacturarpdf($id)
+    {
+        dd("enntro");
+        //$pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
+        //   return $pdf->Stream('Ordenesporfacturar');
+
+    }
+
+    public function Atencionesrealizadas()
+    {
+        return view("reportes.Atencionesrealizadas");
+
+    }
+
+    public function Atencionesrealizadaspdf()
+    {
+        $pdf = PDF::loadView('reportes.pdf.Atencionesrealizadas');
+        return $pdf->Stream('Atencionesrealizadas');
+    }
+
+    public function Imprimirfactura()
+    {
+        return view("reportes.Imprimirfactura");
+
+    }
+
+    public function Imprimirfacturapdf()
+    {
+        $pdf = PDF::loadView('reportes.pdf.Imprimirfactura');
+        return $pdf->Stream('Imprimirfactura');
+
+    }
+
+    public function Cuentadecobro()
+    {
+        return view("reportes.Cuentadecobro");
+
+    }
+
+    public function Cuentadecobropdf()
+    {
+        $pdf = PDF::loadView('reportes.pdf.Cuentadecobro');
+        return $pdf->Stream('Cuentadecobro');
+
+    }
+
+    public function radicacion()
+    {
+        return view("reportes.Radicacion");
+
+    }
+
+    public function radicacionpdf()
+    {
+        $pdf = PDF::loadView('reportes.pdf.Radicacion');
+        return $pdf->Stream('Radicacion');
+
     }
 }

@@ -8,13 +8,13 @@
             <a href="/administracion">Datos de la empresa</a>
         </li>
         <li class="{{ $seccion == 'usuario' ? 'active' : ''}}">
-            <a href="/administracion/usuarios">Usuarios</a>
+            <a href="/usuarios">Usuarios</a>
         </li>
         <li class="{{ $seccion == 'servicio' ? 'active' : ''}}">
             <a href="/servicios">Servicios</a>
         </li>
         <li class="{{ $seccion == 'aseguradora' ? 'active' : ''}}">
-            <a href="/administracion/aseguradoras">Aseguradoras</a>
+            <a href="/aseguradoras">Aseguradoras</a>
         </li>
         <li class="{{ $seccion == 'contrato' ? 'active' : ''}}">
             <a href="/contratos">Contratos</a>
@@ -23,7 +23,7 @@
             <a href="/manuales">Manuales</a>
         </li>	
         <li class="{{ $seccion == 'diagnostico' ? 'active' : ''}}">
-            <a href="/administracion/diagnosticos">Diagnosticos</a>
+            <a href="/diagnosticos">Diagnosticos</a>
         </li>
     </ul>
 </div>

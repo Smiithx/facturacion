@@ -17,7 +17,7 @@
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
                     <span class="input-group-btn">
-                    <a title="Agregar" href="/contratos/create" class="btn btn-primary servicios">Nuevo</a>
+                    <a title="Agregar" href="/contratos/create" class="btn btn-primary">Nuevo</a>
                 </span>
                 </div>
                 {!! Form::close() !!}
@@ -29,7 +29,7 @@
                 <th class="text-center">Nombre</th>
                 <th class="text-center">NIT</th>
                 <th class="text-center">Días V.</th>
-                <th class="text-center">Manual.</th>
+                <th class="text-center">Manual</th>
                 <th class="text-center">Porcentaje</th>
                 <th class="text-center">Estado</th>
                 <th class="text-center">Acciones</th>

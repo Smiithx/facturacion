@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Aseguradora;
 use App\Empresa;
 use App\Usuarios;
@@ -20,46 +21,19 @@ class AdministracionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index()
+    {
         $empresa = Empresa::find(1);
-        return view('administracion.empresa.index',compact('empresa'));
+        return view('administracion.empresa.index', compact('empresa'));
+    }
+    public function creatediagnosticos()
+    {
+
     }
 
-    public function aseguradoras(){
-        $aseguradoras = Aseguradora::paginate(5);
-        $datos = ['aseguradoras' => $aseguradoras];
-        return view("administracion.aseguradoras.index",$datos);
+    public function editdiagnosticos($id)
+    {
+
     }
 
-    public function editaseguradora($id){
-        $aseguradora = Aseguradora::findOrFail($id);         
-        return view('administracion.aseguradoras.edit',compact('aseguradora'));  
-    }
-
-    public function diagnosticos(){
-        $diagnosticos = Diagnosticos::paginate(5);
-        $datos = ['diagnosticos' => $diagnosticos];
-        return view("administracion.diagnosticos.index",$datos);
-    }
-
-    public function creatediagnosticos(){        
-        return view('administracion.diagnosticos.create');}
-
-    public function editdiagnosticos($id){
-        $diagnosticos = Diagnosticos::findOrFail($id);        
-        return view('administracion.diagnosticos.edit',compact('diagnosticos'));}
-
-    public function usuarios(){
-        $usuarios = Usuarios::all();
-        $datosusuarios = ['usuarios' => $usuarios];
-        return view("administracion.usuarios.index",$datosusuarios); 
-    }
-
-    public function createusuario(){        
-        return view('administracion.usuarios.create'); }
-
-    public function editusuarios($id){
-        $usuarios = Usuarios::findOrFail($id);        
-        return view('administracion.usuarios.edit',compact('usuarios'));}
-    
 }

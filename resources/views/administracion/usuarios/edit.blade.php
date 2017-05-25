@@ -2,32 +2,31 @@
 
 @section('menu')
 
-@include('administracion.partials.menu',["pagina" => "Editar usuario", "seccion" => "usuario"])
+    @include('administracion.partials.menu',["pagina" => "Editar usuario", "seccion" => "usuario"])
 
 @endsection
 
 @section('administracion')
-<div>
-
-    <h3 class="text-center">Editar Usuario: {{ $usuarios->nombre }}</h3>
-
-    {!! Form::model($usuarios, ['route' => ['Usuarios.update',$usuarios->id], 'method' => 'put','enctype' => 'multipart/form-data']) !!}
-    {!! Form::label('nombre','Nombre Usuario')   !!}
-    {!! Form::text('nombre',null,['class' => 'form-control'])!!} 
-
-    {!! Form::label('documento','Documento')   !!}
-    {!! Form::text('documento',null,['class' => 'form-control'])!!}
-
-    {!! Form::label('firma','Firma')   !!}	
-    {!! Form::file('firma',null,['class' => 'form-control']) !!}
-
-    {!! Form::hidden('file2',null,['class' => 'form-control', 'readonly'])   !!}
-
-    {!! Form::label('cargo','cargo')   !!}  
-    {!! Form::select('cargo',['Medicos' => 'Medicos', 'Enfermeras' => 'Enfermeras'],null,['class' => 'form-control'])   !!}   
-    <br>          				
-    <button type="submit" class="btn btn-primary pull-right col-xs-3">Actualizar</button>	
-
+    {!! Form::model($usuarios, ['route' => ['usuarios.update',$usuarios->id], 'method' => 'put','enctype' => 'multipart/form-data']) !!}
+    <div class="form-group">
+        {!! Form::label('nombre','Nombre')   !!}
+        {!! Form::text('nombre',null,['class' => 'form-control'])!!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('documento','Documento')   !!}
+        {!! Form::text('documento',null,['class' => 'form-control'])!!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('firma','Firma')   !!}
+        {!! Form::file('firma',['class' => 'form-control']) !!}
+        {!! Form::hidden('file2',null,['class' => 'form-control', 'readonly'])   !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('cargo','Cargo')   !!}
+        {!! Form::select('cargo',['Medicos' => 'Medicos', 'Enfermeras' => 'Enfermeras','Otros' => 'Otros'],null,['class' => 'form-control'])   !!}
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+    </div>
     {!! Form::close() !!}
-
-</div> @stop
+@stop

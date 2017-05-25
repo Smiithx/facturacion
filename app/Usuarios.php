@@ -15,12 +15,18 @@ class Usuarios extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'nombre',
         'documento',
         'contraseña',
         'firma',
         'cargo'
     ];
-    
+
+    public function scopeNombre($query,$nombre){
+        if(trim($nombre) != ""){
+            $query->where('nombre',"LIKE","%$nombre%");
+        }
+    }
 
 }
