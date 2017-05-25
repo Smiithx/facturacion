@@ -96,7 +96,7 @@ Route::get('facturas/reporte/factura', 'FacturaController@reporteFactura');
 Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFacturaShow');
 Route::get('facturas/reporte/contrato', 'FacturaController@reporteContrato');
 Route::get('facturas/reporte/contrato/{contrato}/{desde}/{hasta}', 'FacturaController@reporteContratoShow');
-Route::get('facturas/imprimir/{desde}/{hasta}', 'FacturaController@imprimir');
+Route::get('facturas/imprimir/{anulado}/{desde}/{hasta}', 'FacturaController@imprimir');
 Route::get('facturas/{id}/anular', 'FacturaController@anular');
 
 
@@ -137,7 +137,7 @@ Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfact
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');
 Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
-Route::get('reportes/Imprimirfactura/pdf', 'ReportesController@Imprimirfacturapdf');
+Route::get('reportes/imprimirfacturas/pdf/{id}', 'ReportesController@Imprimirfacturapdf');
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
 Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
 Route::get('reportes/radicacion', 'ReportesController@radicacion');

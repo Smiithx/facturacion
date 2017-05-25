@@ -150,14 +150,18 @@ class ReportesController extends Controller
 
     public function Imprimirfactura()
     {
+
+
         return view("reportes.Imprimirfactura");
 
     }
 
-    public function Imprimirfacturapdf()
+    public function Imprimirfacturapdf($id)
     {
-        $pdf = PDF::loadView('reportes.pdf.Imprimirfactura');
+       
+       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura');
         return $pdf->Stream('Imprimirfactura');
+     
 
     }
 

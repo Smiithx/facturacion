@@ -45,6 +45,8 @@ $(function () {
     var imprimirfactura_fecha_hasta = $("#imprimirfactura_fecha_hasta");
     var btn_imprimirfactura_buscar = $("#btn_imprimirfactura_buscar");
     var imprimirfactura_tbody = $("#imprimirfactura_tbody");
+    var imprimirfactura_anulado = $("#imprimirfactura_anulado");
+
 
     //-- Fin de declarar variables ======================= //
 
@@ -112,7 +114,8 @@ $(function () {
 // Imprimir Factura
 
     btn_imprimirfactura_buscar.on("click", function () {
-        var url = "/facturas/imprimir/"  + imprimirfactura_fecha_desde.val() +
+
+        var url = "/facturas/imprimir/" + imprimirfactura_anulado.val() + "/" + imprimirfactura_fecha_desde.val() +
             "/" + imprimirfactura_fecha_hasta.val(); //la ruta que se desea ir y pasando los parametros
         $.ajax({
             url: url,

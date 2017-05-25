@@ -25,9 +25,15 @@
             </span>
         </div>
     </div>
-    <div class="form-group col-md-1">
-        <label></label>
-        <button type="button" id="btn_imprimirfactura_buscar" name="btn_imprimirfactura_buscar" class="btn btn-success">Buscar</button>
+    <div class="form-group col-md-3">
+     <label>Mostrar Facturas Anuladas</label>
+    <select class="form-control" id="imprimirfactura_anulado" ><option value="0" selected>No</option><option value="1" >Si</option></select>
+       
+   
+
+    </div><div class="form-group col-md-3">
+        <label>&nbsp</label>
+        <button type="button" id="btn_imprimirfactura_buscar" name="btn_imprimirfactura_buscar" class="btn btn-success form-control">Buscar</button>
     </div>
 </div>
 <div class="table-responsive">

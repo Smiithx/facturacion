@@ -428,21 +428,22 @@ class FacturaController extends Controller
     }
 
     //---------------- reporte  Imprimir Facturas-------------------------------//
-    public function imprimir($desde, $hasta)
-    {
-               
+    public function imprimir($anulado,$desde, $hasta)
+    {          
  
             $facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "factura_items.id_orden_servicio", "ordendeservicio.aseguradora_id",  "ordendeservicio.id_contrato", "ordendeservicio.nombre")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->where('facturas.anulado', $anulado)
                 ->whereDate('facturas.created_at', '>=', $desde)
-                ->whereDate('facturas.created_at', '<=', $hasta)->get();  
+                ->whereDate('facturas.created_at', '<=', $hasta)->get(); 
+
+       
 
                 $imprimirfactura_tbody ="";
 
                 foreach ($facturas as $factura) {
-                     $aseguradoras = Aseguradora::where('id',$factura->aseguradora_id)->get();
-                  
+                
 
                      $imprimirfactura_tbody .= "<tr> 
                     <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td>
@@ -455,14 +456,13 @@ class FacturaController extends Controller
                   <a href='/facturas/$factura->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Anular'>
                     <i class='glyphicon glyphicon-remove'></i>
                    </a>
-                 
-             </td>
-
+                    <a href='/reportes/imprimirfacturas/pdf/$factura->id'' class='btn btn-success' data-toggle='tooltip' title='Imprimir'>
+                    <i class='glyphicon glyphicon-print'></i>
+                   </a>                 
+                    </td>
                     </tr>"; 
 
-                }
-
-           
+                }                 
 
                 if ($imprimirfactura_tbody != "") {
                      return response()->json([
