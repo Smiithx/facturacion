@@ -53,7 +53,7 @@ class AbonosController extends Controller
 
         if (count($carteras) >= 1) {          // si encuentra cartera
 
-            if($carteras[0]->valor_saldo >= 1){ //si el saldo es mayor que 0
+            if($carteras[0]->valor_saldo > 0){ //si el saldo es mayor que 0
 
                 $abonos = Abonos::create($request->all());// creo el abono
                 $carteras = Cartera::where('id_factura',$request->id_factura)->get();//busco la cartera para actualizar el monto
@@ -66,13 +66,13 @@ class AbonosController extends Controller
                 return Redirect::to('cartera/editar');
             }
             else{ //El saldo es igual que 0
-                flash('la factura no tiene saldo pendiente!');
+                flash('la factura no tiene saldo pendiente!')->error();
                 return Redirect::to('cartera/editar');
             }
         }
         else{ //si no encuentro cartera envio un mensaje
 
-            flash('la factura no tiene cartera!');
+            flash('la factura no tiene cartera!')->error();
             return Redirect::to('cartera/editar');
         }
 
@@ -164,7 +164,7 @@ class AbonosController extends Controller
                     return Redirect::to("/abonos");
             }
             else{
-                flash('Ya esta factura fue cancelada, Verifique!');
+                flash('Ya esta factura fue cancelada, Verifique!')->error();
                 return Redirect::to("/abonos");
             }
     }

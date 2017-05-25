@@ -71,7 +71,6 @@
             </tr>
             </thead>
             <tbody id="totalfacturado_tbody">
-
             </tbody>
             <tfoot>
             <tr>
@@ -82,7 +81,7 @@
         </table>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-primary" href="/reportes/totalfacturado/pdf/{{$aseguradora->id}}" target="_blank">Imprimir</a>
+        <a class="btn btn-primary" href="/reportes/totalfacturado/pdf/" target="_blank">Imprimir</a>
     </div>
     <script src="{{asset('assets/js/factura.js')}}"></script>
 

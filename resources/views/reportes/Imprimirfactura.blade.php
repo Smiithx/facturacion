@@ -10,16 +10,16 @@
     <div class="form-group col-md-3">
         <label>Fecha inicio:</label>
         <div class='input-group date datepicker' id='datetimepicker1'>
-            <input type='text' name="fecha_inicio" id="fecha_inicio" class="form-control" placeholder="Fecha inicio"/>
+            <input type='text' name="imprimirfactura_fecha_inicio" id="imprimirfactura_fecha_desde" class="form-control" placeholder="Fecha inicio"/>
             <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
+                <span class="glyphicon glyphicon-calendar"></span>
                 </span>
         </div>
     </div>
     <div class="form-group col-md-3">
         <label>Fecha fin:</label>
         <div class='input-group date datepicker' id='datetimepicker2'>
-            <input type='text' name="fecha_fin" id="fecha_fin" class="form-control" placeholder="Fecha fin"/>
+            <input type='text' name="imprimirfactura_fecha_fin" id="imprimirfactura_fecha_hasta" class="form-control" placeholder="Fecha fin"/>
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group col-md-1">
         <label></label>
-        <input value="Buscar" type="button" id="b" class="btn btn-success">
+        <button type="button" id="btn_imprimirfactura_buscar" name="btn_imprimirfactura_buscar" class="btn btn-success">Buscar</button>
     </div>
 </div>
 <div class="table-responsive">
@@ -39,10 +39,11 @@
             <th class="text-center">Nombre</th>
             <th class="text-center">Aseguradora</th>
             <th class="text-center">Contrato</th>
-            <th class="text-center">Acción</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">Acciones</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="imprimirfactura_tbody">
 
         </tbody>
     </table>
@@ -50,6 +51,7 @@
 <div class="modal-footer">
     <a class="btn btn-primary" href="/reportes/Imprimirfactura/pdf" target="_blank">Imprimir</a>
 </div>
+    <script src="{{asset('assets/js/factura.js')}}"></script>
 
 @stop
 <!-- Termina reporte 4 -->

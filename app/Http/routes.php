@@ -48,6 +48,7 @@ Route::get('ordenservicio/buscar/{contrato}/{desde}/{hasta}', 'ordenserviciocont
 Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontroller@ordenes_facturar');
 Route::get('ordenservicio/factura/{factura}', 'ordenserviciocontroller@factura');
 Route::get('ordenservicio/documento/{documento}', 'ordenserviciocontroller@documento');
+Route::get('ordenservicio/{id}/anular', 'ordenserviciocontroller@anular');
 
 //----- Facturas ----- //
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
@@ -58,6 +59,7 @@ Route::get('facturas/reporte/factura', 'FacturaController@reporteFactura');
 Route::get('facturas/reporte/factura/{factura}', 'FacturaController@reporteFacturaShow');
 Route::get('facturas/reporte/contrato', 'FacturaController@reporteContrato');
 Route::get('facturas/reporte/contrato/{contrato}/{desde}/{hasta}', 'FacturaController@reporteContratoShow');
+Route::get('facturas/imprimir/{desde}/{hasta}', 'FacturaController@imprimir');
 
 //----- Radicacion ----- // 
 Route::resource('radicacion', 'RadicacionController', ['only' => ['create','store']]);
@@ -73,7 +75,6 @@ Route::get('cartera/reporte/{factura}', 'CarteraController@reportefactura');
 Route::get('cartera/buscar/{factura}', 'CarteraController@reportebuscar');
 Route::post('cartera/update', 'CarteraController@update');
 Route::get('cartera/editar', 'CarteraController@editar');
-
 
 //----- Glosas ----- //
 Route::resource('glosas', 'GlosasController', ['only' => ['create','store','edit','destroy','update']]);
@@ -92,7 +93,7 @@ Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
 Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
 
 Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar');
-Route::get('reportes/Ordenesporfacturar/pdf/{id}', 'ReportesController@Ordenesporfacturarpdf');
+Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfacturarpdf');
 
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');

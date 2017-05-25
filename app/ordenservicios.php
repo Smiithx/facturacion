@@ -19,7 +19,7 @@ class ordenservicios extends Model
      *
      * @var array
      */
-    protected $fillable = ['nombre', 'documento', 'aseguradora_id','id_contrato','orden_total','id_paciente','created_at'];
+    protected $fillable = ['nombre', 'documento', 'aseguradora_id','id_contrato','orden_total','id_paciente','anulada','created_at'];
 
     public function aseguradora(){
         return $this->belongsTo(Aseguradora::class);
