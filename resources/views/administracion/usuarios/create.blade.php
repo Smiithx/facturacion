@@ -8,38 +8,38 @@
 
 @section('administracion')
     <div class="container-fluid">
-        <form action="/usuarios" method="POST" enctype="multipart/form-data">
+        <form action="{{route("register")}}" method="POST">
             {!!csrf_field() !!}
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre"  value="{{old('nombre')}}">
+                <input required type="text" class="form-control" id="nombre" name="nombre"  value="{{old('nombre')}}">
             </div>
             <div class="form-group">
                 <label for="nit">Documento:</label>
-                <input type="text" class="form-control" id="documento" name="documento"  value="{{old('documento')}}">
+                <input required type="text" class="form-control" id="documento" name="documento"  value="{{old('documento')}}">
             </div>
             <div class="form-group">
-                <label for="contraseña">Contraseña:</label>
-                <input type="password" class="form-control" id="contraseña" name="contraseña"  value="{{old('contraseña')}}">
+                <label for="nit">Correo:</label>
+                <input required type="email" class="form-control" id="email" name="email"  value="{{old('email')}}">
             </div>
             <div class="form-group">
-                <label for="confirm_contraseña">Confirmar contraseña:</label>
-                <input type="password" class="form-control" id="confirm_contraseña" name="confirm_contraseña"  value="{{old('confirm_contraseña')}}">
+                <label for="password">Contraseña:</label>
+                <input required type="password" class="form-control" id="password" name="password"  value="{{old('contraseña')}}">
             </div>
             <div class="form-group">
-                <label for="firma">Firma:</label>
-                <input type="file" class="form-control" id="firma" name="firma"  value="{{old('firma')}}">
+                <label for="password_confirmation">Confirmar contraseña:</label>
+                <input required type="password" class="form-control" id="password_confirmation" name="password_confirmation"  value="{{old('password_confirm')}}">
             </div>
             <div class="form-group">
                 <label for="cargo">Cargo:</label>
-                <select class="form-control" id="cargo"  name="cargo" >
-                    <option value="Medicos" {{ old('cargo') == "Medicos" ? "selected" : ""}} >Medico</option>
-                    <option value="Enfermeras" {{ old('cargo') == "Enfermeras" ? "selected" : ""}} >Enfermera</option>
-                    <option value="Otros" {{ old('cargo') == "Otros" ? "selected" : ""}} >Otro</option>
+                <select required class="form-control" id="cargo"  name="cargo" >
+                    <option value="medico" {{ old('cargo') == "medico" ? "selected" : ""}} >Medico</option>
+                    <option value="enfermera" {{ old('cargo') == "enfermera" ? "selected" : ""}} >Enfermera</option>
+                    <option value="otro" {{ old('cargo') == "otro" ? "selected" : ""}} >Otro</option>
                 </select>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Crear usuario</button>
+                <button type="submit" class="btn btn-primary">Registrar</button>
             </div>
         </form>
     </div>

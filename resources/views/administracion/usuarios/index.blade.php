@@ -12,7 +12,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => 'usuarios.index', 'method' => 'GET', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('nombre',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                    {!! Form::text('name',$name, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
@@ -27,7 +27,7 @@
             <tr>
                 <th class="text-center">#</th>
                 <th>Nombre</th>
-                <th >Documento</th>
+                <th>Documento</th>
                 <th class="text-center">Firma</th>
                 <th>Cargo</th>
                 <th class="text-center">Acción</th>
@@ -37,25 +37,24 @@
             @foreach($usuarios as $usuario)
                 <tr>
                     <td class="text-center">{{ $usuario->id }}
-                    <td>{{ $usuario->nombre }}</td>
+                    <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->documento }}</td>
                     <td class="text-center">
                         <img class="img-responsive firma" src="/imagenes/{{ $usuario->firma }}"
                              alt="imagenes/{{$usuario->firma}}">
                     </td>
                     <td>{{ $usuario->cargo }}</td>
-
                     <td class="acciones">
                         <a href="/usuarios/{{$usuario->id}}/edit" class="btn btn-success"
                            data-toggle='tooltip' title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
                         {!! Form::open(['route' => ['usuarios.destroy', $usuario->id], 'method' => 'delete']) !!}
-                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'
-                                target="_blank">
+                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'>
                             <i class='glyphicon glyphicon-remove'></i>
                         </button>
-                        {!! Form::close() !!}</td>
+                        {!! Form::close() !!}
+                    </td>
                 </tr>
             @endforeach
             </tbody>

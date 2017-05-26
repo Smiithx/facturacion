@@ -13,7 +13,7 @@ use App\OrdenServicio_Items;
 use App\Factura;
 use App\FacturaItems;
 use App\Diagnosticos;
-use App\Usuarios;
+use App\User;
 use App\Glosas;
 use App\Manuales;
 
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         Empresa::truncate();
         FacturaItems::truncate();
         Factura::truncate();
-        Usuarios::truncate();
+        User::truncate();
          \App\Glosas::truncate();
 
         //$this->call('Cie10Seeder');

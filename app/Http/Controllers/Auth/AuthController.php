@@ -24,6 +24,10 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectPath = '/';
+    protected $loginPath = '/login';
+    protected $redirectAfterLogout = '/login';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -46,6 +50,8 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
+            'documento' => 'required|max:50',
+            'cargo' => 'required'
         ]);
     }
 
@@ -61,17 +67,20 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'documento' => $data['documento'],
+            'cargo' => $data['cargo']
         ]);
     }
-
+/*
     public function loginPath()
     {
-        return route("login");
+        return route('login');
     }
 
-    public function redirectPath()
+    public function getLogout()
     {
-        return route("home");
-    }
+        Auth::logout();
+        return route('login');
+    }*/
 
 }

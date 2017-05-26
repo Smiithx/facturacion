@@ -8,7 +8,7 @@
             <a href="/administracion">Datos de la empresa</a>
         </li>
         <li class="{{ $seccion == 'usuario' ? 'active' : ''}}">
-            <a href="/usuarios">Usuarios</a>
+            <a href="{{route("usuarios.index")}}">Usuarios</a>
         </li>
         <li class="{{ $seccion == 'servicio' ? 'active' : ''}}">
             <a href="/servicios">Servicios</a>

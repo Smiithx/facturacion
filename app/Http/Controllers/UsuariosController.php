@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Usuarios;
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class UsuariosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +24,8 @@ class UsuariosController extends Controller
      */
     public function index(Request $request)
     {
-        $usuarios = Usuarios::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate();
-        $datosusuarios = ['usuarios' => $usuarios];
+        $usuarios = User::name($request->get('name'))->orderBy('id', 'DES')->paginate();
+        $datosusuarios = ['usuarios' => $usuarios, "name" => $request->get('name')];
         return view("administracion.usuarios.index", $datosusuarios);
     }
 
@@ -32,7 +38,7 @@ class UsuariosController extends Controller
     public function buscar(Request $request)
     {
         if (trim($request) != "") {
-            $usuarios = Usuarios::where('nombre', "LIKE", "%$request->nombre%")
+            $usuarios = User::where('nombre', "LIKE", "%$request->nombre%")
                 ->get();
             $datos = ['usuarios' => $usuarios];
             return view("administracion.usuarios.index", $datos);
@@ -54,11 +60,12 @@ class UsuariosController extends Controller
     /*QUEDE AQUI DOMINGO FALTA ENCRIPTAR LA CONTRASEÑA*/
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nombre' => 'required|max:255',
-            'documento' => 'required|max:255',
-            'contraseña' => 'required',
-            'confirm_contraseña' => 'required|same:contraseña',
+        /*$this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
+            'documento' => 'required|max:50',
+            'firma' => 'max:100',
             'cargo' => 'required'
         ]);
 
@@ -70,11 +77,11 @@ class UsuariosController extends Controller
         //indicamos que queremos guardar un nuevo archivo en el disco local
         \Storage::disk('local')->put($nombre, \File::get($firma));
 
-        $usuario = Usuarios::create($request->all());
+        $usuario = User::create($request->all());
         $usuario->firma = $nombre;
         $usuario->save();
-        flash("El usuario <a href='/usuarios/$usuario->id/edit' target='_blank'>#$usuario->id</a> ha sido creado con éxito!")->success();
-        return Redirect::to('usuarios');
+        flash("El usuario <a href='/usuarios/$usuario->id/edit' target='_blank'><b>$usuario->name</b></a> ha sido creado con éxito!")->success();
+        return Redirect::to('/usuarios');*/
     }
 
     /**
@@ -97,7 +104,7 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        $usuarios = Usuarios::findOrFail($id);
+        $usuarios = User::findOrFail($id);
         return view('administracion.usuarios.edit', compact('usuarios'));
     }
 
@@ -110,7 +117,40 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $usuario = Usuarios::findOrFail($id);
+        $usuario = User::findOrFail($id);
+
+
+        if (isset($request->email)) {
+            if ($usuario->email != $request->email) {
+                $this->validate($request, [
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|max:255|unique:users',
+                    'password' => 'required|confirmed|min:6',
+                    'documento' => 'required|max:50',
+                    'firma' => 'max:100',
+                    'cargo' => 'required'
+                ]);
+            } else {
+                $this->validate($request, [
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|max:255',
+                    'password' => 'required|confirmed|min:6',
+                    'documento' => 'required|max:50',
+                    'firma' => 'max:100',
+                    'cargo' => 'required'
+                ]);
+            }
+        } else {
+            $this->validate($request, [
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|confirmed|min:6',
+                'documento' => 'required|max:50',
+                'firma' => 'max:100',
+                'cargo' => 'required'
+            ]);
+        }
+
         if ($request->hasFile('firma')) {
             $firma = $request->file('firma');
             //obtenemos el nombre del archivo
@@ -121,12 +161,12 @@ class UsuariosController extends Controller
             $usuario->fill($request->all());
             $usuario->firma = $nombre;
             $usuario->save();
-            flash("El usuario <a href='/usuarios/$usuario->id/edit'>#$usuario->id</a> ha sido actualizado con éxito!")->success();
+            flash("El usuario <a href='/usuarios/$usuario->id/edit'><b>$usuario->name</b></a> ha sido actualizado con éxito!")->success();
             return Redirect::to('/usuarios');
         } else {
             $usuario->fill($request->all());
             $usuario->save();
-            flash("El usuario <a href='/usuarios/$usuario->id/edit'>#$usuario->id</a> ha sido actualizado con éxito!")->success();
+            flash("El usuario <a href='/usuarios/$usuario->id/edit'><b>$usuario->name</b></a> ha sido actualizado con éxito!")->success();
             return Redirect::to('/usuarios');
         }
     }
@@ -139,9 +179,9 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        $usuarios = Usuarios::findOrFail($id);
-        $usuarios->delete();
-        flash("El usuario #$id ha sido eliminado con éxito!")->success();
+        $usuario = User::findOrFail($id);
+        $usuario->delete();
+        flash("El usuario <b>$usuario->name</b> ha sido eliminado con éxito!")->success();
         return Redirect::to('/usuarios');
     }
 }

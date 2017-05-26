@@ -17,6 +17,8 @@ class UsuariosSeeder extends Seeder
             'email' => "admin@facturacion.com",
             'password' => bcrypt("admin"),
             'remember_token' => str_random(10),
-        ]);
+            'documento' => "admin",
+            'cargo' => 'admin'
+         ]);
     }
 }

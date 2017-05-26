@@ -9,12 +9,16 @@
 @section('administracion')
     {!! Form::model($usuarios, ['route' => ['usuarios.update',$usuarios->id], 'method' => 'put','enctype' => 'multipart/form-data']) !!}
     <div class="form-group">
-        {!! Form::label('nombre','Nombre')   !!}
-        {!! Form::text('nombre',null,['class' => 'form-control'])!!}
+        {!! Form::label('name','Nombre')   !!}
+        {!! Form::text('name',null,['class' => 'form-control','required'])!!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('email','Correo')   !!}
+        {!! Form::text('email',null,['class' => 'form-control','required'])!!}
     </div>
     <div class="form-group">
         {!! Form::label('documento','Documento')   !!}
-        {!! Form::text('documento',null,['class' => 'form-control'])!!}
+        {!! Form::text('documento',null,['class' => 'form-control','required'])!!}
     </div>
     <div class="form-group">
         {!! Form::label('firma','Firma')   !!}
@@ -23,7 +27,12 @@
     </div>
     <div class="form-group">
         {!! Form::label('cargo','Cargo')   !!}
-        {!! Form::select('cargo',['Medicos' => 'Medicos', 'Enfermeras' => 'Enfermeras','Otros' => 'Otros'],null,['class' => 'form-control'])   !!}
+        {!!
+        Form::select('cargo',
+            ['medico' => 'Medico', 'enfermera' => 'Enfermera','admin' => 'Administrador','otro' => 'Otro'],
+            null,
+            ['class' => 'form-control','required'])
+        !!}
     </div>
     <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Actualizar</button>

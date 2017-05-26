@@ -19,6 +19,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+        'documento' => $faker->nationalId(),
+        'cargo' => $faker->randomElement(['medico', 'enfermera','otro'])
     ];
 });
 
@@ -72,17 +74,6 @@ $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
         'aseguradora_id' => $paciente->aseguradora_id->id,
         'id_contrato' => $paciente->id_contrato->id,
         'id_paciente' => $paciente->id
-    ];
-});
-
-$factory->define(App\Usuarios::class, function (Faker\Generator $faker) {
-    return [
-        'nombre' => $faker->name,
-        'documento' => $faker->regexify('[0-9]{8}'),
-        'contraseña' => str_random(10),
-        'firma' => 'foto.jpg',
-        'cargo' => $faker->randomElement(array('Medicos', 'Enfermeras', 'Otros'))
-
     ];
 });
 

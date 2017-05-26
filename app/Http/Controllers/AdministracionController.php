@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Aseguradora;
 use App\Empresa;
-use App\Usuarios;
+use App\User;
 use App\Servicios;
 use App\Diagnosticos;
 use App\Manuales;
@@ -16,6 +16,11 @@ use App\Http\Controllers\Controller;
 
 class AdministracionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
