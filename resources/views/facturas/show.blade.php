@@ -66,6 +66,7 @@
 
 <div class="form-group col-xs-12 col-md-12 col-lg-12">
     <a class="btn btn-danger pull-right" href="javascript:window.close()" target="_blak">Regresar</a>
+    <a class="btn btn-primary pull-right" href="/reportes/imprimirfacturas/pdf/{{ $factura->id }}" target="_blank">Imprimir</a>
 </div>
 @endsection
 
