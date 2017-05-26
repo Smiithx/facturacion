@@ -8,34 +8,21 @@
 <!--   inicio del Header -->  
 
   <header>
-    <h1>Cabecera de mi documento dentro de pdf - reportes</h1>
-    <h2>DesarrolloWeb.com</h2>
+    <p>{{$empresa->rezon_social}}</p>
+    <p>Nit: {{$empresa->nit}}</p>
+    <p>Direccion: {{$empresa->direccion}}</p>
+    <img src="/imagenes/{{$empresa->file}}" alt="{{$empresa->file}}" class="img-responsive" id="logo">
+
   </header>
  
 <body>
-  <header>
-    <h1>Cabecera de mi documento</h1>
-    <h2>DesarrolloWeb.com</h2>
-  </header>
+
 
 <!--   inicio del footer -->  
 
- <footer>
-    <table>
-      <tr>
-        <td>
-            <p class="izq">
-              Desarrolloweb.com
-            </p>
-        </td>
-        <td>
-          <p class="page">
-            Página
-          </p>
-        </td>
-      </tr>
-    </table>
-  </footer>
+ <!--  <footer>
+   
+  </footer>--> 
   
   @yield('plantilla')    
 
