@@ -65,7 +65,9 @@
             </ul>
         </li>
         <li><a href="/reportes">Reportes</a></li>
-        <li><a href="/administracion">Administración</a></li>
+        @if(Auth::user()->cargo == "admin")
+            <li><a href="/administracion">Administración</a></li>
+        @endif
         <li><a href="{{route("logout")}}">Desconectar</a></li>
     </ul>
 </section>

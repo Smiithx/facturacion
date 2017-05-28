@@ -8,11 +8,11 @@
 
 @section('administracion')
     <div class="container-fluid">
-        <form action="{{route("register")}}" method="POST">
+        <form action="{{route("usuarios.store")}}" method="POST">
             {!!csrf_field() !!}
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input required type="text" class="form-control" id="nombre" name="nombre"  value="{{old('nombre')}}">
+                <input required type="text" class="form-control" id="nombre" name="name"  value="{{old('name')}}">
             </div>
             <div class="form-group">
                 <label for="nit">Documento:</label>
@@ -24,11 +24,15 @@
             </div>
             <div class="form-group">
                 <label for="password">Contraseña:</label>
-                <input required type="password" class="form-control" id="password" name="password"  value="{{old('contraseña')}}">
+                <input required type="password" class="form-control" id="password" name="password" minlength="6" value="{{old('contraseña')}}">
             </div>
             <div class="form-group">
                 <label for="password_confirmation">Confirmar contraseña:</label>
                 <input required type="password" class="form-control" id="password_confirmation" name="password_confirmation"  value="{{old('password_confirm')}}">
+            </div>
+            <div class="form-group">
+                <label for="firma">Firma:</label>
+                <input type="file" class="form-control" id="firma" name="firma" value="{{old('firma')}}">
             </div>
             <div class="form-group">
                 <label for="cargo">Cargo:</label>

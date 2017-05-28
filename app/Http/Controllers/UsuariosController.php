@@ -60,7 +60,7 @@ class UsuariosController extends Controller
     /*QUEDE AQUI DOMINGO FALTA ENCRIPTAR LA CONTRASEÑA*/
     public function store(Request $request)
     {
-        /*$this->validate($request, [
+        $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
@@ -69,19 +69,29 @@ class UsuariosController extends Controller
             'cargo' => 'required'
         ]);
 
-        $firma = $request->file('firma');
+        $usuario = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'documento' => $request->documento,
+            'cargo' => $request->cargo
+        ]);
 
-        //obtenemos el nombre del archivo
-        $nombre = $firma->getClientOriginalName();
+        if ($request->hasFile('firma')) {
+            $firma = $request->file('firma');
 
-        //indicamos que queremos guardar un nuevo archivo en el disco local
-        \Storage::disk('local')->put($nombre, \File::get($firma));
+            //obtenemos el nombre del archivo
+            $nombre = $firma->getClientOriginalName();
 
-        $usuario = User::create($request->all());
-        $usuario->firma = $nombre;
-        $usuario->save();
+            //indicamos que queremos guardar un nuevo archivo en el disco local
+            \Storage::disk('local')->put($nombre, \File::get($firma));
+
+            $usuario->firma = $nombre;
+            $usuario->save();
+        }
+
         flash("El usuario <a href='/usuarios/$usuario->id/edit' target='_blank'><b>$usuario->name</b></a> ha sido creado con éxito!")->success();
-        return Redirect::to('/usuarios');*/
+        return Redirect::to('/usuarios');
     }
 
     /**
