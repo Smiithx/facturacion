@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Aseguradora;
+use App\Empresa;
 use App\Contratos;
 use App\Factura;
 use App\FacturaItems;
@@ -41,63 +42,7 @@ class ReportesController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
+  
     public function reportefacturacion()
     {
         $aseguradoras = Aseguradora::where('estado', 'Activo')->get();
@@ -133,9 +78,9 @@ class ReportesController extends Controller
 
     public function Ordenesporfacturarpdf($id)
     {
-        dd("enntro");
-        //$pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
-        //   return $pdf->Stream('Ordenesporfacturar');
+      
+        $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
+          return $pdf->Stream('Ordenesporfacturar');
 
     }
 
@@ -161,9 +106,18 @@ class ReportesController extends Controller
 
     public function Imprimirfacturapdf($id)
     {
-       
-       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura');
-        return $pdf->Stream('Imprimirfactura');
+ /*$facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "factura_items.id_orden_servicio", "ordendeservicio.aseguradora_id",  "ordendeservicio.id_contrato", "ordendeservicio.nombre","aseguradoras.nombre as aseguradora","contratos.nombre as contrato")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("aseguradoras","ordendeservicio.aseguradora_id","=","aseguradoras.id")
+                ->join("contratos","ordendeservicio.id_contrato","=","contratos.id")
+                ->where('facturas.id', $id)->get();*/
+
+
+       $facturas =  Factura::find($id);
+       $empresa = Empresa::find(1);
+       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura',compact('facturas','empresa'))->setPaper('a4');
+       return $pdf->Stream('Imprimirfactura.pdf');
      
 
     }

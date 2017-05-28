@@ -152,8 +152,8 @@ class RadicacionController extends Controller
         foreach ($FacturasRadicadas as $factura) {
             $radicacion_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td> 
-          <td>$factura->contrato</td>
-          <td>$factura->fecha_radicacion</td>
+          <td class='text-center'>". number_format($factura->factura_total, 2) ."</td>
+          <td class='text-center'>$factura->fecha_radicacion</td>
            </tr>";
         }
         if ($radicacion_tbody != "") {

@@ -39,7 +39,7 @@
             <thead>
             <tr>
                 <th class="text-center">Ver Factura #</th>
-                <th class="text-center">Contrato</th>
+                <th class="text-center">Valor Factura</th>
                 <th class="text-center">Fecha</th>
 
             </tr>

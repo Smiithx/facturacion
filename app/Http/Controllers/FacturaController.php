@@ -435,14 +435,15 @@ class FacturaController extends Controller
     public function imprimir($anulado,$desde, $hasta)
     {          
  
-            $facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "factura_items.id_orden_servicio", "ordendeservicio.aseguradora_id",  "ordendeservicio.id_contrato", "ordendeservicio.nombre")
+            $facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "factura_items.id_orden_servicio", "ordendeservicio.aseguradora_id",  "ordendeservicio.id_contrato", "ordendeservicio.nombre","aseguradoras.nombre as aseguradora","contratos.nombre as contrato")
                 ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
                 ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("aseguradoras","ordendeservicio.aseguradora_id","=","aseguradoras.id")
+                ->join("contratos","ordendeservicio.id_contrato","=","contratos.id")
                 ->where('facturas.anulado', $anulado)
                 ->whereDate('facturas.created_at', '>=', $desde)
-                ->whereDate('facturas.created_at', '<=', $hasta)->get(); 
+                ->whereDate('facturas.created_at', '<=', $hasta)->get();
 
-       
 
                 $imprimirfactura_tbody ="";
 
@@ -453,14 +454,14 @@ class FacturaController extends Controller
                     <td class='text-center'><a href='/facturas/$factura->id' target='_blank'>$factura->id</a></td>
                     <td>$factura->documento</td>
                     <td>$factura->nombre</td>
-                    <td></td>
-                    <td></td>
+                    <td>$factura->aseguradora</td>
+                    <td>$factura->contrato</td>
                     <td>$factura->created_at</td>
                      <td class='acciones'>
                   <a href='/facturas/$factura->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Anular'>
                     <i class='glyphicon glyphicon-remove'></i>
                    </a>
-                    <a href='/reportes/imprimirfacturas/pdf/$factura->id'' class='btn btn-success' data-toggle='tooltip' title='Imprimir'>
+                    <a href='/reportes/imprimirfacturas/pdf/$factura->id' target='_blank' class='btn btn-success' data-toggle='tooltip' title='Imprimir'>
                     <i class='glyphicon glyphicon-print'></i>
                    </a>                 
                     </td>
@@ -545,7 +546,7 @@ class FacturaController extends Controller
             ]);
         } else {
             return response()->json([
-                'error' => 'No se encontro factura. Verifique que Tenga  Cartera '
+                'error' => 'No se encontro factura con saldo pendiente. '
             ]);
         }
     }

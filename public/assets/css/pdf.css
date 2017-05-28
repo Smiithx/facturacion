@@ -5,20 +5,14 @@
     @page {
       margin: 160px 50px;
     }
-    header { position: fixed;
+    header { 
+      position: fixed;
       left: 0px;
       top: -160px;
       right: 0px;
       height: 100px;
-      background-color: #ddd;
-      text-align: center;
     }
-    header h1{
-      margin: 10px 0;
-    }
-    header h2{
-      margin: 0 0 10px 0;
-    }
+ 
     footer {
       position: fixed;
       left: 0px;
@@ -39,3 +33,7 @@
     footer .izq {
       text-align: left;
     }
+    h3, th,td{
+      text-align: center;
+    }
+

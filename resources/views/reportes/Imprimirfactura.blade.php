@@ -1,7 +1,7 @@
 @extends('reportes.index')
 @section('menu')
 
-    @include('reportes.partials.menu',["pagina" => "Imprimir factura", "seccion" => "imprimir factura"])
+    @include('reportes.partials.menu',["pagina" => "Imprimir Facturas", "seccion" => "imprimir factura"])
 
 @stop
 
@@ -54,9 +54,7 @@
         </tbody>
     </table>
 </div>
-<div class="modal-footer">
-    <a class="btn btn-primary" href="/reportes/Imprimirfactura/pdf" target="_blank">Imprimir</a>
-</div>
+
     <script src="{{asset('assets/js/factura.js')}}"></script>
 
 @stop
