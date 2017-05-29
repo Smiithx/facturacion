@@ -1,44 +1,61 @@
 
-    body{
-      font-family: sans-serif;
-    }
-    @page {
-      margin: 160px 50px;
-    }
-    .logo{
-        max-width: 250px;
-        display: inline-block;
-    }
-    /*
-    header { 
-      position: fixed;
-      left: 0px;
-      top: -160px;
-      right: 0px;
-      height: 100px;
-    }
- */
-    /*footer {
-      position: fixed;
-      left: 0px;
-      bottom: -50px;
-      right: 0px;
-      height: 40px;
-      border-bottom: 2px solid #ddd;
-    }*/
-   /* footer .page:after {
-      content: counter(page);
-    }
-    footer table {
-      width: 100%;
-    }
-    footer p {
-      text-align: right;
-    }
-    footer .izq {
-      text-align: left;
-    }
-    h3, th,td{
-      text-align: center;
-    }*/
+body {
+    font-family: sans-serif;
+}
+
+@page {
+    margin: 160px 50px;
+}
+
+.logo {
+    max-width: 250px;
+    padding: 10px;
+    float: left;
+}
+
+.datos {
+    float: left;
+    margin-left: 10px;
+}
+.datos h1{
+    margin-bottom: 0px;
+    margin-top: 10px;
+
+}
+.datos p{
+    margin: 0;
+    font-size: medium;
+}
+/*
+header {
+  position: fixed;
+  left: 0px;
+  top: -160px;
+  right: 0px;
+  height: 100px;
+}
+*/
+/*footer {
+  position: fixed;
+  left: 0px;
+  bottom: -50px;
+  right: 0px;
+  height: 40px;
+  border-bottom: 2px solid #ddd;
+}*/
+/* footer .page:after {
+   content: counter(page);
+ }
+ footer table {
+   width: 100%;
+ }
+ footer p {
+   text-align: right;
+ }
+ footer .izq {
+   text-align: left;
+ }
+ h3, th,td{
+   text-align: center;
+ }*/
 

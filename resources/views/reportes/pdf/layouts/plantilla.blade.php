@@ -11,12 +11,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="logo">
-                    <img src="/imagenes/{{$empresa->file}}" alt="{{$empresa->file}}" class="img-responsive" id="logo">
+                    <img src="/imagenes/{{$empresa->file}}" alt="{{$empresa->file}}" class="img-responsive"
+                         id="logo">
                 </div>
-                <div class="">
-                    <p>{{$empresa->rezon_social}}</p>
-                    <p>NIT: {{$empresa->nit}}</p>
-                    <p>Direccion: {{$empresa->direccion}}</p>
+                <div class="datos">
+                    <h1>{{$empresa->rezon_social}}</h1>
+                    <p>{{$empresa->direccion}}</p>
+                    <p>NIF: {{$empresa->nit}}</p>
                 </div>
             </div>
         </div>

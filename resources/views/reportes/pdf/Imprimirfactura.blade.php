@@ -1,8 +1,6 @@
 @extends('reportes.pdf.layouts.plantilla')
 @section("content")
-
-<h3>Reporte Factura</h3>
-<div class="table-responsive">
+    <h3>Reporte Factura</h3>
     <table class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
@@ -25,5 +23,4 @@
         </tr>
         </tbody>
     </table>
-</div>
 @endsection
