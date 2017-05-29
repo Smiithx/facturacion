@@ -114,10 +114,19 @@ class ReportesController extends Controller
                 ->where('facturas.id', $id)->get();*/
 
 
-       $factura =  Factura::find($id);
-       $empresa = Empresa::find(1);
-       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura',compact('factura','empresa'))->setPaper('a4');
-       return view("reportes.pdf.Imprimirfactura",compact('factura','empresa'));
+       $factura =  Factura::findOrFail($id);
+       $empresa = Empresa::findOrFail(1);
+        $items = FacturaItems::selectRaw("orden_servicio_items.cups, orden_servicio_items.descripcion,
+            orden_servicio_items.valor_unitario,sum(orden_servicio_items.cantidad) cantidad, sum(orden_servicio_items.copago) copago
+            , sum(orden_servicio_items.valor_total) valor_total")
+            ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+            ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+            ->where("factura_items.id_factura", $id)
+            ->groupBy('orden_servicio_items.cups', "orden_servicio_items.descripcion", "orden_servicio_items.valor_unitario")
+            ->orderBy('orden_servicio_items.cups', 'asc')
+            ->get();
+       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura',compact('factura','empresa','items'))->setPaper('a4');
+       //return view("reportes.pdf.Imprimirfactura",compact('factura','empresa','items'));
        return $pdf->Stream('Imprimirfactura.pdf');
      
 

@@ -1,25 +1,48 @@
 @extends('reportes.pdf.layouts.plantilla')
+@section("title")
+Factura {{$factura->id}}
+@endsection
 @section("content")
-    <h3>Reporte Factura</h3>
-    <table class="table table-striped table-bordered table-hover">
+    <table class="table">
         <thead>
         <tr>
-            <th class="text-center">N° Factura</th>
-            <th class="text-center">Documento</th>
-            <th class="text-center">Nombre</th>
-            <th class="text-center">Aseguradora</th>
-            <th class="text-center">Contrato</th>
+            <th>N° Factura</th>
+            <th>{{$factura->id}}</th>
+            <th>Contrato</th>
+            <th>{{$factura->id_contrato->nombre}}</th>
+            <th>Fecha</th>
+            <th>{{$factura->created_at}}</th>
+        </tr>
+        </thead>
+    </table>
+    <div class="clearfix"></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="text-center">Cups</th>
+            <th class="text-center">Descripcion</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Valor unitario</th>
+            <th class="text-center">Copago</th>
             <th class="text-center">Total</th>
         </tr>
         </thead>
         <tbody>
+        @foreach($items as $item)
+            <tr>
+                <td class="text-center">{{$item->cups}}</td>
+                <td>{{$item->descripcion}}</td>
+                <td class="text-center"> {{$item->cantidad}}</td>
+                <td class="text-right"> {{$item->valor_unitario}}</td>
+                <td class="text-right"> {{$item->copago}}</td>
+                <td class="text-right"> {{number_format($item->valor_total,2)}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+        <tbody>
         <tr>
-            <td class="text-center"> {{$factura->id}}</td>
-            <td class="text-center"> {{$factura->id}}</td>
-            <td class="text-center"> {{$factura->id}}</td>
-            <td class="text-center"> {{$factura->id}}</td>
-            <td class="text-center"> {{$factura->id}}</td>
-            <td class="text-center"> {{$factura->factura_total}}</td>
+            <th class="text-right" colspan="5">Total</th>
+            <th class="text-right">{{number_format($factura->factura_total,2)}}</th>
         </tr>
         </tbody>
     </table>
