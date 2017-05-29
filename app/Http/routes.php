@@ -119,10 +119,10 @@ Route::get('reportes/glosas','ReportesController@reporteglosas');
 Route::get('reportes/carteras','ReportesController@reportecarteras');
 
 Route::get('reportes/totalfacturado', 'ReportesController@reportefacturacion');
-Route::get('reportes/totalfacturado/pdf', 'ReportesController@reportefacturacionpdf');
+Route::get('reportes/totalfacturado/pdf/{aseguradora}/{contrato}/{desde}/{hasta}', 'ReportesController@reportefacturacionpdf');
 
 Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar');
-Route::get('reportes/Ordenesporfacturar/pdf', 'ReportesController@Ordenesporfacturarpdf');
+Route::get('reportes/Ordenesporfacturar/pdf/{inicio}/{fin}', 'ReportesController@Ordenesporfacturarpdf');
 
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
 Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');
