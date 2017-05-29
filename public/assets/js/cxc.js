@@ -9,6 +9,7 @@ $(function () {
     var cxc_tbody = $("#cxc_tbody");
     var total_facturado_cxc = $("#total_facturado_cxc");
     var saldo_cxc = $("#saldo_cxc");
+    var reporte_cxc_btn_imprimir =$("#reporte_cxc_btn_imprimir");
 
 
     //-- Fin de declarar variables ======================= //
@@ -28,6 +29,8 @@ $(function () {
                   cxc_tbody.html(respuesta.cxc_tbody);
                   total_facturado_cxc.html(respuesta.total_facturado_cxc);
                   saldo_cxc.html(respuesta.saldo_cxc);
+                  reporte_cxc_btn_imprimir.attr("href","/reportes/Cuentadecobro/pdf/"+ cxc_factura.val());
+
 
 
                 }
@@ -35,6 +38,8 @@ $(function () {
                     cxc_tbody.html("");
                    total_facturado_cxc.html("");
                    saldo_cxc.html("");
+                   reporte_cxc_btn_imprimir.attr("href","#"+ cxc_factura.val());
+
 
                     swal('Cancelled', respuesta.error, 'error');
                 }

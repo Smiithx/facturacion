@@ -1,6 +1,11 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{asset('assets/css/pdf.css')}}">
+
+
+
+
+
     <title>@section('title') @show</title>
 </head>
 <body>

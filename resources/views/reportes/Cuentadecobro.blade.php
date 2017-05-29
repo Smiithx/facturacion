@@ -22,7 +22,7 @@
         <thead>
         <tr>
 
-            <th class="text-center">Nº de orden</th>
+            <th class="text-center">Nº de Factura</th>
             <th class="text-center">Fecha</th>
             <th class="text-center">Documento</th>
             <th class="text-center">Nombre</th>
@@ -53,8 +53,7 @@
     </table>
 </div>
 <div class="form-group col-xs-12 text-right">
-    <a href="/reportes" class="btn btn-default">Regresar</a>
-    <button class="btn btn-primary hidden" id="reporte_factura_btn_imprimir">Imprimir</button>
+    <a href="#" class="btn btn-primary" id="reporte_cxc_btn_imprimir" target="_blank">Imprimir</a>
 </div>
 
 <script src="{{asset('assets/js/cxc.js')}}"></script>

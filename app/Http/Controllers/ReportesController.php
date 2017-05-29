@@ -97,9 +97,8 @@ class ReportesController extends Controller
             ->where('anulado', "0")
             ->get();
         $empresa = Empresa::findOrFail(1);
-        return view("reportes.pdf.Ordenesporfacturar", compact("ordenes", "empresa"));
-        /* $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
-           return $pdf->Stream('Ordenesporfacturar');*/
+       $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar', compact("ordenes", "empresa"));
+           return $pdf->Stream('Ordenesporfacturar');
 
 
     }
@@ -126,14 +125,7 @@ class ReportesController extends Controller
 
     public function Imprimirfacturapdf($id)
     {
-        /*$facturas = Factura::select("facturas.id","facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "factura_items.id_orden_servicio", "ordendeservicio.aseguradora_id",  "ordendeservicio.id_contrato", "ordendeservicio.nombre","aseguradoras.nombre as aseguradora","contratos.nombre as contrato")
-                       ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
-                       ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
-                       ->join("aseguradoras","ordendeservicio.aseguradora_id","=","aseguradoras.id")
-                       ->join("contratos","ordendeservicio.id_contrato","=","contratos.id")
-                       ->where('facturas.id', $id)->get();*/
-
-
+        
         $factura = Factura::findOrFail($id);
         $empresa = Empresa::findOrFail(1);
         $items = FacturaItems::selectRaw("orden_servicio_items.cups, orden_servicio_items.descripcion,
@@ -146,7 +138,6 @@ class ReportesController extends Controller
             ->orderBy('orden_servicio_items.cups', 'asc')
             ->get();
         $pdf = PDF::loadView('reportes.pdf.Imprimirfactura', compact('factura', 'empresa', 'items'))->setPaper('a4');
-        //return view("reportes.pdf.Imprimirfactura",compact('factura','empresa','items'));
         return $pdf->Stream('Imprimirfactura.pdf');
 
 
@@ -158,10 +149,34 @@ class ReportesController extends Controller
 
     }
 
-    public function Cuentadecobropdf()
+    public function Cuentadecobropdf($id)
     {
-        $pdf = PDF::loadView('reportes.pdf.Cuentadecobro');
-        return $pdf->Stream('Cuentadecobro');
+                $empresa = Empresa::findOrFail(1);
+
+        $facturas = FacturaItems::selectRaw("ordendeservicio.id, ordendeservicio.created_at, ordendeservicio.documento, ordendeservicio.nombre, orden_servicio_items.cups, orden_servicio_items.descripcion, orden_servicio_items.copago, orden_servicio_items.valor_unitario, orden_servicio_items.valor_total, cartera.valor_saldo")
+            ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+            ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+            ->join("cartera", "factura_items.id_factura", "=", "cartera.id_factura")
+            ->where('factura_items.id_factura', $id)
+            ->where('cartera.valor_saldo', '>=', 1)
+            ->groupBy('factura_items.id')
+            ->get();
+
+            $total_facturado_cxc2 = 0;
+            $saldo_cxc2 = 0;
+
+
+             foreach ($facturas as $factura) {
+                 $total_facturado_cxc2 += $factura->valor_total;
+                    $saldo_cxc2 = number_format($factura->valor_saldo, 2);
+                   }
+                $total_facturado_cxc = number_format($total_facturado_cxc2, 2);
+                $saldo_cxc = $saldo_cxc2;
+            
+
+        $pdf = PDF::loadView('reportes.pdf.Cuentadecobro', compact('facturas', 'empresa', 'total_facturado_cxc', 'saldo_cxc'))->setPaper('a4');
+        return $pdf->Stream('Cuentadecobro.pdf');
+     
 
     }
 
@@ -171,10 +186,17 @@ class ReportesController extends Controller
 
     }
 
-    public function radicacionpdf()
+    public function radicacionpdf($desde, $hasta)
     {
-        $pdf = PDF::loadView('reportes.pdf.Radicacion');
-        return $pdf->Stream('Radicacion');
+        $empresa = Empresa::findOrFail(1);
+         $facturasradicadas = Factura::selectRaw("facturas.id,facturas.fecha_radicacion,facturas.factura_total")
+            ->where('radicada', 1)
+            ->whereDate('fecha_radicacion', '>=', $desde)
+            ->whereDate('fecha_radicacion', '<=', $hasta)
+            ->get();
+
+$pdf = PDF::loadView('reportes.pdf.radicacion', compact('empresa','facturasradicadas'))->setPaper('a4');
+        return $pdf->Stream('radicacion.pdf');
 
     }
 }
