@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Aseguradora;
 use App\Contratos;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Paciente;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 //use Illuminate\Support\Facades\DB;
@@ -21,6 +18,7 @@ class PacienteController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -143,7 +141,6 @@ class PacienteController extends Controller
     public function destroy($id)
     {
         $paciente = Paciente::findOrFail($id);
-
         if ($paciente->delete()) {
             return response()->json([
                 'success' => 'true',
@@ -154,6 +151,5 @@ class PacienteController extends Controller
                 'error' => "Error al eliminar el paciente #$id."
             ]);
         }
-
     }
 }

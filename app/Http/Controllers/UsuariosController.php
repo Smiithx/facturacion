@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
 class UsuariosController extends Controller
 {
@@ -187,11 +184,28 @@ class UsuariosController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $usuario = User::findOrFail($id);
-        $usuario->delete();
-        flash("El usuario <b>$usuario->name</b> ha sido eliminado con éxito!")->success();
-        return Redirect::to('/usuarios');
+        if ($usuario->delete()) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => 'true',
+                    'mensaje' => "El usuario <b>$usuario->name</b> ha sido eliminado con éxito!"
+                ]);
+            } else {
+                flash("El usuario <b>$usuario->name</b> ha sido eliminado con éxito!")->success();
+                return Redirect::to('/usuarios');
+            }
+        }else{
+            if ($request->ajax()) {
+                return response()->json([
+                    'error' => "Error al eliminar el usuario <b>$usuario->name</b>."
+                ]);
+            } else {
+                flash("Error al eliminar el usuario <b>$usuario->name</b>.")->error();
+                return Redirect::to('/usuarios');
+            }
+        }
     }
 }

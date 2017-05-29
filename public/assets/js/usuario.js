@@ -1,32 +1,36 @@
 /**
- * Created by smiit on 22/4/2017.
+ * Created by smiit on 29/5/2017.
  */
 //función que se ejecuta al cargar la pagina
-$(function(){
+$(function () {
     //-- Declarar variables =============================== //
-    var btn_eliminar_paciente = $(".btn-eliminar-paciente");
-     var form_eliminar_paciente = $("#form-eliminar-paciente");
+
+    // index
+    var btn_eliminar_usuario = $(".btn_eliminar_usuario");
+    var form_eliminar_usuario = $("#form_eliminar_usuario");
 
     //-- Fin de declarar variables ======================= //
 
+
     //-- Agregar eventos ================================= //
-    btn_eliminar_paciente.on("click",function(e){
+
+    //--  index ================================= //
+
+    btn_eliminar_usuario.on("click",function(e){
         e.preventDefault();
         var parent = $(this).parent().parent().parent();
         var id = $(this).attr("data-id");
         swal({
-            title: '¿Desea eliminar este paciente?',
+            title: '¿Desea eliminar este usuario?',
             text: "¡No podrás revertir esto!",
             type: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Si ',
             cancelButtonText: 'No ',
-            /*confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',*/
             buttonsStyling: true
         }).then(function () {
-            var url = "pacientes/"+ id;
-            var datos = form_eliminar_paciente.serialize();
+            var url = "usuarios/"+ id;
+            var datos = form_eliminar_usuario.serialize();
             $.ajax({
                 url: url,
                 type: "delete",
@@ -55,6 +59,9 @@ $(function(){
             });
         })
     });
+
+    //-- declarar funciones auxiliares------------------------------------//
+
 
 
 });

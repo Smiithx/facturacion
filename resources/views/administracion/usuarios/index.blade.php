@@ -49,8 +49,8 @@
                            data-toggle='tooltip' title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
-                        {!! Form::open(['route' => ['usuarios.destroy', $usuario->id], 'method' => 'delete']) !!}
-                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'>
+                        {!! Form::open(['route' => ['usuarios.destroy', $usuario->id], 'method' => 'delete','id' => 'form_eliminar_usuario']) !!}
+                        <button type="submit" data-id="{{$usuario->id}}" class="btn btn-danger btn_eliminar_usuario" data-toggle='tooltip' title='Eliminar'>
                             <i class='glyphicon glyphicon-remove'></i>
                         </button>
                         {!! Form::close() !!}
@@ -63,6 +63,6 @@
             {!! $usuarios->render() !!}
         </div>
     </div>
-
+    <script src="{{asset('assets/js/usuario.js')}}"></script>
 
 @stop

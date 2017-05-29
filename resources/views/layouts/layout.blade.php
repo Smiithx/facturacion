@@ -24,7 +24,7 @@
 </head>
 <body>
 <header class="modal-header text-success text-center bg-success">
-    <h1 class="text-success">Registro de Usuarios</h1>
+    <h1>Registro de Usuarios</h1>
 </header>
 <!-- menu -->
 @include('layouts.menu')
