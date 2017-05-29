@@ -51,7 +51,7 @@
         </table>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-primary" href="/reportes/Radicacion/pdf" target="_blank">Imprimir</a>
+        <a class="btn btn-primary" href="#" target="_blank" id="btn_radicacion_imprimir">Imprimir</a>
     </div>
     <script src="{{asset('assets/js/radicacion.js')}}"></script>
 

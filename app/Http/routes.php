@@ -129,9 +129,9 @@ Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesre
 Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
 Route::get('reportes/imprimirfacturas/pdf/{id}', 'ReportesController@Imprimirfacturapdf');
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');
-Route::get('reportes/Cuentadecobro/pdf', 'ReportesController@Cuentadecobropdf');
+Route::get('reportes/Cuentadecobro/pdf/{id}', 'ReportesController@Cuentadecobropdf');
 Route::get('reportes/radicacion', 'ReportesController@radicacion');
-Route::get('reportes/radicacion/pdf', 'ReportesController@radicacionpdf');
+Route::get('reportes/radicacion/pdf/{desde}/{hasta}', 'ReportesController@radicacionpdf');
 
 //----- Administracion ----- //
 Route::resource('administracion', 'AdministracionController', ['only' => ['index']]);

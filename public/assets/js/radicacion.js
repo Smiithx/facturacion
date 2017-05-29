@@ -26,6 +26,7 @@ $(function () {
     var radicacion_fecha_fin = $("#radicacion_fecha_fin");
     var btn_radicacion_buscar = $("#btn_radicacion_buscar");
     var radicacion_tbody = $("#radicacion_tbody");
+    var btn_radicacion_imprimir =$("#btn_radicacion_imprimir");
 
     //-- Fin de declarar variables ======================= //
 
@@ -55,9 +56,12 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     radicacion_tbody.html(respuesta.radicacion_tbody);
+                  btn_radicacion_imprimir.attr("href","/reportes/radicacion/pdf/"+ radicacion_fecha_inicio.val()+
+            "/" + radicacion_fecha_fin.val());
                 }
                 else {
                     radicacion_tbody.html("");
+                    btn_radicacion_imprimir.attr("href","#");
                     swal('Cancelled', respuesta.error, 'error');
                 }
             }, error: function (e) {
