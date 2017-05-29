@@ -81,7 +81,7 @@
         </table>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-primary" href="/reportes/totalfacturado/pdf/" target="_blank" id="btn_totalfacturado_imprimir">Imprimir</a>
+        <a class="btn btn-primary" href="#" target="_blank" id="btn_totalfacturado_imprimir">Imprimir</a>
     </div>
     <script src="{{asset('assets/js/factura.js')}}"></script>
 
