@@ -10,7 +10,7 @@ $(function(){
     //-- Fin de declarar variables ======================= //
 
     //-- Agregar eventos ================================= //
-    btn_eliminar_paciente.on("click",function(e){
+   /* btn_eliminar_paciente.on("click",function(e){
         e.preventDefault();
         var parent = $(this).parent().parent().parent();
         var id = $(this).attr("data-id");
@@ -21,8 +21,8 @@ $(function(){
             showCancelButton: true,
             confirmButtonText: 'Si ',
             cancelButtonText: 'No ',
-            /*confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',*/
+            /!*confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',*!/
             buttonsStyling: true
         }).then(function () {
             var url = "pacientes/"+ id;
@@ -54,7 +54,7 @@ $(function(){
                 }
             });
         })
-    });
+    });*/
 
 
 });

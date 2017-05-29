@@ -44,7 +44,7 @@
                     <a href="/servicios/{{$servicio->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
                         <i class='glyphicon glyphicon-edit'></i>
                     </a>
-                    {!! Form::open(['route' => ['servicios.destroy', $servicio->id], 'method' => 'delete','id' => 'form_eliminar_servicio']) !!}
+                    {!! Form::open(['route' => ['servicios.destroy', $servicio->id], 'method' => 'delete','class' => 'form_eliminar_servicio']) !!}
                     <button type="submit" class="btn btn-danger btn_eliminar_servicio" data-toggle='tooltip' title='Eliminar'>
                         <i class='glyphicon glyphicon-remove'></i>
                     </button>
