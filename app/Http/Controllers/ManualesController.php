@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Manuales;
-use App\Servicios;
+use App\Contratos;
+use App\Manuales_servicios;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +25,7 @@ class ManualesController extends Controller
     public function index(Request $request)
     {
         $manuales = Manuales::soat($request->get('soat'))->orderBy('id', 'DES')->paginate();
-        $manuales = ['manuales' => $manuales];
+        $manuales = ['manuales' => $manuales, "soat"=>$request->get('soat')];
         return view("administracion.manuales.index",$manuales);
     }
 
@@ -120,10 +121,26 @@ class ManualesController extends Controller
     public function destroy($id)
     {
         $manuales = Manuales::findOrFail($id);
+        $nombre = $manuales->codigosoat;
+        $contrato = Contratos::where("id_manual",$id)->get();
+        $numero_contrato = count($contrato);
+       
+        if($numero_contrato > 0){
+            flash("El manual '<b>$nombre</b>' no se puede eliminar porque tiene contratos asociados")->error();
+            return Redirect::to('/manuales');
+        }
+        $manuales_servicios = Manuales_servicios::where("id_manual",$id)->get();
+        $numero_manuales_servicios = count($manuales_servicios);
+       
+        if($numero_manuales_servicios > 0){
+            flash("El manual '<b>$nombre</b>' no se puede eliminar porque tiene servicios asociados")->error();
+            return Redirect::to('/manuales');
+        }
+        
         $manuales->delete();
-
-        flash("EL manual #$id ha sido eliminado con éxito!")->success();
+        flash("E manual '<b>$nombre</b>' ha sido eliminado")->success();
         return Redirect::to('/manuales');
+        
     }
 
     public function cups($cups,$contrato){

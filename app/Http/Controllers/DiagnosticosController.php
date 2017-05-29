@@ -23,7 +23,7 @@ class DiagnosticosController extends Controller
     public function index(Request $request)
     {
         $diagnosticos = Diagnosticos::codigo($request->get('codigo'))->paginate(10);
-        $datos = ['diagnosticos' => $diagnosticos];
+        $datos = ['diagnosticos' => $diagnosticos,"codigo"=>$request->get('codigo')];
         return view("administracion.diagnosticos.index", $datos);
     }
 

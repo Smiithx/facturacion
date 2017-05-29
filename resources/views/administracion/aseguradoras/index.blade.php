@@ -46,7 +46,7 @@
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
                         {!! Form::open(['route' => ['aseguradoras.destroy', $aseguradora->id], 'method' => 'delete']) !!}
-                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'
+                        <button type="submit" class="btn btn-danger btn_eliminar_aseguradora" data-toggle='tooltip' title='Eliminar'
                                 target="_blank">
                             <i class='glyphicon glyphicon-remove'></i>
                         </button>

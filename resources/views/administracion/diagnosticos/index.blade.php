@@ -12,7 +12,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => 'diagnosticos.index', 'method' => 'GET', 'class' => 'text-left', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('codigo',null, ['class' => 'form-control', 'placeholder' => 'Código del diagnostico']) !!}
+                    {!! Form::text('codigo',$codigo, ['class' => 'form-control', 'placeholder' => 'Código del diagnostico']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
