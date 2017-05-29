@@ -13,7 +13,7 @@
         <caption class="text-center">
             {!! Form::open(['route' => 'servicios.index', 'method' => 'GET', 'class' => 'text-left', 'role' => 'search']) !!}
             <div class="input-group">
-                {!! Form::text('cup',null, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
+                {!! Form::text('cup',$cup, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>

@@ -12,7 +12,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => 'contratos.index', 'method' => 'GET', 'class' => 'text-left', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('nombre',null, ['class' => 'form-control', 'placeholder' => 'Nombre del contrato']) !!}
+                    {!! Form::text('nombre',$nombre, ['class' => 'form-control', 'placeholder' => 'Nombre del contrato']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>

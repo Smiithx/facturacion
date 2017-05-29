@@ -24,7 +24,7 @@ class AseguradoraController extends Controller
     public function index(Request $request)
     {
         $aseguradoras = Aseguradora::nombre($request->get('nombre'))->paginate(10);
-        $datos = ['aseguradoras' => $aseguradoras];
+        $datos = ['aseguradoras' => $aseguradoras, "nombre" => $request->get('nombre')];
         return view("administracion.aseguradoras.index", $datos);
     }
 

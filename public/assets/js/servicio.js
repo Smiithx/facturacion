@@ -16,7 +16,7 @@ $(function () {
 
     //--  index ================================= //
 
-    btn_eliminar_servicio.on("click",function(e){
+    /*btn_eliminar_servicio.on("click",function(e){
         e.preventDefault();
         var parent = $(this).parent().parent().parent();
         var id = $(this).attr("data-id");
@@ -58,7 +58,7 @@ $(function () {
                 }
             });
         })
-    });
+    });*/
 
     //-- declarar funciones auxiliares------------------------------------//
 

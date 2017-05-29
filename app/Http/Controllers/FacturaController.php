@@ -206,10 +206,10 @@ class FacturaController extends Controller
 
                 $totalfacturado_tbody .= "<tr>
          <td class='text-center'><a href='/facturas/$factura->id_factura' target='_blank'>$factura->id_factura</a></td> 
-          <td>$factura->created_at</td>
+          <td class='text-center'>$factura->created_at</td>
           <td>$factura->documento</td>
           <td>$factura->nombre</td>
-          <td>" . number_format($factura->factura_total, 2) . "</td>          
+          <td class='text-right'>" . number_format($factura->factura_total, 2) . "</td>          
            </tr>";
             }
 

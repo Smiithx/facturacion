@@ -24,7 +24,7 @@ class ContratosController extends Controller
     public function index(Request $request)
     {
         $contratos = Contratos::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate(10);
-        $datos = ['contratos' => $contratos];
+        $datos = ['contratos' => $contratos, "nombre" => $request->get('nombre')];
         return view("administracion.contratos.index",$datos);
     }
 
