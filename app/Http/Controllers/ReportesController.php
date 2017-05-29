@@ -114,9 +114,10 @@ class ReportesController extends Controller
                 ->where('facturas.id', $id)->get();*/
 
 
-       $facturas =  Factura::find($id);
+       $factura =  Factura::find($id);
        $empresa = Empresa::find(1);
-       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura',compact('facturas','empresa'))->setPaper('a4');
+       $pdf = PDF::loadView('reportes.pdf.Imprimirfactura',compact('factura','empresa'))->setPaper('a4');
+       return view("reportes.pdf.Imprimirfactura",compact('factura','empresa'));
        return $pdf->Stream('Imprimirfactura.pdf');
      
 

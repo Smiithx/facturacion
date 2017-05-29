@@ -21,4 +21,13 @@ class FacturaItems extends Model
         'id_orden_servicio',
     ];
 
+    public function getIdOrdenServicioAttribute($value)
+    {
+        return \App\ordenservicios::find($value);
+    }
+    public function getIdFacturaAttribute($value)
+    {
+        return \App\Factura::find($value);
+    }
+
 }

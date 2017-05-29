@@ -68,8 +68,9 @@ ul, ol {
 }
 .logo{
     max-width: 300px;
-    border: 1px solid #204d74;
-    background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
+    box-shadow: 0 0 1px 1px #cccccc;
+    background-color: white;
+    padding: 10px;
 }
 input[type="file"]{
     box-sizing: content-box;

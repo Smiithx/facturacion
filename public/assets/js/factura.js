@@ -110,7 +110,6 @@ $(function () {
     });
 
 
-
 // Imprimir Factura
 
     btn_imprimirfactura_buscar.on("click", function () {
@@ -142,9 +141,9 @@ $(function () {
     });
 
     // reporte factura por contrato
-    reporte_factura_contrato_buscar.on("click",function(){
+    reporte_factura_contrato_buscar.on("click", function () {
         var url = "/facturas/reporte/contrato/" + reporte_factura_contrato_id_contrato.val() + "/";
-        url += reporte_factura_contrato_desde.val() +"/" +reporte_factura_contrato_hasta.val();
+        url += reporte_factura_contrato_desde.val() + "/" + reporte_factura_contrato_hasta.val();
         $.ajax({
             url: url,
             type: "GET",
@@ -234,9 +233,9 @@ $(function () {
                     rellenarReporteFactura(respuesta.factura_items);
                     reporte_factura_contrato.val(respuesta.factura.id_contrato.nombre);
                     reporte_factura_fecha_facturacion.val(respuesta.factura.created_at);
-                    if(respuesta.factura.radicada){
+                    if (respuesta.factura.radicada) {
                         reporte_factura_fecha_radicacion.val(respuesta.factura.fecha_radicacion);
-                    }else{
+                    } else {
                         reporte_factura_fecha_radicacion.val("");
                     }
                     reporte_factura_btn_imprimir.removeClass("hidden");
@@ -278,7 +277,7 @@ $(function () {
         });
 
         reporte_factura_tbody.html(tbody);
-        reporte_factura_total.html($.number(total,2));
+        reporte_factura_total.html($.number(total, 2));
 
     }
 
@@ -288,7 +287,7 @@ $(function () {
 
         $.each(facturas, function (ind, factura) {
             tbody += "<tr>";
-            tbody += "<td class='text-center'><a href='/facturas/" + factura.id + "' target='_blank'>"+ factura.id+"</a></td>";
+            tbody += "<td class='text-center'><a href='/facturas/" + factura.id + "' target='_blank'>" + factura.id + "</a></td>";
             tbody += "<td class='text-center'>" + factura.created_at + "</td>";
             tbody += "<td class='text-center'>" + (factura.radicada == 1 ? factura.fecha_radicacion : "") + "</td>";
             tbody += "<td class='text-right'>" + $.number(factura.factura_total, 2) + "</td>";
@@ -296,7 +295,7 @@ $(function () {
             total += parseFloat(factura.factura_total);
         });
         reporte_factura_contrato_tbody.html(tbody);
-        reporte_factura_contrato_total.html($.number(total,2));
+        reporte_factura_contrato_total.html($.number(total, 2));
 
     }
 

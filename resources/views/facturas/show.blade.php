@@ -43,13 +43,13 @@
                 <tbody>
                     @foreach($ordenes as $orden)
                     <tr>
-                        <td class='text-center'><a href='/ordenservicio/{{ $orden->id}}'
-                                                   target='_blank'>{{ $orden->id}}</a></td>
-                        <td>{{ $orden->nombre}}</td>
-                        <td>{{ $orden->documento}}</td>
-                        <td>{{ $orden->aseguradora_id->nombre}}</td>
-                        <td>{{ $orden->created_at}}</td>
-                        <td class='text-right'>{{ number_format($orden->orden_total,2)}}</td>
+                        <td class='text-center'><a href='/ordenservicio/{{ $orden->id_orden_servicio->id}}'
+                                                   target='_blank'>{{ $orden->id_orden_servicio->id}}</a></td>
+                        <td>{{ $orden->id_orden_servicio->nombre}}</td>
+                        <td>{{ $orden->id_orden_servicio->documento}}</td>
+                        <td>{{ $orden->id_orden_servicio->aseguradora_id->nombre}}</td>
+                        <td>{{ $orden->id_orden_servicio->created_at}}</td>
+                        <td class='text-right'>{{ number_format($orden->id_orden_servicio->orden_total,2)}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -64,9 +64,9 @@
     </div>
 </div>
 
-<div class="form-group col-xs-12 col-md-12 col-lg-12">
-    <a class="btn btn-danger pull-right" href="javascript:window.close()" target="_blak">Regresar</a>
-    <a class="btn btn-primary pull-right" href="/reportes/imprimirfacturas/pdf/{{ $factura->id }}" target="_blank">Imprimir</a>
+<div class="form-group col-xs-12 text-right">
+    <a class="btn btn-danger" href="javascript:window.close()" target="_blak">Regresar</a>
+    <a class="btn btn-primary" href="/reportes/imprimirfacturas/pdf/{{ $factura->id }}" target="_blank">Imprimir</a>
 </div>
 @endsection
 

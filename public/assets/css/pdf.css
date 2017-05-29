@@ -5,6 +5,11 @@
     @page {
       margin: 160px 50px;
     }
+    .logo{
+        max-width: 250px;
+        display: inline-block;
+    }
+    /*
     header { 
       position: fixed;
       left: 0px;
@@ -12,16 +17,16 @@
       right: 0px;
       height: 100px;
     }
- 
-    footer {
+ */
+    /*footer {
       position: fixed;
       left: 0px;
       bottom: -50px;
       right: 0px;
       height: 40px;
       border-bottom: 2px solid #ddd;
-    }
-    footer .page:after {
+    }*/
+   /* footer .page:after {
       content: counter(page);
     }
     footer table {
@@ -35,5 +40,5 @@
     }
     h3, th,td{
       text-align: center;
-    }
+    }*/
 
