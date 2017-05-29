@@ -21,6 +21,7 @@ $(function () {
     var btn_totalfacturado_buscar = $("#btn_totalfacturado_buscar");
     var totalfacturado_tbody = $("#totalfacturado_tbody");
     var total_facturado = $("#total_facturado");
+    var btn_totalfacturado_imprimir = $("#btn_totalfacturado_imprimir");
 
     // reporte factura
     var reporte_factura_numero_factura = $("#reporte_factura_numero_factura");
@@ -98,13 +99,19 @@ $(function () {
                 if (respuesta.success) {
                     totalfacturado_tbody.html(respuesta.totalfacturado_tbody);
                     total_facturado.html(respuesta.total_facturado);
+                    btn_totalfacturado_imprimir.attr("href","/reportes/totalfacturado/pdf/"+ totalfacturado_aseguradora.val() + "/" + totalfacturado_contrato.val() + "/" + totalfacturado_fecha_inicio.val() +
+            "/" + totalfacturado_fecha_fin.val());
                 }
                 else {
                     totalfacturado_tbody.html("");
                     swal('Cancelled', respuesta.error, 'error');
+                    btn_totalfacturado_imprimir.attr("href","/reportes/totalfacturado/pdf/"+ totalfacturado_aseguradora.val() + "/" + totalfacturado_contrato.val() + "/" + totalfacturado_fecha_inicio.val() +
+            "/" + totalfacturado_fecha_fin.val());
                 }
             }, error: function (e) {
                 console.log(e);
+                btn_totalfacturado_imprimir.attr("href","/reportes/totalfacturado/pdf/"+ totalfacturado_aseguradora.val() + "/" + totalfacturado_contrato.val() + "/" + totalfacturado_fecha_inicio.val() +
+            "/" + totalfacturado_fecha_fin.val());
             }
         });
     });

@@ -55,7 +55,7 @@
         </table>
     </div>
     <div class="modal-footer">
-    <a class="btn btn-primary" href="/reportes/Ordenesporfacturar/pdf" target="_blank">Imprimir</a>
+    <a class="btn btn-primary" href="/reportes/Ordenesporfacturar/pdf" target="_blank" id="btn_ordenes_por_facturar_imprimir">Imprimir</a>
     </div>
     <script src="{{asset('assets/js/orden_de_servicios.js')}}"></script>
 

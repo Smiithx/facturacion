@@ -228,7 +228,6 @@ class ordenserviciocontroller extends Controller
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)
                         ->where('anulado', "0")
-
             ->get();
         $tbody_ordenes_facturar = "";
 

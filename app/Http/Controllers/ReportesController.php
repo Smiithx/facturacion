@@ -51,23 +51,27 @@ class ReportesController extends Controller
         return view('reportes.totalfacturado', compact('contratos', 'aseguradoras'));
     }
 
-    public function reportefacturacionpdf()
+    public function reportefacturacionpdf($aseguradora, $contrato, $desde, $hasta)
     {
-        $data = [
-            'quantity' => '1',
-            'description' => 'some ramdom text',
-            'price' => '500',
-            'total' => '500'
-        ];
-
-
-        $view = \View::make('reportes.pdf.totalfacturado', compact('data'))->render();
+        $facturas = Factura::select("facturas.created_at", "factura_items.id_factura", "ordendeservicio.documento", "ordendeservicio.nombre", "facturas.factura_total")
+                ->join("factura_items", "facturas.id", "=", "factura_items.id_factura")
+                ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
+                ->where('facturas.id_contrato', $contrato)
+                ->where('ordendeservicio.aseguradora_id', $aseguradora)
+                ->whereDate('facturas.created_at', '>=', $desde)
+                ->whereDate('facturas.created_at', '<=', $hasta)
+                ->groupBy('facturas.id')->get();
+        $empresa = Empresa::findOrFail(1);
+        //dd($facturas);
+        /*$view = \View::make('reportes.pdf.totalfacturado', compact('data'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('totalfacturado');
-
+*/
         //$pdf = PDF::loadView('reportes.pdf.totalfacturado');
         //return $pdf->Stream('totalfacturado',compact('facturas'));
+    return view("reportes.pdf.totalfacturado",compact('facturas','empresa'));
     }
 
     public function Ordenesporfacturar()
@@ -76,11 +80,17 @@ class ReportesController extends Controller
 
     }
 
-    public function Ordenesporfacturarpdf($id)
+    public function Ordenesporfacturarpdf($desde,$hasta)
     {
-      
-        $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
-          return $pdf->Stream('Ordenesporfacturar');
+        $ordenes = ordenservicios::where('facturado', "0")
+            ->whereDate('created_at', '>=', $desde)
+            ->whereDate('created_at', '<=', $hasta)
+                        ->where('anulado', "0")
+            ->get();
+        $empresa = Empresa::findOrFail(1);
+        return view("reportes.pdf.Ordenesporfacturar",compact("ordenes","empresa"));
+       /* $pdf = PDF::loadView('reportes.pdf.Ordenesporfacturar');
+          return $pdf->Stream('Ordenesporfacturar');*/
 
     }
 

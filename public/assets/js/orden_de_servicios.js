@@ -32,6 +32,7 @@ $(function () {
     var fecha_fin_ordenes_facturar = $("#fecha_fin_ordenes_facturar");
     var tbody_ordenes_facturar = $("#tbody_ordenes_facturar");
     var btn_ordenes_facturar_buscar = $("#btn_ordenes_facturar_buscar");
+    var btn_ordenes_por_facturar_imprimir = $("#btn_ordenes_por_facturar_imprimir");
 
     // Index
     var orden_servicio_factura = $("#orden_servicio_factura");
@@ -83,13 +84,19 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     tbody_ordenes_facturar.html(respuesta.tbody_ordenes_facturar);
+                    btn_ordenes_por_facturar_imprimir.attr("href","/reportes/Ordenesporfacturar/pdf/"+fecha_inicio_ordenes_facturar.val() +
+            "/" + fecha_fin_ordenes_facturar.val());
                 }
                 else {
                     tbody_ordenes_facturar.html("");
                     swal('Cancelled', respuesta.error, 'error');
+                    btn_ordenes_por_facturar_imprimir.attr("href","/reportes/Ordenesporfacturar/pdf/"+fecha_inicio_ordenes_facturar.val() +
+            "/" + fecha_fin_ordenes_facturar.val());
                 }
             }, error: function (e) {
                 console.log(e);
+                btn_ordenes_por_facturar_imprimir.attr("href","/reportes/Ordenesporfacturar/pdf/"+fecha_inicio_ordenes_facturar.val() +
+            "/" + fecha_fin_ordenes_facturar.val());
             }
         });
     });
