@@ -6,8 +6,8 @@ $(function () {
     //-- Declarar variables =============================== //
 
     // index
-    var btn_eliminar_usuario = $(".btn_eliminar_usuario");
-    var form_eliminar_usuario = $("#form_eliminar_usuario");
+    var btn_eliminar_servicio = $(".btn_eliminar_servicio");
+    var form_eliminar_servicio = $("#form_eliminar_servicio");
 
     //-- Fin de declarar variables ======================= //
 
@@ -16,7 +16,7 @@ $(function () {
 
     //--  index ================================= //
 
-    btn_eliminar_usuario.on("click",function(e){
+    btn_eliminar_servicio.on("click",function(e){
         e.preventDefault();
         var parent = $(this).parent().parent().parent();
         var id = $(this).attr("data-id");

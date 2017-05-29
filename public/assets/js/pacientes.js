@@ -36,7 +36,7 @@ $(function(){
                     if(respuesta.success){
                         swal({
                             title: 'Deleted!',
-                            text: respuesta.mensaje,
+                            html: respuesta.mensaje,
                             type: 'success',
                             confirmButtonText: 'Ok'
                         }).then(function () {
