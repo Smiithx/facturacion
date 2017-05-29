@@ -1,7 +1,5 @@
 <html>
 <head>
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap-theme.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/pdf.css')}}">
     <title>@section('title') @show</title>
 </head>
@@ -33,8 +31,6 @@
 
     <!-- </footer> -->
 </div>
-<script src="{{asset('assets/js/jquery.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.js')}}"></script>
 </body>
 </html>
 
