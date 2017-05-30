@@ -15,7 +15,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="logo">
-                    <img src="/imagenes/{{$empresa->file}}" alt="{{$empresa->file}}" class="img-responsive">
+                    <img src="imagenes/{{$empresa->file}}" alt="{{$empresa->file}}" class="img-responsive">
+
+
                 </div>
                 <div class="datos">
                     <h1>{{$empresa->rezon_social}}</h1>
