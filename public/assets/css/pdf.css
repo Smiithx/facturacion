@@ -10,9 +10,13 @@ body {
 .logo {
     max-width: 250px;
     padding: 10px;
-    float: left;
+  float: right;
 }
-
+.logo img {
+   width:150px;
+    height:150px;
+    float: right;
+}
 .datos {
     float: left;
     margin-left: 10px;
