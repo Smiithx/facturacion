@@ -37,12 +37,26 @@ class ordenserviciocontroller extends Controller
     public function anular($id)
     {
         $ordenes = ordenservicios::findOrFail($id);
+
+        if($ordenes->facturado = 1){
+            $factura = FacturaItems::where("id_orden_servicio",$id)->get();
+            $numero_factura = count ($factura);
+            if($numero_factura > 0){
+                $factura = $factura[0]->id_factura->id;
+                flash("La Orden <b>#$id</b> no puedee ser anulada porque tiene una factura asociada. <a href='/factura/$factura'><b>ver factura</b></a>")->error();
+            }else{
+                $ordenes->anulado = 1;
+                $ordenes->save();
+                flash("La orden <b>#$id</b> fué anulada con éxito.")->success();
+                return Redirect::to('/reportes/Ordenesporfacturar');
+            }
+        }
+
+
         $ordenes->anulado = 1;
         $ordenes->save();
-        flash("Orden de servicio Anulada con Exito.");
-            return Redirect::to('/reportes/Ordenesporfacturar');
-
-
+         flash("La orden <b>#$id</b> fué anulada con éxito.")->success();
+        return Redirect::to('/reportes/Ordenesporfacturar');
 
     }
 
@@ -227,7 +241,7 @@ class ordenserviciocontroller extends Controller
         $ordenservicios = ordenservicios::where('facturado', "0")
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)
-                        ->where('anulado', "0")
+            ->where('anulado', "0")
             ->get();
         $tbody_ordenes_facturar = "";
 
@@ -246,7 +260,7 @@ class ordenserviciocontroller extends Controller
                   <a href='/ordenservicio/$orden->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Anular'>
                     <i class='glyphicon glyphicon-remove'></i>
                    </a>
-                 
+
              </td>
             </tr>";
         }
