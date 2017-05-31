@@ -24,7 +24,7 @@
 
                             <td class='text-center'><a href='/facturas/{{$facturas->id}}' target='_blank'>{{$facturas->id}}</a></td> 
                                <td><input id='descripcion_abonar'  required type='text' name='descripcion'    class='form-control'></td>  
-                           <td><input id='monto_abonar' step='0.00'  required type='number' name='valor_abono'    class='form-control'></td>
+                           <td><input id='monto_abonar' step='0.01'  required type='number' name='valor_abono'    class='form-control'></td>
                                              
 
                             </td>

@@ -215,8 +215,8 @@ class GlosasController extends Controller
                             <input type='hidden'  name='id_factura' value='$factura->id'>
                             <td>$factura->fecha_radicacion</td>
                             <td>". number_format($factura->factura_total, 2) ."</td>
-                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor'  class='form-control'     name='valor_glosa' required></td>
-                            <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
+                            <td><input style='width: 100%;' type='number' step='0.01' placeholder='Ingresar valor'  class='form-control'     name='valor_glosa' required></td>
+                            <td><input style='width: 100%;' type='number' step='0.01' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
                             </tr>";
                         }
 
@@ -265,8 +265,8 @@ class GlosasController extends Controller
                        <input type='hidden'  name='id_factura' value='$factura->id'>
                         <td>$factura->fecha_radicacion</td>
                         <td>". number_format($factura->factura_total, 2) ."</td>
-                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' name='valor_glosa' class='form-control' required></td>
-                        <td><input style='width: 100%;' type='number' step='0.00' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
+                        <td><input style='width: 100%;' type='number' step='0.01' placeholder='Ingresar valor' name='valor_glosa' class='form-control' required></td>
+                        <td><input style='width: 100%;' type='number' step='0.01' placeholder='Ingresar valor' class='form-control' name='valor_aceptado' required></td>
                         </tr>";
                         }
                         if ($facturas != "") {
