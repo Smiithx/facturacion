@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use App\Cie10;
 use App\Medicamentos;
 use App\Servicios;
 use App\Paciente;
@@ -35,7 +34,6 @@ class DatabaseSeeder extends Seeder
         \App\Manuales::truncate();
         Servicios::truncate();
         \App\Manuales_servicios::truncate();
-        Cie10::truncate();
         Medicamentos::truncate();
         OrdenServicio_Items::truncate();
         ordenservicios::truncate();
@@ -48,7 +46,6 @@ class DatabaseSeeder extends Seeder
         User::truncate();
          \App\Glosas::truncate();
 
-        //$this->call('Cie10Seeder');
         $this->call('MedicamentosSeeder');
         $this->call('EmpresaSeeder');
         $this->call('DiagnosticosSeeder');

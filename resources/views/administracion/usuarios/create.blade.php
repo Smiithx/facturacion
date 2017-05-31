@@ -37,8 +37,9 @@
             <div class="form-group">
                 <label for="cargo">Cargo:</label>
                 <select required class="form-control" id="cargo"  name="cargo" >
-                    <option value="medico" {{ old('cargo') == "medico" ? "selected" : ""}} >Medico</option>
+                    <option value="medico" {{ old('cargo') == "admin" ? "selected" : ""}} >Administrador</option>
                     <option value="enfermera" {{ old('cargo') == "enfermera" ? "selected" : ""}} >Enfermera</option>
+                    <option value="medico" {{ old('cargo') == "medico" ? "selected" : ""}} >Medico</option>
                     <option value="otro" {{ old('cargo') == "otro" ? "selected" : ""}} >Otro</option>
                 </select>
             </div>

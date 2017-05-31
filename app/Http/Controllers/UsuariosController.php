@@ -132,7 +132,6 @@ class UsuariosController extends Controller
                 $this->validate($request, [
                     'name' => 'required|max:255',
                     'email' => 'required|email|max:255|unique:users',
-                    'password' => 'required|confirmed|min:6',
                     'documento' => 'required|max:50',
                     'firma' => 'max:100',
                     'cargo' => 'required'
@@ -141,7 +140,6 @@ class UsuariosController extends Controller
                 $this->validate($request, [
                     'name' => 'required|max:255',
                     'email' => 'required|email|max:255',
-                    'password' => 'required|confirmed|min:6',
                     'documento' => 'required|max:50',
                     'firma' => 'max:100',
                     'cargo' => 'required'
@@ -151,7 +149,6 @@ class UsuariosController extends Controller
             $this->validate($request, [
                 'name' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users',
-                'password' => 'required|confirmed|min:6',
                 'documento' => 'required|max:50',
                 'firma' => 'max:100',
                 'cargo' => 'required'

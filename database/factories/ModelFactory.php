@@ -56,15 +56,6 @@ $factory->define(App\Aseguradora::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Diagnosticos::class, function (Faker\Generator $faker) {
-    return [
-        'codigo' => $faker->regexify('[a-z0-9A-Z]{8}'),
-        'descripcion' => $faker->name,
-        'estado' => $faker->randomElement(array('Activo', 'Inactivo'))
-
-    ];
-});
-
 $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
     $pacientes = \App\Paciente::all();
     $paciente = $pacientes->random();
