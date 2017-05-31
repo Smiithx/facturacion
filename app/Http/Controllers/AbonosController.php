@@ -96,7 +96,7 @@ class AbonosController extends Controller
     public function show($id)
     {
         // $abonos = Abonos::findOrFail($id);  
-        $abonos = Abonos::where('id_factura',$id)->get();
+        $abonos = Abonos::where('id_factura',$id)->where('anulado',0)->get();
         $abonos_tbody = "";
 
             foreach ($abonos as $abono) {
@@ -107,12 +107,9 @@ class AbonosController extends Controller
                             <td>$abono->created_at</td>
                             <td><a style='float: left;' href='/abonos/$abono->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
 
-                            <form action='abonos/$abono->id' method='POST'>
-                                <input type='hidden' name='_method' value='DELETE'>
-                                <input type='hidden' name='_token' value='csrf_token()'>
-                                <button type='submit' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
-                                <i class='glyphicon glyphicon-remove'></i>
-                             </form>
+                            
+                                <a href='abonos/$abono->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
+                                <i class='glyphicon glyphicon-remove'></i></a>
 
 
                             </td>
@@ -153,7 +150,7 @@ class AbonosController extends Controller
     public function update(Request $request, $id)
     {
        $abonos = Abonos::findOrFail($id);      
-       $carteras = Cartera::where('id_factura',$request->id_factura)->get();
+       $carteras = Cartera::where('id_factura',$request->id_factura)->where('anulado',0)->get();
        $saldo = $carteras[0]->valor_saldo; //saco el saldo actual
             if($saldo >=1 ){                
                  $saldo_sin_abono = $saldo + $abonos->valor_abono;//le sumo el valor de abono viejo
@@ -184,5 +181,32 @@ class AbonosController extends Controller
 
     public function destroy($id)
     {
+    }
+    public function anular($id)
+    {   
+        $abonos = Abonos::findOrFail($id);
+
+
+       $carteras = Cartera::where('id_factura',$abonos->id_factura)->get();
+       $saldo = $carteras[0]->valor_saldo; //saco el saldo actual
+            if($saldo >=1 ){                
+                 $saldo_sin_abono = $saldo + $abonos->valor_abono;//le sumo el valor de abono viejo
+                             
+
+                    $carteras = Cartera::findOrFail($carteras[0]->id);
+                    $carteras->valor_saldo = $saldo_sin_abono;//actualizamos el saldo
+                    $carteras->save();
+
+                    $abonos->anulado = 1;
+                    $abonos->save();
+                    flash('El abono ha sido anulado con  Exito')->error();
+                    return Redirect::to("/abonos");
+            }
+            else{
+                flash('Ya esta factura fue cancelada, Verifique!')->error();
+                return Redirect::to("/abonos");
+            }
+
+
     }
 }

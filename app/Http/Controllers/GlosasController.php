@@ -127,7 +127,7 @@ class GlosasController extends Controller
 
             $carteras = Cartera::findOrFail($carteras[0]->id);//buscamos la cartera
             $factura = Factura::find($glosas->id_factura);//buscamos la factura
-            $abonos = Abonos::where('id_factura',$glosas->id_factura)->get();//buscamos abonos con la factura
+            $abonos = Abonos::where('id_factura',$glosas->id_factura)->where('anulado',0)->get();//buscamos abonos con la factura
             $abonostotal = 0;
             if (count($abonos) > 0) { // verificar si existe abonos a la cartera
 

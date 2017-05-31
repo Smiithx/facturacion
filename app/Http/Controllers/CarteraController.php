@@ -101,7 +101,7 @@ class CarteraController extends Controller
     public function reportebuscar($factura){
                 $carteras = Cartera::where('id_factura',$factura)->get();
         if (count($carteras) > 0) {// verificar si existe  la cartera
-                $abonos = Abonos::where('id_factura',$factura)->get();
+                $abonos = Abonos::where('id_factura',$factura)->where('anulado',0)->get();
                 $facturas = Factura::where('id',$factura)->get();
                 $abonostotal = 0;
                 if (count($abonos) > 0) { // verificar si existe abonos a la cartera

@@ -57,8 +57,10 @@
         </div>
     </div>
     <div class="form-group col-xs-12 text-right">
-        <a href="/facturas" class="btn btn-success">Regresar</a>
-        <button class="btn btn-primary hidden" id="reporte_factura_btn_imprimir">Imprimir</button>
+      
+       
+        <a class="btn btn-primary hidden" id="reporte_factura_btn_imprimir" href="#" target="_blank">Imprimir</a>
+
     </div>
     <script src="{{asset('assets/js/factura.js')}}"></script>
 @endsection
