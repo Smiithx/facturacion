@@ -50,6 +50,8 @@ Route::resource('aseguradoras', 'AseguradoraController');
 //---Abonos--//
 Route::resource('abonos', 'AbonosController');
 Route::get('abonos/create/{id}','AbonosController@create');
+Route::get('abonos/{id}/anular','AbonosController@anular');
+
 
 //----- Servicios ----- //
 Route::resource('servicios', 'ServiciosController');

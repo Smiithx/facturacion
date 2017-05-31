@@ -486,8 +486,7 @@ class FacturaController extends Controller
         $facturas->anulado = 1;
         $facturas->save();
         $factura_items = FacturaItems::where('id_factura', $facturas->id)->get();
-
-        $ordenes = ordenservicios::findOrFail($factura_items[0]->id_orden_servicio);
+        $ordenes =$factura_items[0]->id_orden_servicio;      
         $ordenes->anulado = 1;
         $ordenes->save();
 

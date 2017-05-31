@@ -240,6 +240,8 @@ $(function () {
                     rellenarReporteFactura(respuesta.factura_items);
                     reporte_factura_contrato.val(respuesta.factura.id_contrato.nombre);
                     reporte_factura_fecha_facturacion.val(respuesta.factura.created_at);
+                    reporte_factura_btn_imprimir.attr("href","/reportes/imprimirfacturas/pdf/"+ reporte_factura_numero_factura.val());
+
                     if (respuesta.factura.radicada) {
                         reporte_factura_fecha_radicacion.val(respuesta.factura.fecha_radicacion);
                     } else {

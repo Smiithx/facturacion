@@ -1,4 +1,0 @@
-1. verificar anular factura.
-2.anular abonos
-3.como es el proceso para crear una orden de servicios
-4.imprmmir factura en /facturas/reporte/facturas
