@@ -29,7 +29,10 @@ Route::get('/logout', [
 
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
-Route::post('password/email', 'Auth\PasswordController@postEmail');
+Route::post('password/email',  [
+    "uses" => 'Auth\PasswordController@postEmail',
+    "as" => "password.email"
+] );
 
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');

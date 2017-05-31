@@ -37,6 +37,13 @@
 <div class="container">
     @include('flash::message')
 </div>
+@if (session('status'))
+    <div class="container">
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    </div>
+@endif
 <!-- /menu -->
 <!-- formulario -->
 <div class="container modal-header bg-info">

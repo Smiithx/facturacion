@@ -54,6 +54,12 @@
                             <i class='glyphicon glyphicon-remove'></i>
                         </button>
                         {!! Form::close() !!}
+                        {!! Form::open(['route' => 'password.email', 'method' => 'post']) !!}
+                        <input type="hidden" class="form-control" name="email" value="{{$usuario->email }}">
+                        <button type="submit" class="btn btn-info" data-toggle='tooltip' title='Restablecer contraseña'>
+                            <i class='glyphicon glyphicon-edit'></i>
+                        </button>
+                        {!! Form::close() !!}
                     </td>
                 </tr>
             @endforeach

@@ -20,13 +20,10 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    protected $redirectTo = "/login";
     /**
      * Create a new password controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 }
