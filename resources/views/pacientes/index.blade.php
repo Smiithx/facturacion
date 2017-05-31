@@ -4,16 +4,15 @@
         <table class="table table-striped table-hover table-bordered">
             <caption class="text-center">
                 <h2>Pacientes</h2>
-                <div class="row">
-                    {!! Form::open(['route' => 'pacientes.index', 'method' => 'GET', 'class' => 'container-fluid text-left', 'role' => 'search']) !!}
-                    <div class="input-group">
-                        {!! Form::text('name',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
-                        <span class="input-group-btn">
+                {!! Form::open(['route' => 'pacientes.index', 'method' => 'GET', 'role' => 'search']) !!}
+                <div class="input-group">
+                    {!! Form::text('name',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                    <span class="input-group-btn">
                             <button type="submit" class="btn btn-default">Buscar</button>
                         </span>
-                    </div>
-                    {!! Form::close() !!}
                 </div>
+                {!! Form::close() !!}
+                <br>
             </caption>
             <thead>
             <tr>
@@ -51,12 +50,10 @@
                 </tr>
             @endforeach
             </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="7" class="text-center">{!! $pacientes->render() !!}</td>
-            </tr>
-            </tfoot>
         </table>
+        <div class="container-fluid text-center">
+            {!! $pacientes->render() !!}
+        </div>
     </div>
     <script src="{{asset('assets/js/pacientes.js')}}"></script>
 @endsection
