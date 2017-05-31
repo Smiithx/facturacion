@@ -27,7 +27,14 @@ $(function () {
           '<input type="hidden" class="orden_servicios_valor_unitario"></td>' +
           '<td><input required type="text" readonly class="form-control orden_servicios_valor_total"></td></tr>';
 
-    //-- REPORTE TOTAL FACTURADO ============================== //
+    //-- REPORTE ATENCIONES REALIZADAS============================== //
+    var fecha_inicio_atenciones_realizadas = $("#fecha_inicio_atenciones_realizadas");
+    var fecha_fin_atenciones_realizadas = $("#fecha_fin_atenciones_realizadas");
+    var tbody_atenciones_realizadas = $("#tbody_atenciones_realizadas");
+    var btn_buscar_atenciones_realizadas = $("#btn_buscar_atenciones_realizadas");
+    var btn_atenciones_imprimir = $("#btn_atenciones_imprimir");
+
+//-- REPORTE TOTAL FACTURADO ============================== //
     var fecha_inicio_ordenes_facturar = $("#fecha_inicio_ordenes_facturar");
     var fecha_fin_ordenes_facturar = $("#fecha_fin_ordenes_facturar");
     var tbody_ordenes_facturar = $("#tbody_ordenes_facturar");
@@ -97,6 +104,35 @@ $(function () {
                 console.log(e);
                 btn_ordenes_por_facturar_imprimir.attr("href","/reportes/Ordenesporfacturar/pdf/"+fecha_inicio_ordenes_facturar.val() +
             "/" + fecha_fin_ordenes_facturar.val());
+            }
+        });
+    });
+ //-- REPORTE ATENCIONES REALIZADAS ================================= //
+
+    btn_buscar_atenciones_realizadas.on("click", function () {
+        var url = "/ordenservicio/atenciones/" + fecha_inicio_atenciones_realizadas.val() +
+            "/" + fecha_fin_atenciones_realizadas.val(); //la ruta que se desea ir y pasando los parametros
+            console.log(url);
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (respuesta) {
+                if (respuesta.success) {
+                    tbody_atenciones_realizadas.html(respuesta.tbody_atenciones_realizadas);
+                    btn_atenciones_imprimir.attr("href","/reportes/atencionesrealizadas/pdf/"+fecha_inicio_atenciones_realizadas.val() +
+            "/" + fecha_fin_atenciones_realizadas.val());
+                }
+                else {
+                    tbody_atenciones_realizadas.html("");
+                    swal('Cancelled', respuesta.error, 'error');
+                    btn_atenciones_imprimir.attr("href","/reportes/atencionesrealizadas/pdf/"+fecha_inicio_atenciones_realizadas.val() +
+            "/" + fecha_fin_atenciones_realizadas.val());
+                }
+            }, error: function (e) {
+                console.log(e);
+                btn_atenciones_imprimir.attr("href","/reportes/atencionesrealizadas/pdf/"+fecha_inicio_atenciones_realizadas.val() +
+            "/" + fecha_fin_atenciones_realizadas.val());
             }
         });
     });

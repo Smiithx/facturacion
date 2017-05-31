@@ -8,6 +8,7 @@ use App\Empresa;
 use App\Factura;
 use App\FacturaItems;
 use App\ordenservicios;
+use App\OrdenServicio_Items;
 use Illuminate\Support\Facades\Redirect;
 use PDF;
 
@@ -109,10 +110,21 @@ class ReportesController extends Controller
 
     }
 
-    public function Atencionesrealizadaspdf()
+    public function Atencionesrealizadaspdf($desde, $hasta)
     {
-        $pdf = PDF::loadView('reportes.pdf.Atencionesrealizadas');
-        return $pdf->Stream('Atencionesrealizadas');
+       $ordenservicios = OrdenServicio_Items::selectRaw("ordendeservicio.id, ordendeservicio.documento,ordendeservicio.nombre, aseguradoras.nombre as aseguradora, contratos.nombre as contrato,orden_servicio_items.cups,orden_servicio_items.descripcion, ordendeservicio.facturado")
+               ->join("ordendeservicio", "orden_servicio_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("aseguradoras", "ordendeservicio.aseguradora_id", "=", "aseguradoras.id")
+                ->join("contratos", "ordendeservicio.id_contrato", "=", "contratos.id")
+                
+                ->whereDate('orden_servicio_items.created_at', '>=', $desde)
+                ->whereDate('orden_servicio_items.created_at', '<=', $hasta)
+                ->get();
+            
+
+          $empresa = Empresa::findOrFail(1);
+       $pdf = PDF::loadView('reportes.pdf.Atencionesrealizadas', compact("empresa","ordenservicios"));
+           return $pdf->Stream('Atencionesrealizadas');
     }
 
     public function Imprimirfactura()

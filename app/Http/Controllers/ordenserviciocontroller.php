@@ -309,4 +309,54 @@ class ordenserviciocontroller extends Controller
         }
     }
 
+    //----------------Reporte atenciiones realizadas-----------//
+
+      public function atenciones( $desde, $hasta)
+    {
+        
+               $ordenservicios = OrdenServicio_Items::select("ordendeservicio.id", "ordendeservicio.documento","ordendeservicio.nombre", "aseguradoras.nombre as aseguradora", "contratos.nombre as contrato","orden_servicio_items.cups","orden_servicio_items.descripcion", "ordendeservicio.facturado")
+               ->join("ordendeservicio", "orden_servicio_items.id_orden_servicio", "=", "ordendeservicio.id")
+                ->join("aseguradoras", "ordendeservicio.aseguradora_id", "=", "aseguradoras.id")
+                ->join("contratos", "ordendeservicio.id_contrato", "=", "contratos.id")
+                
+                ->whereDate('orden_servicio_items.created_at', '>=', $desde)
+                ->whereDate('orden_servicio_items.created_at', '<=', $hasta)
+                ->get();
+            
+
+          $factura = "";
+          $tbody_atenciones_realizadas = "";
+         foreach ($ordenservicios as $orden) {
+            $factura = "Facturado";
+
+             if ($orden->facturado == 0 ) {
+                $factura = "Sin Facturar";
+             }
+           
+
+              $tbody_atenciones_realizadas .= "<tr>
+            <td class='text-center'><a href='/ordenservicio/$orden->id' ' target='_blank'>$orden->id</a></td>
+            <td>$orden->documento</td>
+            <td>$orden->nombre</td>
+            <td>$orden->aseguradora</td>
+            <td>$orden->contrato</td>
+           <td>$orden->cups</td>
+           <td>$orden->descripcion</td>
+           <td>$factura</td>
+             </tr>";
+             }
+         if ($tbody_atenciones_realizadas != "") {
+             return response()->json([
+                'success' => 'true',
+                'tbody_atenciones_realizadas' => $tbody_atenciones_realizadas
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'No se encontraron ordenes de servicios.'
+            ]);
+        }
+
+
+    }
+
 }
