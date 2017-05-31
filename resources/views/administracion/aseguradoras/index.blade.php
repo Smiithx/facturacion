@@ -12,7 +12,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => 'aseguradoras.index', 'method' => 'GET', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('nombre',null, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
+                    {!! Form::text('nombre',$nombre, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
@@ -46,7 +46,7 @@
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
                         {!! Form::open(['route' => ['aseguradoras.destroy', $aseguradora->id], 'method' => 'delete']) !!}
-                        <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'
+                        <button type="submit" class="btn btn-danger btn_eliminar_aseguradora" data-toggle='tooltip' title='Eliminar'
                                 target="_blank">
                             <i class='glyphicon glyphicon-remove'></i>
                         </button>

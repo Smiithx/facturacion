@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Aseguradora;
 use App\Contratos;
+use App\ordenservicios;
 use App\Paciente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -138,18 +139,51 @@ class PacienteController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $paciente = Paciente::findOrFail($id);
-        if ($paciente->delete()) {
-            return response()->json([
-                'success' => 'true',
-                'mensaje' => "El paciente #$id ha sido eliminado."
-            ]);
-        } else {
-            return response()->json([
-                'error' => "Error al eliminar el paciente #$id."
-            ]);
+        $ordenes = ordenservicios::where("id_paciente", $paciente->id)->get();
+        if (count($ordenes) == 0) {
+            try {
+                if ($paciente->delete()) {
+                    if ($request->ajax()) {
+                        return response()->json([
+                            'success' => 'true',
+                            'mensaje' => "El paciente <b>$paciente->nombre</b> ha sido eliminado con éxito!"
+                        ]);
+                    } else {
+                        flash("El paciente <b>$paciente->nombre</b> ha sido eliminado con éxito!")->success();
+                        return Redirect::to('/pacientes');
+                    }
+                } else {
+                    if ($request->ajax()) {
+                        return response()->json([
+                            'error' => "Error al eliminar el paciente <b>$paciente->nombre</b>."
+                        ]);
+                    } else {
+                        flash("Error al eliminar el paciente <b>$paciente->nombre</b>.")->error();
+                        return Redirect::to('/pacientes');
+                    }
+                }
+            } catch (\Exception $e) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'error' => "Error al eliminar el paciente <b>$paciente->nombre</b>."
+                    ]);
+                } else {
+                    flash("Error al eliminar el paciente <b>$paciente->nombre</b>.")->error();
+                    return Redirect::to('/pacientes');
+                }
+            }
+        }else{
+            if ($request->ajax()) {
+                return response()->json([
+                    'error' => "No se puede eliminar el paciente <b>$paciente->nombre</b> debido a que existen ordenes de servicios asociadas a este."
+                ]);
+            } else {
+                flash("No se puede eliminar el paciente <b>$paciente->nombre</b> debido a que existen ordenes de servicios asociadas a este.")->error();
+                return Redirect::to('/pacientes');
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ $(function () {
 
     //--  index ================================= //
 
-    btn_eliminar_usuario.on("click",function(e){
+    /*btn_eliminar_usuario.on("click",function(e){
         e.preventDefault();
         var parent = $(this).parent().parent().parent();
         var id = $(this).attr("data-id");
@@ -40,7 +40,7 @@ $(function () {
                     if(respuesta.success){
                         swal({
                             title: 'Deleted!',
-                            text: respuesta.mensaje,
+                            html: respuesta.mensaje,
                             type: 'success',
                             confirmButtonText: 'Ok'
                         }).then(function () {
@@ -58,7 +58,7 @@ $(function () {
                 }
             });
         })
-    });
+    });*/
 
     //-- declarar funciones auxiliares------------------------------------//
 

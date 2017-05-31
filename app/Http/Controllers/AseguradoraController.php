@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Aseguradora;
+use App\Paciente;
+use App\ordenservicios;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -24,7 +26,7 @@ class AseguradoraController extends Controller
     public function index(Request $request)
     {
         $aseguradoras = Aseguradora::nombre($request->get('nombre'))->paginate(10);
-        $datos = ['aseguradoras' => $aseguradoras];
+        $datos = ['aseguradoras' => $aseguradoras, "nombre" => $request->get('nombre')];
         return view("administracion.aseguradoras.index", $datos);
     }
 
@@ -119,10 +121,26 @@ class AseguradoraController extends Controller
     public function destroy($id)
     {
         $aseguradora = Aseguradora::findOrFail($id);
-        $nombre = $aseguradora->nombre;
+         $nombre = $aseguradora->nombre;
+        $pacientes = Paciente::where("aseguradora_id",$id)->get();
+        $numero_pacientes = count($pacientes);
+       
+        if($numero_pacientes > 0){
+            flash("La aseguradora '<b>$nombre</b>' no se puede eliminar porque tiene pacientes asociados")->error();
+            return Redirect::to('/aseguradoras');
+        }
+         $ordenes = ordenservicios::where("aseguradora_id",$id)->get();
+        $numero_ordenes = count($ordenes);
+       
+        if($numero_ordenes > 0){
+            flash("La aseguradora '<b>$nombre</b>' no se puede eliminar porque tiene ordenes de servicios asociados")->error();
+            return Redirect::to('/aseguradoras');
+        }
+        
         $aseguradora->delete();
         flash("La aseguradora '<b>$nombre</b>' ha sido eliminada con éxito")->success();
         return Redirect::to('/aseguradoras');
+        
     }
 
 

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contratos;
+use App\Aseguradora;
+use App\Paciente;
+use App\ordenservicios;
+use App\Factura;
 use App\Manuales;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -24,7 +28,7 @@ class ContratosController extends Controller
     public function index(Request $request)
     {
         $contratos = Contratos::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate(10);
-        $datos = ['contratos' => $contratos];
+        $datos = ['contratos' => $contratos, "nombre" => $request->get('nombre')];
         return view("administracion.contratos.index",$datos);
     }
 
@@ -147,6 +151,33 @@ class ContratosController extends Controller
     public function destroy($id)
     {
         $contrato = Contratos::findOrFail($id);
+        $pacientes = Paciente::where("id_contrato",$id)->get();
+        $nombre = $contrato->nombre;
+        $numero_pacientes = count($pacientes);
+       
+        if($numero_pacientes > 0){
+            flash("El contrato '<b>$nombre</b>' no se puede eliminar porque tiene pacientes asociados")->error();
+            return Redirect::to('/contratos');
+        }
+         $ordenes = ordenservicios::where("id_contrato",$id)->get();
+        $numero_ordenes = count($ordenes);
+       
+        if($numero_ordenes > 0){
+            flash("El contrato '<b>$nombre</b>' no se puede eliminar porque tiene ordenes de servicios asociados")->error();
+            return Redirect::to('/contratos');
+        }
+         $facturas = Factura::where("id_contrato",$id)->get();
+        $numero_facturas = count($facturas);
+       
+        if($numero_facturas > 0){
+            flash("El contrato '<b>$nombre</b>' no se puede eliminar porque tiene faturas asociados")->error();
+            return Redirect::to('/contratos');
+        }
+        
+        $contrato->delete();
+        flash("El contrato '<b>$nombre</b>' ha sido eliminada con éxito")->success();
+        return Redirect::to('/contratos');
+       
         $contrato->delete();
         flash("EL contrato #$id ha sido eliminado con éxito!")->success();
         return Redirect::to('/contratos');

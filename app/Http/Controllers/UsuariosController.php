@@ -187,17 +187,28 @@ class UsuariosController extends Controller
     public function destroy(Request $request, $id)
     {
         $usuario = User::findOrFail($id);
-        if ($usuario->delete()) {
-            if ($request->ajax()) {
-                return response()->json([
-                    'success' => 'true',
-                    'mensaje' => "El usuario <b>$usuario->name</b> ha sido eliminado con éxito!"
-                ]);
+        try {
+            if ($usuario->delete()) {
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => 'true',
+                        'mensaje' => "El usuario <b>$usuario->name</b> ha sido eliminado con éxito!"
+                    ]);
+                } else {
+                    flash("El usuario <b>$usuario->name</b> ha sido eliminado con éxito!")->success();
+                    return Redirect::to('/usuarios');
+                }
             } else {
-                flash("El usuario <b>$usuario->name</b> ha sido eliminado con éxito!")->success();
-                return Redirect::to('/usuarios');
+                if ($request->ajax()) {
+                    return response()->json([
+                        'error' => "Error al eliminar el usuario <b>$usuario->name</b>."
+                    ]);
+                } else {
+                    flash("Error al eliminar el usuario <b>$usuario->name</b>.")->error();
+                    return Redirect::to('/usuarios');
+                }
             }
-        }else{
+        } catch (\Exception $e) {
             if ($request->ajax()) {
                 return response()->json([
                     'error' => "Error al eliminar el usuario <b>$usuario->name</b>."

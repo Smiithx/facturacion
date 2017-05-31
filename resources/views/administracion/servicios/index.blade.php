@@ -13,7 +13,7 @@
         <caption class="text-center">
             {!! Form::open(['route' => 'servicios.index', 'method' => 'GET', 'class' => 'text-left', 'role' => 'search']) !!}
             <div class="input-group">
-                {!! Form::text('cup',null, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
+                {!! Form::text('cup',$cup, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
@@ -44,8 +44,8 @@
                     <a href="/servicios/{{$servicio->id}}/edit" class="btn btn-success" data-toggle='tooltip' title='Editar'>
                         <i class='glyphicon glyphicon-edit'></i>
                     </a>
-                    {!! Form::open(['route' => ['servicios.destroy', $servicio->id], 'method' => 'delete']) !!}
-                    <button type="submit" class="btn btn-danger" data-toggle='tooltip' title='Eliminar'>
+                    {!! Form::open(['route' => ['servicios.destroy', $servicio->id], 'method' => 'delete','class' => 'form_eliminar_servicio']) !!}
+                    <button type="submit" class="btn btn-danger btn_eliminar_servicio" data-toggle='tooltip' title='Eliminar'>
                         <i class='glyphicon glyphicon-remove'></i>
                     </button>
                     {!! Form::close() !!}
@@ -57,5 +57,6 @@
     <div class="container-fluid text-center">
         {!! $servicios->render() !!}
     </div>
+    <script src="{{asset('assets/js/servicio.js')}}"></script>
 </div> 
 @endsection

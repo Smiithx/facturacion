@@ -76,6 +76,8 @@ Route::get('ordenservicio/ordenes_facturar/{desde}/{hasta}', 'ordenserviciocontr
 Route::get('ordenservicio/factura/{factura}', 'ordenserviciocontroller@factura');
 Route::get('ordenservicio/documento/{documento}', 'ordenserviciocontroller@documento');
 Route::get('ordenservicio/{id}/anular', 'ordenserviciocontroller@anular');
+Route::get('ordenservicio/atenciones/{desde}/{hasta}', 'ordenserviciocontroller@atenciones');
+
 
 //----- Facturas ----- //
 Route::resource('facturas', 'FacturaController', ['only' => ['index','create','store','show']]);
@@ -125,7 +127,7 @@ Route::get('reportes/Ordenesporfacturar', 'ReportesController@Ordenesporfacturar
 Route::get('reportes/Ordenesporfacturar/pdf/{inicio}/{fin}', 'ReportesController@Ordenesporfacturarpdf');
 
 Route::get('reportes/Atencionesrealizadas', 'ReportesController@Atencionesrealizadas');
-Route::get('reportes/Atencionesrealizadas/pdf', 'ReportesController@Atencionesrealizadaspdf');
+Route::get('reportes/atencionesrealizadas/pdf/{desde}/{hasta}', 'ReportesController@Atencionesrealizadaspdf');
 Route::get('reportes/Imprimirfactura', 'ReportesController@Imprimirfactura');
 Route::get('reportes/imprimirfacturas/pdf/{id}', 'ReportesController@Imprimirfacturapdf');
 Route::get('reportes/Cuentadecobro', 'ReportesController@Cuentadecobro');

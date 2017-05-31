@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contratos;
 use App\Aseguradora;
 use App\Manuales_servicios;
+use App\OrdenServicio_Items;
 use Illuminate\Http\Request;
 use App\Servicios;
 use App\Http\Requests;
@@ -27,7 +28,7 @@ class ServiciosController extends Controller
     public function index(Request $request)
     {
         $servicios = Servicios::cups($request->get('cup'))->orderBy('id', 'DES')->paginate();
-        $datos = ['servicios' => $servicios];
+        $datos = ['servicios' => $servicios, "cup" => $request->get('cup')];
         return view("administracion.servicios.index", $datos);
     }
 
@@ -138,9 +139,27 @@ class ServiciosController extends Controller
      */
     public function destroy($id)
     {
-        $servicios = Servicios::findOrFail($id);
-        $servicios->delete();
-        flash("EL servicio #$id ha sido eliminado con éxito!")->success();
+        $servicio = Servicios::findOrFail($id);
+        $manuales_servicios = Manuales_servicios::where("id_servicio",$id)->get();
+        $count_manuales_servicios = count($manuales_servicios);
+
+        if($count_manuales_servicios > 0){
+            flash("EL servicio <b>$servicio->cups</b> no se puede eliminar porque esta asociado a un manual.")->error();
+            return Redirect::to('/servicios');
+        }
+
+        $orden_servicio_items = OrdenServicio_Items::where("cups",$servicio->cups)->get();
+        $count_orden_servicio_items = count($orden_servicio_items);
+
+        if($count_orden_servicio_items > 0){
+            flash("EL servicio <b>$servicio->cups</b> no se puede eliminar porque fue cargado en una orden de servicio.")->error();
+            return Redirect::to('/servicios');
+        }
+
+
+
+        $servicio->delete();
+        flash("EL servicio <b>$servicio->cups</b> ha sido eliminado con éxito!")->success();
         return Redirect::to('/servicios');
 
     }

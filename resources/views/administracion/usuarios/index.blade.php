@@ -49,7 +49,7 @@
                            data-toggle='tooltip' title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>
                         </a>
-                        {!! Form::open(['route' => ['usuarios.destroy', $usuario->id], 'method' => 'delete','id' => 'form_eliminar_usuario']) !!}
+                        {!! Form::open(['route' => ['usuarios.destroy', $usuario->id], 'method' => 'delete','class' => 'form_eliminar_usuario']) !!}
                         <button type="submit" data-id="{{$usuario->id}}" class="btn btn-danger btn_eliminar_usuario" data-toggle='tooltip' title='Eliminar'>
                             <i class='glyphicon glyphicon-remove'></i>
                         </button>

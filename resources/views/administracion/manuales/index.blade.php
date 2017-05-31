@@ -13,7 +13,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => 'manuales.index', 'method' => 'GET', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('soat',null, ['class' => 'form-control', 'placeholder' => 'Codigo soat']) !!}
+                    {!! Form::text('soat',$soat, ['class' => 'form-control', 'placeholder' => 'Codigo soat']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
