@@ -19,8 +19,7 @@ class Facturas extends Migration
             $table->decimal('factura_total', 42, 2);
             $table->boolean('radicada');
             $table->date('fecha_radicacion');
-                        $table->boolean('anulado');
-
+            $table->boolean('anulado');
             $table->timestamps();
         });
     }

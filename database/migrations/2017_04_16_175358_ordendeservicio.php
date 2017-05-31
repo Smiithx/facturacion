@@ -25,7 +25,6 @@ class Ordendeservicio extends Migration
             $table->decimal('orden_total', 42, 2);
             $table->boolean('facturado');
             $table->boolean('anulado');
-
             $table->timestamps();
         });
     }

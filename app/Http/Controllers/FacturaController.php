@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contratos;
+use App\Factura;
 use App\FacturaItems;
 use App\ordenservicios;
-use App\OrdenServicio_items;
-use App\Paciente;
-use App\Aseguradora;
 use Illuminate\Http\Request;
-use App\Factura;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class FacturaController extends Controller
 {
@@ -96,7 +91,8 @@ class FacturaController extends Controller
         if ($request->ajax()) {
             try {
                 $factura = Factura::findOrFail($id);// lo trae como objeto
-                $radicacion_tbody = "<tr>
+                if ($factura->anulado != 1) {
+                    $radicacion_tbody = "<tr>
                         <td class=\"text-center\">
                             <a href=\"/facturas/$factura->id\" target='_blank'>$factura->id</a>
                          </td>
@@ -105,15 +101,20 @@ class FacturaController extends Controller
                         <td class=\"text-right\">" . number_format($factura->factura_total, 2) . "</td>
                     </tr>";
 
-                if (is_null($factura)) {
+                    if (is_null($factura)) {
+                        return response()->json([
+                            'error' => 'Numero de factura desconocido.'
+                        ]);
+                    } else {
+                        return response()->json([
+                            'success' => 'true',
+                            'factura' => $factura,
+                            'radicacion_factura_tbody' => $radicacion_tbody
+                        ]);
+                    }
+                }else{
                     return response()->json([
-                        'error' => 'Numero de factura desconocido.'
-                    ]);
-                } else {
-                    return response()->json([
-                        'success' => 'true',
-                        'factura' => $factura,
-                        'radicacion_factura_tbody' => $radicacion_tbody
+                        'error' => 'Factura anulada.'
                     ]);
                 }
             } catch (\Exception $e) {
@@ -169,6 +170,7 @@ class FacturaController extends Controller
     {
         $facturas = Factura::where("radicada", 0)
             ->where('id_contrato', $contrato)
+            ->where('anulado', 0)
             ->whereDate('created_at', '>=', $desde)
             ->whereDate('created_at', '<=', $hasta)
             ->get();
@@ -482,22 +484,30 @@ class FacturaController extends Controller
     //----------------- Anular Factura---------------------------//
     public function anular($id)
     {
-        $facturas = Factura::findOrFail($id);
-        $facturas->anulado = 1;
-        $facturas->save();
-        $factura_items = FacturaItems::where('id_factura', $facturas->id)->get();
-        $ordenes =$factura_items[0]->id_orden_servicio;      
-        $ordenes->anulado = 1;
-        $ordenes->save();
+        $factura = Factura::findOrFail($id);
+        $factura->anulado = 1;
+        $factura->radicada = 0;
+        $factura->fecha_radicacion = "";
 
-        flash("Factura  Anulada con Exito.");
+        if (true) {
+
+        }
+
+        $factura->save();
+        $factura_items = FacturaItems::where('id_factura', $factura->id)->get();
+
+        foreach ($factura_items as $item) {
+            $ordene = $item->id_orden_servicio;
+            $ordene->anulado = 1;
+            $ordene->save();
+        }
+        flash("La factura <b>#$id</b> ha sido anulada con éxito.");
         return Redirect::to('/reportes/Imprimirfactura');
-
 
     }
 
 
-    //----------------- reporte cuenta por cobrar---------------------------//
+//----------------- reporte cuenta por cobrar---------------------------//
     public function cxcbuscar($factura)
     {
         $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total", "cartera.valor_saldo")
