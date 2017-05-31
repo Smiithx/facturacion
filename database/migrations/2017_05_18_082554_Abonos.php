@@ -18,6 +18,8 @@ class Abonos extends Migration
             $table->integer('id_factura');
             $table->string('descripcion',100);
             $table->decimal('valor_abono', 42, 2);
+               $table->boolean('anulado');
+
             $table->timestamps();
 
         });
