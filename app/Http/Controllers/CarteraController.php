@@ -246,16 +246,16 @@ class CarteraController extends Controller
                     <input type='hidden' name='fecha_vencimiento' value='$date'>
 
           
-                    <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
+                    <td><input id='cartera_valor_abono' step='0.01'  required type='number' name='valor_abono'  class='form-control'></td>
           
 
                     <td><input id='cartera_glosa' data-value='$factura->valor_aceptado' required type='text' name='valor_glosa' readonly
                                         class='form-control' value=".number_format($factura->valor_aceptado, 2)."></td>
                                    
-                    <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
+                    <td><input id='cartera_retencion' step='0.01'  required type='number' name='valor_retencion'    class='form-control'></td>
                      
 
-                    <td class='text-right'><input id='cartera_saldo'step='0.00'  required type='text' name='valor_saldo'    class='form-control'></td>
+                    <td class='text-right'><input id='cartera_saldo'step='0.01'  required type='text' name='valor_saldo'    class='form-control'></td>
             
                                      </tr>";
                     }//termina el foreach
@@ -322,16 +322,16 @@ class CarteraController extends Controller
                     <input type='hidden' name='fecha_vencimiento' value='$date'>
 
           
-                    <td><input id='cartera_valor_abono' step='0.00'  required type='number' name='valor_abono'  class='form-control'></td>
+                    <td><input id='cartera_valor_abono' step='0.01'  required type='number' name='valor_abono'  class='form-control'></td>
           
 
                     <td><input id='cartera_glosa' data-value='$factura->valor_aceptado' required type='text' name='valor_glosa' readonly
                                         class='form-control' value=".number_format($factura->valor_aceptado, 2)."></td>
                                    
-                    <td><input id='cartera_retencion' step='0.00'  required type='number' name='valor_retencion'    class='form-control'></td>
+                    <td><input id='cartera_retencion' step='0.01'  required type='number' name='valor_retencion'    class='form-control'></td>
                      
 
-                    <td class='text-right'><input id='cartera_saldo'step='0.00'  required type='text' name='valor_saldo'    class='form-control'></td>
+                    <td class='text-right'><input id='cartera_saldo'step='0.01'  required type='text' name='valor_saldo'    class='form-control'></td>
             
                                      </tr>";
                     }//termina el foreach

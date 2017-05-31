@@ -21,7 +21,7 @@
 
                                 <td class='text-center'>{!! Form::text('id_factura',null,['class' => 'form-control','readonly'])   !!}</td>                               
                                 <td class='text-center'>{!! Form::text('descripcion',null,['class' => 'form-control'])   !!}</td>
-                                <td class='text-center'>{!! Form::text('valor_abono',null,['class' => 'form-control'])   !!}</td> 
+                                <td class='text-center'>{!! Form::text('valor_abono',null,['class' => 'form-control','step'=>'0.01'])   !!}</td> 
                           </tr>
                   </tbody>
       </table>
