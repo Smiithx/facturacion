@@ -102,7 +102,10 @@ class CarteraController extends Controller
                 $carteras = Cartera::where('id_factura',$factura)->get();
         if (count($carteras) > 0) {// verificar si existe  la cartera
                 $abonos = Abonos::where('id_factura',$factura)->where('anulado',0)->get();
+                dd($abonos);
+
                 $facturas = Factura::where('id',$factura)->get();
+
                 $abonostotal = 0;
                 if (count($abonos) > 0) { // verificar si existe abonos a la cartera
 
@@ -214,9 +217,14 @@ class CarteraController extends Controller
     //=================crear cartera por Numeroo Factura =======================//
 
        if ($factura >= 1) { //si es por factura, verifico que halla factura
-                    $facturas = Factura::where('id',$factura)->get();
+           $facturas = Factura::where('id',$factura)->get();
 
-            if (count($facturas) >= 1) { // si existe factura, verifico que tenga glosa
+     //si la factura ets anulada 
+
+            if (count($facturas) >= 1) { // si existe factura
+
+
+             if ($facturas[0]->anulado == 0){//si no esta anulada  verifico que tenga glosa
                 $glosas = Glosas::where('id_factura',$facturas[0]->id)->get();
 
                 if (count($glosas) >= 1) { //si hay glosa, verifico que tenga cartera
@@ -279,6 +287,13 @@ class CarteraController extends Controller
                     'error' => 'Verificar #Factura , La Factura No tiene glosa.'
                     ]);
                     }
+          }//termina si existe
+          else{
+             return response()->json([
+                'error' => 'Verificar, Factura Anulada.'
+                ]);
+                }
+
         }// terminar  si existe factura
         else {
             return response()->json([
