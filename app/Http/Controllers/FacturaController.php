@@ -489,10 +489,6 @@ class FacturaController extends Controller
         $factura->radicada = 0;
         $factura->fecha_radicacion = "";
 
-        if (true) {
-
-        }
-
         $factura->save();
         $factura_items = FacturaItems::where('id_factura', $factura->id)->get();
 
