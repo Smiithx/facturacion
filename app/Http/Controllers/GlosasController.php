@@ -58,9 +58,14 @@ class GlosasController extends Controller
             'valor_glosa' => 'required',
             'valor_aceptado' => 'required'
         ]);
+       
+
+
         $glosas = Glosas::create($request->all());
         flash('Glosas creada con exito!');
         return Redirect::to("/glosas/create");
+     
+       
     }
 
     /**
@@ -200,7 +205,7 @@ class GlosasController extends Controller
 
             $factura = Factura::find($factura);
 
-            if ($factura->anulado == 1) { // verificar si existe factura
+            if ($factura->anulado == 0) { // verificar si existe factura
 
                 if ($factura->radicada == 1) { // verificar si la factura esta radicada
 
@@ -236,7 +241,7 @@ class GlosasController extends Controller
                 // cierra el if de verificar si existe la factura
             } else {
                 return response()->json([
-                    'error' => 'La factura se encuentra anulada.'
+                    'error' => 'La factura se encuentra anulada .'
                 ]);
             }
 

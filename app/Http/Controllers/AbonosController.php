@@ -53,6 +53,9 @@ class AbonosController extends Controller
     public function store(Request $request){
 
         $this->validate($request,['id_factura'=>'required','descripcion'=>'required','valor_abono'=>'required|numeric|min:0.01' ]);
+            $facturas = Factura::findOrFail($id); 
+            if (count($facturas) >= 1) { 
+
         $carteras = Cartera::where('id_factura',$request->id_factura)
             ->get();//verifico que si ya la factura tiene cartera.
 
@@ -80,8 +83,12 @@ class AbonosController extends Controller
             flash('la factura no tiene cartera!')->error();
             return Redirect::to('cartera/editar');
         }
+    }
+        else{ //si no encuentro cartera envio un mensaje
 
-
+            flash('la factura se encuentra anulada!')->error();
+            return Redirect::to('cartera/editar');
+        }
 
 
 
