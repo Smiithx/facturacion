@@ -41,6 +41,10 @@
                     <td>{{ $manual->codigosoat }}</td>
                     <td class="text-center">{{ $manual->estado }}</td>
                     <td class="acciones">
+                        <a href="/manuales/{{ $manual->id }}" class="btn btn-info" data-toggle='tooltip'
+                           title='Añadir servicios'>
+                            <i class='glyphicon glyphicon-plus'></i>
+                        </a>
                         <a href="/manuales/{{$manual->id}}/edit" class="btn btn-success" data-toggle='tooltip'
                            title='Editar'>
                             <i class='glyphicon glyphicon-edit'></i>

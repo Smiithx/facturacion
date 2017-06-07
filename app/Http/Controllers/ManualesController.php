@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Manuales;
 use App\Contratos;
 use App\Manuales_servicios;
+use App\Servicios;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;

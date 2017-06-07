@@ -35,8 +35,6 @@ $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
         'documento' => $faker->nationalId(),
         'tipo_documento' => $faker->randomElement(array('CC', 'TI', 'RC', 'CE', 'AS', 'MS', 'PA')),
         'nombre' => $faker->firstName($sexo == 'Masculino' ? 'male' : 'female') . " " . $faker->lastName,
-        'edad' => $faker->numberBetween($min = 1, $max = 90),
-        'tipo_edad' => $faker->randomElement(array('Años', 'Meses', 'Dias')),
         'fecha_nacimiento' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'sexo' => $sexo,
         'telefono' => $faker->phoneNumber,

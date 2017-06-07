@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ $paciente->documento }}</td>
                     <td>{{ $paciente->nombre }}</td>
-                    <td>{{ $paciente->edad." ".$paciente->tipo_edad }}</td>
+                    <td>{{ $paciente->getEdad() }}</td>
                     <td>{{ $paciente->sexo }}</td>
                     <td>{{ $paciente->aseguradora_id->nombre }}</td>
                     <td>{{ $paciente->id_contrato->nombre }}</td>

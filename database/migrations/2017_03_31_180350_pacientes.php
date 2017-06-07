@@ -17,8 +17,6 @@ class Pacientes extends Migration
             $table->string('documento')->unique();
             $table->enum('tipo_documento', array('CC', 'TI','RC','CE','AS','MS','PA'));
             $table->string('nombre');
-            $table->integer('edad');
-            $table->enum('tipo_edad', array('Años', 'Meses','Dias'));
             $table->date('fecha_nacimiento');
             $table->enum('sexo', array('Masculino','Femenino'));
             $table->string('telefono');

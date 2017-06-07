@@ -2,7 +2,7 @@
 
 @section('menu')
 
-    @include('administracion.partials.menu',["pagina" => "Manual $manual->codigosoat", "seccion" => "manual"])
+    @include('administracion.partials.menu',["pagina" => "Manual - $manual->codigosoat", "seccion" => "manual"])
 
 @endsection
 
