@@ -131,15 +131,13 @@ class ManualesController extends Controller
             return Redirect::to('/manuales');
         }
         $manuales_servicios = Manuales_servicios::where("id_manual",$id)->get();
-        $numero_manuales_servicios = count($manuales_servicios);
-       
-        if($numero_manuales_servicios > 0){
-            flash("El manual '<b>$nombre</b>' no se puede eliminar porque tiene servicios asociados")->error();
-            return Redirect::to('/manuales');
+
+        foreach ($manuales_servicios as $manuale_servicio){
+            $manuale_servicio->delete();
         }
         
         $manuales->delete();
-        flash("E manual '<b>$nombre</b>' ha sido eliminado")->success();
+        flash("El manual '<b>$nombre</b>' ha sido eliminado")->success();
         return Redirect::to('/manuales');
         
     }
