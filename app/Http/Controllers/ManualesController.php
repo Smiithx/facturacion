@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Manuales;
 use App\Contratos;
+use App\Manuales;
 use App\Manuales_servicios;
 use App\Servicios;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 
 class ManualesController extends Controller
 {
@@ -18,6 +15,7 @@ class ManualesController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -26,19 +24,20 @@ class ManualesController extends Controller
     public function index(Request $request)
     {
         $manuales = Manuales::soat($request->get('soat'))->orderBy('id', 'DES')->paginate();
-        $manuales = ['manuales' => $manuales, "soat"=>$request->get('soat')];
-        return view("administracion.manuales.index",$manuales);
+        $servicios = Servicios::where("estado","Activo")->orderBy("cups")->get();
+        $manuales = ['manuales' => $manuales, "soat" => $request->get('soat'),"servicios" => $servicios];
+        return view("administracion.manuales.index", $manuales);
     }
 
     public function buscar(Request $request)
     {
-        if(trim($request) != ""){    
-            $manuales = Manuales::where('codigosoat',"LIKE","%$request->nombre%")
+        if (trim($request) != "") {
+            $manuales = Manuales::where('codigosoat', "LIKE", "%$request->nombre%")
                 ->get();
             $datos = ['manuales' => $manuales];
-            return view("administracion.manuales.index",$datos);
+            return view("administracion.manuales.index", $datos);
         }
-    }   
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,14 +45,14 @@ class ManualesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { 
+    {
         return view('administracion.manuales.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +60,7 @@ class ManualesController extends Controller
         $this->validate($request, [
             'tipo' => 'required',
             'codigosoat' => 'required',
-            'estado' => 'required'            
+            'estado' => 'required'
         ]);
         $manual = Manuales::create($request->all());
 
@@ -72,34 +71,63 @@ class ManualesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,Request $request)
+    public function show($id, Request $request)
     {
-        $manual = Manuales::findOrFail($id);
-        $servicios = Servicios::manualCups($request->get('cup'),$id)
-            ->paginate();
-        return view('administracion.manuales.show',compact('manual','servicios'));
+        if ($request->ajax()) {
+            try {
+                $manual = Manuales::findOrFail($id);
+
+                $total_results = count(Servicios::manualCups($request->cup, $id)->get());
+
+                if ($request->page == 1) {
+                    $inicio = 0;
+                } else {
+                    $inicio = ($request->page - 1) * $request->limit_results;
+                }
+
+                $servicios = Servicios::manualCups($request->cup, $id)
+                    ->offset($inicio)
+                    ->limit($request->limit_results)
+                    ->get();
+
+                return response()->json([
+                    'success' => true,
+                    'servicios' => $servicios,
+                    'total_results' => $total_results
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'error' => $e->getMessage()
+                ]);
+            }
+        } else {
+            $manual = Manuales::findOrFail($id);
+            $servicios = Servicios::manualCups($request->get('cup'), $id)
+                ->paginate();
+            return view('administracion.manuales.show', compact('manual', 'servicios'));
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $manual = Manuales::findOrFail($id);
-        return view('administracion.manuales.edit',["manual" => $manual]);
+        return view('administracion.manuales.edit', ["manual" => $manual]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -116,33 +144,34 @@ class ManualesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $manuales = Manuales::findOrFail($id);
         $nombre = $manuales->codigosoat;
-        $contrato = Contratos::where("id_manual",$id)->get();
+        $contrato = Contratos::where("id_manual", $id)->get();
         $numero_contrato = count($contrato);
-       
-        if($numero_contrato > 0){
+
+        if ($numero_contrato > 0) {
             flash("El manual '<b>$nombre</b>' no se puede eliminar porque tiene contratos asociados")->error();
             return Redirect::to('/manuales');
         }
-        $manuales_servicios = Manuales_servicios::where("id_manual",$id)->get();
+        $manuales_servicios = Manuales_servicios::where("id_manual", $id)->get();
 
-        foreach ($manuales_servicios as $manuale_servicio){
+        foreach ($manuales_servicios as $manuale_servicio) {
             $manuale_servicio->delete();
         }
-        
+
         $manuales->delete();
         flash("El manual '<b>$nombre</b>' ha sido eliminado")->success();
         return Redirect::to('/manuales');
-        
+
     }
 
-    public function cups($cups,$contrato){
+    public function cups($cups, $contrato)
+    {
 
     }
 

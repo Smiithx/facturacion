@@ -226,7 +226,6 @@ $(function () {
 
     function buscarCups(fila) {
         var url = "/servicios/cups/" + fila[0].value + "/" + orden_contrato.val();
-        console.log(url);
         $.ajax({
             url: url,
             type: "GET",
@@ -293,7 +292,7 @@ $(function () {
     }
     
     function rellenarOrdenServicio(ordenes){
-        var tbody = ""
+        var tbody = "";
         var total = 0;
 
         $.each(ordenes, function (ind, orden) {
@@ -307,7 +306,6 @@ $(function () {
             tbody += "</tr>";
             total += parseFloat(orden.orden_total);
         });
-        console.log(tbody,total);
         orden_servicio_tbody.html(tbody);
         orden_servicio_total.html($.number(total,2));
     }

@@ -11,7 +11,7 @@
     <form action="/manuales/{{$manual->id}}/servicios" method="POST">
         {!!csrf_field() !!}
         <div class="form-group">
-            <label for="id_servicio">Servicios:</label>
+            <label for="id_servicio">Servicio:</label>
             <select required class="form-control" id="id_servicio"  name="id_servicio" >
                 <option value="">Seleccione un servicio</option>
                 @foreach ($servicios as $servicio)
