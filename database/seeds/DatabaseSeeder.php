@@ -48,10 +48,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call('MedicamentosSeeder');
         $this->call('EmpresaSeeder');
-        $this->call('DiagnosticosSeeder');
+       $this->call('DiagnosticosSeeder');
         $this->call('ServiciosSeeder');
         $this->call('AseguradoraSeeder');
         // manuales
+        $this->call('ManualSeeder');
+
         $this->call('ManualesServiciosSeeder');
         $this->call('ContratoSeeder');
         $this->call('PacientesSeeder');

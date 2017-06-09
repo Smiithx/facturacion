@@ -23,16 +23,16 @@ class ManualesController extends Controller
      */
     public function index(Request $request)
     {
-        $manuales = Manuales::soat($request->get('soat'))->orderBy('id', 'DES')->paginate();
+        $manuales = Manuales::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate();
         $servicios = Servicios::where("estado","Activo")->orderBy("cups")->get();
-        $manuales = ['manuales' => $manuales, "soat" => $request->get('soat'),"servicios" => $servicios];
+        $manuales = ['manuales' => $manuales, "nombre" => $request->get('nombre'),"servicios" => $servicios];
         return view("administracion.manuales.index", $manuales);
     }
 
     public function buscar(Request $request)
     {
         if (trim($request) != "") {
-            $manuales = Manuales::where('codigosoat', "LIKE", "%$request->nombre%")
+            $manuales = Manuales::where('nombre', "LIKE", "%$request->nombre%")
                 ->get();
             $datos = ['manuales' => $manuales];
             return view("administracion.manuales.index", $datos);
@@ -45,8 +45,10 @@ class ManualesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
+
     {
-        return view('administracion.manuales.create');
+        $servicios = Servicios::where("estado", "Activo")->orderBy("cups")->get();
+        return view('administracion.manuales.create', compact('servicios'));
     }
 
     /**
@@ -58,14 +60,26 @@ class ManualesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'tipo' => 'required',
-            'codigosoat' => 'required',
+            'nombre' => 'required',
             'estado' => 'required'
-        ]);
-        $manual = Manuales::create($request->all());
 
+        ]);
+        $manuales = Manuales::where("nombre","LIKE","$request->nombre")->get();
+        if (count($manuales) >= 1 ) {
+
+            flash("EL Manual ".$request->nombre." ya se encuentra Creado!")->error();
+            $servicios = Servicios::where("estado", "Activo")->orderBy("cups")->get();
+            return view('administracion.manuales.create', compact('servicios'));        }
+        else{
+
+
+        $manual = Manuales::create($request->all());
         flash("EL manual #<a href='/manuales/$manual->id/edit' target='_blank'>$manual->id</a> ha sido creado con éxito!")->success();
         return Redirect::to('/manuales');
+
+        }
+        
+       
     }
 
     /**

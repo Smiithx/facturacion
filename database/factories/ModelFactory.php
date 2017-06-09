@@ -66,13 +66,7 @@ $factory->define(App\ordenservicios::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Manuales::class, function (Faker\Generator $faker) {
-    return [
-        'tipo' => $faker->randomElement(array('ISS2001', 'SOAT', 'PARTICULAR', 'OTRO')),
-        'codigosoat' => $faker->regexify('[a-z0-9A-Z]{8}'),
-        'estado' => 'Activo'
-    ];
-});
+
 
 $factory->define(App\Contratos::class, function (Faker\Generator $faker) {
     $faker->addProvider(new Faker\Provider\es_VE\Person($faker));

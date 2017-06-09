@@ -12,7 +12,7 @@ class ManualesServiciosSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Manuales::class)->times(15)->create();
+       /* factory(\App\Manuales::class)->times(15)->create();*/
         $manuales = \App\Manuales::all();
         $servicios = \App\Servicios::all();
         $faker = Faker::create();

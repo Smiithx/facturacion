@@ -16,17 +16,17 @@ class Manuales extends Model
      */
     protected $fillable = [
         'id', 
-        'tipo',    
-        'codigosoat',
+        'nombre',
         'estado',
         'created_at',
         'updated_at'
     ];
 
-    public function scopeSoat($query,$soat){
-        if(trim($soat) != ""){
-            $query->where('codigosoat',"LIKE","%$soat%");
+    public function scopeNombre($query,$nombre){
+        if(trim($nombre) != ""){
+            $query->where('nombre',"LIKE","%$nombre%");
         }
     }
+
 
 }

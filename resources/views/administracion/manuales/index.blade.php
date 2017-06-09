@@ -12,7 +12,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => 'manuales.index', 'method' => 'GET', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('soat',$soat, ['class' => 'form-control', 'placeholder' => 'Codigo soat']) !!}
+                    {!! Form::text('nombre',$nombre, ['class' => 'form-control', 'placeholder' => 'Nombre']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
@@ -26,8 +26,7 @@
             <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">Tipo</th>
-                <th class="text-center">SOAT</th>
+                <th class="text-center">Nombre</th>
                 <th class="text-center">Estado</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -36,8 +35,7 @@
             @foreach($manuales as $manual)
                 <tr>
                     <td class="text-center"><a href="/manuales/{{ $manual->id }}">{{ $manual->id }}</a></td>
-                    <td>{{ $manual->tipo }}</td>
-                    <td>{{ $manual->codigosoat }}</td>
+                    <td>{{ $manual->nombre }}</td>
                     <td class="text-center">{{ $manual->estado }}</td>
                     <td class="acciones">
                         <button class="btn btn-info btn_manuales_servicios" data-toggle="modal"

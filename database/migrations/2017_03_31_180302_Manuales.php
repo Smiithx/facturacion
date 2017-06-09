@@ -14,8 +14,7 @@ class Manuales extends Migration
     {
         Schema::create('manuales', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('tipo', array('ISS2001','SOAT','PARTICULAR','OTRO'));
-            $table->string('codigosoat',50)->unique();
+            $table->string('nombre',50);
             $table->enum('estado', array('Activo','Inactivo'));   
             $table->timestamps();
         });

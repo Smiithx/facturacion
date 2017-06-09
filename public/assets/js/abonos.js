@@ -10,7 +10,7 @@ $(function () {
         var url = "/abonos/" + abonos_factura.val(); //la ruta que se desea ir y pasando los parametros
         $.ajax({
             url: url,
-            type: "GET",
+            type: "post",
             dataType: "json",
             success: function (respuesta) {
                 if (respuesta.success) {

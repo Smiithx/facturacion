@@ -11,13 +11,11 @@
 {!! Form::model($manual, ['route' => ['manuales.update',$manual->id], 'method' => 'put']) !!}	
 
 <div class="form-group">
-    {!! Form::label('tipo','Tipo de manual') !!}
-    {!! Form::select('tipo',['ISS2001' => 'ISS2001', 'SOAT' => 'SOAT', 'PARTICULAR' => 'PARTICULAR', 'OTRO' => 'SOAT'],null,['class' => 'form-control']) !!}  
+    {!! Form::label('tipo','Nombre') !!}
+    {!! Form::text('nombre',null,['class' => 'form-control'])!!}
+ 
 </div>       
-<div class="form-group">
-    {!! Form::label('codigosoat','Soat')   !!}
-    {!! Form::text('codigosoat',null,['class' => 'form-control'])!!}
-</div>
+
 <div class="form-group">
     {!! Form::label('estado','Estado')   !!}  
     {!! Form::select('estado',['Activo' => 'Activo', 'Inactivo' => 'Inactivo'],null,['class' => 'form-control'])   !!}  
