@@ -15,6 +15,7 @@ class ManualesServicios extends Migration
         Schema::create('manuales_servicios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_manual')->unsigned();
+            $table->string('codigosoat');
             $table->foreign('id_manual')->references('id')->on('manuales');
             $table->integer('id_servicio')->unsigned();
             $table->foreign('id_servicio')->references('id')->on('servicios');

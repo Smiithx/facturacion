@@ -117,6 +117,7 @@ $(function () {
 
     function buscarManual() {
         var url = "/manuales/" + manual_show.data("id");
+
         var datos = {
             cup: manuales_servicios_cups.val(),
             page: manuales_servicios_page,
@@ -133,7 +134,7 @@ $(function () {
                     rellenarPaginacion(respuesta.total_results);
                     actualizarVariables();
                 } else {
-                    manuales_servicios_tbody.html("<tr><td colspan='6'><p class='text-info'>" + respuesta.error + ".</p></td></tr>");
+                    manuales_servicios_tbody.html("<tr><td colspan='7'><p class='text-info'>" + respuesta.error + ".</p></td></tr>");
                     manuales_servicios_paginacion.html("");
                 }
             }, error: function (e) {
@@ -235,6 +236,7 @@ $(function () {
             tbody += "<tr>";
             tbody += "<td class='text-center'>" + servicio.id + "</td>";
             tbody += "<td class='text-center'>" + servicio.cups + "</td>";
+            tbody += "<td class='text-center'>" + servicio.estado + "</td>";
             tbody += "<td>" + servicio.descripcion + "</td>";
             tbody += "<td class='text-right'>" + $.number(servicio.costo, 2) + "</td>";
             tbody += "<td class='text-center'>" + servicio.estado + "</td>";

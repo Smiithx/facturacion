@@ -96,6 +96,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center">#</th>
+                                    <th class="text-center">Soat</th>
                                     <th class="text-center">Cups</th>
                                     <th class="text-center">Descripcion</th>
                                     <th class="text-center">Costo</th>

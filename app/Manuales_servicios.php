@@ -18,7 +18,7 @@ class Manuales_servicios extends Model
      *
      * @var array
      */
-    protected $fillable = ["id",'id_manual', 'id_servicio', 'estado','costo','created_at','updated_at'];
+    protected $fillable = ["id",'id_manual', 'codigosoat', 'id_servicio', 'estado','costo','created_at','updated_at'];
 
     public function getIdManualAttribute($value)
     {

@@ -22,8 +22,10 @@ class ManualesServiciosSeeder extends Seeder
             $servicios = \App\Servicios::all()->random($count_servicios);
             foreach ($servicios as $servicio){
                 $costo = $faker->randomFloat(2, 0);
+                $codigo = $faker->regexify('[a-zA-Z0-9]{8}');
                 \App\Manuales_servicios::create([
                     "id_manual" => $manual->id,
+                    "codigosoat" =>$codigo,
                     "id_servicio" => $servicio->id,
                     "estado" => "Activo",
                     "costo" => $costo

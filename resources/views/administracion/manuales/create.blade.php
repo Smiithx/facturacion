@@ -17,10 +17,6 @@
             <input type="text" class="form-control" id="nombre"  name="nombre" >
                
         </div>
-         
-      
-       
-
         <div class="form-group">
             <label for="estado">Estado:</label>
             <select class="form-control" id="estado"  name="estado" >

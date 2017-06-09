@@ -23,7 +23,7 @@ class ManualesController extends Controller
      */
     public function index(Request $request)
     {
-        $manuales = Manuales::nombre($request->get('nombre'))->orderBy('id', 'DES')->paginate();
+        $manuales = Manuales::nombre($request->get('nombre'))->orderBy('id')->paginate();
         $servicios = Servicios::where("estado","Activo")->orderBy("cups")->get();
         $manuales = ['manuales' => $manuales, "nombre" => $request->get('nombre'),"servicios" => $servicios];
         return view("administracion.manuales.index", $manuales);
@@ -88,8 +88,10 @@ class ManualesController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
+    //----------------Listado por manual---------------//
     public function show($id, Request $request)
     {
+
         if ($request->ajax()) {
             try {
                 $manual = Manuales::findOrFail($id);
