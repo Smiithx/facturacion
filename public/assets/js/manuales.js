@@ -235,8 +235,8 @@ $(function () {
         $.each(servicios, function (index, servicio) {
             tbody += "<tr>";
             tbody += "<td class='text-center'>" + servicio.id + "</td>";
+            tbody += "<td class='text-center'>" + servicio.codigosoat + "</td>";
             tbody += "<td class='text-center'>" + servicio.cups + "</td>";
-            tbody += "<td class='text-center'>" + servicio.estado + "</td>";
             tbody += "<td>" + servicio.descripcion + "</td>";
             tbody += "<td class='text-right'>" + $.number(servicio.costo, 2) + "</td>";
             tbody += "<td class='text-center'>" + servicio.estado + "</td>";
