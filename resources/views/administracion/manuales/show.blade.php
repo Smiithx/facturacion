@@ -2,7 +2,7 @@
 
 @section('menu')
 
-    @include('administracion.partials.menu',["pagina" => "Manual - $manual->codigosoat", "seccion" => "manual"])
+    @include('administracion.partials.menu',["pagina" => "Manual - $manual->nombre", "seccion" => "manual"])
 
 @endsection
 
@@ -10,15 +10,11 @@
 
     {!! Form::model($manual) !!}
     <div class="row">
-        <div class="form-group col-xs-12 col-md-4">
-            {!! Form::label('tipo','Tipo de manual') !!}
-            {!! Form::text('tipo',null,['class' => 'form-control','readonly' => 'readonly']) !!}
+        <div class="form-group col-xs-12 col-md-6">
+            {!! Form::label('nombre','Nombre') !!}
+            {!! Form::text('nombre',null,['class' => 'form-control','readonly' => 'readonly']) !!}
         </div>
-        <div class="form-group col-xs-12 col-md-4">
-            {!! Form::label('codigosoat','SOAT')   !!}
-            {!! Form::text('codigosoat',null,['class' => 'form-control','readonly' => 'readonly'])!!}
-        </div>
-        <div class="form-group col-xs-12 col-md-4">
+        <div class="form-group col-xs-12 col-md-6">
             {!! Form::label('estado','Estado')   !!}
             {!! Form::text('estado',null,['class' => 'form-control','readonly' => 'readonly'])   !!}
         </div>
@@ -30,7 +26,7 @@
             <caption class="text-center">
                 {!! Form::open(['route' => ['manuales.show',$manual->id], 'method' => 'GET', 'class' => 'text-left', 'role' => 'search']) !!}
                 <div class="input-group">
-                    {!! Form::text('cup',null, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
+                    {!! Form::text('cup',$cup, ['class' => 'form-control', 'placeholder' => 'Cups']) !!}
                     <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Buscar</button>
                 </span>
@@ -45,6 +41,7 @@
             <thead>
             <tr>
                 <th class="text-center">#</th>
+                <th class="text-center">SOAT</th>
                 <th class="text-center">Cups</th>
                 <th class="text-center">Descripcion</th>
                 <th class="text-center">Costo</th>
@@ -56,6 +53,7 @@
             @foreach($servicios as $servicio)
                 <tr>
                     <td class="text-center">{{ $servicio->id }}</td>
+                    <td class="text-center">{{ $servicio->codigosoat }}</td>
                     <td class="text-center">{{ $servicio->cups }}</td>
                     <td>{{ $servicio->descripcion }}</td>
                     <td class="text-right">{{ number_format($servicio->costo,2) }}</td>

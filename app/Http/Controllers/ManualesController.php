@@ -123,7 +123,8 @@ class ManualesController extends Controller
             $manual = Manuales::findOrFail($id);
             $servicios = Servicios::manualCups($request->get('cup'), $id)
                 ->paginate();
-            return view('administracion.manuales.show', compact('manual', 'servicios'));
+            $cup = $request->get('cup');
+            return view('administracion.manuales.show', compact('manual', 'servicios','cup'));
         }
     }
 

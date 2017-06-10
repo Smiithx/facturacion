@@ -96,7 +96,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Soat</th>
+                                    <th class="text-center">SOAT</th>
                                     <th class="text-center">Cups</th>
                                     <th class="text-center">Descripcion</th>
                                     <th class="text-center">Costo</th>
@@ -193,7 +193,12 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="costo">Costo:</label>
+                                <label for="manual_servicio_editar_soat">SOAT:</label>
+                                <input required type="text" class="form-control" id="manual_servicio_editar_soat"
+                                       name="codigosoat" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="manual_servicio_editar_costo">Costo:</label>
                                 <input required type="number" step="0.01" min="0" class="form-control" id="manual_servicio_editar_costo"
                                        name="costo" value="">
                             </div>

@@ -9,15 +9,15 @@ class ManualSeeder extends Seeder
      *
      * @return void
      */
-       public function run()
+    public function run()
     {
-    	 $datos = [
+        $datos = [
             ['ISS2001'],
             ['SOAT'],
             ['PARTICULAR'],
             ['OTRO']
         ];
-    	 foreach ($datos as $valor) {
+        foreach ($datos as $valor) {
             Manuales::create
             ([
                 'nombre' => $valor[0],
@@ -26,4 +26,3 @@ class ManualSeeder extends Seeder
         }
     }
 }
-

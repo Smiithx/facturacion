@@ -27,6 +27,7 @@ $(function () {
     // manuales servicios editar
     var btn_manual_servicio_editar = $(".btn_manual_servicio_editar");
     var manual_servicio_editar_id_servicio = $("#manual_servicio_editar_id_servicio");
+    var manual_servicio_editar_soat = $("#manual_servicio_editar_soat");
     var manual_servicio_editar_costo = $("#manual_servicio_editar_costo");
     var manual_servicio_editar_estado = $("#manual_servicio_editar_estado");
     var manual_servicios_editar_actualizar = $("#manual_servicios_editar_actualizar");
@@ -153,6 +154,7 @@ $(function () {
             success: function (respuesta) {
                 if (respuesta.success) {
                     manual_servicio_editar_id_servicio.val(respuesta.manual_servicio.id_servicio.id);
+                    manual_servicio_editar_soat.val(respuesta.manual_servicio.codigosoat);
                     manual_servicio_editar_costo.val(respuesta.manual_servicio.costo);
                     manual_servicio_editar_estado.val(respuesta.manual_servicio.estado);
                 } else {

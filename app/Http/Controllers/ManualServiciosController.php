@@ -133,6 +133,7 @@ class ManualServiciosController extends Controller
         $this->validate($request, [
             'id_servicio' => 'required|exists:servicios,id',
             'costo' => 'required|numeric|min:0',
+            'codigosoat' => "required",
             'estado' => 'required'
         ]);
         $servicio = Servicios::findOrfail($request->id_servicio);
@@ -154,10 +155,12 @@ class ManualServiciosController extends Controller
             } else {
                 $manual_servicio->id_servicio = $request->id_servicio;
                 $manual_servicio->costo = $request->costo;
+                $manual_servicio->codigosoat = $request->codigosoat;
                 $manual_servicio->estado = $request->estado;
                 $manual_servicio->save();
             }
         } else {
+            $manual_servicio->codigosoat = $request->codigosoat;
             $manual_servicio->costo = $request->costo;
             $manual_servicio->estado = $request->estado;
             $manual_servicio->save();
