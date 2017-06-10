@@ -19,6 +19,7 @@
                 @endforeach
             </select>
         </div>
+      
         <div class="form-group">
             <label for="costo">Costo:</label>
             <input required type="number" step="0.01" min="0" class="form-control" id="costo" name="costo"  value="{{old('costo')}}">

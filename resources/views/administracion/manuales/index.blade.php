@@ -143,6 +143,10 @@
                                     @endforeach
                                 </select>
                             </div>
+                                <div class="form-group">
+            <label for="codigosoat  ">Soat:</label>
+            <input required type="text" class="form-control" id="codigosoat" name="codigosoat"  value="{{old('codigosoat')}}">
+        </div>
                             <div class="form-group">
                                 <label for="costo">Costo:</label>
                                 <input required type="number" step="0.01" min="0" class="form-control" id="costo"
@@ -192,6 +196,10 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                        <label for="codigosoat  ">Soat:</label>
+                        <input required type="text" class="form-control" id="manual_servicio_editar_codigosoat" name="codigosoat"  value="">
+        </div>
                             <div class="form-group">
                                 <label for="costo">Costo:</label>
                                 <input required type="number" step="0.01" min="0" class="form-control" id="manual_servicio_editar_costo"
