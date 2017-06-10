@@ -19,6 +19,7 @@
                 @endforeach
             </select>
         </div>
+      
         <div class="form-group">
             <label for="manual_servicio_editar_soat">SOAT:</label>
             <input required type="text" class="form-control" id="manual_servicio_editar_soat"

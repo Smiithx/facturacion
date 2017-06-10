@@ -30,6 +30,7 @@ $(function () {
     var manual_servicio_editar_soat = $("#manual_servicio_editar_soat");
     var manual_servicio_editar_costo = $("#manual_servicio_editar_costo");
     var manual_servicio_editar_estado = $("#manual_servicio_editar_estado");
+    var manual_servicio_editar_codigosoat = $("#manual_servicio_editar_codigosoat");
     var manual_servicios_editar_actualizar = $("#manual_servicios_editar_actualizar");
     var modal_manual_servicios_editar = $("#modal_manual_servicios_editar");
     var form_manuales_servicios_editar = $("#form_manuales_servicios_editar");
@@ -156,12 +157,16 @@ $(function () {
                     manual_servicio_editar_id_servicio.val(respuesta.manual_servicio.id_servicio.id);
                     manual_servicio_editar_soat.val(respuesta.manual_servicio.codigosoat);
                     manual_servicio_editar_costo.val(respuesta.manual_servicio.costo);
+                    manual_servicio_editar_soat.val(respuesta.manual_servicio.codigosoat);
                     manual_servicio_editar_estado.val(respuesta.manual_servicio.estado);
                 } else {
                     manual_servicio_editar_costo.val(0);
+                    manual_servicio_editar_soat.val("");
                 }
             }, error: function (e) {
                 manual_servicio_editar_costo.val(0);
+                manual_servicio_editar_soat.val("");
+
             }
         });
     }

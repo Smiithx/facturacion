@@ -48,6 +48,7 @@ class ManualServiciosController extends Controller
         $manual = Manuales::findOrFail($id_manual);
         $this->validate($request, [
             'id_servicio' => 'required|exists:servicios,id',
+            'codigosoat' => 'required',
             'costo' => 'required|numeric|min:0',
             'estado' => 'required'
         ]);
@@ -132,6 +133,7 @@ class ManualServiciosController extends Controller
     {
         $this->validate($request, [
             'id_servicio' => 'required|exists:servicios,id',
+            'codigosoat' => 'required',
             'costo' => 'required|numeric|min:0',
             'codigosoat' => "required",
             'estado' => 'required'

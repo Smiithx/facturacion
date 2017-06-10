@@ -29,13 +29,18 @@ class Servicios extends Model
 
     public function scopeManualCups($query, $cup, $manual)
     {
-       
-
+        if (trim($cup) != "") {
             $query->selectRaw('servicios.cups,servicios.descripcion,manuales_servicios.*')
-            ->join("manuales_servicios", "manuales_servicios.id_servicio", "=", "servicios.id")
-            ->where("manuales_servicios.id", $manual)
-            ->where('servicios.cups', "LIKE", "%$cup%")
-            ->orderBy("servicios.cups");
+                ->join("manuales_servicios", "manuales_servicios.id_servicio", "=", "servicios.id")
+                ->where("manuales_servicios.id_manual", $manual)
+                ->where('servicios.cups', "LIKE", "%$cup%")
+                ->orderBy("servicios.cups");
+        }else{
+            $query->selectRaw('servicios.cups,servicios.descripcion,manuales_servicios.*')
+                ->join("manuales_servicios", "manuales_servicios.id_servicio", "=", "servicios.id")
+                ->where("manuales_servicios.id_manual", $manual)
+                ->orderBy("servicios.cups");
+        }
     }
 
 }

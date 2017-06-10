@@ -11,7 +11,7 @@
 {!! Form::model($manual, ['route' => ['manuales.update',$manual->id], 'method' => 'put']) !!}	
 
 <div class="form-group">
-    {!! Form::label('tipo','Nombre') !!}
+    {!! Form::label('nombre','Nombre') !!}
     {!! Form::text('nombre',null,['class' => 'form-control'])!!}
  
 </div>       
