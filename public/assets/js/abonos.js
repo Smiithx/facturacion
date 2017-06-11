@@ -8,9 +8,10 @@ $(function () {
     //-- Agregar evento Buscar Factura en la Vista abonos ================================= //
     btn_abonos_buscar.on("click", function () {
         var url = "/abonos/" + abonos_factura.val(); //la ruta que se desea ir y pasando los parametros
+        console.log(url);
         $.ajax({
             url: url,
-            type: "post",
+            type: "get",
             dataType: "json",
             success: function (respuesta) {
                 if (respuesta.success) {

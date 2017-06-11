@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contratos;
+use DB;
+
 use App\Factura;
 use App\FacturaItems;
 use App\ordenservicios;
@@ -506,7 +508,7 @@ class FacturaController extends Controller
 //----------------- reporte cuenta por cobrar---------------------------//
     public function cxcbuscar($factura)
     {
-        $facturas = FacturaItems::select("ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", "orden_servicio_items.valor_total", "cartera.valor_saldo")
+            $facturas = FacturaItems::select("factura_items.id_factura","ordendeservicio.id", "ordendeservicio.created_at", "ordendeservicio.documento", "ordendeservicio.nombre", "orden_servicio_items.cups", "orden_servicio_items.descripcion", "orden_servicio_items.copago", "orden_servicio_items.valor_unitario", DB::raw('SUM(orden_servicio_items.valor_total) as valor_total'), "cartera.valor_saldo") 
             ->join("ordendeservicio", "factura_items.id_orden_servicio", "=", "ordendeservicio.id")
             ->join("orden_servicio_items", "ordendeservicio.id", "=", "orden_servicio_items.id_orden_servicio")
             ->join("cartera", "factura_items.id_factura", "=", "cartera.id_factura")
@@ -520,21 +522,24 @@ class FacturaController extends Controller
         $saldo_cxc = 0;
 
 
-        foreach ($facturas as $factura) {
-            $total_facturado_cxc += $factura->valor_total;
-            $saldo_cxc = number_format($factura->valor_saldo, 2);
-            $cxc_tbody .= "<tr> 
-          <td class='text-center'><a href='/ordenservicio/$factura->id' target='_blank'>$factura->id</a></td>
-          <td>$factura->created_at</td>
-          <td>$factura->documento</td>
-          <td>$factura->nombre</td>
-          <td>$factura->cups</td>
-          <td>$factura->descripcion</td>
-          <td>" . number_format($factura->copago, 3) . "</td>
-          <td>" . number_format($factura->valor_unitario, 2) . "</td>
-          <td>" . number_format($factura->valor_total, 2) . "</td>
+        foreach ($facturas as $factur) {
+            $total_facturado_cxc += $factur->valor_total;
+            $saldo_cxc = number_format($factur->valor_saldo, 2);
+            $cxc_tbody .= "<tr>
+          <td class='text-center'><a href='/facturas/$factura' target='_blank'>$factura</a></td> 
+ 
+          <td class='text-center'><a href='/ordenservicio/$factur->id' target='_blank'>$factur->id</a></td>
+          <td>$factur->documento</td>
+          <td>$factur->nombre</td>
+          <td>$factur->cups</td>
+          <td>$factur->descripcion</td>
+          <td>" . number_format($factur->copago, 3) . "</td>
+          <td>" . number_format($factur->valor_unitario, 2) . "</td>
+          <td>" . number_format($factur->valor_total, 2) . "</td>
           </tr>";
         }
+      $total_facturado_cxc = number_format($total_facturado_cxc, 2);
+
 
         if ($cxc_tbody != "") {
             return response()->json([

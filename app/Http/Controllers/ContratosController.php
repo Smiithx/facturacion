@@ -39,8 +39,9 @@ class ContratosController extends Controller
      */
     public function create()
     {
-        $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get();
-        $manuales = ['manuales' => $manuales];       
+        $manuales = Manuales::where('estado', 'Activo')->get();
+        $manuales = ['manuales' => $manuales];     
+
         return view('administracion.contratos.create',$manuales);
     }
 
@@ -95,7 +96,7 @@ class ContratosController extends Controller
      */
     public function edit($id)
     {
-        $manuales = Manuales::where('estado', 'Activo')->orderBy('codigosoat')->get(); 
+        $manuales = Manuales::where('estado', 'Activo')->get(); 
         $contrato = Contratos::findOrFail($id);        
         return view('administracion.contratos.edit',compact('contrato','manuales'));
     }

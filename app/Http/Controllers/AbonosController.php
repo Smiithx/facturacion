@@ -52,8 +52,10 @@ class AbonosController extends Controller
      */
     public function store(Request $request){
 
+
         $this->validate($request,['id_factura'=>'required','descripcion'=>'required','valor_abono'=>'required|numeric|min:0.01' ]);
-            $facturas = Factura::findOrFail($id); 
+            $facturas = Factura::findOrFail($request->id_factura); 
+
             if (count($facturas) >= 1) { 
 
         $carteras = Cartera::where('id_factura',$request->id_factura)
@@ -112,9 +114,7 @@ class AbonosController extends Controller
                             <td>$abono->descripcion</td>
                             <td>". number_format($abono->valor_abono, 2) ."</td>
                             <td>$abono->created_at</td>
-                            <td><a style='float: left;' href='/abonos/$abono->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
-
-                            
+                            <td><a style='float: left;' href='/abonos/$abono->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>                            
                                 <a href='abonos/$abono->id/anular' class='btn btn-danger' data-toggle='tooltip' title='Eliminar'>
                                 <i class='glyphicon glyphicon-remove'></i></a>
 
@@ -156,8 +156,9 @@ class AbonosController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $abonos = Abonos::findOrFail($id);      
-       $carteras = Cartera::where('id_factura',$request->id_factura)->where('anulado',0)->get();
+       $abonos = Abonos::findOrFail($id);
+
+       $carteras = Cartera::where('id_factura',$request->id_factura)->get();
        $saldo = $carteras[0]->valor_saldo; //saco el saldo actual
             if($saldo >=1 ){                
                  $saldo_sin_abono = $saldo + $abonos->valor_abono;//le sumo el valor de abono viejo

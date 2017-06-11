@@ -102,9 +102,10 @@ class CarteraController extends Controller
                 $carteras = Cartera::where('id_factura',$factura)->get();
         if (count($carteras) > 0) {// verificar si existe  la cartera
                 $abonos = Abonos::where('id_factura',$factura)->where('anulado',0)->get();
-                dd($abonos);
+
 
                 $facturas = Factura::where('id',$factura)->get();
+
 
                 $abonostotal = 0;
                 if (count($abonos) > 0) { // verificar si existe abonos a la cartera
@@ -130,7 +131,6 @@ class CarteraController extends Controller
                             <td>". number_format($abonostotal, 2) ."</td>
                             <td>". number_format($cartera->valor_retencion, 2) ."</td>
                             <td>". number_format($cartera->valor_saldo, 2) ."</td>
-
                             <td><a style='float: left;' href='/cartera/$cartera->id/edit' class='btn btn-success' data-toggle='tooltip' title='Editar'><i class='glyphicon glyphicon-edit'></i></a>
                             <a style='right: right;' href='/abonos/create/$cartera->id_factura' class='btn btn-primary' data-toggle='tooltip' title='Abonar'><i class='glyphicon glyphicon-usd'></i></a>
 

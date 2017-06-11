@@ -22,8 +22,8 @@
         <thead>
         <tr>
 
-            <th class="text-center">Nº de Factura</th>
-            <th class="text-center">Fecha</th>
+            <th class="text-center">Factura</th>
+            <th class="text-center">Nº de Orden</th>
             <th class="text-center">Documento</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Cups</th>

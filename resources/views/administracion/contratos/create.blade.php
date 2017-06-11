@@ -27,7 +27,7 @@
             <select class="form-control" id="id_manual" required name="id_manual" >
                 <option value="">Seleccione un manual</option>
                 @foreach ($manuales as $manual)
-                <option value="{{$manual->id}}" {{old('id_manual')  == $manual->id ?"selected":""}}>{{$manual->codigosoat}}</option>
+                <option value="{{$manual->id}}" {{old('id_manual')  == $manual->id ?"selected":""}}>{{$manual->nombre}}</option>
                 @endforeach
             </select>
         </div>

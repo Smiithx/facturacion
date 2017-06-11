@@ -42,7 +42,7 @@
                     <td>{{ $contrato->nombre }}</td>
                     <td>{{ $contrato->nit}}</td>
                     <td class="text-center">{{ $contrato->diasvencimiento }}</td>
-                    <td>{{ $contrato->id_manual->codigosoat }}</td>
+                    <td>{{ $contrato->id_manual->nombre }}</td>
                     <td class="text-center">{{ $contrato->porcentaje }}%</td>
                     <td class="text-center">{{ $contrato->estado }}</td>
                     <td class="acciones">
