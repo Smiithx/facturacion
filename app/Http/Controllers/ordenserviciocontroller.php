@@ -229,7 +229,7 @@ class ordenserviciocontroller extends Controller
         $factura_item = FacturaItems::select('id_factura')->where('id_orden_servicio', $id)->get();
         $factura = 0;
         if (count($factura_item) > 0) {
-            $factura = $factura_item[0]->id_factura;
+            $factura = $factura_item[0]->id_factura->id;
         }
         $datos = ['ordenservicio' => $ordenservicio, 'OrdenServicio_Items' => $OrdenServicio_Items, 'factura' => $factura];
 
