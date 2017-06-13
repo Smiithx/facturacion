@@ -5,13 +5,18 @@
     <form method="POST" action="/cartera">
         <div class="form-group col-xs-12 col-md-3 col-lg-3">
             <label for="label">Contrato:</label>
-            <input class="form-control" placeholder="Escribir Contrato" id="cartera_contrato" type="text"
-                   name="cartera_factura"/>
+           
+            <select class="form-control" name="cartera_factura" id="cartera_contrato">
+                @foreach ($contratos as $contrato)
+                <option value="{{$contrato->id}}">{{$contrato->nombre}}</option>
+                @endforeach
+            </select>
 
                    
           <input class="form-control" id="cartera_factura" type="hidden" value="0" name="id_contrato"/>
         </div>
-     
+
+    
        
         <div class="form-group col-xs-12 col-md-1">
             <label for=""></label>

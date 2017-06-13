@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Factura;
 use App\Cartera;
 use App\Glosas;
+use App\Contratos;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -50,7 +52,11 @@ class CarteraController extends Controller
     public function createcontrato()
     {
 
-        return view("cartera.createcontrato");
+
+        $contratos = Contratos::where('estado', 'Activo')->get();
+        $contratoss = ['contratos' => $contratos];
+        return view("cartera.createcontrato", compact('contratos'));
+
     }
 
     /**
