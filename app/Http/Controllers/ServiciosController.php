@@ -182,7 +182,7 @@ class ServiciosController extends Controller
                             // ---- Validar existencia del servicio en el contrato ----- //
                             if ($manual_servicios != "[]") {
                                 $manual_servicios = $manual_servicios[0];
-                                $precio = $manual_servicios->costo * $contrato->porcentaje / 100.00;
+                                $precio = $manual_servicios->costo + $manual_servicios->costo * $contrato->porcentaje / 100.00;
                                 return response()->json([
                                     'success' => 'true',
                                     'manual_servicios' => $manual_servicios,

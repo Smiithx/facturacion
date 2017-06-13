@@ -226,6 +226,7 @@ $(function () {
 
     function buscarCups(fila) {
         var url = "/servicios/cups/" + fila[0].value + "/" + orden_contrato.val();
+        var row = fila.parent().parent();
         $.ajax({
             url: url,
             type: "GET",
@@ -241,10 +242,12 @@ $(function () {
                     fila.parent().parent()[0].children[4].children[0].value = "";
                     fila.parent().parent()[0].children[4].children[1].value = 0;
                 }
+                valorTotal(row);
             }, error: function (e) {
                 fila.parent().parent()[0].children[1].children[0].value = "";
                 fila.parent().parent()[0].children[4].children[0].value = "";
                 fila.parent().parent()[0].children[4].children[1].value = 0;
+                valorTotal(row);
             }
         });
     }
@@ -283,6 +286,12 @@ $(function () {
             valorTotal($(this).parent().parent());
         });
         orden_servicios_copago.on("keyup", function () {
+            valorTotal($(this).parent().parent());
+        });
+        orden_servicios_cantidad.on("change", function () {
+            valorTotal($(this).parent().parent());
+        });
+        orden_servicios_copago.on("change", function () {
             valorTotal($(this).parent().parent());
         });
         orden_servicios_valor_unitario_vista.on("keyup", function () {

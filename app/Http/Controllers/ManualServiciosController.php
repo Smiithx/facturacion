@@ -69,6 +69,7 @@ class ManualServiciosController extends Controller
             $manual_servicio = Manuales_servicios::create([
                 'id_servicio' => $request->id_servicio,
                 'id_manual' => $id_manual,
+                'codigosoat' => $request->codigosoat,
                 'costo' => $request->costo,
                 'estado' => $request->estado
             ]);

@@ -61,8 +61,7 @@ class ManualesController extends Controller
     {
         $this->validate($request, [
             'nombre' => 'required',
-            'estado' => 'required'
-
+            'estado' => 'required',
         ]);
         $manuales = Manuales::where("nombre","LIKE","$request->nombre")->get();
         if (count($manuales) >= 1 ) {
