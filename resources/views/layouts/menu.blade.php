@@ -2,9 +2,9 @@
     <ul class="nav">
         <li class="active"><a href="/">Home</a></li>
         <li>
-            <a href="/pacientes">Pacientes</a>
+            <a href="{{url('/pacientes')}}">Pacientes</a>
             <ul>
-                <li><a href="/pacientes/create" class="list-group-item">Crear</a></li>
+                <li><a href="{{url('/pacientes/create')}}" class="list-group-item">Crear</a></li>
             </ul>
         </li>
         <li><a href="">Facturas</a>
